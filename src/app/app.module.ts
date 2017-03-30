@@ -69,6 +69,7 @@ import { VariantAnnotationsComponent } from './components/parts/variant-annotati
 import { AnnoTreeComponent, JsonLabelPipe } from './components/parts/anno-tree/anno-tree.component';
 import { VirtualListComponent } from './components/parts/virtual-list/virtual-list.component';
 import { VirtualListItemComponent } from './components/parts/virtual-list-item/virtual-list-item.component';
+import { AnalyticsComponent } from './components/pages/analytics/analytics.component';
 import * as Raven from 'raven-js';
 import { PopFreqsComponent } from './components/parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -156,7 +157,8 @@ export class RavenErrorHandler implements ErrorHandler {
         PopFreqsComponent,
         ErrorComponent,
         ScoresComponent,
-        ConsequencesComponent
+        ConsequencesComponent,
+        AnalyticsComponent
     ],
     providers: [
         Auth,
