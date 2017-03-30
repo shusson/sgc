@@ -1,0 +1,5 @@
+<div class="genome-browser">
+    <app-genome-browser *ngIf="width && !error" [width]="width"></app-genome-browser>
+</div>
+<div class="message message-error" *ngIf="error">{{ error }}</div>
+<div class="message message-info" *ngIf="loading">Loading Genome Browser...</div>

@@ -1,0 +1,41 @@
+.about-bar-band .content {
+    color: white;
+}
+
+.about-bar-band {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #003263;
+    border-top: solid 1px lightgrey;
+}
+
+.about {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-basis: 0;
+    flex-grow: 1;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.about article {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.about button {
+    width: 300px;
+    color: #003263;
+    background-color: white;
+    cursor: pointer;
+}
+
+.about .title {
+    font-size: x-large;
+}

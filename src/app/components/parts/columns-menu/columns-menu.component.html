@@ -1,0 +1,12 @@
+<div>
+    <div class="option" (click)="toggle()">
+        <span *ngIf="!cs.activeColumns().length">Select columns to view</span>
+        <i class="material-icons" md-tooltip="Show/hide columns" mdTooltipPosition="above">view_column</i>
+    </div>
+
+    <md-list class="column-options" *ngIf="showList">
+        <md-list-item *ngFor="let key of cs.keys()">
+            <md-slide-toggle [checked]="cs.get(key)" (change)="switchValue(key, $event)">{{ key }}</md-slide-toggle>
+        </md-list-item>
+    </md-list>
+</div>

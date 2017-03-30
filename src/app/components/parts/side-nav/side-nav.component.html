@@ -1,0 +1,18 @@
+<nav>
+    <a routerLink="/initiatives" routerLinkActive="is-active">INITIATIVES</a>
+    <a routerLink="/search" routerLinkActive="is-active">SEARCH</a>
+    <a routerLink="/beacon" routerLinkActive="is-active">BEACON</a>
+    <a routerLink="/about" routerLinkActive="is-active">ABOUT</a>
+    <a [ngClass]="{'is-active': termsLinkActive}" (click)="toggleTerms($event)">
+        <div class="terms-link">
+            <span class="label">DATA ACCESS</span>
+            <i *ngIf="!termsDropdown" class="material-icons">keyboard_arrow_down</i>
+            <i *ngIf="termsDropdown" class="material-icons">keyboard_arrow_up</i>
+        </div>
+    </a>
+    <a *ngIf="termsDropdown" class="terms-dropdown" (click)="goToMgrbTerms($event)">MGRB</a>
+    <a (click)="auth.login()" *ngIf="!auth.authenticated()">LOG IN</a>
+    <a (click)="auth.logout()" *ngIf="auth.authenticated()">LOG OUT</a>
+</nav>
+
+

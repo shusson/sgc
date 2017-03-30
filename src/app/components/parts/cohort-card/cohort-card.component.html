@@ -1,0 +1,10 @@
+<div *ngIf="cohort" class="cohort-card">
+    <div class="title">
+        <div>{{ cohort.title }}</div>
+    </div>
+    <div class="logos">
+        <div class="logo" *ngFor="let logo of cohort.logos">
+            <img (click)="toggleLogo()" *ngIf="logo === currentLogo" src="{{ logo }}" [@flyInOut]="'in'">
+        </div>
+    </div>
+</div>

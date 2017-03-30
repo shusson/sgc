@@ -1,0 +1,12 @@
+.material-icons {
+    cursor: pointer;
+}
+
+.check {
+    color: rgb(64, 196, 255);
+    margin-left: 1rem;
+}
+
+span {
+    margin-right: 1rem;
+}

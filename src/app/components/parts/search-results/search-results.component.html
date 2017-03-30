@@ -1,0 +1,15 @@
+<div class="loading-message" *ngIf="loadingVariants">
+    <md-spinner color="primary"></md-spinner>
+</div>
+
+<div *ngIf="!loadingVariants && variants.length <= 0">No Variants found for the query</div>
+
+<div class="search-result-content" *ngIf="searchService.commenced">
+    <div class="meta-information">
+        <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
+        <app-region-information *ngIf="showRegionInformation()"></app-region-information>
+    </div>
+
+    <app-genome-browser-resizable></app-genome-browser-resizable>
+    <app-variants-table [variants]="variants"></app-variants-table>
+</div>

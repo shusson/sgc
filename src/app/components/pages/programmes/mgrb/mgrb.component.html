@@ -1,0 +1,64 @@
+<app-page-container>
+    <section *ngIf="initiative">
+        <h1 class="title">{{ initiative.title }}</h1>
+        <div class="title-description">
+            Providing a genomic reference bank of healthy aged individuals
+        </div>
+
+        <div class="methods">
+            <div class="sub-title">About</div>
+            <p>
+                One of the key challenges in the interpretation of whole genome sequencing for the diagnosis of
+                inherited
+                disease is in the
+                discrimination of a single or small number of disease-causing variants from large numbers of non-disease
+                causing variants.
+            </p>
+            <p>
+                To facilitate accurate diagnosis of and discovery of new genetic variants underpinning disease, the
+                Medical
+                Genome Reference Bank (MGRB) Program will sequence and analyse the genomes from ~4,000 healthy, older
+                individuals to create a high quality database that is depleted of damaging genetic variants.
+            </p>
+            <p>
+                Funded by the NSW State Government, the MGRB leverages the Illumina Hiseq X Ten sequencing platform at
+                the
+                Garvan Institute’s Kinghorn Centre for Clinical Genomics (KCCG). Participants in the 45 and Up (Sax
+                Institute) and Aspirin in Reducing Events in the Elderly (ASPREE) (Monash University) studies will be
+                sequenced to provide a resource of lasting value for national and international health and medical
+                researchers.
+            </p>
+        </div>
+
+        <div class="sub-title">Cohorts</div>
+        <div class="cohorts">
+            <a *ngFor="let cohort of cohorts" target="_blank" href="{{ cohort.link }}">
+                <app-cohort-card [cohortId]="cohort.id"></app-cohort-card>
+            </a>
+
+        </div>
+
+        <div *ngIf="initiative.ages.length > 0" class="graphs">
+            <div class="sub-title">Cohort Demographics</div>
+            <app-graphs-widget [initiative]="initiative"></app-graphs-widget>
+        </div>
+
+        <div class="sub-title">Genetic Distance</div>
+        <div class="pca">
+            <div class="plots">
+                <app-pca-plot [title]="'PCA1 vs PCA2'" [axis]="['PC1', 'PC2']"></app-pca-plot>
+                <app-pca-plot [title]="'PCA1 vs PCA3'" [axis]="['PC1', 'PC3']"></app-pca-plot>
+            </div>
+        </div>
+
+        <div class="other-initiatives">
+            <div class="sub-title-anchor">
+                <div class="sub-title">Other Initiatives</div>
+                <a class="back-anchor" (click)="backToTop()">Back to top</a>
+            </div>
+            <div *ngFor="let initiative of otherInitiatives">
+                <a routerLink="/initiatives/{{ initiative.id }}">{{ initiative.title }}</a>
+            </div>
+        </div>
+    </section>
+</app-page-container>

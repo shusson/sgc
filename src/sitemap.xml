@@ -1,0 +1,28 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://sgc.garvan.org.au/initiatives</loc>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://sgc.garvan.org.au/initiatives/mgrb</loc>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://sgc.garvan.org.au/initiatives/nswgp</loc>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://sgc.garvan.org.au/initiatives/gcmp</loc>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://sgc.garvan.org.au/about</loc>
+        <changefreq>monthly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://sgc.garvan.org.au/terms/mgrb</loc>
+        <changefreq>monthly</changefreq>
+    </url>
+
+</urlset>

@@ -1,0 +1,29 @@
+nav a.is-active {
+    border-left: 5px solid rgb(64, 196, 255);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: medium;
+    padding: 1rem 1rem 1rem 2rem;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.terms-link {
+    display: inline-flex;
+    align-items: center;
+}
+
+.terms-dropdown {
+    left: 0;
+    background-color: #336F9C;
+}

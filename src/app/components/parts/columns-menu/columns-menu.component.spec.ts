@@ -1,0 +1,39 @@
+/* tslint:disable:no-unused-variable */
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+
+import { ColumnsMenuComponent } from './columns-menu.component';
+import { MaterialModule } from '@angular/material';
+import { ColumnService } from '../../../services/column-service';
+
+describe('ColumnsMenuComponent', () => {
+    let component: ColumnsMenuComponent;
+    let fixture: ComponentFixture<ColumnsMenuComponent>;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [MaterialModule],
+            declarations: [ColumnsMenuComponent],
+            providers: [
+                {
+                    provide: ColumnService,
+                    useValue: {
+                        activeColumns: (): any[] => []
+                    }
+                }
+            ]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ColumnsMenuComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});

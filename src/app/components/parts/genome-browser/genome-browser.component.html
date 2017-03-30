@@ -1,0 +1,29 @@
+<div class="browser" (wheel)="wheeling($event)">
+    <div class="message message-error" *ngIf="!ensemblSupported">Unfortunately we cannot connect to ensembl. The
+        transcripts and sequence tracks will not be available.
+    </div>
+    <div class="details">
+            <div class="left">
+            </div>
+            <div class="gb-nav">
+                <!--<i (click)="backward()" class="material-icons">arrow_back</i>
+                <i (click)="forward()" class="material-icons">arrow_forward</i>
+                <i (click)="zoomIn()" class="material-icons">zoom_in</i>
+                <i (click)="zoomOut()" class="material-icons">zoom_out</i><-->
+            </div>
+
+            <div class="right">
+                <app-overlay-menu></app-overlay-menu>
+                <i (click)="unlock()" *ngIf="locked" class="material-icons" mdTooltip="Unlock the current view" mdTooltipPosition="above">lock</i>
+                <i (click)="lock()" *ngIf="!locked" class="material-icons" mdTooltip="Lock the current view" mdTooltipPosition="above">lock_open</i>
+                <md-slide-toggle *ngIf="ensemblSupported" [ngModel]="transcriptsShown" (ngModelChange)="toggleTranscripts()" mdTooltip="Show/hide Transcripts from Ensembl" mdTooltipPosition="above">
+                    Transcripts
+                </md-slide-toggle>
+            </div>
+    </div>
+    <div #genomeBrowser id="genome-browser"></div>
+    <div class="legend" [ngClass]="{hidden: !transcriptsShown}" id="genome-browser-gene-legend">
+        <span>Gene legend:</span>
+    </div>
+</div>
+

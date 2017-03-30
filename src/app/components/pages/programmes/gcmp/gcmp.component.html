@@ -1,0 +1,153 @@
+<app-page-container>
+    <section *ngIf="initiative">
+        <h1 class="title">{{ initiative.title }}</h1>
+        <div class="title-description">
+            Understanding and exploiting genomics to impact on cancer care
+        </div>
+
+        <div class="sub-title">About</div>
+
+        <div>
+            <p>
+                The Genomic Cancer Medicine Program will use genomic information in novel ways to understand further the
+                genetic
+                contribution to cancer risk and identify new therapeutic opportunities for individual patients, with a
+                view
+                to
+                improving outcomes in families affected by cancer.
+            </p>
+            <p>
+                The program is led by Professor David Thomas and is comprised of two major projects:
+            </p>
+            <ul>
+                <li>Cancer Molecular Screening and Therapeutics (MoST) Program - Led by Dr Dominique Hess</li>
+                <li>Genetic Cancer Risk in the Young Study (Cancer Risk Study) - Led by Dr Mandy Ballinger</li>
+            </ul>
+            <p>
+                Participants for both projects of the Genomic Cancer Medicine program are now being recruited from The
+                Kinghorn
+                Cancer Centre. Recruitment from the Chris O’Brien Lifehouse is anticipated to start in early 2017.
+            </p>
+        </div>
+
+        <div class="sub-title">Cohorts</div>
+        <div class="cohorts">
+            <a *ngFor="let cohort of cohorts" href="initiatives/gcmp#{{ cohort.id }}-details">
+                <app-cohort-card [cohortId]="cohort.id"></app-cohort-card>
+            </a>
+        </div>
+
+        <div class="offset-anchor" id="most-details"></div>
+
+        <div [ngClass]="{'is-active': activeAnchor === 'most-details'}">
+            <div class="sub-title">Molecular Screening and Therapeutics (MoST) Program</div>
+            <p>
+                Recent advances in genomic technology have created the opportunity to identify the genetic changes that
+                drive
+                cancer growth. Molecular information from tumours can be used to match individual patients with targeted
+                treatments, personalising the cancer treatment of patients. However, the translation of molecular
+                information
+                into improved health outcomes has not kept pace with scientific discovery. This is particularly the case
+                for
+                patients with rare or neglected cancers, which account for over 30% of all cancer deaths. Innovations in
+                clinical trial design are needed to accelerate the therapeutic translation of genomic opportunities.
+            </p>
+
+            <p>
+                The MoST program will evaluate a new approach for testing the activity of drugs for the treatment of
+                advanced
+                cancer, with the overall goal of accelerating the clinical development of novel treatments. Up to 1000
+                patients
+                with no further standard treatment options will be recruited over four years. The program will be open
+                to
+                patients with advanced cancer of any histologic type, but with a particular focus on rare or neglected
+                cancers.
+            </p>
+
+            <p>The two key components to the MoST program are:</p>
+            <ul>
+                <li>
+                    A molecular screening platform incorporating genomics and other molecular assays to find clinically
+                    actionable
+                    variants; and
+                    multiple clinical substudies for novel molecularly targeted treatments.
+                    We anticipate that the findings from this program will inform future models for personalised
+                    medicine
+                    and more
+                    efficient and successful evaluation of new drugs.
+                </li>
+
+                <li>
+                    The MoST program builds on partnerships between academic research, the public health sector and the
+                    pharmaceutical industry. This program is a collaboration between the Garvan Institute of Medical
+                    Research, the
+                    NHMRC Clinical Trials Centre and Sydney Catalyst – University of Sydney, and the Molecular
+                    Diagnostic
+                    Oncology
+                    Laboratory at the Peter MacCallum Cancer Centre.
+                </li>
+            </ul>
+
+            <p>
+                The program is led by Dr Dominique Hess.
+            </p>
+        </div>
+
+
+        <div class="offset-anchor" id="crs-details"></div>
+
+        <div [ngClass]="{'is-active': activeAnchor === 'crs-details'}">
+            <div class="sub-title">Cancer Risk Study</div>
+            <p>
+                Cancer risk is not evenly distributed in the community. Up to 50% of cancer risk is thought to be
+                genetic
+                (heritable), varying by cancer type. It is likely that early-onset cancers have a greater likelihood of
+                heritable origins. A large proportion of cancer risk is still unknown. Further understanding about the
+                inherited
+                genetic alterations that cause cancer may lead to:
+            </p>
+            <ul>
+                <li>more personalised cancer treatments with better outcomes;</li>
+                <li>improved cancer screening;</li>
+                <li>increased options for reducing cancer risks; and more fully informed lifestyle and reproductive
+                    decisions.
+                </li>
+                <li>This study will use whole genome sequencing to investigate and understand further the genetic
+                    contributionto developing cancer.
+                </li>
+            </ul>
+
+            <p>
+                The cohort will be made up of 1000 young individuals diagnosed with cancer aged 16-40 years as well as
+                people with multiple cancers at any age. Family members will also be invited to participate. Individuals
+                who
+                carry
+                genetic variants important to their health and potentially the health of family members will be offered
+                genetic counselling and tailored clinical risk management. The risk management will also be evaluated.
+                Some
+                of these
+                individuals may be referred to the <a href="/initiatives/gcmp#most-details">MoST program</a>.
+            </p>
+
+            <p>
+                General knowledge and attitudes towards genomic screening in this population will be investigated. The
+                data
+                collected from this cohort of individuals with early-onset cancer will be used to generate an ongoing
+                resource
+                for research.
+            </p>
+            <p>
+                The study is led by Dr Mandy Ballinger.
+            </p>
+        </div>
+        <div class="other-initiatives">
+            <div class="sub-title-anchor">
+                <div class="sub-title">Other Initiatives</div>
+                <a class="back-anchor" (click)="backToTop()">Back to top</a>
+            </div>
+            <div *ngFor="let initiative of otherInitiatives">
+                <a routerLink="/initiatives/{{ initiative.id }}">{{ initiative.title }}</a>
+            </div>
+        </div>
+    </section>
+</app-page-container>

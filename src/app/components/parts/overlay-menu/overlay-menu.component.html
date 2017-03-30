@@ -1,0 +1,11 @@
+<div>
+    <i class="material-icons" [mdMenuTriggerFor]="overlayMenu" md-tooltip="Overlay colour for a subset"
+       mdTooltipPosition="above">layers</i>
+
+    <md-menu class="menu-items" #overlayMenu="mdMenu">
+        <button md-menu-item *ngFor="let overlay of overlays" (click)="activateOverlay(overlay)">
+            <span>{{ overlay }}</span>
+            <i *ngIf="variantTrack.getOverlay() === overlay" class="check material-icons">check</i>
+        </button>
+    </md-menu>
+</div>

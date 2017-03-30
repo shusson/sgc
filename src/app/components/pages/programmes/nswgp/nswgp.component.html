@@ -1,0 +1,190 @@
+<app-page-container>
+    <section *ngIf="initiative">
+        <h1 class="title">{{ initiative.title }}</h1>
+        <div class="title-description">
+            Supporting researchers as they undertake ground-breaking human genomic medicine
+            research
+        </div>
+
+        <div class="sub-title">About</div>
+        <div>
+            <p>
+                From 2014, over 4 years, the NSW government is providing funding for researchers to undertake
+                whole-genome
+                sequencing to improve understanding of the genetic causes for disease. The grants enable NSW researchers
+                to
+                access the whole genome sequencing technology at the Garvan Institute of Medical Research and to engage
+                bioinformatics services.
+            </p>
+            <p>
+                The grants will help to establish NSW as a leader in genomics and generate significant benefits for the
+                NSW
+                health system and community. With rapid advances in genomics over recent years, it is expected that
+                these
+                advances will, over time, fundamentally transform health care, with a new focus on proactive prevention
+                and
+                provision of tailored therapies.
+            </p>
+
+            <p>
+                Information regarding applications for the 2017 round can be found <a target="_blank"
+                                                                                      href="http://www.health.nsw.gov.au/ohmr/Pages/genomics-grant-apps.aspx">here</a>.
+            </p>
+        </div>
+
+        <div class="sub-title">2015 Cohorts</div>
+        <div class="cohorts">
+            <a *ngFor="let cohort of cohorts2015" href="initiatives/nswgp#{{ cohort.id }}-details">
+                <app-cohort-card [cohortId]="cohort.id"></app-cohort-card>
+            </a>
+
+        </div>
+
+        <div class="sub-title">2016 Cohorts</div>
+        <div class="cohorts">
+            <a *ngFor="let cohort of cohorts2016" href="initiatives/nswgp#{{ cohort.id }}-details">
+                <app-cohort-card [cohortId]="cohort.id"></app-cohort-card>
+            </a>
+        </div>
+
+        <div class="sub-title-anchor">
+            <div class="sub-title">Recipients 2015</div>
+            <a class="back-anchor" (click)="backToTop()">Back to top</a>
+        </div>
+
+        <div class="recipients">
+            <ul>
+
+                <div class="offset-anchor" id="melanoma-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'melanoma-details'}">
+                    Professor Graham Mann ($811,150) from the Westmead Millennium Institute for Medical Research/the
+                    University
+                    of Sydney will lead chief investigators from the Melanoma Institute Australia and Macquarie
+                    University
+                    to
+                    support research into new therapies for metastatic melanoma.
+                </li>
+
+                <div class="offset-anchor" id="mitochondrial-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'mitochondrial-details'}">
+                    Professor Carolyn Sue ($740,000) from the Kolling Institute of Medical Research will lead chief
+                    investigators from the Children’s Hospital at Westmead and Charles Perkins Centre (University of
+                    Sydney)
+                    in
+                    research aimed at transforming the diagnostic paradigm for mitochondrial disease using whole genome
+                    sequencing to unlock new knowledge about the genetic causes.
+                </li>
+
+                <div class="offset-anchor" id="congenital-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'congenital-details'}">
+                    Professor Sally Dunwoodie ($370,000) from the Victor Chang Cardiac Research Institute will lead
+                    chief
+                    investigators from her own institute and the Sydney Children’s Hospital Network in research into the
+                    genetic
+                    causes of congenital heart disease.
+                </li>
+
+                <div class="offset-anchor" id="schizophrenia-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'schizophrenia-details'}">
+                    Associate Professor Murray Cairns ($800,000) from the University of Newcastle will lead chief
+                    investigators
+                    from the University of New South Wales and St Vincent’s Hospital in research to identify genomic
+                    system
+                    motifs and associated markers that can inform the development of new interventions in relation to
+                    schizophrenia.
+                </li>
+
+            </ul>
+
+        </div>
+        <div class="sub-title-anchor">
+            <div class="sub-title">Recipients 2016</div>
+            <a class="back-anchor" (click)="backToTop()">Back to top</a>
+        </div>
+        <div class="recipients">
+            <ul>
+                <div class="offset-anchor" id="retinal-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'retinal-details'}">
+                    Associate Professor Robyn Jamieson ($340,000) from the University of Sydney will lead chief
+                    investigators
+                    from the Children’s Medical Research Institute, Sydney Children’s Hospital Network, Save Sight
+                    Institute,
+                    University of Sydney Faculty of Pharmacy and Garvan Institute to translate genomics for genetic
+                    diagnosis
+                    and improved patient management in blinding retinal dystrophy.
+                </li>
+
+                <div class="offset-anchor" id="mendelian_disorders-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'mendelian_disorders-details'}">
+                    Dr Tony Roscioli ($200,000) from the Garvan Institute will lead chief investigators from SEALS
+                    Genetics
+                    Laboratory, Royal Prince Alfred Hospital, St Vincent's Clinical School and the Sydney Children’s
+                    Hospital
+                    Network to support research into novel gene identification and elucidation of immune pathways in
+                    Mendelian
+                    Immunodeficiencies using whole genome sequencing.
+                </li>
+
+                <div class="offset-anchor" id="rare_disease-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'rare_disease-details'}">
+                    Dr Tony Roscioli ($200,000) from the Garvan Institute will lead chief investigators from SEALS
+                    Genetics
+                    Laboratory Randwick, Sydney Children's Hospital Randwick, University of Sydney Faculty of Pharmacy
+                    and
+                    St
+                    Vincent's Clinical School in a study of a group of 60 NSW families who have received extensive
+                    clinical
+                    investigation with no causative gene identified in 70% of these families.
+                </li>
+
+                <div class="offset-anchor" id="epilepsy-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'epilepsy-details'}">
+                    Dr Tony Roscioli ($180,000) from the Garvan Institute will lead chief investigators from the Sydney
+                    Children’s Hospital Randwick and The University of Sydney Faculty of Pharmacy to leverage genomic
+                    sequencing
+                    to help doctors with the diagnosis and improve the medical understanding of the cause of
+                    drug-resistant
+                    childhood onset epilepsy with intellectual disability.
+                </li>
+
+                <div class="offset-anchor" id="bone-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'bone-details'}">
+                    Professor Andreas Zankl ($300,000) from the Sydney Children’s Hospital Network will lead chief
+                    investigators
+                    from the Kinghorn Centre for Clinical Genomics, Kolling Institute, Garvan Institute for Medical
+                    Research,
+                    the Murdoch Children’s Research Institute and the Children’s Medical Research Institute to explore
+                    the
+                    genomic landscape to fully characterise patients with different genetic disorders of bone.
+                </li>
+
+                <div class="offset-anchor" id="cardiomyopathies-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'cardiomyopathies-details'}">
+                    Professor Christopher Semsarian ($320,000) from the University of Sydney and Centenary Institute
+                    will
+                    lead
+                    chief investigators from the Victor Chang Cardiac Research Institute, Kinghorn Centre for Clinical
+                    Genomics,
+                    Garvan Institute of Medical Research, Sydney Children’s Hospital Network, Liverpool Hospital, Royal
+                    North
+                    Shore Hospital, Hunter Genetics Unit Newcastle to conduct a world-first comprehensive genomic and
+                    clinical
+                    analysis of patients and their families that aims to improve the care of families with inherited
+                    cardiomyopathies.
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="other-initiatives">
+            <div class="sub-title-anchor">
+                <div class="sub-title">Other Initiatives</div>
+                <a class="back-anchor" (click)="backToTop()">Back to top</a>
+            </div>
+            <div *ngFor="let initiative of otherInitiatives">
+                <a routerLink="/initiatives/{{ initiative.id }}">{{ initiative.title }}</a>
+            </div>
+        </div>
+    </section>
+</app-page-container>

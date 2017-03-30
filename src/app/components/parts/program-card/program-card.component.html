@@ -1,0 +1,16 @@
+<div class="initiative-card" (click)="gotoDetail(initiative)">
+    <div class="title">
+        <div class="title-text">{{ initiative.title }}</div>
+    </div>
+    <div *ngIf="showDetails">
+        <div class="supporting-text">
+            {{ initiative.summary }}
+        </div>
+        <div class="genomes">
+            <h6>Genomes Sequenced</h6>
+            <md-progress-bar [mode]="'buffer'" [value]="percentComplete()" [bufferValue]="80"></md-progress-bar>
+            {{ initiative.sequenced }}/{{ initiative.genomes }}
+        </div>
+    </div>
+
+</div>

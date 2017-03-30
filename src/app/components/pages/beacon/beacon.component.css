@@ -1,0 +1,53 @@
+section {
+    margin-top: 1rem;
+}
+
+.title {
+    font-size: xx-large;
+}
+
+form {
+    display: flex;
+    height: 50px;
+}
+
+form select {
+    font-size: large;
+    flex-basis: 0;
+    flex-grow: 1;
+    height: 40px;
+}
+
+form input {
+    font-size: large;
+    flex-basis: 0;
+    flex-grow: 6;
+    height: 40px;
+    width: 100%;
+    -webkit-appearance:none;
+}
+
+.mat-mini-fab {
+    border-radius: 0;
+}
+
+.network-result {
+    display: flex;
+    align-items: center;
+}
+
+.network-result div {
+    margin-right: 1rem;
+}
+
+.examples {
+    display: flex;
+}
+
+.examples div {
+    margin-right: 5px;
+}
+
+table .loading i {
+    float: right;
+}

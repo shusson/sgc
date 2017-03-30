@@ -1,0 +1,25 @@
+.filter-options {
+    z-index: 100000;
+    position: absolute;
+    box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filter-option {
+    cursor: pointer;
+    min-width: 120px;
+    background-color: white;
+    padding: 5px;
+}
+
+.auto-complete {
+    position: relative;
+}
+
+.selected {
+    background-color: #FFD658;
+}
+
+input {
+    width: 200px;
+}

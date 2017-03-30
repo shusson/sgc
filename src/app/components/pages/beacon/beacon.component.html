@@ -1,0 +1,72 @@
+<app-page-container>
+    <section>
+        <form (ngSubmit)="onSubmit()" #beaconForm="ngForm">
+
+            <select id="ref-select" name="ref-select" [(ngModel)]="reference" required>
+                <option *ngFor="let ref of availableReferences" value="{{ ref | uppercase }}">{{ ref | uppercase }}
+                </option>
+            </select>
+
+            <input id="search-beacon-input"
+                   name="search-beacon-input"
+                   type="search"
+                   [(ngModel)]="searchInput"
+                   placeholder="e.g 13 : 32936732 > C" required>
+            <button md-mini-fab><md-icon>search</md-icon></button>
+
+        </form>
+        <div class="example">
+            <p>Examples: <a (click)="searchInput=example1; onSubmit()">{{ example1 }}</a> or <a
+                (click)="searchInput=example2; onSubmit()">{{ example2 }}</a></p>
+        </div>
+
+        <p>Please note that position is 1-based and only SNP variants are supported</p>
+
+        <div class="results">
+            <div *ngIf="errorMessage" class="message message-error">{{ errorMessage }}</div>
+        </div>
+
+        <div class="search-result-content" *ngIf="responses.length > 0">
+            <div class="results">
+                <div class="table-container">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th *ngFor="let key of labels" (click)="sortResponses(key)">{{ key }} <i
+                                class="material-icons">code</i></th>
+                        <tr>
+                        <tr *ngFor="let response of responses | paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
+                            <td class="loading" *ngIf="response.loading"><span>Loading...{{ response.id }}</span><i
+                                class="fa fa-circle-o-notch fa-spin fa-fw"></i></td>
+                            <td *ngIf="response.loading">...</td>
+                            <td *ngIf="response.loading">...</td>
+
+                            <td *ngIf="!response.loading && response.error">{{ response.id }}</td>
+                            <td *ngIf="!response.loading && response.error">...</td>
+                            <td *ngIf="!response.loading && response.error" class="message-error">{{ response.error }}
+                            </td>
+
+                            <td *ngIf="!response.loading && !response.error">{{ response.result.beacon.name }}</td>
+                            <td *ngIf="!response.loading && !response.error">
+                                <div *ngIf="!response.displayUrl">{{ response.result.beacon.organization }}</div>
+                                <a target="_blank" *ngIf="response.displayUrl" href="{{ response.displayUrl }}">{{
+                                    response.result.beacon.organization }}</a>
+                            </td>
+                            <td *ngIf="!response.loading && !response.error"
+                                [ngClass]="{'message-success': response.result.response, 'message-warning': !response.result.response}">
+                                {{ response.displayResult() | uppercase }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    Results per page:<select [(ngModel)]="pageSize" name="'pageSize">
+                    <option *ngFor="let item of [10, 20, 50, 100]" value="{{ item }}">{{ item }}</option>
+                </select>
+                    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </section>
+</app-page-container>

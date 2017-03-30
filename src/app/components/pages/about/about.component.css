@@ -1,0 +1,72 @@
+article {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.title {
+    font-size: xx-large;
+}
+
+.content {
+    align-self: flex-start;
+}
+
+.sponsor-images {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sponsor-images img {
+    margin: 2rem;
+    width: 330px;
+    max-height: 380px;
+    height: auto;
+}
+
+.garvan-logo {
+    margin-left: 34px !important;
+}
+
+.contact {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.contact p {
+    font-size: larger;
+}
+
+h4 {
+    margin-top: 0;
+}
+
+iframe {
+    width: 500px;
+    height: 400px;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+    article .sponsor-images {
+        display: none;
+    }
+
+    iframe {
+        width: 400px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 400px) {
+    article .sponsor-images {
+        display: none;
+    }
+
+    iframe {
+        width: 300px;
+        height: 400px;
+    }
+}

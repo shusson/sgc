@@ -1,0 +1,113 @@
+.cohorts {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.cohorts a {
+    text-decoration: none;
+    color: rgb(0, 60, 105)
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+section .title {
+    font-size: xx-large;
+    margin-bottom: 1rem;
+}
+
+.title-description {
+    font-size: large;
+    margin-bottom: 1rem;
+}
+
+.sub-title {
+    font-size: large;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: rgba(0, 60, 105, 0.5)
+}
+
+.description {
+    display: flex;
+    justify-content: space-around;
+}
+
+.description div {
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.nav-button {
+    position: absolute;
+    width: 0;
+    padding: 0;
+    align-self: flex-start;
+}
+
+.content * {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+}
+
+.logo img {
+    height: auto;
+    width: 80%;
+    align-self: center;
+}
+
+.breadcrumbs .home {
+    cursor: pointer;
+    display: inline;
+}
+
+.breadcrumbs {
+    font-style: italic;
+}
+
+div.is-active {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    padding: 1rem;
+    margin: 5px 1px 3px 0;
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.offset-anchor {
+    display: block;
+    position: relative;
+    top: -160px;
+    visibility: hidden;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.sub-title-anchor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.other-initiatives div {
+    margin-top: 5px;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+    .description {
+        flex-direction: column;
+    }
+}

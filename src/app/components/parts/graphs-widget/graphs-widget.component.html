@@ -1,0 +1,12 @@
+<div class="graphs-card">
+    <div class="filter">
+        <app-cohort-list [cohortIds]="initiative.cohorts" (onChanged)="update()"></app-cohort-list>
+    </div>
+    <div class="distributions">
+        <app-column-chart [title]="'Age (yr)'" [data]="age" [height]="200" [width]="190"></app-column-chart>
+        <app-column-chart [title]="'Height (cm)'" [data]="height" [height]="200" [width]="190"></app-column-chart>
+        <app-column-chart [title]="'Weight (kg)'" [data]="weight" [height]="200" [width]="190"></app-column-chart>
+        <app-pie-chart [title]="'Gender'" [data]="sex" [height]="200" [width]="190"></app-pie-chart>
+    </div>
+</div>
+

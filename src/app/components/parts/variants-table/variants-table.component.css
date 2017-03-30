@@ -1,0 +1,40 @@
+.search-result-content {
+    margin-top: 1rem;
+}
+
+.location.beacon {
+    display: initial;
+}
+
+.location i {
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+}
+
+button {
+    width: auto;
+    height: 45px;
+    font-size: small;
+    margin-top: 0;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.options, .task-bar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.options * {
+    margin-left: 1rem;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+
+    .location {
+        height: 40px;
+    }
+}

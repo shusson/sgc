@@ -1,0 +1,38 @@
+.distributions {
+    margin-top: 1em;
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 6;
+    align-items: center;
+    justify-content: center;
+}
+
+.distributions * {
+    margin: 1em;
+}
+
+app-cohort-list {
+    margin-top: 0;
+}
+
+.graphs-card {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.filter {
+    flex-grow: 1;
+    border-right: 1px solid lightgrey;
+}
+
+
+@media (min-width: 0px) and (max-width: 800px) {
+    .graphs-card {
+        flex-flow: column;
+    }
+
+    .filter {
+        border-right: 0;
+        border-bottom: 1px solid lightgrey;
+    }
+}

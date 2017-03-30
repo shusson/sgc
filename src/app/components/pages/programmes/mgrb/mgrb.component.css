@@ -1,0 +1,12 @@
+.plots {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.plots * {
+    margin-right: 1rem;
+}
+
+.graphs {
+    margin-bottom: 1rem;
+}

@@ -1,0 +1,50 @@
+.totals-widget {
+    display: flex;
+    flex-direction: row;
+    margin: 1em;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;
+}
+
+.stat div {
+    width: 130px;
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.total-label {
+    font-size: x-small;
+}
+
+.total-number {
+    font-family: 'Prompt', sans-serif;
+    font-size: 36px;
+    margin-top: 10px;
+}
+
+.separator {
+    width: 1px;
+    height: 150px;
+    border-left: 1px solid lightgrey;
+}
+
+@media (min-width: 0px) and (max-width: 500px) {
+
+    .separator {
+        display: none;
+    }
+
+    .stat {
+        padding: 2rem;
+    }
+}

@@ -1,0 +1,20 @@
+<app-page-container>
+    <div class="search-jumbo">
+        <app-search-bar-with-options [expanded]="!searching" [expandable]="searching"></app-search-bar-with-options>
+    </div>
+    <section class="content">
+        <div class="message message-error" *ngIf="searchBarService.autocompleteError">
+            {{ searchBarService.autocompleteError }}
+        </div>
+        <div class="message message-error" *ngIf="error">{{ error }}</div>
+
+        <div *ngIf="!searchBarService.autocompleteError && !error && autocomplete != null">
+            <div class="search-results">
+                <app-search-results [autocomplete]="autocomplete"
+                                    (errorEvent)="handleError($event)"></app-search-results>
+            </div>
+        </div>
+    </section>
+</app-page-container>
+
+

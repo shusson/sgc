@@ -1,0 +1,53 @@
+<div class="results">
+
+    <div class="task-bar">
+        <app-filter-auto [variants]="variants" (output)="onFilter($event)"></app-filter-auto>
+
+        <div class="options">
+            <span *ngIf="!columnService.activeColumns().length">Select columns to view</span>
+            <app-columns-menu></app-columns-menu>
+            <i (click)="downloadFile()" md-tooltip="Download Variants (CSV)" mdTooltipPosition="above"
+               class="material-icons">file_download</i>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <tbody>
+            <tr>
+                <th *ngFor="let key of columnService.activeColumns()" (click)="sortVariants(key)">{{ key }} <i
+                        class="material-icons">code</i></th>
+            <tr>
+            <tr *ngFor="let variant of variants | paginate: { itemsPerPage: pageSize, currentPage: currentPage }"
+                [ngClass]="{'highlighted': compare(variant, highlightedVariant) }"
+                (mouseover)="highlightVariant(variant)"
+                (mouseout)="unHighlightVariant(variant)">
+
+                <td *ngFor="let label of columnService.activeColumns()">
+                    <span *ngIf="label !== 'dbSNP' && label !== 'Allele Scale'"
+                          class="value">{{ columnService.display(label, variant) }}</span>
+                    <a *ngIf="label === 'dbSNP'" target="_blank"
+                       href="{{ variantDbSnpUrl(variant) }}">{{ variant.dbSNP }}</a>
+                    <div class="location beacon" *ngIf="label == 'Alternate'">
+                        <a target="_blank"
+                           href="{{ variantBeaconUrl(variant) }}"><i
+                                *ngIf="variant.type === 'SNV' && variant.alternate !== '*'" class="material-icons">settings_input_antenna</i></a>
+                    </div>
+
+                    <app-allele-freq *ngIf="label === 'Allele Scale'"
+                                     [freq]="variant.variantStats[0].altAlleleFreq"></app-allele-freq>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <div>
+            <span>Results per page:</span>
+            <select [(ngModel)]="pageSize" name="'pageSize">
+                <option *ngFor="let item of [10, 20, 50, 100]" value="{{ item }}">{{ item }}</option>
+            </select>
+        </div>
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+</div>

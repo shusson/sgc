@@ -1,0 +1,67 @@
+form {
+    display: flex;
+    margin: 0;
+}
+
+form input {
+    height: 40px;
+    font-size: large;
+    width: 100%;
+    -webkit-appearance:none;
+}
+
+.search-input {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    width: 100%;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    -webkit-box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.gene-search-result.even {
+    background-color: white;
+}
+
+.gene-search-result.selected {
+    background-color: orange;
+}
+
+.gene-search-result {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: large;
+    padding: 10px;
+    background-color: whitesmoke;
+}
+
+.gene-search-result .symbol {
+    min-width: 95px;
+    margin-right: 1rem;
+}
+
+.gene-search-result .result-type {
+    min-width: 50px;
+    margin-right: 1rem;
+}
+
+.mat-mini-fab {
+    border-radius: 0;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+
+    .gene-search-result .description {
+        display: none;
+    }
+
+}

@@ -1,0 +1,36 @@
+.cohorts-list {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.cohort-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    padding: 1em;
+    border-bottom: 1px solid lightgrey;
+}
+
+.item-title {
+    flex-grow: 4;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 0;
+}
+
+md-checkbox, .material-icons {
+    flex-grow: 1;
+    margin: 1em;
+    flex-basis: 0;
+}
+
+.cohorts-list-container {
+    width: 200px;
+}
+
+.md-checkbox-background {
+    background-color: #000088 !important;
+}

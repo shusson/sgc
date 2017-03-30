@@ -1,0 +1,12 @@
+
+chart {
+    width: 520px;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+    chart {
+        width: 300px;
+    }
+}
+
+

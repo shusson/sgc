@@ -1,0 +1,13 @@
+<div class="cohorts-list-container">
+    <div class="cohorts-list">
+        <div class="cohort-item" *ngFor="let cohort of cohorts">
+            <!--<i class="material-icons">people_outline</i>-->
+            <div class="item-title">
+                <div class="item-title-text">
+                    <h6>{{ cohort.title }}</h6>
+                </div>
+            </div>
+            <md-checkbox [checked]="selected.get(cohort.id)" (change)="toggle(cohort, $event)"></md-checkbox>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="auto-complete">
+    <input placeholder="Filter" [ngModel]="currentFilter" (ngModelChange)="onFilter($event)"
+           (keydown)="onKeydown($event)"
+           (blur)="onBlur()"
+           (focus)="onFocus()"
+    >
+    <div class="filter-options" *ngIf="show">
+        <div class="filter-option" *ngFor="let option of autoComplete; let i = index;"
+             (mousedown)="select(option)"
+             (mouseover)="highlight(i)"
+             [ngClass]="{'selected': i === selectedIndex}"
+        >
+            <span>{{ option }}</span>
+
+        </div>
+    </div>
+</div>

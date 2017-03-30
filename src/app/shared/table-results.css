@@ -1,0 +1,62 @@
+th:hover {
+    cursor: pointer;
+}
+
+th i {
+    font-size: smaller;
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+th {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: small;
+}
+
+.table-container {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+table tr:nth-child(even), table th {
+    background-color: white;
+}
+
+table tr.highlighted {
+    background-color: #FFD658;
+}
+
+table td, table th {
+    padding: 5px;
+    max-width: 170px;
+    overflow: hidden;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}
+
+.pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination ul {
+    padding: 0;
+}
+
+.pagination select {
+    margin-left: 1rem;
+}

@@ -1,0 +1,42 @@
+<div *ngIf="region" class="details">
+    <div class="detail-type">Region</div>
+    <div class="detail">
+        <div class="detail-label">
+            Location:
+        </div>
+        <div class="detail-value">
+                <span><a id="region_location_id" target="_blank"
+                         href="http://grch37.ensembl.org/Homo_sapiens/Location/View?r={{ region.name() }}">
+                    {{ region.name() }}<i class="fa fa-external-link" aria-hidden="true"></i>
+                </a>
+                </span>
+        </div>
+    </div>
+
+    <div class="detail">
+        <div class="detail-label">
+            Genes in this region:
+        </div>
+        <div class="gene-detail-values">
+            <div *ngIf="genes" class="gene-detail-values">
+                <div class="gene-detail-value"
+                     *ngFor="let gene of genes; let i = index">
+                    <a (click)="gotoGene(gene)">{{ gene.symbol.trim() }}</a>
+                    <span *ngIf="i !== (genes.length - 1)"
+                          class="separator">,</span>
+                </div>
+                <div *ngIf="genes.length <= 0">None</div>
+            </div>
+
+            <div class="loading" *ngIf="!genes"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></div>
+        </div>
+    </div>
+    <div class="detail">
+        <div class="detail-label">
+            <span>Variants:</span>
+        </div>
+        <div class="detail-value">
+            <span>{{ variants.length }}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div *ngIf="autocomplete" class="details">
+    <div class="detail-type">Gene</div>
+    <div>
+        <div class="detail">
+            <div class="detail-label">
+                Id:
+            </div>
+            <div class="detail-value">
+                <a id="gene_en_id" target="_blank"
+                   href="http://grch37.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ autocomplete.result.id }}">
+                    {{ autocomplete.result.id }}<i class="fa fa-external-link" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="detail">
+            <div class="detail-label">
+                <span>Symbol:</span>
+            </div>
+            <div class="detail-value">
+                <span>{{ autocomplete.result.symbol }}</span>
+            </div>
+        </div>
+        <div class="detail">
+            <div class="detail-label">
+                <span>Description:</span>
+            </div>
+            <div class="detail-value">
+                <span>{{ searchBarService.displayDescription(autocomplete.result.name) }}</span>
+            </div>
+        </div>
+        <div class="detail">
+            <div class="detail-label">
+                <span>Location:</span>
+            </div>
+            <div class="detail-value">
+                <span>{{ geneLocation(autocomplete.result) }}</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="detail">
+        <div class="detail-label">
+            <span>Variants:</span>
+        </div>
+        <div class="detail-value">
+            <span>{{ variants.length }}</span>
+        </div>
+    </div>
+</div>

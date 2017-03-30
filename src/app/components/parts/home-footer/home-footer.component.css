@@ -1,0 +1,44 @@
+.footer-band {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 2em 2em 3em 2em;
+}
+
+.footer {
+    flex-basis: 0;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 80em;
+    margin: 0 2rem 0 2rem;
+}
+
+.logos img {
+    width: 180px;
+    height: auto !important;
+    margin-top: 1rem;
+}
+
+.footer h6 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer .contact-details {
+    margin-top: 2rem;
+}
+
+.footer p {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+@media (min-width: 0px) and (max-width: 1120px) {
+
+    .footer-band {
+        justify-content: flex-start;
+    }
+
+}

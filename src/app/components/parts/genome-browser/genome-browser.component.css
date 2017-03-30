@@ -1,0 +1,51 @@
+.details {
+    display: flex;
+    justify-content: space-between;
+    /*margin-top: 1rem;*/
+}
+
+.details div {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.details .right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hidden {
+    display: none;
+}
+
+.details .gb-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.material-icons, app-overlay-menu, md-slide-toggle {
+    z-index: 1000;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+md-slide-toggle {
+    margin: 0;
+}
+
+#genome-browser {
+    margin-top: -10px;
+}
+
+.message-error {
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 0px) and (max-width: 800px) {
+
+    .material-icons {
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+}

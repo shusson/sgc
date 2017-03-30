@@ -1,0 +1,32 @@
+.option {
+    position: relative;
+    cursor: pointer;
+}
+
+.option span {
+    white-space: nowrap;
+}
+
+.options {
+    background-color: white;
+    border: 1px solid lightgrey;
+    position: absolute;
+    width: 100px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.16);
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.16);
+    z-index: 99999;
+}
+
+.options div:hover {
+    background-color: whitesmoke;
+}
+
+.options div {
+    padding: 5px;
+}
+
+.selected-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

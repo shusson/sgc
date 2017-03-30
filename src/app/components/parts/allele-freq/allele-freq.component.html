@@ -1,0 +1,9 @@
+<!--Inspired by http://exac.broadinstitute.org/ allele frequency-->
+<div class="chart" md-tooltip="Allele frequency on a discrete scale: <1/10000, <1/1000, <1%, <5%, <50% and >50%" mdTooltipPosition="left">
+    <div [ngClass]="{ active: freq > 0 }"></div>
+    <div [ngClass]="{ active: freq > scales[0] }"></div>
+    <div [ngClass]="{ active: freq > scales[1] }"></div>
+    <div [ngClass]="{ active: freq > scales[2] }"></div>
+    <div [ngClass]="{ active: freq > scales[3] }"></div>
+    <div [ngClass]="{ active: freq > scales[4] }"></div>
+</div>

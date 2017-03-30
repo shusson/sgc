@@ -1,0 +1,10 @@
+.gene-detail-values, .gene-detail-value, .detail-value {
+    display: flex;
+    font-weight: lighter;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.gene-detail-value .separator {
+    margin-right: 10px;
+}

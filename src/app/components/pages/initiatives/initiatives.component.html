@@ -1,0 +1,29 @@
+
+<app-page-container [showTitle]="scrollService.currentScrollTop">
+    <div class="initiatives">
+        <div class="cover-parent">
+            <div class="shadow-cover" [ngStyle]="shadowStyle"></div>
+            <app-title-logo-banner [ngStyle]="shadowStyle"></app-title-logo-banner>
+        </div>
+
+
+        <app-search-bar-with-options [expanded]="true"></app-search-bar-with-options>
+        <div class="cards-band">
+            <div class="program-cards">
+                <app-program-card *ngFor="let initiative of initiatives" [initiative]="initiative"></app-program-card>
+            </div>
+        </div>
+
+        <div class="totals-band">
+            <div class="totals">
+                <app-totals-widget></app-totals-widget>
+            </div>
+        </div>
+
+        <app-home-about></app-home-about>
+
+        <app-home-footer></app-home-footer>
+
+    </div>
+</app-page-container>
+

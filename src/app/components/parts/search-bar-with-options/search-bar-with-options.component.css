@@ -1,0 +1,71 @@
+.search-band {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.search-content {
+    width: 100%;
+    max-width: 80em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.search-content.expanded {
+    padding: 2rem;
+}
+
+.search-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-bar i {
+    position: absolute;
+    left: -2rem;
+    top: 8px;
+}
+
+.search-bar app-search-bar {
+    height: 40px;
+    font-size: large;
+    width: 100%;
+    border-right: 0;
+}
+
+.search-bar .material-icons {
+    margin-right: 1rem;
+}
+
+.search-options {
+    margin: 10px 1rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.search-options app-search-option {
+    margin-right: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-examples {
+    margin: 10px 1rem 0 0;
+}
+
+@media (min-width: 0px) and (max-width: 1200px) {
+    .search-content.expanded {
+        padding: 1rem 1rem 1rem 3rem;
+    }
+
+    .search-content {
+        padding-left: 3rem;
+    }
+}

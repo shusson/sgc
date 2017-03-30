@@ -1,0 +1,25 @@
+.details {
+    min-height: 169px;
+}
+
+.detail {
+    font-size: larger;
+    display: flex;
+    padding-top: 5px;
+}
+
+.detail .detail-label {
+    min-width: 140px;
+    font-weight: bold;
+    color: rgba(0, 60, 105, 0.5);
+    max-width: 100px;
+}
+
+.detail-type {
+    font-size: x-large;
+    margin-bottom: 1rem;
+}
+
+.detail-value i {
+    margin-left: 5px;
+}

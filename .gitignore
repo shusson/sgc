@@ -1,0 +1,13 @@
+
+!.gitkeep
+.DS_Store
+.idea
+
+dist
+node_modules
+coverage
+.sass-cache
+connect.lock
+coverage/*
+npm-debug.log
+**/*.log
