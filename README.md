@@ -67,7 +67,7 @@ cd e2e; protractor
 
 ### External services
 The application connects to a number of external services, 
-all of which are defined in the [environments](environments). 
+all of which are defined in [src/environments](src/environments). 
    
 #### VSAL
 Garvan's variant store abstraction layer. Source code is not currently 
