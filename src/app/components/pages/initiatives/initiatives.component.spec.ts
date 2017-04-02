@@ -29,6 +29,9 @@ import { LocationStrategy } from '@angular/common';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { PositionService } from '../../../services/autocomplete/position-service';
+import { MgrbDownloadBannerComponent } from '../../parts/mgrb-download-banner/mgrb-download-banner.component';
+import { LocalStorageService } from '../../../services/local-storage.service';
+import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
 
 describe('Component: Initiatives', () => {
     let component: InitiativesComponent;
@@ -55,7 +58,8 @@ describe('Component: Initiatives', () => {
                 PageContainerComponent,
                 PrivacyFooterComponent,
                 SideNavComponent,
-                HeaderNavComponent
+                HeaderNavComponent,
+                MgrbDownloadBannerComponent
             ],
             providers: [
                 ScrollService,
@@ -94,6 +98,10 @@ describe('Component: Initiatives', () => {
                 {
                     provide: PositionService,
                     useValue: {}
+                },
+                {
+                    provide: LocalStorageService,
+                    useValue: new MockLocalStorageService()
                 }
             ]
         }).compileComponents();

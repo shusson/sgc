@@ -58,6 +58,10 @@ import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageContainerComponent } from './components/parts/page-container/page-container.component';
 import { RegionInformationComponent } from './components/parts/region-information/region-information.component';
+import { DurlService } from './services/durl.service';
+import { MgrbDownloadComponent } from './components/pages/mgrb-download/mgrb-download.component';
+import { MgrbDownloadBannerComponent } from './components/parts/mgrb-download-banner/mgrb-download-banner.component';
+import { LocalStorageService } from './services/local-storage.service';
 
 @NgModule({
     imports: [
@@ -107,7 +111,9 @@ import { RegionInformationComponent } from './components/parts/region-informatio
         PcaPlotComponent,
         FilterAutoComponent,
         PageContainerComponent,
-        RegionInformationComponent
+        RegionInformationComponent,
+        MgrbDownloadComponent,
+        MgrbDownloadBannerComponent,
     ],
     providers: [
         Auth,
@@ -122,6 +128,8 @@ import { RegionInformationComponent } from './components/parts/region-informatio
         BeaconSearchService,
         PositionService,
         ColumnService,
+        DurlService,
+        LocalStorageService,
         {provide: 'NULL_VALUE', useValue: null}
     ],
     bootstrap: [AppComponent]

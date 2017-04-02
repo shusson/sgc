@@ -34,7 +34,7 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
                     result.length = source.length;
                     return result;
                 } else {
-                    return Observable.throw('Failed to get chromosome' + chromosome);
+                    throw new Error('Failed to get chromosome' + chromosome);
                 }
             });
     }
@@ -110,7 +110,7 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
                         return new GeneAutocomplete(g, g.id, g.name, this);
                     });
                 } else {
-                    return Observable.throw('Failed to get gene search results for query:' + query);
+                    throw new Error('Failed to get gene search results for query:' + query);
                 }
             });
     }

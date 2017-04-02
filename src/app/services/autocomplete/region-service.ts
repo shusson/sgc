@@ -20,7 +20,7 @@ export class RegionService implements AutocompleteService<Region> {
             let start = Number(results[2]);
             let end = Number(results[3]);
             if (start > end) {
-                return Observable.throw(new Error('Start position cannot be greater than end'));
+                throw new Error('Start position cannot be greater than end');
             }
             let r = new Region(chromosome, start, end);
             let regions = [new RegionAutocomplete(r, r.name(), '', this)];

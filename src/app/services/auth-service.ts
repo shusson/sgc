@@ -49,11 +49,26 @@ export class Auth {
     public login() {
         this.lock.show({
             auth: {
-                params: {state: this.router.url},
-                scope: 'openid'
-            }
+                params: {
+                    state: this.router.url,
+                    scope: 'openid email'
+                },
+            },
+            initialScreen: 'login'
         });
     };
+
+    public signUp() {
+        this.lock.show({
+            auth: {
+                params: {
+                    state: this.router.url,
+                    scope: 'openid email'
+                },
+            },
+            initialScreen: 'signUp'
+        });
+    }
 
     public authenticated() {
         return this.tokenExpiredFn();

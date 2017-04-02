@@ -19,6 +19,17 @@
     align-items: center;
 }
 
+.sign-up {
+    display: inline;
+    color: white;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.sign-up a {
+    padding: 5px;
+}
+
 nav a.is-active {
     border-bottom: 3px solid rgb(64, 196, 255);
 }
@@ -38,4 +49,11 @@ nav a {
     color: white;
     text-decoration: none;
     font-size: medium;
+}
+
+.spacer {
+    display: inline;
+    font-size: medium;
+    padding: 0 1rem 23px 1rem;
+    color: white;
 }

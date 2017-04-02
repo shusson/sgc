@@ -18,7 +18,7 @@ export class EnsemblService {
             .timeout(TIMEOUT)
             .map((response: Response) => {
                 if (!response.ok) {
-                    return Observable.throw('Ensembl health check failed');
+                    throw new Error();
                 }
             })
             .catch(() => {

@@ -72,6 +72,10 @@ all of which are defined in [src/environments](src/environments).
 #### VSAL
 Garvan's variant store abstraction layer. Source code is not currently 
 available.
+
+#### [DURL](https://github.com/shusson/durl)
+A simple webtask for generating an s3 presigned url. 
+Used for downloading VCFs that require minimal authentication.
  
 #### [Elastic Gene Search](https://github.com/shusson/genesearch)
 A service for searching for gene information.
@@ -81,6 +85,9 @@ Used for genomic reference information.
 
 #### [BeaconNetwork](https://beacon-network.org/)
 Used for querying variants across different datasets and organizations.
+
+#### [Auth0](https://auth0.com/)
+Our identity service. Provides identity and authentication.
 
 ### Acknowledgements
 Special thanks to [Miguel Pignatelli](https://github.com/emepyc) 
