@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AsyncResult, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
+import { BeaconAsyncResult, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'app-beacon-search',
     templateUrl: './beacon.component.html',
-    styleUrls: ['./beacon.component.css', '../../../shared/table-results.css']
+    styleUrls: ['./beacon.component.css', '../../../shared/table-results.css'],
+    providers: [BeaconSearchService]
 })
 export class BeaconComponent implements OnInit, OnDestroy {
     availableReferences: string[] = ['HG19'];
@@ -21,13 +22,13 @@ export class BeaconComponent implements OnInit, OnDestroy {
     ];
 
     labelsSortingMap: any = {
-        'Name': (a: AsyncResult) => a.result ? a.result.beacon.name.toLowerCase() : '',
-        'Organization': (a: AsyncResult) => a.result ? a.result.beacon.organization.toLowerCase() : '',
-        'Response': (a: AsyncResult) => a.displayResult(),
+        'Name': (a: BeaconAsyncResult) => a.result ? a.result.beacon.name.toLowerCase() : '',
+        'Organization': (a: BeaconAsyncResult) => a.result ? a.result.beacon.organization.toLowerCase() : '',
+        'Response': (a: BeaconAsyncResult) => a.displayResult(),
     };
     errorMessage: string;
     searchInput = '';
-    responses: AsyncResult[] = [];
+    responses: BeaconAsyncResult[] = [];
     private lastSortedLabel = '';
     private lastSortedOrder = true;
     private subscriptions: Subscription[] = [];

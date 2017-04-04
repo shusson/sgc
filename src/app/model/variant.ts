@@ -1,7 +1,7 @@
 export const HOMOZYGOTES_KEY = '1/1';
 export const HETEROZYGOTES_KEY = '0/1';
 export const MISSED_GENOTYPES_KEY = './.';
-
+const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
 
 export class VariantStat {
     altAlleleFreq: number;
@@ -12,11 +12,15 @@ export class VariantStat {
 export class Variant {
     name: string;
     dbSNP: string;
-    chromosome: number;
+    chromosome: string;
     start: number;
     reference: string;
     alternate: string;
     type: string;
     variantStats: VariantStat[];
     highlight = false;
+
+    static dbSnpUrl(variant: Variant) {
+        return `${DB_SNP_URL}?rs=${variant.dbSNP}`;
+    }
 }

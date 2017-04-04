@@ -8,12 +8,13 @@ import { NswgpComponent } from './components/pages/programmes/nswgp/nswgp.compon
 import { MgrbComponent } from './components/pages/programmes/mgrb/mgrb.component';
 import { MgrbTermsComponent } from './components/pages/mgrb-terms/mgrb-terms.component';
 import { ModuleWithProviders} from '@angular/core';
-import { MgrbDownloadComponent } from './components/pages/mgrb-download/mgrb-download.component';
+import { VariantComponent } from './components/pages/variant/variant.component';
 
 const appRoutes: Routes = [
     { path: 'initiatives', component: InitiativesComponent },
     { path: 'about',  component: AboutComponent },
     { path: 'search/results', component: SearchComponent },
+    { path: 'search/variant', component: VariantComponent },
     { path: 'search', component: SearchComponent },
     { path: 'beacon', component: BeaconComponent },
     { path: 'initiatives/mgrb', component: MgrbComponent },

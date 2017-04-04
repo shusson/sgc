@@ -12,7 +12,7 @@ export class ColumnService {
         'Heterozygotes Count': (v: Variant) => v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY],
         'Missed Genotypes': (v: Variant) => v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY],
         'Allele Count': (v: Variant) => v.variantStats[0].altAlleleCount,
-        'Allele Freq.': (v: Variant) => v.variantStats[0].altAlleleFreq,
+        'Allele Freq.': (v: Variant) => v.variantStats[0].altAlleleFreq.toExponential(4),
         'Allele Scale': (v: Variant) => v.variantStats[0].altAlleleFreq
     };
 

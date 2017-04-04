@@ -24,7 +24,7 @@ npm install
 ng serve
 ```
 
-#### structure
+#### Structure
 The general structure is scaffolded by angular-cli.
 
 The app src code structure:
@@ -105,6 +105,9 @@ Used for querying variants across different datasets and organizations.
 
 #### [Auth0](https://auth0.com/)
 Our identity service. Provides identity and authentication.
+
+#### [Sentry](https://sentry.io/)
+Tracks any unhandled errors
 
 ### Acknowledgements
 Special thanks to [Miguel Pignatelli](https://github.com/emepyc) 

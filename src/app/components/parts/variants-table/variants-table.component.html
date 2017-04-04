@@ -23,11 +23,11 @@
                 (mouseover)="highlightVariant(variant)"
                 (mouseout)="unHighlightVariant(variant)">
 
-                <td *ngFor="let label of columnService.activeColumns()">
+                <td (click)="goToVariant(variant)" *ngFor="let label of columnService.activeColumns()">
                     <span *ngIf="label !== 'dbSNP' && label !== 'Allele Scale'"
                           class="value">{{ columnService.display(label, variant) }}</span>
                     <a *ngIf="label === 'dbSNP'" target="_blank"
-                       href="{{ variantDbSnpUrl(variant) }}">{{ variant.dbSNP }}</a>
+                       href="{{ dbSnpUrl(variant) }}">{{ variant.dbSNP }}</a>
                     <div class="location beacon" *ngIf="label == 'Alternate'">
                         <a target="_blank"
                            href="{{ variantBeaconUrl(variant) }}"><i

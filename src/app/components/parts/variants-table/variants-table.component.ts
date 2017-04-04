@@ -12,7 +12,6 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { ColumnService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 
-
 const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
 const MINIMAL_VIEW = 500;
 
@@ -26,6 +25,7 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     @ViewChild(FilterAutoComponent) filterComponent: FilterAutoComponent;
     pageSize = 10;
     currentPage = 1;
+    dbSnpUrl = Variant.dbSnpUrl;
     private highlightedVariant: Variant;
     private subscriptions: Subscription[] = [];
 
@@ -112,10 +112,6 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         return JSON.stringify(a) === JSON.stringify(b);
     }
 
-    variantDbSnpUrl(variant: Variant) {
-        return `${DB_SNP_URL}?rs=${variant.dbSNP}`;
-    }
-
     variantBeaconUrl(v: Variant) {
         let query = `${v.chromosome}:${v.start}>${v.alternate}`;
         let obj = {query: query};
@@ -129,6 +125,11 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
     onFilter(filtered: Variant[]) {
         this.variants = filtered;
+    }
+
+    goToVariant(v: Variant) {
+        let query = { chromosome: v.chromosome, start: v.start, alternate: v.alternate, timestamp: Date.now() };
+        this.router.navigate(['/search/variant', query]);
     }
 
 }

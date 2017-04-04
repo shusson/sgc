@@ -6,23 +6,23 @@ const REFERENCE = 'HG19';
 export const MGRB_ID = 'garvan';
 const STEP = 1;
 
-class CacheObject {
-    idMap = new Map<string, AsyncResult>();
-    responses: AsyncResult[] = [];
+export class BeaconCache {
+    idMap = new Map<string, BeaconAsyncResult>();
+    responses: BeaconAsyncResult[] = [];
     beaconQuery: Beacon;
 }
 
 @Injectable()
 export class BeaconSearchService {
     errors = new EventEmitter();
-    private resultCache = new Map<string, CacheObject>();
+    private searches = new Map<string, BeaconCache>();
     private organizations: NetworkOrganization[] = [];
     private supportedBeacons: any;
 
     constructor(private beaconNetworkService: BeaconNetworkService) {
         this.beaconNetworkService.getOrganisations().then(v => {
             this.organizations = v;
-            Array.from(<Iterable<CacheObject>>this.resultCache.values()).forEach((cacheObject: CacheObject) => {
+            Array.from(<Iterable<BeaconCache>>this.searches.values()).forEach((cacheObject: BeaconCache) => {
                 cacheObject.responses.forEach(r => r.loadExtraDetails(this.organizations));
             });
         }).catch(e => {
@@ -37,50 +37,50 @@ export class BeaconSearchService {
             });
     }
 
-    searchBeacon(query: string, useCache = true): CacheObject {
+    searchBeacon(query: string, useCache = true): BeaconCache {
         let beacon = this.parseQuery(query);
         if (!beacon) {
             this.errors.emit(`Could not parse query: ${ query }`);
-            return new CacheObject();
+            return new BeaconCache();
         }
 
-        if (this.resultCache.has(query) && useCache) {
-            let cachedResult = this.resultCache.get(query);
-            this.retryFailedResults(cachedResult, beacon);
-            return cachedResult;
+        if (this.searches.has(query) && useCache) {
+            let cache = this.searches.get(query);
+            this.retryFailedResults(cache, beacon);
+            return cache;
         }
 
-        let cachedResult = new CacheObject();
-        this.resultCache.set(query, cachedResult);
-        cachedResult.responses = [];
-        cachedResult.idMap.clear();
+        let cache = new BeaconCache();
+        this.searches.set(query, cache);
+        cache.responses = [];
+        cache.idMap.clear();
 
-        this.queryBeaconNetwork(cachedResult, beacon);
+        this.queryBeaconNetwork(cache, beacon);
 
-        return cachedResult;
+        return cache;
     }
 
-    private queryBeaconNetwork(cachedResult: CacheObject, beacon: Beacon) {
+    private queryBeaconNetwork(cache: BeaconCache, beacon: Beacon) {
         return this.supportedBeacons.then((beacons: NetworkBeacon[]) => {
             let beaconIds = [MGRB_ID].concat(beacons.map((v) => v.id));
 
             for (let i = 0; i < beaconIds.length; i += STEP) {
                 let idRange = beaconIds.slice(i, i + STEP);
                 idRange.forEach(id => {
-                    let asyncResult = new AsyncResult(id);
-                    cachedResult.idMap.set(id, asyncResult);
-                    cachedResult.responses.push(asyncResult);
+                    let asyncResult = new BeaconAsyncResult(id);
+                    cache.idMap.set(id, asyncResult);
+                    cache.responses.push(asyncResult);
                 });
 
                 this.beaconNetworkService.queryBeacons(idRange, beacon)
                     .then((queryResponses: QueryResponse[]) => {
                         queryResponses.forEach((v: QueryResponse) => {
-                            cachedResult.idMap.get(v.beacon.id).setResult(v, this.organizations);
+                            cache.idMap.get(v.beacon.id).setResult(v, this.organizations);
                         });
                     })
                     .catch(e => {
                         idRange.forEach(id => {
-                            let asyncQuery = cachedResult.idMap.get(id);
+                            let asyncQuery = cache.idMap.get(id);
                             asyncQuery.setFailed();
                         });
                     });
@@ -102,8 +102,8 @@ export class BeaconSearchService {
         return beacon;
     }
 
-    private retryFailedResults(result: CacheObject, beacon: Beacon) {
-        result.responses.forEach((a: AsyncResult) => {
+    private retryFailedResults(result: BeaconCache, beacon: Beacon) {
+        result.responses.forEach((a: BeaconAsyncResult) => {
             if (a.error) {
                 a.loading = true;
                 this.beaconNetworkService.queryBeacons([a.id], beacon)
@@ -117,7 +117,7 @@ export class BeaconSearchService {
     }
 }
 
-export class AsyncResult {
+export class BeaconAsyncResult {
     loading = true;
     result: QueryResponse;
     error = '';

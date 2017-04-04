@@ -1,0 +1,22 @@
+.group {
+    margin-top: 2rem;
+}
+
+.highlight-number {
+    font-weight: bolder;
+    font-size: large;
+    margin: 1rem;
+}
+
+md-progress-circle {
+    height: 20px;
+}
+
+.card {
+    max-width: 380px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0,.22);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
