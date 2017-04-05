@@ -15,25 +15,21 @@
         <table>
             <tbody>
             <tr>
-                <th *ngFor="let key of columnService.activeColumns()" (click)="sortVariants(key)">{{ key }} <i
-                        class="material-icons">code</i></th>
+                <th *ngFor="let key of columnService.activeColumns()" (click)="sortVariants(key)">
+                    <span md-tooltip="{{ columnService.tooltip(key) }}" mdTooltipPosition="above">{{ key }}</span>
+                    <i class="material-icons">code</i>
+
+                </th>
             <tr>
             <tr *ngFor="let variant of variants | paginate: { itemsPerPage: pageSize, currentPage: currentPage }"
                 [ngClass]="{'highlighted': compare(variant, highlightedVariant) }"
                 (mouseover)="highlightVariant(variant)"
-                (mouseout)="unHighlightVariant(variant)">
+                (mouseout)="unHighlightVariant(variant)"
+                md-tooltip="Click for more info" mdTooltipPosition="left">
 
                 <td (click)="goToVariant(variant)" *ngFor="let label of columnService.activeColumns()">
-                    <span *ngIf="label !== 'dbSNP' && label !== 'Allele Scale'"
+                    <span *ngIf="label !== 'Allele Scale'"
                           class="value">{{ columnService.display(label, variant) }}</span>
-                    <a *ngIf="label === 'dbSNP'" target="_blank"
-                       href="{{ dbSnpUrl(variant) }}">{{ variant.dbSNP }}</a>
-                    <div class="location beacon" *ngIf="label == 'Alternate'">
-                        <a target="_blank"
-                           href="{{ variantBeaconUrl(variant) }}"><i
-                                *ngIf="variant.type === 'SNV' && variant.alternate !== '*'" class="material-icons">settings_input_antenna</i></a>
-                    </div>
-
                     <app-allele-freq *ngIf="label === 'Allele Scale'"
                                      [freq]="variant.variantStats[0].altAlleleFreq"></app-allele-freq>
                 </td>

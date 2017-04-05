@@ -1,6 +1,6 @@
 ## SYDNEY GENOMICS COLLABORATIVE
 
-An web application for investigating genomic variants.
+A web application for exploring population scale genomic studies.
 
 More info: https://sgc.garvan.org.au 
 

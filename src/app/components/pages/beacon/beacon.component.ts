@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BeaconAsyncResult, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
+import { BeaconAsyncResult, BeaconCache, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'app-beacon-search',
     templateUrl: './beacon.component.html',
-    styleUrls: ['./beacon.component.css', '../../../shared/table-results.css'],
+    styleUrls: ['./beacon.component.css'],
     providers: [BeaconSearchService]
 })
 export class BeaconComponent implements OnInit, OnDestroy {
@@ -14,23 +14,9 @@ export class BeaconComponent implements OnInit, OnDestroy {
     reference = this.availableReferences[0];
     example1 = '22:46546565>A';
     example2 = '2:45895>G';
-    pageSize = 10;
-    currentPage = 1;
-
-    labels = [
-        'Name', 'Organization', 'Response'
-    ];
-
-    labelsSortingMap: any = {
-        'Name': (a: BeaconAsyncResult) => a.result ? a.result.beacon.name.toLowerCase() : '',
-        'Organization': (a: BeaconAsyncResult) => a.result ? a.result.beacon.organization.toLowerCase() : '',
-        'Response': (a: BeaconAsyncResult) => a.displayResult(),
-    };
     errorMessage: string;
     searchInput = '';
-    responses: BeaconAsyncResult[] = [];
-    private lastSortedLabel = '';
-    private lastSortedOrder = true;
+    beacons: BeaconCache;
     private subscriptions: Subscription[] = [];
 
     constructor(private beaconSearchService: BeaconSearchService,
@@ -55,41 +41,9 @@ export class BeaconComponent implements OnInit, OnDestroy {
         this.router.navigate(['/beacon', obj]);
     }
 
-    sortResponses(label: string) {
-        if (this.lastSortedLabel === label) {
-            this.lastSortedOrder = this.lastSortedOrder ? false : true;
-        } else {
-            this.lastSortedLabel = label;
-            this.lastSortedOrder = true;
-        }
-        let fn = this.labelsSortingMap[label];
-        if (this.lastSortedOrder) {
-            this.responses = this.responses.sort((a: any, b: any) => {
-                if (fn(a) > fn(b)) {
-                    return -1;
-                } else if (fn(a) < fn(b)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-        } else {
-            this.responses = this.responses.sort((a: any, b: any) => {
-                if (fn(a) < fn(b)) {
-                    return -1;
-                } else if (fn(a) > fn(b)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-        }
-    }
-
     private searchBeacon(query: string) {
         this.errorMessage = '';
-        let result = this.beaconSearchService.searchBeacon(query);
-        this.responses = result.responses;
+        this.beacons = this.beaconSearchService.searchBeacon(query);
     }
 
     parseParams(params: Params) {

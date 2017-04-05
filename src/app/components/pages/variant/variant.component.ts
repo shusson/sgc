@@ -22,13 +22,15 @@ export class VariantComponent implements OnInit, OnDestroy {
     dbSnpUrl = Variant.dbSnpUrl;
     beacons: BeaconCache;
     gene: Gene;
+    showBeacon = false;
     error = '';
+    loading = true;
+    beaconSupported = true;
 
     constructor(private route: ActivatedRoute,
                 private vss: VariantSearchService,
                 private bss: BeaconSearchService,
-                private rs: RegionService,
-                private cd: ChangeDetectorRef) {
+                private rs: RegionService) {
     }
 
     ngOnInit() {
@@ -36,16 +38,19 @@ export class VariantComponent implements OnInit, OnDestroy {
     }
 
     parseParams(params: Params) {
-        // validate params
         let start = Number(params['start']);
         let alternate = params['alternate'];
         let sq = new SearchQuery(params['chromosome'], start, start, []);
         this.vss.getVariants(sq).then(variants => {
+            this.loading = false;
             let vf = variants.filter((v) => v.alternate === alternate);
             if (vf.length > 1) {
                 this.error = 'Found more than one variant for query';
             } else if (vf.length > 0) {
                 this.variant = vf[0];
+                if (this.variant.alternate.length !== 1) {
+                    this.beaconSupported = false;
+                }
                 this.beacons = this.bss.searchBeacon(this.beaconQuery(this.variant));
                 let r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
                 this.rs.getGenesInRegion(r).subscribe((g) => {
@@ -67,19 +72,7 @@ export class VariantComponent implements OnInit, OnDestroy {
         return `${ v.chromosome }:${ v.start }>${v.alternate}`;
     }
 
-    validBeacons() {
-        return this.beacons.responses.filter((r) => {
-            return !r.loading && r.result.response;
-        }).length;
-    }
-
-    beaconsLoading() {
-        let b = this.beacons.responses.filter((r) => {
-            return r.loading;
-        });
-        console.log(b.map((x) => {
-            return {n: x.result.beacon.organization};
-        }));
-        return b.length > 0;
+    toggleBeacon() {
+        this.showBeacon = !this.showBeacon;
     }
 }

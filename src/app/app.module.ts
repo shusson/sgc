@@ -64,6 +64,7 @@ import { MgrbDownloadBannerComponent } from './components/parts/mgrb-download-ba
 import { LocalStorageService } from './services/local-storage.service';
 import { environment } from '../environments/environment';
 import { VariantComponent } from './components/pages/variant/variant.component';
+import { BeaconTableComponent } from './components/parts/beacon-table/beacon-table.component';
 import * as Raven from 'raven-js';
 
 Raven
@@ -127,7 +128,8 @@ export class RavenErrorHandler implements ErrorHandler {
         RegionInformationComponent,
         MgrbDownloadComponent,
         MgrbDownloadBannerComponent,
-        VariantComponent
+        VariantComponent,
+        BeaconTableComponent
     ],
     providers: [
         Auth,

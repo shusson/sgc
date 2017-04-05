@@ -1,10 +1,21 @@
 <app-page-container>
-    <div class="message error" *ngIf="error">{{ error }}</div>
     <section>
+        <div class="message message-error" *ngIf="error">{{ error }}</div>
+        <div class="loading-message" *ngIf="loading">
+            <md-spinner color="primary"></md-spinner>
+        </div>
         <div *ngIf="variant" class="details">
 
             <div class="group">
                 <div class="detail-type">Variant</div>
+                <div class="detail">
+                    <div class="detail-label">
+                        <span>Cohorts:</span>
+                    </div>
+                    <div class="detail-value">
+                        <span>MGRB</span>
+                    </div>
+                </div>
                 <div class="detail">
                     <div class="detail-label">
                         <span>Chromosome:</span>
@@ -83,20 +94,20 @@
             </div>
 
             <div class="group">
-                <div class="detail-type">Annotations</div>
-
-            </div>
-
-            <div class="group">
                 <div class="detail-type">Beacon Results</div>
-
-                <div class="card">
-                    <div>
-                        <span class="highlight-number">{{ validBeacons() }}</span>
-                        <span>found in other databases</span>
+                <div *ngIf="!beaconSupported">Not supported (SNP only)</div>
+                <div class="card" *ngIf="beaconSupported">
+                    <div class="beacon-row" (click)="toggleBeacon()">
+                        <div>
+                            <span>This variant was found in</span>
+                            <span class="highlight-number">{{ beacons.foundCount() }}</span>
+                            <span>other databases</span>
+                        </div>
+                        <md-icon>keyboard_arrow_down</md-icon>
                     </div>
-                    <md-progress-circle *ngIf="beaconsLoading()" [mode]="'indeterminate'"></md-progress-circle>
-                    <md-icon>keyboard_arrow_down</md-icon>
+                    <md-progress-bar *ngIf="beacons.loadingCount() > 0" [mode]="'indeterminate'"></md-progress-bar>
+
+                    <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [foundOnly]="true" [pagination]="false"></app-beacon-table>
                 </div>
 
             </div>

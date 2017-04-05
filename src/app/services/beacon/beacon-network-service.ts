@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { MGRB_ID } from './beacon-search-service';
 
-const TIMEOUT = 25000;
+const TIMEOUT = 10000;
 
 const SUPPORTED_REFERENCES = new Set(['HG19', 'GRCH37']);
 
@@ -26,62 +26,61 @@ export class NetworkOrganization {
     logo: string;
 }
 
-export class QueryResponse {
+export class BeaconResponse {
     beacon: NetworkBeacon;
     query: Beacon;
     response: boolean;
     error: string;
 }
 
+export type BeaconId = string;
+
 @Injectable()
 export class BeaconNetworkService {
+    orgs: Observable<NetworkOrganization[]> = this.getOrganisations();
+    supported: Observable<NetworkBeacon[]> = this.getSupportedBeacons();
 
     constructor(private http: Http) {
     }
 
-    getSupportedBeacons(): Promise<NetworkBeacon[]> {
+    getSupportedBeacons(): Observable<NetworkBeacon[]> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', '*/*');
         return this.http.get(`${ environment.beaconNetworkUrl }/beacons`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError)
-            .toPromise()
-            .then((response: Response) => {
-                return response.json().filter((v: NetworkBeacon) => {
+            .map((r: Response) => {
+                return r.json().filter((v: NetworkBeacon) => {
                     let intersection = v.supportedReferences.filter(x => SUPPORTED_REFERENCES.has(x));
                     return intersection.length > 0 && !v.aggregator && v.id !== MGRB_ID;
                 });
             });
     }
 
-    getOrganisation(id: string): Promise<NetworkOrganization> {
+    getOrganisation(id: string): Observable<NetworkOrganization> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', '*/*');
         return this.http.get(`${ environment.beaconNetworkUrl }/organizations/${ id }`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError)
-            .toPromise()
-            .then((response: Response) => {
-                return response.json();
+            .map((r: Response) => {
+                return r.json();
             });
     }
 
-    getOrganisations(): Promise<NetworkOrganization[]> {
+    getOrganisations(): Observable<NetworkOrganization[]> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', '*/*');
         return this.http.get(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError)
-            .toPromise()
-            .then((response: Response) => {
-                return response.json();
-            });
+            .map(r => r.json());
     }
 
-    queryBeacons(ids: string[], beacon: Beacon): Promise<QueryResponse[]> {
+    queryBeacons(ids: string[], beacon: Beacon): Observable<BeaconResponse[]> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', '*/*');
@@ -90,19 +89,35 @@ export class BeaconNetworkService {
         return this.http.get(`${ environment.beaconNetworkUrl }/responses`, {headers: headers, search: searchParams})
             .timeout(TIMEOUT)
             .catch(this.handleError)
-            .toPromise()
-            .then((response: Response) => {
-                return response.json().map((v: any) => {
-                    let result = new QueryResponse();
-                    result.beacon = v.beacon;
-                    result.query = new Beacon(v.query);
-                    result.response = v.response;
-                    return result;
-                });
+            .map((response: Response) => {
+                return response.json().map(this.parseBeacon);
+            });
+    }
+
+    queryBeacon(id: string, beacon: Beacon): Observable<BeaconResponse> {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', '*/*');
+        let searchParams = beacon.getSearchParams();
+        return this.http.get(`${ environment.beaconNetworkUrl }/responses/${ id }`, {
+            headers: headers,
+            search: searchParams
+        })
+            .timeout(TIMEOUT)
+            .map((response: Response) => {
+                return this.parseBeacon(response.json());
             });
     }
 
     private handleError() {
         return Observable.throw('An error occurred while trying to connect to the Beacon Network');
+    }
+
+    private parseBeacon(v: any): BeaconResponse {
+        let result = new BeaconResponse();
+        result.beacon = v.beacon;
+        result.query = new Beacon(v.query);
+        result.response = v.response;
+        return result;
     }
 }

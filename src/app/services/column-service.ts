@@ -51,11 +51,19 @@ export class ColumnService {
         'Allele Scale': (v: Variant) => v.variantStats[0].altAlleleFreq
     };
 
+    private tooltips: any = {
+        'Allele Scale': 'Allele frequency on a discrete scale: <1/10000, <1/1000, <1%, <5%, <50% and >50%'
+    };
+
     private lastSortedLabel = '';
     private lastSortedOrder = true;
 
     constructor() {
 
+    }
+
+    tooltip(key) {
+        return this.tooltips[key];
     }
 
     display(label: string, variant: Variant): string {
