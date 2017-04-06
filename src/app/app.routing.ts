@@ -8,6 +8,7 @@ import { NswgpComponent } from './components/pages/programmes/nswgp/nswgp.compon
 import { MgrbComponent } from './components/pages/programmes/mgrb/mgrb.component';
 import { MgrbTermsComponent } from './components/pages/mgrb-terms/mgrb-terms.component';
 import { ModuleWithProviders} from '@angular/core';
+import { MgrbDownloadComponent } from './components/pages/mgrb-download/mgrb-download.component';
 
 const appRoutes: Routes = [
     { path: 'initiatives', component: InitiativesComponent },
@@ -18,6 +19,8 @@ const appRoutes: Routes = [
     { path: 'initiatives/mgrb', component: MgrbComponent },
     { path: 'initiatives/nswgp', component: NswgpComponent },
     { path: 'initiatives/gcmp', component: GcmpComponent },
+    // disabled until we get approval from data committee
+    // { path: 'initiatives/mgrb/download', component: MgrbDownloadComponent },
     { path: 'terms/mgrb', component: MgrbTermsComponent },
     { path: '', redirectTo: '/initiatives', pathMatch: 'full'},
     { path: '**', redirectTo: '/initiatives', pathMatch: 'full'},

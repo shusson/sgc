@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { VsalService } from './vsal-service';
 import { Variant } from '../model/variant';
 import { Subject, Observable } from 'rxjs';
-import { AutocompleteResult } from '../model/autocomplete-result';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { Region } from '../model/region';

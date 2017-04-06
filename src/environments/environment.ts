@@ -12,5 +12,6 @@ export const environment = {
     auth0Domain: '',
     beaconNetworkUrl: '',
     vsalUrl: '',
-    elasticUrl: ''
+    elasticUrl: '',
+    durlUrl: ''
 };

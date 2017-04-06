@@ -1,0 +1,16 @@
+<app-page-container>
+    <section *ngIf="!auth.authenticated()">
+        <p>Please <a (click)="login()">login</a> or <a (click)="signUp()">sign-up</a> to download the MGRB summary stats VCF</p>
+    </section>
+    <section *ngIf="auth.authenticated()">
+        <div class="title" *ngIf="!url && !error">
+            Preparing MGRB Summary Stats VCF...
+        </div>
+        <div class="title" *ngIf="url && !error">
+            <div>Your download should start shortly, otherwise please click <a [href]="url" target="_blank">here</a>.</div>
+        </div>
+        <div class="title" *ngIf="error">
+            There was an error while preparing your download. Click <a (click)="reload()">here</a> to try again
+        </div>
+    </section>
+</app-page-container>

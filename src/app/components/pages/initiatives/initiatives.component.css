@@ -5,12 +5,7 @@
     background-color: whitesmoke;
 }
 
-.title-box {
-    display: flex;
-    flex-direction: column;
-}
-
-.cards-band {
+.band-flex {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -26,13 +21,6 @@
     max-width: 1200px;
     flex-grow: 2;
     flex-basis: 0;
-}
-
-.totals-band {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    background-color: whitesmoke;
 }
 
 .totals {
@@ -62,37 +50,23 @@ app-program-card {
     margin-right: 1rem;
 }
 
-app-home-about {
-    width: 100%;
-}
-
 app-home-footer {
     border-top: 1px solid lightgray;
-    width: 100%;
-}
-
-app-about {
-    width: 100%;
-}
-app-privacy-footer {
-    width: 100%;
 }
 
 app-search-bar-with-options {
-    width: 100%;
     border-bottom: 1px solid lightgrey;
 }
 
 app-title-logo-banner {
     position: relative;
+}
+
+.band {
     width: 100%;
 }
 
 @media (min-width: 0px) and (max-width: 1120px) {
-
-    .footer-band {
-        justify-content: flex-start;
-    }
 
     .program-cards {
         justify-content: center;

@@ -1,0 +1,11 @@
+section {
+    margin-top: 2rem;
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+p {
+    font-size: large;
+}

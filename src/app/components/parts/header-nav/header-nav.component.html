@@ -15,7 +15,13 @@
                 <a>MGRB</a>
             </div>
         </a>
-        <a (click)="auth.login()" *ngIf="!auth.authenticated()">LOG IN</a>
+
+        <div *ngIf="!auth.authenticated()" class="sign-up">
+            <a (click)="auth.login()">LOG IN</a>
+            <div class="spacer">|</div>
+            <a (click)="auth.signUp()">SIGN UP</a>
+        </div>
+
         <a (click)="auth.logout()" *ngIf="auth.authenticated()">LOG OUT</a>
     </nav>
 </div>
