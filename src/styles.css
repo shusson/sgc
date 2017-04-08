@@ -66,18 +66,6 @@ input {
     padding: 5px;
 }
 
-button {
-    margin-top: 1em;
-    padding: 1em;
-    color: white;
-    background-color: #003263;
-    border: solid 1px lightgrey;
-    border-radius: 1px;
-    font-size: medium;
-    width: 150px;
-    cursor: pointer;
-}
-
 section {
     padding: 1em;
     margin: 0 auto;

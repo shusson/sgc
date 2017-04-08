@@ -1,3 +1,13 @@
 .search-result-content {
     margin-top: 1rem;
 }
+
+.overview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.overview * {
+    flex-basis: 0;
+    flex-grow: 1;
+}

@@ -1,0 +1,8 @@
+<div class="filter">
+    <div class="overview">
+        <app-search-filter-select></app-search-filter-select>
+    </div>
+    <div class="items" *ngIf="sfs.appliedItems.length > 0">
+        <app-search-filter-item *ngFor="let item of sfs.appliedItems" [item]="item"></app-search-filter-item>
+    </div>
+</div>

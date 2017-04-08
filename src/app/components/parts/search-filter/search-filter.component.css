@@ -1,0 +1,11 @@
+.overview {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.items {
+    padding: 5px;
+    box-shadow: inset 0 0 3px lightblue;
+    margin-bottom: 1rem;
+}
