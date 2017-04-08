@@ -8,12 +8,13 @@ import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Region } from '../../../model/region';
+import { SearchFilterService } from '../../../services/search-filter.service';
 
 @Component({
     selector: 'app-search-results',
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.css'],
-    providers: [VariantSearchService, VariantTrackService]
+    providers: [VariantSearchService, VariantTrackService, SearchFilterService]
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
     @Input() autocomplete: AutocompleteResult<any>;
@@ -24,7 +25,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     constructor(public searchService: VariantSearchService,
                 private cd: ChangeDetectorRef,
-                private searchBarService: SearchBarService) {
+                private searchBarService: SearchBarService,
+                private sfs: SearchFilterService) {
     }
 
     ngOnInit(): void {
@@ -36,6 +38,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.searchService.errors.subscribe((e) => {
             this.errorEvent.emit(e);
+        }));
+
+        this.subscriptions.push(this.sfs.updates.subscribe((v) => {
+            let q = this.searchService.lastQuery;
+            q.clinicalFilters = this.sfs.appliedItems.filter((f) => f.isValid() && f.enabled);
+            if (q.clinicalFilters.length) {
+                this.searchService.getVariants(q);
+            }
+
         }));
 
         this.loadingVariants = true;

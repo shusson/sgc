@@ -37,6 +37,10 @@ import { RegionInformationComponent } from '../../parts/region-information/regio
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { PositionService } from '../../../services/autocomplete/position-service';
+import { SearchFilterComponent } from '../../parts/search-filter/search-filter.component';
+import { SearchFilterItemComponent } from '../../parts/search-filter-item/search-filter-item.component';
+import { SearchFilterParametersComponent } from '../../parts/search-filter-parameters/search-filter-parameters.component';
+import { SearchFilterSelectComponent } from '../../parts/search-filter-select/search-filter-select.component';
 
 describe('Component: Search', () => {
 
@@ -69,7 +73,11 @@ describe('Component: Search', () => {
                 PageContainerComponent,
                 PrivacyFooterComponent,
                 SideNavComponent,
-                HeaderNavComponent
+                HeaderNavComponent,
+                SearchFilterComponent,
+                SearchFilterItemComponent,
+                SearchFilterParametersComponent,
+                SearchFilterSelectComponent
             ],
             providers: [
                 ScrollService,

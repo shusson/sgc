@@ -24,6 +24,10 @@ import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
 import { ColumnService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
+import { SearchFilterSelectComponent } from '../search-filter-select/search-filter-select.component';
+import { SearchFilterParametersComponent } from '../search-filter-parameters/search-filter-parameters.component';
+import { SearchFilterItemComponent } from '../search-filter-item/search-filter-item.component';
+import { SearchFilterComponent } from '../search-filter/search-filter.component';
 
 describe('Component: SearchResults', () => {
 
@@ -49,6 +53,10 @@ describe('Component: SearchResults', () => {
                 OverlayMenuComponent,
                 ColumnsMenuComponent,
                 FilterAutoComponent,
+                SearchFilterComponent,
+                SearchFilterItemComponent,
+                SearchFilterParametersComponent,
+                SearchFilterSelectComponent
 
             ],
             providers: [

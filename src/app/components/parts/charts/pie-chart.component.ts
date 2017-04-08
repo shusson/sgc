@@ -23,7 +23,7 @@ export class PieChartComponent {
     constructor(private router: Router) {
         this.options = {
             chart: {
-                width: 95,
+                width: 85,
                 height: 120,
                 spacing: [0, 0, 0, 0],
                 showAxes: false,
@@ -33,7 +33,7 @@ export class PieChartComponent {
                 pie: {
                     dataLabels: {
                         enabled: true,
-                        distance: 5
+                        distance: 2
                     }
 
                 },

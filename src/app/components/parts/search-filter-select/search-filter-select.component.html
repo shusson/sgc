@@ -1,0 +1,12 @@
+<div class="overview">
+    <button md-raised-button *ngIf="sfs.availableItems.length > 0" [mdMenuTriggerFor]="conditions"><md-icon>add</md-icon>Add Clinical Filter</button>
+    <div mdTooltip="No Clinical Features Left" mdTooltipPosition="above" *ngIf="sfs.availableItems.length <= 0">
+        <button  md-raised-button [disabled]="true"><md-icon>add</md-icon>Add Clinical Filter</button>
+    </div>
+
+    <md-menu class="menu-items" #conditions="mdMenu" [style.width]="'100%'">
+        <button md-menu-item *ngFor="let item of sfs.availableItems" (click)="selectItem(item)">
+            <span>{{ item.name }}</span>
+        </button>
+    </md-menu>
+</div>
