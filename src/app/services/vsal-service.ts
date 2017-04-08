@@ -5,12 +5,44 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
+import { SearchFilterItem } from '../model/search-filter-item';
 
 export const VSAL_VARIANT_LIMIT = 500;
 export const VSAL_TIMEOUT = 20000;
 
 @Injectable()
 export class VsalService {
+
+    private clinicalParamMap: any = {
+        'Year Of Birth': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('yobStart', v.start);
+            p.append('yobEnd', v.end);
+        },
+        'Systolic Blood Pressure': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('sbpStart', v.start);
+            p.append('sbpEnd', v.end);
+        },
+        'Height': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('heightStart', v.start);
+            p.append('heightEnd', v.end);
+        },
+        'Weight': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('weightStart', v.start);
+            p.append('weightEnd', v.end);
+        },
+        'Abdominal Circumference': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('abdCircStart', v.start);
+            p.append('abdCircEnd', v.end);
+        },
+        'Glucose': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('glcStart', v.start);
+            p.append('glcEnd', v.end);
+        },
+        'Gender': (v: SearchFilterItem, p: URLSearchParams) => {
+            p.append('gender', v.start);
+        },
+    };
+
     constructor(private http: Http) {
     }
 
@@ -25,6 +57,10 @@ export class VsalService {
             if (o.key) {
                 urlParams.append(o.key, o.getValue());
             }
+        });
+
+        query.clinicalFilters.forEach((v: SearchFilterItem) => {
+            this.clinicalParamMap[v.name](v, urlParams);
         });
 
         let headers = new Headers();

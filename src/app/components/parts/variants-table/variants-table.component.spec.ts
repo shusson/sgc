@@ -41,7 +41,6 @@ describe('VariantsTableComponent', () => {
             declarations: [
                 AlleleFreqComponent,
                 GenomeBrowserComponent,
-                SearchResultsComponent,
                 VariantsTableComponent,
                 GenomeBrowserResizeComponent,
                 GeneInformationComponent,

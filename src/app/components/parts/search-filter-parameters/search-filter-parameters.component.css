@@ -1,0 +1,42 @@
+.parameters {
+    display: flex;
+    align-items: center;
+}
+
+.name, .operator, .values {
+    flex-basis: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.name {
+    flex-grow: 1;
+    font-size: medium;
+}
+
+.operator {
+    flex-grow: 1;
+}
+
+.values {
+    flex-grow: 2;
+}
+
+.values div {
+    width: 100%;
+}
+
+.values span {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mat-select-trigger {
+    min-width: 80px;
+}
+
+input {
+    width: 35%;
+    display: inline;
+    min-width: 20px;
+}

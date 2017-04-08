@@ -1,0 +1,30 @@
+<div class="parameters">
+    <div class="name">
+        <span>{{ item.name }}</span>
+        <span *ngIf="item.hasOwnProperty('unit')">({{ item.unit }})</span>
+    </div>
+
+    <div class="operator">
+        <md-select [ngModel]="item.operator" (ngModelChange)="updateOperator($event)" name="op">
+            <md-option *ngFor="let op of item.operators" [value]="op">
+                {{ op }}
+            </md-option>
+        </md-select>
+    </div>
+
+    <div class="values">
+        <div *ngIf="showNumeric()">
+            <input [ngModel]="item.start" (ngModelChange)="updateStart($event)">
+            <span *ngIf="item.operator === 'is between'">&</span>
+            <input *ngIf="item.operator === 'is between'" [ngModel]="item.end" (ngModelChange)="updateEnd($event)">
+        </div>
+        <div *ngIf="showEnum()">
+            <md-select [ngModel]="item.start" (ngModelChange)="updateStart($event)" name="op">
+                <md-option *ngFor="let v of item.values" [value]="v">
+                    {{ v }}
+                </md-option>
+            </md-select>
+        </div>
+    </div>
+
+</div>

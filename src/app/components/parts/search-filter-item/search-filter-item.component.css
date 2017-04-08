@@ -1,0 +1,23 @@
+.overview {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.properties {
+    flex-grow: 1;
+}
+
+button, md-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #FF5D37;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+    font-size: x-large;
+}

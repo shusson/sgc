@@ -1,0 +1,11 @@
+<div class="overview">
+    <md-checkbox [ngModel]="item.enabled" (ngModelChange)="enable()"></md-checkbox>
+    <div class="properties">
+        <app-search-filter-parameters [item]="item"></app-search-filter-parameters>
+    </div>
+    <button md-mini-fab (click)="remove()">
+        <div class="icon">
+            -
+        </div>
+    </button>
+</div>

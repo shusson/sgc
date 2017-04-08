@@ -1,6 +1,7 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
+import { Subscription } from 'rxjs/Subscription';
 
 let MIN_NAV_WIDTH = 1200;
 
@@ -9,11 +10,12 @@ let MIN_NAV_WIDTH = 1200;
     templateUrl: './page-container.component.html',
     styleUrls: ['./page-container.component.css']
 })
-export class PageContainerComponent implements OnInit {
+export class PageContainerComponent implements OnInit, OnDestroy {
     @Input() showTitle = true;
     title = 'CAAS';
     smallTitle = 'CAAS';
     showHamburger = false;
+    private subs: Subscription[] = [];
 
     @HostListener('window:resize') windowResized() {
         this.showHamburger = window.innerWidth <= MIN_NAV_WIDTH;
@@ -22,7 +24,7 @@ export class PageContainerComponent implements OnInit {
     constructor(private router: Router,
                 private scrollService: ScrollService) {
         this.windowResized();
-        this.router.events
+        this.subs.push(this.router.events
             .filter((x, idx) => x instanceof NavigationEnd)
             .subscribe((event: any) => {
                 window.scrollTo(0, 0);
@@ -30,11 +32,15 @@ export class PageContainerComponent implements OnInit {
                 if (!event.url.match(anchor)) {
                     this.scrollService.scrollToTop();
                 }
-            });
+            }));
     }
 
     ngOnInit() {
 
+    }
+
+    ngOnDestroy() {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
     updateScroll($event: any) {
