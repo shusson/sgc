@@ -65,6 +65,23 @@ run the tests
 cd e2e; protractor
 ```
 
+Alternatively run the tests with the help of docker ([macOS issue](https://forums.docker.com/t/access-host-not-vm-from-inside-container/11747/10)):
+
+ Build dist directory
+ ```bash
+ ng build --target=production --environment=staging --aot
+ ```
+
+ Start docker nginx test server and host dist directory and use config in e2e directory
+ ```bash
+ docker run --volume $(pwd):/usr/share/nginx/html --volume $(pwd)/e2e:/etc/nginx --detach --name sgc -p 5013:80 nginx:latest
+ ```
+
+ Run containerized protractor tests using [shusson/chrome-tester](https://github.com/shusson/docker-chrome-headless) 
+ ```bash
+ docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd)/e2e:/tests shusson/chrome-tester protractor
+ ```
+
 ### External services
 The application connects to a number of external services, 
 all of which are defined in [src/environments](src/environments). 
