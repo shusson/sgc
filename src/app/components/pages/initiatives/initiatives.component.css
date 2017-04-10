@@ -66,6 +66,10 @@ app-title-logo-banner {
     width: 100%;
 }
 
+app-page-container {
+    height: 100%;
+}
+
 @media (min-width: 0px) and (max-width: 1120px) {
 
     .program-cards {
