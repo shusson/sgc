@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import {
+    Component, OnInit, Input, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit,
+    ElementRef
+} from '@angular/core';
 import { Variant, HOMOZYGOTES_KEY, HETEROZYGOTES_KEY, MISSED_GENOTYPES_KEY } from '../../../model/variant';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -11,6 +14,7 @@ import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 
 
 const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
+const MINIMAL_VIEW = 500;
 
 @Component({
     selector: 'app-variants-table',
@@ -33,7 +37,11 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     ngOnInit() {
-         this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: Variant) => {
+        if (window.screen.width < MINIMAL_VIEW) {
+            this.columnService.minimalView();
+        }
+
+        this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: Variant) => {
             if (v.highlight) {
                 this.highlightedVariant = v;
             } else {

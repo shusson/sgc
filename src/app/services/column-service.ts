@@ -105,6 +105,23 @@ export class ColumnService {
         this.columns.set(k, v);
     }
 
+    minimalView() {
+        let keys: any[] = [
+            ['Location', true],
+            ['Reference', true],
+            ['Alternate', true],
+            ['Type', false],
+            ['dbSNP', false],
+            ['Homozygotes Count', false],
+            ['Heterozygotes Count', false],
+            ['Missed Genotypes', false],
+            ['Allele Count', false],
+            ['Allele Freq.', true],
+            ['Allele Scale', false]
+        ];
+        this.columns = new Map<string, boolean>(keys);
+    }
+
     activeColumns(): string[] {
         let ac: string[] = [];
         this.columns.forEach((v, k) => {
