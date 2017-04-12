@@ -100,7 +100,6 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
                 'Missed Genotypes': variant.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY],
                 'Allele Count': variant.variantStats[0].altAlleleCount,
                 'Allele Frequency': variant.variantStats[0].altAlleleFreq,
-
             };
         });
         let csv = Papa.unparse(data);
@@ -112,13 +111,6 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         return JSON.stringify(a) === JSON.stringify(b);
     }
 
-    variantBeaconUrl(v: Variant) {
-        let query = `${v.chromosome}:${v.start}>${v.alternate}`;
-        let obj = {query: query};
-        let urlTree = this.router.createUrlTree(['/beacon', obj]);
-        return urlTree.toString();
-    }
-
     ngOnDestroy() {
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
@@ -127,9 +119,9 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         this.variants = filtered;
     }
 
-    goToVariant(v: Variant) {
+    variantUrl(v: Variant) {
         let query = { chromosome: v.chromosome, start: v.start, alternate: v.alternate, timestamp: Date.now() };
-        this.router.navigate(['/search/variant', query]);
+        return ['/search/variant', query];
     }
 
 }

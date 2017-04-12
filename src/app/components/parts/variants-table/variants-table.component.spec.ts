@@ -15,7 +15,7 @@ import { GeneInformationComponent } from '../gene-information/gene-information.c
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
@@ -35,7 +35,8 @@ describe('VariantsTableComponent', () => {
             imports: [
                 FormsModule,
                 Ng2PaginationModule,
-                MaterialModule
+                MaterialModule,
+                RouterModule
             ],
             declarations: [
                 AlleleFreqComponent,

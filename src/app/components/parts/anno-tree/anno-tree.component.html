@@ -1,0 +1,56 @@
+<div *ngIf="isSimple(object)">
+    <div>
+        <span *ngIf="object">{{ object }}</span>
+    </div>
+</div>
+
+<div *ngIf="isComplex(object) || isArray(object)">
+    <div *ngFor="let k of keys" class="row">
+        <div *ngIf="isArray(object[k])">
+            <div class="list-container" *ngIf="object[k].length <= 0">
+                <div class="label-array empty">
+                    <span class="label">{{ k | jsonLabel }}:</span>
+                    <span class="label-empty" *ngIf="object[k].length <= 0">unavailable</span>
+                </div>
+            </div>
+            <div class="list-container" *ngIf="object[k].length > 0">
+                <div class="label-array" (click)="show[k]=show[k] === null ? true : !show[k]">
+                    <p><span class="label">{{ k | jsonLabel }}</span><span> ({{ object[k].length }})</span></p>
+
+                    <md-icon *ngIf="!show[k]">keyboard_arrow_down</md-icon>
+                    <md-icon *ngIf="show[k]">keyboard_arrow_up</md-icon>
+                </div>
+                <div class="list" *ngIf="show[k]">
+                    <div class="list-item" *ngFor="let v of object[k]; let i = index">
+                        <app-anno-tree [object]="v" [show]="show"></app-anno-tree>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isSimple(object[k])">
+            <div>
+                <span class="label">{{ k | jsonLabel}}: </span>
+                <span *ngIf="object[k]">{{ object[k] }}</span>
+                <span class="label-empty" *ngIf="!object[k]">unavailable</span>
+            </div>
+        </div>
+
+        <div *ngIf="isComplex(object[k])">
+            <div class="list-container">
+                <div class="label-array" (click)="show[k]=show[k] === null ? true : !show[k]">
+                    <p><span class="label">{{ k | jsonLabel }}</span></p>
+
+                    <md-icon *ngIf="!show[k]">keyboard_arrow_down</md-icon>
+                    <md-icon *ngIf="show[k]">keyboard_arrow_up</md-icon>
+                </div>
+                <div class="object-list" *ngIf="show[k]">
+                    <div class="object-item">
+                        <app-anno-tree [object]="object[k]" [show]="show"></app-anno-tree>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

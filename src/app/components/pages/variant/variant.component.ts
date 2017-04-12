@@ -9,6 +9,7 @@ import { EnsemblService } from '../../../services/ensembl-service';
 import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
+import { SearchOption } from '../../../model/search-option';
 
 @Component({
     selector: 'app-variant',
@@ -30,7 +31,8 @@ export class VariantComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private vss: VariantSearchService,
                 private bss: BeaconSearchService,
-                private rs: RegionService) {
+                private rs: RegionService,
+                private cd: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -40,7 +42,7 @@ export class VariantComponent implements OnInit, OnDestroy {
     parseParams(params: Params) {
         let start = Number(params['start']);
         let alternate = params['alternate'];
-        let sq = new SearchQuery(params['chromosome'], start, start, []);
+        let sq = new SearchQuery(params['chromosome'], start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
         this.vss.getVariants(sq).then(variants => {
             this.loading = false;
             let vf = variants.filter((v) => v.alternate === alternate);
@@ -50,8 +52,10 @@ export class VariantComponent implements OnInit, OnDestroy {
                 this.variant = vf[0];
                 if (this.variant.alternate.length !== 1) {
                     this.beaconSupported = false;
+                } else {
+                    this.beacons = this.bss.searchBeacon(this.beaconQuery(this.variant));
                 }
-                this.beacons = this.bss.searchBeacon(this.beaconQuery(this.variant));
+
                 let r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
                 this.rs.getGenesInRegion(r).subscribe((g) => {
                     if (g.length > 0) {
@@ -61,6 +65,7 @@ export class VariantComponent implements OnInit, OnDestroy {
             } else {
                 this.error = 'Found no variants for query';
             }
+            this.cd.detectChanges();
         });
     }
 
@@ -74,5 +79,11 @@ export class VariantComponent implements OnInit, OnDestroy {
 
     toggleBeacon() {
         this.showBeacon = !this.showBeacon;
+    }
+
+    name() {
+        let r = this.variant.reference ? this.variant.reference : '*';
+        let a = this.variant.alternate ? this.variant.alternate : '*';
+        return `${ this.variant.chromosome }-${ this.variant.start }-${ r }-${ a }`;
     }
 }

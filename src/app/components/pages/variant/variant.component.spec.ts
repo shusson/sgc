@@ -14,6 +14,16 @@ import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-foote
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MgrbTermsComponent } from '../mgrb-terms/mgrb-terms.component';
 import { MaterialModule } from '@angular/material';
+import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
+import { VariantAnnotationsComponent } from '../../parts/variant-annotations/variant-annotations.component';
+import { Ng2PaginationModule } from 'ng2-pagination';
+import { FormsModule } from '@angular/forms';
+import { AnnoTreeComponent, JsonLabelPipe } from '../../parts/anno-tree/anno-tree.component';
+import { VsalService } from '../../../services/vsal-service';
+import { MockVsalService } from '../../../mocks/vsal-service.mock';
+import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
+import { RegionService } from '../../../services/autocomplete/region-service';
+import { Observable } from 'rxjs/Observable';
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -22,7 +32,9 @@ describe('VariantComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule
+                MaterialModule,
+                Ng2PaginationModule,
+                FormsModule
             ],
             declarations: [
                 VariantComponent,
@@ -30,7 +42,11 @@ describe('VariantComponent', () => {
                 PageContainerComponent,
                 PrivacyFooterComponent,
                 SideNavComponent,
-                HeaderNavComponent
+                HeaderNavComponent,
+                BeaconTableComponent,
+                VariantAnnotationsComponent,
+                AnnoTreeComponent,
+                JsonLabelPipe
             ],
             providers: [
                 ScrollService,
@@ -40,7 +56,9 @@ describe('VariantComponent', () => {
                 },
                 {
                     provide: ActivatedRoute,
-                    useValue: {}
+                    useValue: {
+                        params: Observable.empty()
+                    }
                 },
                 {
                     provide: Router,
@@ -50,6 +68,18 @@ describe('VariantComponent', () => {
                     provide: Auth,
                     useValue: new MockAuth()
                 },
+                {
+                    provide: VsalService,
+                    useValue: new MockVsalService([])
+                },
+                {
+                    provide: BeaconNetworkService,
+                    useValue: {}
+                },
+                {
+                    provide: RegionService,
+                    useValue: {}
+                }
             ]
         })
             .compileComponents();

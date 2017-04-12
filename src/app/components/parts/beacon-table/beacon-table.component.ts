@@ -33,6 +33,22 @@ export class BeaconTableComponent implements OnInit, OnDestroy {
     constructor() {
     }
 
+    ngOnInit() {
+        if (this.foundOnly) {
+            this.labels = ['Name', 'Organization'];
+            this.responses = this.beacons.foundResponses();
+            this.subs.push(this.beacons.results.subscribe(() => {
+                this.responses = this.beacons.foundResponses();
+            }));
+        } else {
+            this.responses = this.beacons.responses;
+        }
+
+        if (!this.pagination) {
+            this.pageSize = MAX_RESULTS;
+        }
+    }
+
     sortResponses(label: string) {
         if (this.lastSortedLabel === label) {
             this.lastSortedOrder = !this.lastSortedOrder;
@@ -61,22 +77,6 @@ export class BeaconTableComponent implements OnInit, OnDestroy {
                     return 0;
                 }
             });
-        }
-    }
-
-    ngOnInit() {
-        if (this.foundOnly) {
-            this.labels = ['Name', 'Organization'];
-            this.responses = this.beacons.foundResponses();
-            this.subs.push(this.beacons.results.subscribe(() => {
-                this.responses = this.beacons.foundResponses();
-            }));
-        } else {
-            this.responses = this.beacons.responses;
-        }
-
-        if (!this.pagination) {
-            this.pageSize = MAX_RESULTS;
         }
     }
 

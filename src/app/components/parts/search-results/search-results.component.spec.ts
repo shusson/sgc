@@ -14,7 +14,7 @@ import { ScrollService } from '../../../services/scroll-service';
 import { GeneInformationComponent } from '../gene-information/gene-information.component';
 import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { EnsemblService } from '../../../services/ensembl-service';
 import { MaterialModule } from '@angular/material';
 import { SearchResultsComponent } from './search-results.component';
@@ -35,7 +35,8 @@ describe('Component: SearchResults', () => {
             imports: [
                 FormsModule,
                 Ng2PaginationModule,
-                MaterialModule
+                MaterialModule,
+                RouterModule
             ],
             declarations: [
                 AlleleFreqComponent,

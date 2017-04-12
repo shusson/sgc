@@ -65,6 +65,8 @@ import { LocalStorageService } from './services/local-storage.service';
 import { environment } from '../environments/environment';
 import { VariantComponent } from './components/pages/variant/variant.component';
 import { BeaconTableComponent } from './components/parts/beacon-table/beacon-table.component';
+import { VariantAnnotationsComponent } from './components/parts/variant-annotations/variant-annotations.component';
+import { AnnoTreeComponent, JsonLabelPipe } from './components/parts/anno-tree/anno-tree.component';
 import * as Raven from 'raven-js';
 
 Raven
@@ -129,7 +131,10 @@ export class RavenErrorHandler implements ErrorHandler {
         MgrbDownloadComponent,
         MgrbDownloadBannerComponent,
         VariantComponent,
-        BeaconTableComponent
+        BeaconTableComponent,
+        VariantAnnotationsComponent,
+        AnnoTreeComponent,
+        JsonLabelPipe
     ],
     providers: [
         Auth,

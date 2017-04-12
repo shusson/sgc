@@ -20,8 +20,8 @@
 
                     <td *ngIf="!response.loading && !response.error">{{ response.result.beacon.name }}</td>
                     <td *ngIf="!response.loading && !response.error">
-                        <div *ngIf="!(response.displayUrl | async)">{{ response.result.beacon.organization }}</div>
-                        <a target="_blank" *ngIf="response.displayUrl | async" href="{{ response.displayUrl | async }}">{{
+                        <div *ngIf="!(response.displayUrl)">{{ response.result.beacon.organization }}</div>
+                        <a target="_blank" *ngIf="response.displayUrl" href="{{ response.displayUrl }}">{{
                             response.result.beacon.organization }} <i class="fa fa-external-link" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="!response.loading && !response.error && !foundOnly"

@@ -12,10 +12,6 @@
     float: right;
 }
 
-td {
-    cursor: pointer;
-}
-
 button {
     width: auto;
     height: 45px;

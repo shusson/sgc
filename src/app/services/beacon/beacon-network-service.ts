@@ -4,6 +4,7 @@ import { Beacon } from '../../model/beacon';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { MGRB_ID } from './beacon-search-service';
+import { Subject } from 'rxjs/Subject';
 
 const TIMEOUT = 10000;
 
@@ -37,10 +38,13 @@ export type BeaconId = string;
 
 @Injectable()
 export class BeaconNetworkService {
-    orgs: Observable<NetworkOrganization[]> = this.getOrganisations();
+    orgs: NetworkOrganization[];
     supported: Observable<NetworkBeacon[]> = this.getSupportedBeacons();
 
     constructor(private http: Http) {
+        this.getOrganisations().subscribe((o) => {
+            this.orgs = o;
+        });
     }
 
     getSupportedBeacons(): Observable<NetworkBeacon[]> {

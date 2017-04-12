@@ -1,5 +1,22 @@
+.title {
+    font-size: xx-large;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 .group {
     margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.detail-type {
+    margin-top: 1rem;
+}
+
+.beacon, .reference {
+    flex-grow: 1;
+    flex-basis: 0;
 }
 
 .highlight-number {
@@ -26,6 +43,12 @@ md-progress-circle {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+    margin-top: 5px;
+}
+
+app-beacon-table {
+    max-height: 155px;
+    overflow-y: scroll;
 }
 
 

@@ -13,7 +13,7 @@ import { GenomeBrowserResizeComponent } from '../../parts/genome-browser-resizab
 import { SearchBarComponent } from '../../parts/search-bar/search-bar.component';
 import { SearchOptionComponent } from '../../parts/search-option/search-option.component';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { ActivatedRoute, Router, RouterOutletMap } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, RouterOutletMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
@@ -48,7 +48,8 @@ describe('Component: Search', () => {
             imports: [
                 FormsModule,
                 Ng2PaginationModule,
-                MaterialModule
+                MaterialModule,
+                RouterModule
             ],
             declarations: [
                 AlleleFreqComponent,

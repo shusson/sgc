@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, OnDestroy } from '@angular/core';
 import {
     BeaconResponse, NetworkOrganization, BeaconNetworkService, NetworkBeacon,
     BeaconId
@@ -6,6 +6,7 @@ import {
 import { Beacon } from '../../model/beacon';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 const REFERENCE = 'HG19';
 export const MGRB_ID = 'garvan';
@@ -17,6 +18,7 @@ export class BeaconCache {
     error = false;
     queue = new Subject<BeaconId>();
     results: Observable<BeaconResponse>;
+    private loading = true;
     private buffered = new Subject<BeaconId>();
     private buffer = [];
     private idMap = new Map<BeaconId, BeaconAsyncResult>();
@@ -24,6 +26,7 @@ export class BeaconCache {
     private found = 0;
     private notFound = 0;
     private failed = 0;
+    private subs: Subscription[] = [];
 
     constructor(private beacon: Beacon,
                 private bns: BeaconNetworkService) {
@@ -34,6 +37,10 @@ export class BeaconCache {
                 while (this.pending <= QUERY_LIMIT && this.buffer.length > 0) {
                     this.pending++;
                     let id = this.buffer.shift();
+                    if (this.buffer.length <= 0) {
+                        this.loading = false;
+                        this.responses.forEach(r => r.getDisplayUrl());
+                    }
                     obs.push(this.bns.queryBeacon(id, this.beacon)
                         .catch(e => {
                             let br = new BeaconResponse();
@@ -49,12 +56,13 @@ export class BeaconCache {
                 return Observable.merge(...obs);
             }).share();
 
-        this.queue.subscribe((id) => {
+        this.subs.push(this.queue.subscribe((id) => {
+            this.loading = true;
             this.buffer.push(id);
             this.buffered.next();
-        });
+        }));
 
-        this.results.subscribe(
+        this.subs.push(this.results.subscribe(
             (v: BeaconResponse) => {
                 this.pending--;
                 this.buffered.next();
@@ -69,7 +77,7 @@ export class BeaconCache {
             (e: any) => {
                 this.error = true;
             }
-        );
+        ));
     }
 
     addBeacon(id: BeaconId) {
@@ -79,8 +87,8 @@ export class BeaconCache {
         this.queue.next(id);
     }
 
-    loadingCount() {
-        return this.pending;
+    isLoading() {
+        return this.loading;
     }
 
     foundCount() {
@@ -91,20 +99,16 @@ export class BeaconCache {
         return this.responses.filter(b => b.result && b.result.response);
     }
 
-    retryFailedResults() {
-        this.responses.forEach((a: BeaconAsyncResult) => {
-            if (a.error) {
-                this.queue.next(a.id);
-            }
-        });
+    unsubscribe() {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
 }
 
 @Injectable()
-export class BeaconSearchService {
+export class BeaconSearchService implements OnDestroy {
     errors = new EventEmitter();
-    private searches = new Map<string, BeaconCache>();
+    private cache: BeaconCache;
 
     constructor(private bns: BeaconNetworkService) {
     }
@@ -115,31 +119,22 @@ export class BeaconSearchService {
             this.errors.emit(`Could not parse query: ${ query }`);
             return new BeaconCache(beacon, this.bns);
         }
-
-        if (this.searches.has(query) && useCache) {
-            let cache = this.searches.get(query);
-            cache.retryFailedResults();
-            return cache;
+        if (this.cache) {
+            this.cache.unsubscribe();
         }
-
-        let cache = new BeaconCache(beacon, this.bns);
-        this.searches.set(query, cache);
-        this.queryBeaconNetwork(cache);
-
-        return cache;
-    }
-
-    private queryBeaconNetwork(cache: BeaconCache) {
+        this.cache = new BeaconCache(beacon, this.bns);
         this.bns.supported.subscribe(
             (beacons: NetworkBeacon[]) => {
                 let beaconIds = [MGRB_ID].concat(beacons.map((v) => v.id));
                 beaconIds.forEach((id) => {
-                    cache.addBeacon(id);
+                    this.cache.addBeacon(id);
                 });
             },
             (e) => {
                 this.errors.emit(e);
             });
+
+        return this.cache;
     }
 
     private parseQuery(query: string): Beacon {
@@ -154,13 +149,20 @@ export class BeaconSearchService {
         beacon.reference = REFERENCE;
         return beacon;
     }
+
+    ngOnDestroy() {
+        if (this.cache) {
+            this.cache.unsubscribe();
+        }
+
+    }
 }
 
 export class BeaconAsyncResult {
     loading = true;
     result: BeaconResponse;
     error = '';
-    displayUrl: Observable<string>;
+    displayUrl: string;
 
     constructor(public id: string,
                 public beacon: Beacon,
@@ -177,7 +179,7 @@ export class BeaconAsyncResult {
         this.result = result;
         this.loading = false;
         this.error = '';
-        this.displayUrl = this.getDisplayUrl();
+        this.getDisplayUrl();
     }
 
     displayResult() {
@@ -192,16 +194,13 @@ export class BeaconAsyncResult {
         }
     }
 
-    private getDisplayUrl() {
-        if (this.result) {
-            return this.bns.orgs.map((organizations) => {
-                let org = organizations.find((o: NetworkOrganization) => {
-                    return o.name === this.result.beacon.organization;
-                });
-                return org ? org.url : '';
+    getDisplayUrl() {
+        if (this.result && this.bns.orgs) {
+            let org = this.bns.orgs.find((o: NetworkOrganization) => {
+                return o.name === this.result.beacon.organization;
             });
+            this.displayUrl = org ? org.url : '';
         }
-        return Observable.of('');
     }
 }
 

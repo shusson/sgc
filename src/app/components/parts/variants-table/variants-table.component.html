@@ -24,12 +24,13 @@
             <tr *ngFor="let variant of variants | paginate: { itemsPerPage: pageSize, currentPage: currentPage }"
                 [ngClass]="{'highlighted': compare(variant, highlightedVariant) }"
                 (mouseover)="highlightVariant(variant)"
-                (mouseout)="unHighlightVariant(variant)"
-                md-tooltip="Click for more info" mdTooltipPosition="left">
+                (mouseout)="unHighlightVariant(variant)">
 
-                <td (click)="goToVariant(variant)" *ngFor="let label of columnService.activeColumns()">
-                    <span *ngIf="label !== 'Allele Scale'"
+                <td *ngFor="let label of columnService.activeColumns()">
+
+                    <span *ngIf="label !== 'Allele Scale' && label !== 'Location'"
                           class="value">{{ columnService.display(label, variant) }}</span>
+                    <a *ngIf="label === 'Location'" [routerLink]="variantUrl(variant)">{{ columnService.display(label, variant) }}</a>
                     <app-allele-freq *ngIf="label === 'Allele Scale'"
                                      [freq]="variant.variantStats[0].altAlleleFreq"></app-allele-freq>
                 </td>

@@ -1,3 +1,4 @@
+import { VariantAnnotation } from './variant-annotations';
 export const HOMOZYGOTES_KEY = '1/1';
 export const HETEROZYGOTES_KEY = '0/1';
 export const MISSED_GENOTYPES_KEY = './.';
@@ -18,6 +19,7 @@ export class Variant {
     alternate: string;
     type: string;
     variantStats: VariantStat[];
+    annotation: VariantAnnotation;
     highlight = false;
 
     static dbSnpUrl(variant: Variant) {
