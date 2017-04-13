@@ -42,6 +42,7 @@
     "tnt.genome": "^0.1.6",
     "tnt.tooltip": "^0.1.0",
     "ts-helpers": "^1.1.1",
+    "uuid": "^3.0.1",
     "web-animations-js": "^2.2.2",
     "zone.js": "^0.8.4"
   },
@@ -54,6 +55,7 @@
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "@types/papaparse": "^4.1.27",
+    "@types/uuid": "^2.0.29",
     "codelyzer": "~2.0.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",

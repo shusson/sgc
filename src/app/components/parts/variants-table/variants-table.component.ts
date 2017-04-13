@@ -120,8 +120,8 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     variantUrl(v: Variant) {
-        let query = { chromosome: v.chromosome, start: v.start, alternate: v.alternate, timestamp: Date.now() };
-        return ['/search/variant', query];
+
+        return ['/search/variant', {query: Variant.displayName(v)}];
     }
 
 }

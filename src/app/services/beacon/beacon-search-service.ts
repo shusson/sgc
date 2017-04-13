@@ -71,7 +71,7 @@ export class BeaconCache {
                     this.failed++;
                 } else {
                     this.idMap.get(v.beacon.id).setResult(v);
-                    v.response ? this.found++ : this.notFound--;
+                    v.response ? this.found++ : this.notFound++;
                 }
             },
             (e: any) => {
@@ -101,6 +101,18 @@ export class BeaconCache {
 
     unsubscribe() {
         this.subs.forEach(s => s.unsubscribe());
+    }
+
+    totalCount() {
+        return this.responses.length;
+    }
+
+    totalProcessed() {
+        return this.found + this.notFound + this.failed;
+    }
+
+    percentComplete() {
+        return (this.totalProcessed() / this.responses.length) * 100;
     }
 
 }

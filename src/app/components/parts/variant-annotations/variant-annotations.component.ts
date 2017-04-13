@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { VariantAnnotation } from '../../../model/variant-annotations';
 
 const REDUNDANT_ANNOTATIONS = ['chromosome',
@@ -16,6 +16,10 @@ export class VariantAnnotationsComponent implements OnInit {
     @Input() annotations: VariantAnnotation;
     showOptions = {};
 
+    constructor(private cd: ChangeDetectorRef) {
+
+    }
+
     ngOnInit() {
         REDUNDANT_ANNOTATIONS.forEach((ra) => delete this.annotations[ra]);
     }
@@ -23,15 +27,21 @@ export class VariantAnnotationsComponent implements OnInit {
     expandAll() {
         let keys = Object.keys(this.showOptions);
         for (let k of keys) {
-            this.showOptions[k] = true;
+            for (let j of Object.keys(this.showOptions[k])) {
+                this.showOptions[k][j] = true;
+            }
         }
+        this.cd.detectChanges();
     }
 
     collapseAll() {
         let keys = Object.keys(this.showOptions);
         for (let k of keys) {
-            this.showOptions[k] = false;
+            for (let j of Object.keys(this.showOptions[k])) {
+                this.showOptions[k][j] = false;
+            }
         }
+        this.cd.detectChanges();
     }
 
 }

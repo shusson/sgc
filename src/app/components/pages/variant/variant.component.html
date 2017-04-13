@@ -6,7 +6,7 @@
         </div>
         <div *ngIf="variant" class="details">
             <div class="title">
-                Variant {{ name() }}
+                Variant {{ displayName(variant) }}
             </div>
             <div class="group">
                 <div class="reference">
@@ -48,6 +48,15 @@
 
                     <div class="detail">
                         <div class="detail-label">
+                            <span>Reference:</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>{{ variant.reference }}</span>
+                        </div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">
                             <span>Alternate:</span>
                         </div>
                         <div class="detail-value">
@@ -61,14 +70,6 @@
                         </div>
                         <div class="detail-value">
                             <span>{{ variant.variantStats[0].altAlleleFreq.toExponential(4) }}</span>
-                        </div>
-                    </div>
-                    <div class="detail">
-                        <div class="detail-label">
-                            <span>Reference:</span>
-                        </div>
-                        <div class="detail-value">
-                            <span>{{ variant.reference }}</span>
                         </div>
                     </div>
 
@@ -103,16 +104,22 @@
                 <div class="beacon">
                     <div class="detail-type">Beacon Results</div>
                     <div *ngIf="!beaconSupported">Not supported (SNP only)</div>
-                    <div class="card" *ngIf="beaconSupported">
+                    <div class="loading-message" *ngIf="beaconSupported && !beacons.totalCount()">
+                        <md-spinner color="primary"></md-spinner>
+                    </div>
+                    <div class="card" *ngIf="beaconSupported && beacons.totalCount()">
                         <div class="beacon-row" (click)="toggleBeacon()">
                             <div>
                                 <span>This variant was found in</span>
                                 <span class="highlight-number">{{ beacons.foundCount() }}</span>
-                                <span>other databases</span>
+                                <span> out of </span>
+                                <span class="highlight-number">{{ beacons.totalCount() }}</span>
+                                <span>beacons</span>
+
                             </div>
                             <md-icon>keyboard_arrow_down</md-icon>
                         </div>
-                        <md-progress-bar *ngIf="beacons.isLoading()" [mode]="'indeterminate'"></md-progress-bar>
+                        <md-progress-bar [mode]="'determinate'" [value]="beacons.percentComplete()"></md-progress-bar>
 
                         <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [foundOnly]="true"
                                           [pagination]="false"></app-beacon-table>

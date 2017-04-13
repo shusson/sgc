@@ -32,7 +32,7 @@ md-progress-circle {
 
 .card {
     max-width: 600px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0,.22);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
     display: flex;
     flex-direction: column;
 }
@@ -51,4 +51,12 @@ app-beacon-table {
     overflow-y: scroll;
 }
 
+.beacon .loading-message {
+    min-height: 0;
+    height: 40px;
+    width: 40px;
+}
 
+.beacon .loading-message md-icon {
+    height: 40px;
+}

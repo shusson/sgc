@@ -25,4 +25,10 @@ export class Variant {
     static dbSnpUrl(variant: Variant) {
         return `${DB_SNP_URL}?rs=${variant.dbSNP}`;
     }
+
+    static displayName(variant: Variant) {
+        let r = variant.reference ? variant.reference : '*';
+        let a = variant.alternate ? variant.alternate : '*';
+        return `${ variant.chromosome }-${ variant.start }-${ r }-${ a }`;
+    }
 }

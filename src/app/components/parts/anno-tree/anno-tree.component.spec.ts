@@ -19,6 +19,7 @@ describe('AnnoTreeComponent', () => {
         fixture = TestBed.createComponent(AnnoTreeComponent);
         component = fixture.componentInstance;
         component.object = {};
+        component.show = {};
         fixture.detectChanges();
     });
 

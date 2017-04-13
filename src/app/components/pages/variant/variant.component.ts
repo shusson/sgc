@@ -27,6 +27,7 @@ export class VariantComponent implements OnInit, OnDestroy {
     error = '';
     loading = true;
     beaconSupported = true;
+    displayName = Variant.displayName;
 
     constructor(private route: ActivatedRoute,
                 private vss: VariantSearchService,
@@ -40,33 +41,19 @@ export class VariantComponent implements OnInit, OnDestroy {
     }
 
     parseParams(params: Params) {
-        let start = Number(params['start']);
-        let alternate = params['alternate'];
-        let sq = new SearchQuery(params['chromosome'], start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
-        this.vss.getVariants(sq).then(variants => {
-            this.loading = false;
-            let vf = variants.filter((v) => v.alternate === alternate);
-            if (vf.length > 1) {
-                this.error = 'Found more than one variant for query';
-            } else if (vf.length > 0) {
-                this.variant = vf[0];
-                if (this.variant.alternate.length !== 1) {
-                    this.beaconSupported = false;
-                } else {
-                    this.beacons = this.bss.searchBeacon(this.beaconQuery(this.variant));
-                }
+        try {
+            let r = /([\dxy]*)-(\d*)-([AGTC\*]*)-([AGTC\*]*)+/ig;
+            let m = r.exec(params['query']);
+            let chromo = m[1];
+            let start = Number(m[2]);
+            let alternate = m[4].replace('*', '');
 
-                let r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
-                this.rs.getGenesInRegion(r).subscribe((g) => {
-                    if (g.length > 0) {
-                        this.gene = g[0];
-                    }
-                });
-            } else {
-                this.error = 'Found no variants for query';
-            }
-            this.cd.detectChanges();
-        });
+            let sq = new SearchQuery(chromo, start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
+            this.getVariant(sq, alternate);
+        } catch (e) {
+            this.error = 'Could not find specified variant';
+            this.loading = false;
+        }
     }
 
     ngOnDestroy() {
@@ -81,9 +68,33 @@ export class VariantComponent implements OnInit, OnDestroy {
         this.showBeacon = !this.showBeacon;
     }
 
-    name() {
-        let r = this.variant.reference ? this.variant.reference : '*';
-        let a = this.variant.alternate ? this.variant.alternate : '*';
-        return `${ this.variant.chromosome }-${ this.variant.start }-${ r }-${ a }`;
+    private getVariant(sq: SearchQuery, alternate: string) {
+        this.vss.getVariants(sq).then(variants => {
+            this.loading = false;
+            let vf = variants.filter((v) => v.alternate === alternate);
+            if (vf.length > 1) {
+                this.error = 'Found more than one variant for query';
+            } else if (vf.length > 0) {
+                this.variant = vf[0];
+                if (this.variant.alternate.length !== 1) {
+                    this.beaconSupported = false;
+                } else {
+                    this.beacons = this.bss.searchBeacon(this.beaconQuery(this.variant));
+                    this.subscriptions.push(this.beacons.results.debounceTime(500).subscribe(() => {
+                        this.cd.detectChanges();
+                    }));
+                }
+
+                let r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
+                this.rs.getGenesInRegion(r).subscribe((g) => {
+                    if (g.length > 0) {
+                        this.gene = g[0];
+                    }
+                });
+            } else {
+                this.error = 'Found no variants for query';
+            }
+            this.cd.detectChanges();
+        });
     }
 }
