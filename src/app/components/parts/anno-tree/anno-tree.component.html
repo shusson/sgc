@@ -20,12 +20,8 @@
                     <md-icon *ngIf="!isShown(k)">keyboard_arrow_down</md-icon>
                     <md-icon *ngIf="isShown(k)">keyboard_arrow_up</md-icon>
                 </div>
-                <div class="container">
-                    <div class="list" *ngIf="isShown(k)">
-                        <div class="list-item" *ngFor="let v of object[k]; let i = index">
-                            <app-anno-tree [object]="v" [show]="show"></app-anno-tree>
-                        </div>
-                    </div>
+                <div class="container" *ngIf="isShown(k)">
+                    <app-virtual-list [items]="object[k]"></app-virtual-list>
                 </div>
             </div>
         </div>
@@ -49,7 +45,7 @@
                 </div>
                 <div class="object-list" *ngIf="isShown(k)">
                     <div class="object-item">
-                        <app-anno-tree [object]="object[k]" [show]="show"></app-anno-tree>
+                        <app-anno-tree [object]="object[k]"></app-anno-tree>
                     </div>
                 </div>
             </div>

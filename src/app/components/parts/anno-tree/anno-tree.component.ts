@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Pipe, PipeTransform } from '@angular/core';
 import * as uuid from 'uuid';
+import { AnnotationTreeService } from '../../../services/annotation.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Pipe({name: 'jsonLabel'})
 export class JsonLabelPipe implements PipeTransform {
@@ -13,24 +15,30 @@ export class JsonLabelPipe implements PipeTransform {
 @Component({
     selector: 'app-anno-tree',
     templateUrl: './anno-tree.component.html',
-    styleUrls: ['./anno-tree.component.css']
+    styleUrls: ['./anno-tree.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AnnoTreeComponent implements OnInit {
+export class AnnoTreeComponent implements OnInit, OnDestroy {
     @Input() object: any;
-    @Input() show: any;
     keys: string[];
     id: string = uuid.v4();
+    subs: Subscription[] = [];
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef,
+                private ats: AnnotationTreeService) {
     }
 
     ngOnInit() {
-        this.show[this.id] = {};
         this.keys = Object.keys(this.object);
         this.keys.sort((a: string, b: string) => {
             return this.isSimple(this.object[a]) ? -1 : 1;
         });
-        this.keys.forEach((k) => this.show[this.id][k] = false);
+
+        this.ats.initNode(this.id, this.keys);
+
+        this.subs.push(this.ats.updates.subscribe(() => {
+            this.cd.detectChanges();
+        }));
     }
 
     isArray(v: any) {
@@ -46,13 +54,14 @@ export class AnnoTreeComponent implements OnInit {
     }
 
     toggleShow(k: string) {
-        this.show[this.id][k] = this.show[this.id][k] === null ? true : !this.show[this.id][k];
-        this.cd.detectChanges();
+        this.ats.toggleShow(this.id, k);
     }
 
-    isShown(k: string) {
-        return this.show[this.id][k];
+    isShown(k: string): boolean {
+        return this.ats.isShown(this.id, k);
     }
 
-
+    ngOnDestroy() {
+        this.subs.forEach(s => s.unsubscribe());
+    }
 }

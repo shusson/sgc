@@ -67,6 +67,8 @@ import { VariantComponent } from './components/pages/variant/variant.component';
 import { BeaconTableComponent } from './components/parts/beacon-table/beacon-table.component';
 import { VariantAnnotationsComponent } from './components/parts/variant-annotations/variant-annotations.component';
 import { AnnoTreeComponent, JsonLabelPipe } from './components/parts/anno-tree/anno-tree.component';
+import { VirtualListComponent } from './components/parts/virtual-list/virtual-list.component';
+import { VirtualListItemComponent } from './components/parts/virtual-list-item/virtual-list-item.component';
 import * as Raven from 'raven-js';
 
 Raven
@@ -134,7 +136,9 @@ export class RavenErrorHandler implements ErrorHandler {
         BeaconTableComponent,
         VariantAnnotationsComponent,
         AnnoTreeComponent,
-        JsonLabelPipe
+        JsonLabelPipe,
+        VirtualListComponent,
+        VirtualListItemComponent
     ],
     providers: [
         Auth,

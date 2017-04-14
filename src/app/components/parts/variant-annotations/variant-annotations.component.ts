@@ -1,5 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit,
+    ViewChild
+} from '@angular/core';
 import { VariantAnnotation } from '../../../model/variant-annotations';
+import { AnnoTreeComponent } from '../anno-tree/anno-tree.component';
+import { AnnotationTreeService } from '../../../services/annotation.service';
 
 const REDUNDANT_ANNOTATIONS = ['chromosome',
     'reference',
@@ -10,13 +15,14 @@ const REDUNDANT_ANNOTATIONS = ['chromosome',
 @Component({
     selector: 'app-variant-annotations',
     templateUrl: './variant-annotations.component.html',
-    styleUrls: ['./variant-annotations.component.css', '../../../shared/meta-information.css']
+    styleUrls: ['./variant-annotations.component.css', '../../../shared/meta-information.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [AnnotationTreeService]
 })
 export class VariantAnnotationsComponent implements OnInit {
     @Input() annotations: VariantAnnotation;
-    showOptions = {};
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef, private ats: AnnotationTreeService) {
 
     }
 
@@ -25,23 +31,11 @@ export class VariantAnnotationsComponent implements OnInit {
     }
 
     expandAll() {
-        let keys = Object.keys(this.showOptions);
-        for (let k of keys) {
-            for (let j of Object.keys(this.showOptions[k])) {
-                this.showOptions[k][j] = true;
-            }
-        }
-        this.cd.detectChanges();
+        this.ats.expandAll();
     }
 
     collapseAll() {
-        let keys = Object.keys(this.showOptions);
-        for (let k of keys) {
-            for (let j of Object.keys(this.showOptions[k])) {
-                this.showOptions[k][j] = false;
-            }
-        }
-        this.cd.detectChanges();
+        this.ats.collapseAll();
     }
 
 }
