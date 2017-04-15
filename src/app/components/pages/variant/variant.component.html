@@ -127,7 +127,7 @@
                 </div>
             </div>
 
-            <div class="group">
+            <div class="group" *ngIf="showAnnotations">
                 <app-variant-annotations [annotations]="variant.annotation"></app-variant-annotations>
             </div>
 

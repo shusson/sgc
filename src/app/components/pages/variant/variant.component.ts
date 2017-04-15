@@ -23,7 +23,8 @@ export class VariantComponent implements OnInit, OnDestroy {
     dbSnpUrl = Variant.dbSnpUrl;
     beacons: BeaconCache;
     gene: Gene;
-    showBeacon = false;
+    showBeacon = true;
+    showAnnotations = false;
     error = '';
     loading = true;
     beaconSupported = true;
@@ -46,10 +47,11 @@ export class VariantComponent implements OnInit, OnDestroy {
             let m = r.exec(params['query']);
             let chromo = m[1];
             let start = Number(m[2]);
+            let reference = m[3].replace('*', '');
             let alternate = m[4].replace('*', '');
 
             let sq = new SearchQuery(chromo, start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
-            this.getVariant(sq, alternate);
+            this.getVariant(sq, reference, alternate);
         } catch (e) {
             this.error = 'Could not find specified variant';
             this.loading = false;
@@ -68,10 +70,10 @@ export class VariantComponent implements OnInit, OnDestroy {
         this.showBeacon = !this.showBeacon;
     }
 
-    private getVariant(sq: SearchQuery, alternate: string) {
+    private getVariant(sq: SearchQuery, reference: string, alternate: string) {
         this.vss.getVariants(sq).then(variants => {
             this.loading = false;
-            let vf = variants.filter((v) => v.alternate === alternate);
+            let vf = variants.filter((v) => v.alternate === alternate && v.reference === reference);
             if (vf.length > 1) {
                 this.error = 'Found more than one variant for query';
             } else if (vf.length > 0) {

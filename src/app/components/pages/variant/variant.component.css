@@ -47,8 +47,8 @@ md-progress-circle {
 }
 
 app-beacon-table {
-    max-height: 155px;
-    overflow-y: scroll;
+    /*max-height: 155px;*/
+    /*overflow-y: scroll;*/
 }
 
 .beacon .loading-message {

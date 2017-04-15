@@ -2,6 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AnnoTreeComponent, JsonLabelPipe } from './anno-tree.component';
 import { MdIconModule } from '@angular/material';
+import { VirtualListComponent } from '../virtual-list/virtual-list.component';
+import { VirtualListItemComponent } from '../virtual-list-item/virtual-list-item.component';
+import { AnnotationTreeService } from '../../../services/annotation.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('AnnoTreeComponent', () => {
     let component: AnnoTreeComponent;
@@ -10,7 +14,21 @@ describe('AnnoTreeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MdIconModule],
-            declarations: [AnnoTreeComponent, JsonLabelPipe]
+            declarations: [
+                AnnoTreeComponent,
+                JsonLabelPipe,
+                VirtualListComponent,
+                VirtualListItemComponent
+            ],
+            providers: [
+                {
+                    provide: AnnotationTreeService,
+                    useValue: {
+                        initNode: () => {},
+                        updates: Observable.empty();
+                    }
+                }
+            ]
         })
             .compileComponents();
     }));
@@ -19,7 +37,6 @@ describe('AnnoTreeComponent', () => {
         fixture = TestBed.createComponent(AnnoTreeComponent);
         component = fixture.componentInstance;
         component.object = {};
-        component.show = {};
         fixture.detectChanges();
     });
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { MGRB_ID } from './beacon-search-service';
 import { Subject } from 'rxjs/Subject';
 
-const TIMEOUT = 10000;
+const TIMEOUT = 20000;
 
 const SUPPORTED_REFERENCES = new Set(['HG19', 'GRCH37']);
 

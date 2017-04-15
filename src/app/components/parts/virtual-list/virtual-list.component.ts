@@ -18,7 +18,7 @@ const MARGIN_OF_ERROR_ROWS = 2;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VirtualListComponent implements OnInit, AfterViewInit, OnDestroy {
-    @Input() items: any[];
+    @Input() items: any[] = [];
     @ViewChildren(VirtualListItemComponent)
     private virtualItems: QueryList<VirtualListItemComponent>;
     visibleItems: any[];
@@ -51,6 +51,9 @@ export class VirtualListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updateEnd(window: number) {
+        if (!this.virtualItems.first) {
+            return;
+        }
         let estimatedWidth = this.virtualItems.first.elf.nativeElement.clientWidth;
         let estimatedHeight = this.virtualItems.first.elf.nativeElement.clientHeight;
         let listWidth = this.elf.nativeElement.children[0].clientWidth;

@@ -24,6 +24,8 @@ import { MockVsalService } from '../../../mocks/vsal-service.mock';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Observable } from 'rxjs/Observable';
+import { VirtualListComponent } from '../../parts/virtual-list/virtual-list.component';
+import { VirtualListItemComponent } from '../../parts/virtual-list-item/virtual-list-item.component';
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -46,7 +48,9 @@ describe('VariantComponent', () => {
                 BeaconTableComponent,
                 VariantAnnotationsComponent,
                 AnnoTreeComponent,
-                JsonLabelPipe
+                JsonLabelPipe,
+                VirtualListComponent,
+                VirtualListItemComponent
             ],
             providers: [
                 ScrollService,
