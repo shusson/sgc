@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { constants } from '../app.constants';
 import Auth0Lock from 'auth0-lock';
+import * as Raven from 'raven-js';
 
 const options: any = {
     theme: {

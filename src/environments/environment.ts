@@ -13,5 +13,6 @@ export const environment = {
     beaconNetworkUrl: '',
     vsalUrl: '',
     elasticUrl: '',
-    durlUrl: ''
+    durlUrl: '',
+    sentryUrl: ''
 };

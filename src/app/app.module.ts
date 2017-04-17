@@ -1,6 +1,6 @@
 import 'rxjs/Rx';
 import 'hammerjs';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -62,6 +62,18 @@ import { DurlService } from './services/durl.service';
 import { MgrbDownloadComponent } from './components/pages/mgrb-download/mgrb-download.component';
 import { MgrbDownloadBannerComponent } from './components/parts/mgrb-download-banner/mgrb-download-banner.component';
 import { LocalStorageService } from './services/local-storage.service';
+import { environment } from '../environments/environment';
+import * as Raven from 'raven-js';
+
+Raven
+    .config(environment.sentryUrl)
+    .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+    handleError(err: any): void {
+        Raven.captureException(err.originalError);
+    }
+}
 
 @NgModule({
     imports: [
@@ -130,6 +142,7 @@ import { LocalStorageService } from './services/local-storage.service';
         ColumnService,
         DurlService,
         LocalStorageService,
+        { provide: ErrorHandler, useClass: RavenErrorHandler },
         {provide: 'NULL_VALUE', useValue: null}
     ],
     bootstrap: [AppComponent]
