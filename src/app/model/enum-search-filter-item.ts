@@ -11,7 +11,15 @@ export class EnumSearchFilterItem implements SearchFilterItem {
 
     }
 
-    isValid(): boolean {
+    isStartValid() {
         return this.values.indexOf(this.start) !== -1;
+    }
+
+    isValid(): boolean {
+        return this.isStartValid();
+    }
+
+    startInvalidTooltipText(): string {
+        return 'Please select a value';
     }
 }
