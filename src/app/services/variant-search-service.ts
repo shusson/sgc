@@ -16,6 +16,7 @@ export class VariantSearchService {
     commenced = false;
     lastQuery: SearchQuery;
     startingRegion: Region;
+    loading = false;
     private searchQuery = new Subject<SearchQuery>();
     private variantsObserver: Observable<VariantRequest>;
 
@@ -39,11 +40,13 @@ export class VariantSearchService {
             }
             this.variants = cs.variants;
             this.commenced = true;
+            this.loading = false;
         });
     }
 
     getVariants(query: SearchQuery): Promise<Variant[]> {
         this.lastQuery = query;
+        this.loading = true;
         let promise = new Promise((resolve, reject) => {
             this.results.take(1).subscribe(
                 (vr: VariantRequest) => {

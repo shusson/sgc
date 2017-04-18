@@ -1,3 +1,20 @@
+
+.loading-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.loading-message.overview {
+    min-height: 300px;
+}
+
+.loading-message.subview {
+    min-height: 170px;
+}
+
 .search-result-content {
     margin-top: 1rem;
 }
