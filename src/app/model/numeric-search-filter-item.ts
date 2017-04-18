@@ -14,26 +14,46 @@ export class NumericSearchFilterItem implements SearchFilterItem {
 
     }
 
-    isValid(): boolean {
+    isStartValid(): boolean {
+        if (this.start === '') {
+            return false;
+        }
+        let s = Number(this.start);
+        if (s === null) {
+            return false;
+        }
+        return s >= this.min && s <= this.max;
+    }
 
+    isEndValid(): boolean {
+        if (this.start === '' || this.end === '') {
+            return false;
+        }
         let s = Number(this.start);
         let e = Number(this.end);
+        if (s === null || e === null) {
+            return false;
+        }
+        return e >= this.min && e <= this.max && s <= e;
+    }
+
+    isValid(): boolean {
         switch (this.operator) {
             case 'is':
-                if (s === null) {
-                    return false;
-                }
-                return s > this.min && s < this.max;
+                return this.isStartValid();
             case 'is between':
-                if (s === null || e === null) {
-                    return false;
-                }
-                return s > this.min && s < this.max &&
-                    e > this.min && e < this.max &&
-                    s <= e;
-
+                return this.isStartValid() &&
+                        this.isEndValid();
             default:
                 return false;
         }
+    }
+
+    startInvalidTooltipText(): string {
+        return `Value must be between ${ this.min } and ${ this.max }`;
+    }
+
+    endInvalidTooltipText(): string {
+        return `Value must be between ${ this.min } and ${ this.max } and less than or equal to starting range`;
     }
 }

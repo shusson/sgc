@@ -8,5 +8,11 @@ export interface SearchFilterItem {
     start: string;
     end?: string;
 
+    isStartValid(): boolean;
+    isEndValid?(): boolean;
+
     isValid(): boolean;
+
+    startInvalidTooltipText(): string;
+    endInvalidTooltipText?(): string;
 }

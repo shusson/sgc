@@ -40,13 +40,19 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.errorEvent.emit(e);
         }));
 
-        this.subscriptions.push(this.sfs.updates.subscribe((v) => {
+        this.subscriptions.push(this.sfs.updates.subscribe(() => {
             let q = this.searchService.lastQuery;
+            let previous = this.searchService.lastQuery.clinicalFilters;
             q.clinicalFilters = this.sfs.appliedItems.filter((f) => f.isValid() && f.enabled);
-            if (q.clinicalFilters.length) {
+            let diff = () => {
+                let a = q.clinicalFilters;
+                return a.filter((x) => previous.indexOf(x) < 0)
+                    .concat(previous.filter(x => a.indexOf(x) < 0));
+
+            };
+            if (diff().length > 0) {
                 this.searchService.getVariants(q);
             }
-
         }));
 
         this.loadingVariants = true;

@@ -40,3 +40,8 @@ input {
     display: inline;
     min-width: 20px;
 }
+
+.invalid {
+    outline: 2px solid #FF5D37;
+}
+
