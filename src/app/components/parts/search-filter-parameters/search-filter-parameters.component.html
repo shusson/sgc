@@ -14,12 +14,21 @@
 
     <div class="values">
         <div *ngIf="showNumeric()">
-            <input [ngModel]="item.start" (ngModelChange)="updateStart($event)">
+            <input [ngModel]="item.start" (ngModelChange)="updateStart($event)"
+                   [ngClass]="{invalid: !item.isStartValid()}"
+                   [mdTooltip]="item.startInvalidTooltipText()"
+                   [mdTooltipDisabled]="item.isStartValid()">
             <span *ngIf="item.operator === 'is between'">&</span>
-            <input *ngIf="item.operator === 'is between'" [ngModel]="item.end" (ngModelChange)="updateEnd($event)">
+            <input *ngIf="item.operator === 'is between'" [ngModel]="item.end" (ngModelChange)="updateEnd($event)"
+                   [ngClass]="{invalid: !item.isEndValid()}"
+                   [mdTooltip]="item.endInvalidTooltipText()"
+                   [mdTooltipDisabled]="item.isEndValid()">
         </div>
         <div *ngIf="showEnum()">
-            <md-select [ngModel]="item.start" (ngModelChange)="updateStart($event)" name="op">
+            <md-select [ngModel]="item.start" (ngModelChange)="updateStart($event)" name="op"
+                       [ngClass]="{invalid: !item.isStartValid()}"
+                       [mdTooltip]="item.startInvalidTooltipText()"
+                       [mdTooltipDisabled]="item.isStartValid()">
                 <md-option *ngFor="let v of item.values" [value]="v">
                     {{ v }}
                 </md-option>
