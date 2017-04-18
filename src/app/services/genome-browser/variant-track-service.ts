@@ -8,6 +8,7 @@ import { Region } from '../../model/region';
 import { RegionAutocomplete } from '../../model/region-autocomplete';
 import { RegionService } from '../autocomplete/region-service';
 import { TrackService } from './track-service';
+import { SearchFilterItem, SearchFilterItemSerialised } from '../../model/search-filter-item';
 
 const PIN_COLOR = '#4682b4';
 const PIN_SELECTED_COLOR = '#FFD658';
@@ -185,7 +186,7 @@ export class VariantTrackService implements TrackService {
 
                 if (this.searchService.startingRegion.start !== loc.from ||
                     this.searchService.startingRegion.end !== loc.to) {
-                    return regionAutocomplete.search(this.searchService, this.searchService.lastQuery.options, this.searchService.lastQuery.clinicalFilters).then(() => {
+                    return regionAutocomplete.search(this.searchService, this.searchService.lastQuery.options, <SearchFilterItem[]>this.searchService.lastQuery.clinicalFilters).then(() => {
                         return Promise.resolve(this.searchService.variants.map(createPin));
                     });
                 } else {

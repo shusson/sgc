@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
-import { SearchFilterItem } from '../model/search-filter-item';
+import { SearchFilterItem, SearchFilterItemSerialised } from '../model/search-filter-item';
 
 export const VSAL_VARIANT_LIMIT = 500;
 export const VSAL_TIMEOUT = 20000;
@@ -59,7 +59,7 @@ export class VsalService {
             }
         });
 
-        query.clinicalFilters.forEach((v: SearchFilterItem) => {
+        query.clinicalFilters.forEach((v: SearchFilterItemSerialised) => {
             this.clinicalParamMap[v.name](v, urlParams);
         });
 
