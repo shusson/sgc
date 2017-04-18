@@ -1,3 +1,12 @@
+export interface SearchFilterItemSerialised {
+    enabled: boolean;
+    name: string;
+    operators: string[];
+    operator: string;
+
+    start: string;
+    end?: string;
+}
 
 export interface SearchFilterItem {
     enabled: boolean;
@@ -15,4 +24,8 @@ export interface SearchFilterItem {
 
     startInvalidTooltipText(): string;
     endInvalidTooltipText?(): string;
+
+    isEqual(x: SearchFilterItemSerialised): boolean;
+
+    copy(): SearchFilterItem;
 }

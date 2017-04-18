@@ -1,4 +1,4 @@
-import { SearchFilterItem } from './search-filter-item';
+import { SearchFilterItem, SearchFilterItemSerialised } from './search-filter-item';
 
 export class NumericSearchFilterItem implements SearchFilterItem {
     enabled = true;
@@ -55,5 +55,15 @@ export class NumericSearchFilterItem implements SearchFilterItem {
 
     endInvalidTooltipText(): string {
         return `Value must be between ${ this.min } and ${ this.max } and less than or equal to starting range`;
+    }
+
+    isEqual(x: SearchFilterItemSerialised) {
+        return this.name === x.name &&
+            this.start === x.start &&
+            this.end === x.end;
+    }
+
+    copy(): SearchFilterItem {
+        return new NumericSearchFilterItem(this.name, this.min, this.max, this.unit);
     }
 }

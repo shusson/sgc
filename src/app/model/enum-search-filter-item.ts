@@ -1,4 +1,4 @@
-import { SearchFilterItem } from './search-filter-item';
+import { SearchFilterItem, SearchFilterItemSerialised } from './search-filter-item';
 
 export class EnumSearchFilterItem implements SearchFilterItem {
     enabled = true;
@@ -21,5 +21,14 @@ export class EnumSearchFilterItem implements SearchFilterItem {
 
     startInvalidTooltipText(): string {
         return 'Please select a value';
+    }
+
+    isEqual(x: SearchFilterItemSerialised) {
+        return this.name === x.name &&
+            this.start === x.start;
+    }
+
+    copy(): SearchFilterItem {
+        return new EnumSearchFilterItem(this.name, this.values);
     }
 }

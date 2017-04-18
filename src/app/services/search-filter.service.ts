@@ -29,14 +29,14 @@ export class SearchFilterService {
         v.enabled = true;
         let index = this.availableItems.findIndex((item) => item.name === v.name);
         this.availableItems.splice(index, 1);
-        this.appliedItems.push(v);
+        this.appliedItems.push(v.copy());
         this.updates.next();
     }
 
     removeItem(v: SearchFilterItem) {
         let index = this.appliedItems.findIndex((item) => item.name === v.name);
         this.appliedItems.splice(index, 1);
-        this.availableItems.push(v);
+        this.availableItems.push(v.copy());
         this.updates.next();
     }
 

@@ -46,6 +46,7 @@ export class VariantSearchService {
 
     getVariants(query: SearchQuery): Promise<Variant[]> {
         this.lastQuery = query;
+        this.lastQuery.clinicalFilters = JSON.parse(JSON.stringify(this.lastQuery.clinicalFilters));
         this.loading = true;
         let promise = new Promise((resolve, reject) => {
             this.results.take(1).subscribe(
