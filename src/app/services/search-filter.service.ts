@@ -13,10 +13,10 @@ export class SearchFilterService {
     availableItems: SearchFilterItem[] = [
         new NumericSearchFilterItem('Year Of Birth', 1800, 2100, 'yr'),
         new NumericSearchFilterItem('Systolic Blood Pressure', 0, 300, 'mmHg'),
-        new NumericSearchFilterItem('Height', 0, 300, 'cm'),
+        new NumericSearchFilterItem('Height', 0, 5, 'm'),
         new NumericSearchFilterItem('Weight', 0, 300, 'kg'),
         new NumericSearchFilterItem('Abdominal Circumference', 0, 300, 'cm'),
-        new NumericSearchFilterItem('Glucose', 0, 10, 'mmol/L'),
+        new NumericSearchFilterItem('Glucose', 0, 30, 'mmol/L'),
         new EnumSearchFilterItem('Gender', ['Male', 'Female'])
     ];
 
