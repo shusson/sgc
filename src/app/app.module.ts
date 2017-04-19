@@ -63,6 +63,12 @@ import { MgrbDownloadComponent } from './components/pages/mgrb-download/mgrb-dow
 import { MgrbDownloadBannerComponent } from './components/parts/mgrb-download-banner/mgrb-download-banner.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { environment } from '../environments/environment';
+import { VariantComponent } from './components/pages/variant/variant.component';
+import { BeaconTableComponent } from './components/parts/beacon-table/beacon-table.component';
+import { VariantAnnotationsComponent } from './components/parts/variant-annotations/variant-annotations.component';
+import { AnnoTreeComponent, JsonLabelPipe } from './components/parts/anno-tree/anno-tree.component';
+import { VirtualListComponent } from './components/parts/virtual-list/virtual-list.component';
+import { VirtualListItemComponent } from './components/parts/virtual-list-item/virtual-list-item.component';
 import * as Raven from 'raven-js';
 
 Raven
@@ -72,6 +78,7 @@ Raven
 export class RavenErrorHandler implements ErrorHandler {
     handleError(err: any): void {
         Raven.captureException(err.originalError);
+        console.error(err);
     }
 }
 
@@ -126,6 +133,13 @@ export class RavenErrorHandler implements ErrorHandler {
         RegionInformationComponent,
         MgrbDownloadComponent,
         MgrbDownloadBannerComponent,
+        VariantComponent,
+        BeaconTableComponent,
+        VariantAnnotationsComponent,
+        AnnoTreeComponent,
+        JsonLabelPipe,
+        VirtualListComponent,
+        VirtualListItemComponent
     ],
     providers: [
         Auth,
@@ -137,7 +151,6 @@ export class RavenErrorHandler implements ErrorHandler {
         BeaconNetworkService,
         ScrollService,
         EnsemblService,
-        BeaconSearchService,
         PositionService,
         ColumnService,
         DurlService,

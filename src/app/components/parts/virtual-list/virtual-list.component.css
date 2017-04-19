@@ -1,0 +1,16 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.list-container {
+    display: flex;
+    max-height: 400px;
+    overflow-y: scroll;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.hidden-height {
+    width: 0;
+}

@@ -1,0 +1,62 @@
+.title {
+    font-size: xx-large;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.group {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.detail-type {
+    margin-top: 1rem;
+}
+
+.beacon, .reference {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.highlight-number {
+    font-weight: bolder;
+    font-size: large;
+    margin: 1rem;
+}
+
+md-progress-circle {
+    height: 20px;
+    width: 20px;
+}
+
+.card {
+    max-width: 600px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+}
+
+.beacon-row {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-top: 5px;
+}
+
+app-beacon-table {
+    /*max-height: 155px;*/
+    /*overflow-y: scroll;*/
+}
+
+.beacon .loading-message {
+    min-height: 0;
+    height: 40px;
+    width: 40px;
+}
+
+.beacon .loading-message md-icon {
+    height: 40px;
+}

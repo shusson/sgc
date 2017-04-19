@@ -1,6 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterModule, RouterOutletMap } from '@angular/router';
 import { AppComponent } from './app.component';
+import { BeaconNetworkService } from './services/beacon/beacon-network-service';
 
 describe('App Component', () => {
 
@@ -23,7 +24,7 @@ describe('App Component', () => {
                         },
                         removeOutlet: () => {
                         }
-                    }
+                    },
                 }
             ]
         }).compileComponents();

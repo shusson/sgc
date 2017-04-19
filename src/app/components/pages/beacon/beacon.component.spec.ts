@@ -16,6 +16,8 @@ import { MockRouter } from '../../../mocks/router.mock';
 import { MockLocationStrategy } from '../../../mocks/locationstrategy.mock';
 import { LocationStrategy } from '@angular/common';
 import { ScrollService } from '../../../services/scroll-service';
+import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
+import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 
 describe('BeaconComponent', () => {
 
@@ -34,7 +36,8 @@ describe('BeaconComponent', () => {
                 PageContainerComponent,
                 PrivacyFooterComponent,
                 SideNavComponent,
-                HeaderNavComponent
+                HeaderNavComponent,
+                BeaconTableComponent
             ],
             providers: [
                 ScrollService,
@@ -61,6 +64,10 @@ describe('BeaconComponent', () => {
                     useValue: {
                         params: Observable.empty()
                     }
+                },
+                {
+                    provide: BeaconNetworkService,
+                    useValue: {}
                 },
             ]
         }).compileComponents();

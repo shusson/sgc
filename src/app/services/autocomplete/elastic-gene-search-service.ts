@@ -8,7 +8,7 @@ import { GeneAutocomplete } from '../../model/gene-autocomplete';
 import { AutocompleteService } from './autocomplete-service';
 import { Chromosome } from '../../model/chromosome';
 
-const TIMEOUT = 2000;
+const TIMEOUT = 5000;
 
 @Injectable()
 export class ElasticGeneSearch implements AutocompleteService<Gene> {
@@ -87,7 +87,6 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
             },
             'sort': [
                 {'_score': {'order': 'desc'}},
-                {'concrete': {'order': 'asc'}}
             ]
         };
         let options = {search: urlParams, headers: headers};
