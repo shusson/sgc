@@ -42,7 +42,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             this.errorEvent.emit(e);
         }));
 
-        this.subscriptions.push(this.sfs.updates.subscribe(() => {
+        this.subscriptions.push(this.sfs.updates.debounceTime(500).subscribe(() => {
             let q = this.searchService.lastQuery;
             let previous = this.searchService.lastQuery.clinicalFilters;
             let validFilters: SearchFilterItem[] = this.sfs.appliedItems.filter((f) => f.isValid() && f.enabled);
