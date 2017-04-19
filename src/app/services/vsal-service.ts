@@ -117,7 +117,12 @@ export class VsalService {
                 if (res.error) {
                     return new VariantRequest([], `${res.error.name}: ${res.error.description}`);
                 }
-                let vs = new VariantRequest(res.variants);
+
+                let v = res.variants;
+                if (v === null) {
+                    v = [];
+                }
+                let vs = new VariantRequest(v);
                 if (res.total && res.total.length > 0) {
                     vs.total = res.total[0];
                 }
