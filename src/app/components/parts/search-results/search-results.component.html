@@ -6,10 +6,7 @@
 
 <div class="search-result-content" *ngIf="searchService.commenced">
     <div class="overview">
-        <div class="loading-message subview" *ngIf="!loadGb">
-            <md-spinner color="primary"></md-spinner>
-        </div>
-        <div class="meta-information" *ngIf="loadGb">
+        <div class="meta-information">
             <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
             <app-region-information *ngIf="showRegionInformation()"></app-region-information>
         </div>
