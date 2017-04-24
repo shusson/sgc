@@ -70,6 +70,8 @@ import { AnnoTreeComponent, JsonLabelPipe } from './components/parts/anno-tree/a
 import { VirtualListComponent } from './components/parts/virtual-list/virtual-list.component';
 import { VirtualListItemComponent } from './components/parts/virtual-list-item/virtual-list-item.component';
 import * as Raven from 'raven-js';
+import { PopFreqsComponent } from './components/parts/pop-freqs/pop-freqs.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 Raven
     .config(environment.sentryUrl)
@@ -77,8 +79,8 @@ Raven
 
 export class RavenErrorHandler implements ErrorHandler {
     handleError(err: any): void {
-        Raven.captureException(err);
         console.error(err);
+        Raven.captureException(err);
     }
 }
 
@@ -91,6 +93,7 @@ export class RavenErrorHandler implements ErrorHandler {
         HttpModule,
         MaterialModule,
         Ng2PaginationModule,
+        NgxDatatableModule,
         ChartModule
     ],
     declarations: [
@@ -139,7 +142,8 @@ export class RavenErrorHandler implements ErrorHandler {
         AnnoTreeComponent,
         JsonLabelPipe,
         VirtualListComponent,
-        VirtualListItemComponent
+        VirtualListItemComponent,
+        PopFreqsComponent
     ],
     providers: [
         Auth,

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { BeaconAsyncResult, BeaconCache, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -17,11 +17,13 @@ export class BeaconComponent implements OnInit, OnDestroy {
     errorMessage: string;
     searchInput = '';
     beacons: BeaconCache;
+    private beaconSub: Subscription;
     private subscriptions: Subscription[] = [];
 
     constructor(private beaconSearchService: BeaconSearchService,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private cd: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -34,6 +36,10 @@ export class BeaconComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
+        if (this.beaconSub) {
+            this.beaconSub.unsubscribe();
+            this.beaconSub = null;
+        }
     }
 
     onSubmit() {
@@ -42,8 +48,15 @@ export class BeaconComponent implements OnInit, OnDestroy {
     }
 
     private searchBeacon(query: string) {
+        if (this.beaconSub) {
+            this.beaconSub.unsubscribe();
+            this.beaconSub = null;
+        }
+        this.beacons = null;
         this.errorMessage = '';
+        this.cd.detectChanges();
         this.beacons = this.beaconSearchService.searchBeacon(query);
+        this.beaconSub = this.beacons.results.subscribe(() => this.cd.detectChanges());
     }
 
     parseParams(params: Params) {

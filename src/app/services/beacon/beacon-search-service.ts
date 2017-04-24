@@ -99,6 +99,10 @@ export class BeaconCache {
         return this.responses.filter(b => b.result && b.result.response);
     }
 
+    resolvedResponses() {
+        return this.responses.filter(b => !b.loading);
+    }
+
     unsubscribe() {
         this.subs.forEach(s => s.unsubscribe());
     }
@@ -173,8 +177,9 @@ export class BeaconSearchService implements OnDestroy {
 export class BeaconAsyncResult {
     loading = true;
     result: BeaconResponse;
+    displayResult: string;
     error = '';
-    displayUrl: string;
+    orgUrl: string;
 
     constructor(public id: string,
                 public beacon: Beacon,
@@ -189,12 +194,13 @@ export class BeaconAsyncResult {
 
     setResult(result: BeaconResponse) {
         this.result = result;
+        this.displayResult = this.getDisplayResult();
         this.loading = false;
         this.error = '';
         this.getDisplayUrl();
     }
 
-    displayResult() {
+    private getDisplayResult() {
         if (this.result) {
             if (this.result.response === null) {
                 return 'N/A';
@@ -211,7 +217,7 @@ export class BeaconAsyncResult {
             let org = this.bns.orgs.find((o: NetworkOrganization) => {
                 return o.name === this.result.beacon.organization;
             });
-            this.displayUrl = org ? org.url : '';
+            this.orgUrl = org ? org.url : '';
         }
     }
 }

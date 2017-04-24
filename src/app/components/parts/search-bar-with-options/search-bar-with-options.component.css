@@ -8,7 +8,7 @@
 
 .search-content {
     width: 100%;
-    max-width: 80em;
+    max-width: 70rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,10 +62,6 @@
 
 @media (min-width: 0px) and (max-width: 1200px) {
     .search-content.expanded {
-        padding: 1rem 1rem 1rem 3rem;
-    }
-
-    .search-content {
-        padding-left: 3rem;
+        padding: 1rem 1rem 1rem 1rem;
     }
 }

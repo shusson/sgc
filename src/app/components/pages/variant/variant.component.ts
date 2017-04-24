@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { VariantSearchService } from '../../../services/variant-search-service';
@@ -10,6 +10,8 @@ import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
 import { SearchOption } from '../../../model/search-option';
+import { PopFreqsComponent } from '../../parts/pop-freqs/pop-freqs.component';
+import { Auth } from '../../../services/auth-service';
 
 @Component({
     selector: 'app-variant',
@@ -24,21 +26,32 @@ export class VariantComponent implements OnInit, OnDestroy {
     beacons: BeaconCache;
     gene: Gene;
     showBeacon = true;
+    showPopFreq = true;
     showAnnotations = false;
     error = '';
     loading = true;
     beaconSupported = true;
     displayName = Variant.displayName;
 
+    @ViewChild(PopFreqsComponent) popFreq: PopFreqsComponent;
+
     constructor(private route: ActivatedRoute,
                 private vss: VariantSearchService,
                 private bss: BeaconSearchService,
                 private rs: RegionService,
-                private cd: ChangeDetectorRef) {
+                private cd: ChangeDetectorRef,
+                private auth: Auth) {
     }
 
     ngOnInit() {
-        this.subscriptions.push(this.route.params.subscribe(p => this.parseParams(p)));
+        if (!this.auth.authenticated()) {
+            this.auth.lock.on('hide', () => {
+                this.error = 'Please login or sign up to see variant information';
+            });
+            this.auth.login();
+        } else {
+            this.subscriptions.push(this.route.params.subscribe(p => this.parseParams(p)));
+        }
     }
 
     parseParams(params: Params) {
@@ -69,6 +82,11 @@ export class VariantComponent implements OnInit, OnDestroy {
     toggleBeacon() {
         this.showBeacon = !this.showBeacon;
     }
+
+    togglePopFreq() {
+        this.showPopFreq = !this.showPopFreq;
+    }
+
 
     private getVariant(sq: SearchQuery, reference: string, alternate: string) {
         this.vss.getVariants(sq).then(variants => {

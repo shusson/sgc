@@ -1,31 +1,38 @@
 <app-page-container>
-    <section>
-        <form (ngSubmit)="onSubmit()" #beaconForm="ngForm">
+    <div class="search-band">
+        <div class="search-bar">
+            <form (ngSubmit)="onSubmit()" #beaconForm="ngForm">
 
-            <select id="ref-select" name="ref-select" [(ngModel)]="reference" required>
-                <option *ngFor="let ref of availableReferences" value="{{ ref | uppercase }}">{{ ref | uppercase }}
-                </option>
-            </select>
+                <select id="ref-select" name="ref-select" [(ngModel)]="reference" required>
+                    <option *ngFor="let ref of availableReferences" value="{{ ref | uppercase }}">{{ ref | uppercase }}
+                    </option>
+                </select>
 
-            <input id="search-beacon-input"
-                   name="search-beacon-input"
-                   type="search"
-                   [(ngModel)]="searchInput"
-                   placeholder="e.g 13 : 32936732 > C" required>
-            <button md-mini-fab><md-icon>search</md-icon></button>
+                <input id="search-beacon-input"
+                       name="search-beacon-input"
+                       type="search"
+                       [(ngModel)]="searchInput"
+                       placeholder="e.g 13 : 32936732 > C" required>
+                <button md-mini-fab><md-icon>search</md-icon></button>
 
-        </form>
-        <div class="example">
-            <p>Examples: <a (click)="searchInput=example1; onSubmit()">{{ example1 }}</a> or <a
-                (click)="searchInput=example2; onSubmit()">{{ example2 }}</a></p>
+            </form>
+            <div class="example">
+                <p>Examples: <a (click)="searchInput=example1; onSubmit()">{{ example1 }}</a> or <a
+                    (click)="searchInput=example2; onSubmit()">{{ example2 }}</a></p>
+            </div>
+
+            <p>Please note that position is 1-based and only SNP variants are supported</p>
         </div>
-
-        <p>Please note that position is 1-based and only SNP variants are supported</p>
-
+    </div>
+    <section>
         <div class="results">
             <div *ngIf="errorMessage" class="message message-error">{{ errorMessage }}</div>
         </div>
 
-        <app-beacon-table *ngIf="beacons" [beacons]="beacons"></app-beacon-table>
+        <div class="loading-message" *ngIf="beacons && !beacons.totalCount() && beacons.totalProcessed() <= 0 && !errorMessage">
+            <md-spinner color="primary"></md-spinner>
+        </div>
+
+        <app-beacon-table *ngIf="beacons" [beacons]="beacons" [limit]="20"></app-beacon-table>
     </section>
 </app-page-container>
