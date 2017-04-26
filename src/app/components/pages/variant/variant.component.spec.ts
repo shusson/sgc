@@ -13,7 +13,7 @@ import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-footer.component';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MgrbTermsComponent } from '../mgrb-terms/mgrb-terms.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdTabsModule } from '@angular/material';
 import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
 import { VariantAnnotationsComponent } from '../../parts/variant-annotations/variant-annotations.component';
 import { Ng2PaginationModule } from 'ng2-pagination';
@@ -26,6 +26,8 @@ import { RegionService } from '../../../services/autocomplete/region-service';
 import { Observable } from 'rxjs/Observable';
 import { VirtualListComponent } from '../../parts/virtual-list/virtual-list.component';
 import { VirtualListItemComponent } from '../../parts/virtual-list-item/virtual-list-item.component';
+import { PopFreqsComponent } from '../../parts/pop-freqs/pop-freqs.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -36,7 +38,9 @@ describe('VariantComponent', () => {
             imports: [
                 MaterialModule,
                 Ng2PaginationModule,
-                FormsModule
+                FormsModule,
+                MdTabsModule,
+                NgxDatatableModule
             ],
             declarations: [
                 VariantComponent,
@@ -50,7 +54,8 @@ describe('VariantComponent', () => {
                 AnnoTreeComponent,
                 JsonLabelPipe,
                 VirtualListComponent,
-                VirtualListItemComponent
+                VirtualListItemComponent,
+                PopFreqsComponent
             ],
             providers: [
                 ScrollService,

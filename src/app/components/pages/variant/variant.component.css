@@ -8,16 +8,23 @@
     margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+    align-items: flex-start;
 }
 
 .detail-type {
     margin-top: 1rem;
 }
 
-.beacon, .reference {
-    flex-grow: 1;
+.subgroup {
     flex-basis: 0;
+    flex-grow: 1;
     min-width: 300px;
+}
+
+.sibling {
+    display: flex;
 }
 
 .highlight-number {
@@ -32,24 +39,19 @@ md-progress-circle {
 }
 
 .card {
-    max-width: 600px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
     display: flex;
     flex-direction: column;
 }
 
-.beacon-row {
+.card-row {
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
     margin-top: 5px;
-}
-
-app-beacon-table {
-    /*max-height: 155px;*/
-    /*overflow-y: scroll;*/
+    border-bottom: 1px solid lightgray;
 }
 
 .beacon .loading-message {

@@ -18,6 +18,7 @@ import { LocationStrategy } from '@angular/common';
 import { ScrollService } from '../../../services/scroll-service';
 import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 describe('BeaconComponent', () => {
 
@@ -29,7 +30,8 @@ describe('BeaconComponent', () => {
             imports: [
                 FormsModule,
                 Ng2PaginationModule,
-                MaterialModule
+                MaterialModule,
+                NgxDatatableModule,
             ],
             declarations: [
                 BeaconComponent,

@@ -1,0 +1,15 @@
+<div class="overview">
+    <md-tab-group>
+        <md-tab *ngFor="let study of studies" [label]="study">
+            <ngx-datatable class="material"
+                           [rows]="freqStudies[study]"
+                           [columns]="keys"
+                           [limit]="10"
+                           [scrollbarH]="true"
+                           [headerHeight]="50"
+                           [footerHeight]="50"
+                           [rowHeight]="'auto'">
+            </ngx-datatable>
+        </md-tab>
+    </md-tab-group>
+</div>

@@ -4,6 +4,8 @@ import { BeaconTableComponent } from './beacon-table.component';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { FormsModule } from '@angular/forms';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { Observable } from 'rxjs/Observable';
 
 describe('BeaconTableComponent', () => {
     let component: BeaconTableComponent;
@@ -11,7 +13,11 @@ describe('BeaconTableComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [Ng2PaginationModule, FormsModule],
+            imports: [
+                Ng2PaginationModule,
+                FormsModule,
+                NgxDatatableModule,
+            ],
             declarations: [BeaconTableComponent],
             providers: [
                 {
@@ -26,8 +32,12 @@ describe('BeaconTableComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(BeaconTableComponent);
         component = fixture.componentInstance;
-        component.foundOnly = false;
-        component.beacons = <any>{responses: []};
+        component.minimal = false;
+        component.beacons = <any>{
+            responses: [],
+            resolvedResponses: () => [],
+            results: Observable.empty()
+        };
         fixture.detectChanges();
     });
 
