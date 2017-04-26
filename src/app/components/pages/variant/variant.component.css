@@ -25,6 +25,7 @@
 
 .sibling {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .highlight-number {
