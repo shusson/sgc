@@ -74,6 +74,8 @@ import { PopFreqsComponent } from './components/parts/pop-freqs/pop-freqs.compon
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ErrorComponent } from './components/pages/error/error.component';
 
+const CRITICAL_ERROR_WAIT_DURATION = 1000;
+
 Raven
     .config(environment.sentryUrl)
     .install();
@@ -84,7 +86,9 @@ export class RavenErrorHandler implements ErrorHandler {
             console.error(err);
         }
         Raven.captureException(err);
-        window.location.href = 'error';
+        window.setTimeout(() => {
+            window.location.href = 'error';
+        }, CRITICAL_ERROR_WAIT_DURATION);
     }
 }
 
