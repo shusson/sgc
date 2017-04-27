@@ -13,21 +13,14 @@ export class PopFreqsComponent implements OnInit {
     studies: Set<string>;
     populations: Set<string>;
     freqStudies = {};
-
-    keys = [
-        {prop: 'population'},
-        {prop: 'refAlleleFreq'},
-        {prop: 'altAlleleFreq'},
-        {prop: 'refHomGenotypeFreq'},
-        {prop: 'hetGenotypeFreq'},
-        {prop: 'altHomGenotypeFreq'}
-    ];
+    // workaround to avoid issue with hidden attribute,
+    // it is expected the parent of this component will change the selected index back to 0
+    selectedIndex = 1;
 
     constructor() {
     }
 
     ngOnInit() {
-
         this.freqs = this.variant.annotation.populationFrequencies;
         this.studies = new Set(this.freqs.map((f) => f.study).sort());
         this.populations = new Set(this.freqs.map((f) => f.population));

@@ -1,0 +1,33 @@
+.empty-cell {
+    color: rgba(0, 60, 105, 0.5);
+    font-style: italic;
+}
+
+.selectable {
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    overflow: scroll;
+}
+
+.term {
+    margin: 10px;
+}
+
+
+.row-detail {
+    display: flex;
+    justify-content: space-around;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.row-detail .detail-label {
+    min-width: 200px !important;
+    max-width: 300px !important;
+}
+
+.row-detail .group {
+    margin: 1rem;
+}

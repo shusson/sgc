@@ -109,30 +109,10 @@
 
             </div>
 
-            <div class="group">
-                <div class="subgroup">
-                    <div class="detail-type">External Population Studies</div>
-                    <div class="card">
-
-                        <div class="card-row" (click)="togglePopFreq()" *ngIf="popFreq">
-                            <div>
-                                <span>This variant was found in</span>
-                                <span class="highlight-number">{{ popFreq.studies.size }}</span>
-                                <span>Population studies</span>
-                            </div>
-                            <md-icon *ngIf="!showPopFreq">keyboard_arrow_down</md-icon>
-                            <md-icon *ngIf="showPopFreq">keyboard_arrow_up</md-icon>
-                        </div>
-                        <app-pop-freqs [hidden]="!showPopFreq" [variant]="variant"></app-pop-freqs>
-                    </div>
-
-                </div>
-            </div>
-
+            <div class="detail-type">Beacon Results</div>
             <div class="group">
                 <div class="subgroup">
                     <div class="beacon">
-                        <div class="detail-type">Beacon Results</div>
                         <div *ngIf="!beaconSupported">Not supported (SNP only)</div>
                         <div class="loading-message" *ngIf="beaconSupported && !beacons.totalCount()">
                             <md-spinner color="primary"></md-spinner>
@@ -140,7 +120,6 @@
                         <div class="card" *ngIf="beaconSupported && beacons.totalCount()">
                             <div class="card-row" (click)="toggleBeacon()">
                                 <div>
-                                    <span>This variant was found in</span>
                                     <span class="highlight-number">{{ beacons.foundCount() }}</span>
                                     <span> out of </span>
                                     <span class="highlight-number">{{ beacons.totalCount() }}</span>
@@ -156,6 +135,59 @@
                             <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [minimal]="true" [limit]="10"></app-beacon-table>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="detail-type">Annotations</div>
+
+            <div class="group">
+                <div class="subgroup">
+                    <div class="card">
+                        <div class="card-row" (click)="toggleConsequence()" *ngIf="consequences">
+                            <div>
+                                <span class="highlight-number">{{ consequences.types.length }}</span>
+                                <span>Consequences</span>
+                            </div>
+                            <md-icon *ngIf="!showConsequence">keyboard_arrow_down</md-icon>
+                            <md-icon *ngIf="showConsequence">keyboard_arrow_up</md-icon>
+                        </div>
+                        <app-consequences [hidden]="!showConsequence" [variant]="variant"></app-consequences>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="subgroup">
+                    <div class="card">
+                        <div class="card-row" (click)="toggleScores()" *ngIf="scores">
+                            <div>
+                                <span class="highlight-number">{{ scores.scores.length }}</span>
+                                <span>Scores</span>
+                            </div>
+                            <md-icon *ngIf="!showScores">keyboard_arrow_down</md-icon>
+                            <md-icon *ngIf="showScores">keyboard_arrow_up</md-icon>
+                        </div>
+                        <app-scores [hidden]="!showScores" [variant]="variant"></app-scores>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="subgroup">
+                    <div class="card">
+                        <div class="card-row" (click)="togglePopFreq()" *ngIf="popFreq">
+                            <div>
+                                <span class="highlight-number">{{ popFreq.studies.size }}</span>
+                                <span>Population studies</span>
+                            </div>
+                            <md-icon *ngIf="!showPopFreq">keyboard_arrow_down</md-icon>
+                            <md-icon *ngIf="showPopFreq">keyboard_arrow_up</md-icon>
+                        </div>
+                        <app-pop-freqs [hidden]="!showPopFreq" [variant]="variant"></app-pop-freqs>
+                    </div>
+
                 </div>
             </div>
 

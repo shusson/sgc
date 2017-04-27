@@ -28,6 +28,8 @@ import { VirtualListComponent } from '../../parts/virtual-list/virtual-list.comp
 import { VirtualListItemComponent } from '../../parts/virtual-list-item/virtual-list-item.component';
 import { PopFreqsComponent } from '../../parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ScoresComponent } from '../../parts/scores/scores.component';
+import { ConsequencesComponent } from '../../parts/consequences/consequences.component';
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -55,7 +57,9 @@ describe('VariantComponent', () => {
                 JsonLabelPipe,
                 VirtualListComponent,
                 VirtualListItemComponent,
-                PopFreqsComponent
+                PopFreqsComponent,
+                ScoresComponent,
+                ConsequencesComponent
             ],
             providers: [
                 ScrollService,

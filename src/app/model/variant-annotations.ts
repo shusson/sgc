@@ -73,7 +73,7 @@ export class VariantPopulationFrequency {
     altHomGenotypeFreq: number;
 }
 
-export class VariantConservation {
+export class VariantScore {
     score: number;
     source: string;
     description: string;
@@ -98,12 +98,6 @@ export class VariantGeneDrugInteraction {
     type: string;
 }
 
-export class VariantFunctionalScore {
-    score: number;
-    source: string;
-    description: string;
-}
-
 export class VAVariantTraitAssociation {
     // TODO
 }
@@ -118,8 +112,8 @@ export class VariantAnnotation {
     geneExpression: VariantGeneExpression[];
     consequenceTypes: VariantConsequenceType[];
     populationFrequencies: VariantPopulationFrequency[];
-    conservation: VariantConservation[];
+    conservation: VariantScore[];
     geneTraitAssociation: VariantGeneTraitAssociation[];
     geneDrugInteraction: VariantGeneDrugInteraction[];
-    functionalScore: VariantFunctionalScore[];
+    functionalScore: VariantScore[];
 }
