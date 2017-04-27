@@ -72,6 +72,7 @@ import { VirtualListItemComponent } from './components/parts/virtual-list-item/v
 import * as Raven from 'raven-js';
 import { PopFreqsComponent } from './components/parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ErrorComponent } from './components/pages/error/error.component';
 
 Raven
     .config(environment.sentryUrl)
@@ -79,8 +80,11 @@ Raven
 
 export class RavenErrorHandler implements ErrorHandler {
     handleError(err: any): void {
-        console.error(err);
+        if (!environment.production) {
+            console.error(err);
+        }
         Raven.captureException(err);
+        window.location.href = 'error';
     }
 }
 
@@ -143,7 +147,8 @@ export class RavenErrorHandler implements ErrorHandler {
         JsonLabelPipe,
         VirtualListComponent,
         VirtualListItemComponent,
-        PopFreqsComponent
+        PopFreqsComponent,
+        ErrorComponent
     ],
     providers: [
         Auth,
@@ -160,7 +165,7 @@ export class RavenErrorHandler implements ErrorHandler {
         DurlService,
         LocalStorageService,
         { provide: ErrorHandler, useClass: RavenErrorHandler },
-        {provide: 'NULL_VALUE', useValue: null}
+        { provide: 'NULL_VALUE', useValue: null }
     ],
     bootstrap: [AppComponent]
 })
