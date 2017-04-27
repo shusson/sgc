@@ -9,6 +9,7 @@ import { MgrbComponent } from './components/pages/programmes/mgrb/mgrb.component
 import { MgrbTermsComponent } from './components/pages/mgrb-terms/mgrb-terms.component';
 import { ModuleWithProviders} from '@angular/core';
 import { VariantComponent } from './components/pages/variant/variant.component';
+import { ErrorComponent } from './components/pages/error/error.component';
 
 const appRoutes: Routes = [
     { path: 'initiatives', component: InitiativesComponent },
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
     { path: 'initiatives/mgrb', component: MgrbComponent },
     { path: 'initiatives/nswgp', component: NswgpComponent },
     { path: 'initiatives/gcmp', component: GcmpComponent },
+    { path: 'error', component: ErrorComponent },
     // disabled until we get approval from data committee
     // { path: 'initiatives/mgrb/download', component: MgrbDownloadComponent },
     { path: 'terms/mgrb', component: MgrbTermsComponent },
