@@ -31,7 +31,7 @@
             "environments": {
                 "prod": "environments/environment.prod.ts",
                 "staging": "environments/environment.staging.ts",
-                "dr": "environments/environment.dr.ts",
+                "demo": "environments/environment.demo.ts",
                 "dev": "environments/environment.dev.ts"
             }
         }
