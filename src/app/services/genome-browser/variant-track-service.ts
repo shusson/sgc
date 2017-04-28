@@ -163,7 +163,7 @@ export class VariantTrackService implements TrackService {
         let createPin = (variant: Variant) => {
             return new VariantPin(
                 variant.start,
-                variant.variantStats[0].altAlleleFreq,
+                variant.variantStats[0] ? variant.variantStats[0].altAlleleFreq : 0,
                 this.variantName(variant),
                 variant
             );
@@ -222,7 +222,7 @@ export class VariantTrackService implements TrackService {
                 that.createMethod.call(this, pins);
 
                 let homoz = pins.filter((d: VariantPin) => {
-                    return d.variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY];
+                    return d.variant.variantStats[0] ? d.variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : false;
                 });
                 homoz.select('line').attr('stroke', OVERLAY_COLOR);
                 homoz.select('circle').attr('fill', OVERLAY_COLOR);
@@ -234,7 +234,7 @@ export class VariantTrackService implements TrackService {
                 that.createMethod.call(this, pins);
 
                 let hetz = pins.filter((d: VariantPin) => {
-                    return d.variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY];
+                    return d.variant.variantStats[0] ? d.variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : false;
                 });
                 hetz.select('line').attr('stroke', OVERLAY_COLOR);
                 hetz.select('circle').attr('fill', OVERLAY_COLOR);

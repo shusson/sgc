@@ -21,11 +21,11 @@ export class FilterService {
         'reference': (v: Variant) => v.reference,
         'alternate': (v: Variant) => v.alternate,
         'type': (v: Variant) => v.type,
-        'alleleFrequency': (v: Variant) => v.variantStats[0].altAlleleFreq,
-        'alleleCount': (v: Variant) => v.variantStats[0].altAlleleCount,
-        'homozygotesCount': (v: Variant) => v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY],
-        'heterozygotesCount': (v: Variant) => v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY],
-        'missedGenotypesCount': (v: Variant) => v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY]
+        'alleleFrequency': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : null,
+        'alleleCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleCount : null,
+        'homozygotesCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : null,
+        'heterozygotesCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : null,
+        'missedGenotypesCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : null
     };
 
     readonly operators: FilterOperator[] = ['<', '>', '=', '!='];

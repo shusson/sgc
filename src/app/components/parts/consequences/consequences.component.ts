@@ -21,7 +21,7 @@ export class ConsequencesComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.types = this.variant.annotation.consequenceTypes;
+        this.types = this.variant.annotation.consequenceTypes ? this.variant.annotation.consequenceTypes : [];
     }
 
     ngAfterViewInit() {
