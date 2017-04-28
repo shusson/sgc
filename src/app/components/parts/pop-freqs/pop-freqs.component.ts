@@ -21,7 +21,10 @@ export class PopFreqsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.freqs = this.variant.annotation.populationFrequencies;
+        if (!this.variant.annotation) {
+            return;
+        }
+        this.freqs = this.variant.annotation.populationFrequencies ? this.variant.annotation.populationFrequencies : [];
         this.studies = new Set(this.freqs.map((f) => f.study).sort());
         this.populations = new Set(this.freqs.map((f) => f.population));
         this.studies.forEach((s) => {

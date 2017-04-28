@@ -31,7 +31,7 @@
                     <span *ngIf="label !== 'Allele Scale' && label !== 'Location'"
                           class="value">{{ columnService.display(label, variant) }}</span>
                     <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ columnService.display(label, variant) }}</a>
-                    <app-allele-freq *ngIf="label === 'Allele Scale'"
+                    <app-allele-freq *ngIf="label === 'Allele Scale' && variant.variantStats[0]"
                                      [freq]="variant.variantStats[0].altAlleleFreq"></app-allele-freq>
                 </td>
             </tr>

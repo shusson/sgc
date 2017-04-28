@@ -95,11 +95,11 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
                 'Reference': variant.reference,
                 'Alternate': variant.alternate,
                 'Type': variant.type,
-                'Homozygotes Count': variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY],
-                'Heterozygotes Count': variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY],
-                'Missed Genotypes': variant.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY],
-                'Allele Count': variant.variantStats[0].altAlleleCount,
-                'Allele Frequency': variant.variantStats[0].altAlleleFreq,
+                'Homozygotes Count': variant.variantStats[0] ? variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : '',
+                'Heterozygotes Count': variant.variantStats[0] ? variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : '',
+                'Missed Genotypes': variant.variantStats[0] ? variant.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : '',
+                'Allele Count': variant.variantStats[0] ? variant.variantStats[0].altAlleleCount : '',
+                'Allele Frequency': variant.variantStats[0] ? variant.variantStats[0].altAlleleFreq : '',
             };
         });
         let csv = Papa.unparse(data);

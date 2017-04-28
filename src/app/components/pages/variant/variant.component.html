@@ -73,7 +73,7 @@
                                     <span>Frequency:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.variantStats[0].altAlleleFreq.toExponential(4) }}</span>
+                                    <span *ngIf="variant.variantStats[0]">{{ variant.variantStats[0].altAlleleFreq.toExponential(4) }}</span>
                                 </div>
                             </div>
 
@@ -132,67 +132,70 @@
                             <md-progress-bar [mode]="'determinate'"
                                              [value]="beacons.percentComplete()"></md-progress-bar>
 
-                            <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [minimal]="true" [limit]="10"></app-beacon-table>
+                            <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [minimal]="true"
+                                              [limit]="10"></app-beacon-table>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="detail-type">Annotations</div>
+            <div *ngIf="variant.annotation">
+                <div class="detail-type">Annotations</div>
 
-            <div class="group">
-                <div class="subgroup">
-                    <div class="card">
-                        <div class="card-row" (click)="toggleConsequence()" *ngIf="consequences">
-                            <div>
-                                <span class="highlight-number">{{ consequences.types.length }}</span>
-                                <span>Consequences</span>
+                <div class="group">
+                    <div class="subgroup">
+                        <div class="card">
+                            <div class="card-row" (click)="toggleConsequence()" *ngIf="consequences">
+                                <div>
+                                    <span class="highlight-number">{{ consequences.types.length }}</span>
+                                    <span>Consequences</span>
+                                </div>
+                                <md-icon *ngIf="!showConsequence">keyboard_arrow_down</md-icon>
+                                <md-icon *ngIf="showConsequence">keyboard_arrow_up</md-icon>
                             </div>
-                            <md-icon *ngIf="!showConsequence">keyboard_arrow_down</md-icon>
-                            <md-icon *ngIf="showConsequence">keyboard_arrow_up</md-icon>
+                            <app-consequences [hidden]="!showConsequence" [variant]="variant"></app-consequences>
                         </div>
-                        <app-consequences [hidden]="!showConsequence" [variant]="variant"></app-consequences>
+
                     </div>
-
                 </div>
-            </div>
 
-            <div class="group">
-                <div class="subgroup">
-                    <div class="card">
-                        <div class="card-row" (click)="toggleScores()" *ngIf="scores">
-                            <div>
-                                <span class="highlight-number">{{ scores.scores.length }}</span>
-                                <span>Scores</span>
+                <div class="group">
+                    <div class="subgroup">
+                        <div class="card">
+                            <div class="card-row" (click)="toggleScores()" *ngIf="scores">
+                                <div>
+                                    <span class="highlight-number">{{ scores.scores.length }}</span>
+                                    <span>Scores</span>
+                                </div>
+                                <md-icon *ngIf="!showScores">keyboard_arrow_down</md-icon>
+                                <md-icon *ngIf="showScores">keyboard_arrow_up</md-icon>
                             </div>
-                            <md-icon *ngIf="!showScores">keyboard_arrow_down</md-icon>
-                            <md-icon *ngIf="showScores">keyboard_arrow_up</md-icon>
+                            <app-scores [hidden]="!showScores" [variant]="variant"></app-scores>
                         </div>
-                        <app-scores [hidden]="!showScores" [variant]="variant"></app-scores>
+
                     </div>
-
                 </div>
-            </div>
 
-            <div class="group">
-                <div class="subgroup">
-                    <div class="card">
-                        <div class="card-row" (click)="togglePopFreq()" *ngIf="popFreq">
-                            <div>
-                                <span class="highlight-number">{{ popFreq.studies.size }}</span>
-                                <span>Population studies</span>
+                <div class="group">
+                    <div class="subgroup">
+                        <div class="card">
+                            <div class="card-row" (click)="togglePopFreq()" *ngIf="popFreq">
+                                <div>
+                                    <span class="highlight-number">{{ popFreq.studies.size }}</span>
+                                    <span>Population studies</span>
+                                </div>
+                                <md-icon *ngIf="!showPopFreq">keyboard_arrow_down</md-icon>
+                                <md-icon *ngIf="showPopFreq">keyboard_arrow_up</md-icon>
                             </div>
-                            <md-icon *ngIf="!showPopFreq">keyboard_arrow_down</md-icon>
-                            <md-icon *ngIf="showPopFreq">keyboard_arrow_up</md-icon>
+                            <app-pop-freqs [hidden]="!showPopFreq" [variant]="variant"></app-pop-freqs>
                         </div>
-                        <app-pop-freqs [hidden]="!showPopFreq" [variant]="variant"></app-pop-freqs>
+
                     </div>
-
                 </div>
-            </div>
 
-            <div class="group" *ngIf="showAnnotations">
-                <app-variant-annotations [annotations]="variant.annotation"></app-variant-annotations>
+                <div class="group" *ngIf="showAnnotations">
+                    <app-variant-annotations [annotations]="variant.annotation"></app-variant-annotations>
+                </div>
             </div>
 
         </div>

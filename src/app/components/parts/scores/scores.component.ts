@@ -15,7 +15,12 @@ export class ScoresComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.variant.annotation.functionalScore.forEach((s) => this.scores.push(s));
-        this.variant.annotation.conservation.forEach((s) => this.scores.push(s));
+        if (this.variant.annotation.functionalScore) {
+            this.variant.annotation.functionalScore.forEach((s) => this.scores.push(s));
+        }
+
+        if (this.variant.annotation.conservation) {
+            this.variant.annotation.conservation.forEach((s) => this.scores.push(s));
+        }
     }
 }

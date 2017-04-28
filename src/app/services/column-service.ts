@@ -8,12 +8,12 @@ export class ColumnService {
         'Alternate': (v: Variant) => v.alternate,
         'Type': (v: Variant) => v.type,
         'dbSNP': (v: Variant) => v.dbSNP,
-        'Homozygotes Count': (v: Variant) => v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY],
-        'Heterozygotes Count': (v: Variant) => v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY],
-        'Missed Genotypes': (v: Variant) => v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY],
-        'Allele Count': (v: Variant) => v.variantStats[0].altAlleleCount,
-        'Allele Freq.': (v: Variant) => v.variantStats[0].altAlleleFreq.toExponential(4),
-        'Allele Scale': (v: Variant) => v.variantStats[0].altAlleleFreq
+        'Homozygotes Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : null,
+        'Heterozygotes Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : null,
+        'Missed Genotypes': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : null,
+        'Allele Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleCount : null,
+        'Allele Freq.': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq.toExponential(4) : null,
+        'Allele Scale': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : null
     };
 
     private searchResultKeys: any[] = [
@@ -38,17 +38,29 @@ export class ColumnService {
         'Alternate': (v: Variant) => v.alternate,
         'Type': (v: Variant) => v.type,
         'dbSNP': (v: Variant) => v.dbSNP ? v.dbSNP.match(/rs(\d+)/)[1] : 0,
-        'Homozygotes Count': (v: Variant) =>
-            v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : 0,
-        'Heterozygotes Count': (v: Variant) =>
-            v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] ?
-                v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : 0,
-        'Missed Genotypes': (v: Variant) =>
-            v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] ?
-                v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : 0,
-        'Allele Count': (v: Variant) => v.variantStats[0].altAlleleCount,
-        'Allele Freq.': (v: Variant) => v.variantStats[0].altAlleleFreq,
-        'Allele Scale': (v: Variant) => v.variantStats[0].altAlleleFreq
+        'Homozygotes Count': (v: Variant) => {
+            if (!v.variantStats[0]) {
+                return 0;
+            }
+            return v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : 0;
+        },
+        'Heterozygotes Count': (v: Variant) => {
+            if (!v.variantStats[0]) {
+                return 0;
+            }
+            return v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] ?
+                v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : 0;
+        },
+        'Missed Genotypes': (v: Variant) => {
+            if (!v.variantStats[0]) {
+                return 0;
+            }
+            return v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] ?
+                v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : 0;
+        },
+        'Allele Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleCount : 0,
+        'Allele Freq.': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : 0,
+        'Allele Scale': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : 0
     };
 
     private tooltips: any = {
