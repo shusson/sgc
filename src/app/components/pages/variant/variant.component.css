@@ -5,7 +5,8 @@
 }
 
 .group {
-    margin-top: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -14,7 +15,7 @@
 }
 
 .detail-type {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .subgroup {

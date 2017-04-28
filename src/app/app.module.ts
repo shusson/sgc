@@ -73,6 +73,8 @@ import * as Raven from 'raven-js';
 import { PopFreqsComponent } from './components/parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ErrorComponent } from './components/pages/error/error.component';
+import { ScoresComponent } from './components/parts/scores/scores.component';
+import { ConsequencesComponent } from './components/parts/consequences/consequences.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -152,7 +154,9 @@ export class RavenErrorHandler implements ErrorHandler {
         VirtualListComponent,
         VirtualListItemComponent,
         PopFreqsComponent,
-        ErrorComponent
+        ErrorComponent,
+        ScoresComponent,
+        ConsequencesComponent
     ],
     providers: [
         Auth,

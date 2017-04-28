@@ -12,6 +12,8 @@ import { Region } from '../../../model/region';
 import { SearchOption } from '../../../model/search-option';
 import { PopFreqsComponent } from '../../parts/pop-freqs/pop-freqs.component';
 import { Auth } from '../../../services/auth-service';
+import { ScoresComponent } from '../../parts/scores/scores.component';
+import { ConsequencesComponent } from '../../parts/consequences/consequences.component';
 
 @Component({
     selector: 'app-variant',
@@ -25,8 +27,10 @@ export class VariantComponent implements OnInit, OnDestroy {
     dbSnpUrl = Variant.dbSnpUrl;
     beacons: BeaconCache;
     gene: Gene;
-    showBeacon = true;
-    showPopFreq = true;
+    showBeacon = false;
+    showPopFreq = false;
+    showScores = false;
+    showConsequence = false;
     showAnnotations = false;
     error = '';
     loading = true;
@@ -34,6 +38,8 @@ export class VariantComponent implements OnInit, OnDestroy {
     displayName = Variant.displayName;
 
     @ViewChild(PopFreqsComponent) popFreq: PopFreqsComponent;
+    @ViewChild(ScoresComponent) scores: ScoresComponent;
+    @ViewChild(ConsequencesComponent) consequences: ConsequencesComponent;
 
     constructor(private route: ActivatedRoute,
                 private vss: VariantSearchService,
@@ -85,8 +91,19 @@ export class VariantComponent implements OnInit, OnDestroy {
 
     togglePopFreq() {
         this.showPopFreq = !this.showPopFreq;
+
+        // workaround to avoid issue with hidden attribute
+        this.popFreq.selectedIndex = 0;
+        this.cd.detectChanges();
     }
 
+    toggleScores() {
+        this.showScores = !this.showScores;
+    }
+
+    toggleConsequence() {
+        this.showConsequence = !this.showConsequence;
+    }
 
     private getVariant(sq: SearchQuery, reference: string, alternate: string) {
         this.vss.getVariants(sq).then(variants => {
