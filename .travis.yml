@@ -1,0 +1,34 @@
+#.travis.yml
+
+dist: trusty
+sudo: false # ensures we use the container stack (it's faster)
+
+cache:
+  directories:
+    - node_modules
+
+language: node_js
+
+addons:
+  apt:
+    packages:
+      - google-chrome-stable
+
+node_js:
+  - "6.9"
+
+env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=e2e
+
+before_script:
+  - if [ "$TEST_SUITE" == "e2e" ]; then export DISPLAY=:99.0; fi
+  - if [ "$TEST_SUITE" == "e2e" ]; then eval "sh -e /etc/init.d/xvfb start &"; fi
+  - if [ "$TEST_SUITE" == "e2e" ]; then sleep 3; fi # let xvfb start up
+  - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm install -g firebase-tools; fi
+  - npm install -g @angular/cli
+
+script:
+  - if [ "$TEST_SUITE" == "unit" ]; then karma start; fi
+  - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ng e2e; fi
+  - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" != "false" ]; then sh deploy/staging.sh; fi

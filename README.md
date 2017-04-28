@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/shusson/sgc.svg?branch=master)](https://travis-ci.org/shusson/sgc)
+
 ## SYDNEY GENOMICS COLLABORATIVE
 
 A web application for exploring population scale genomic studies.
