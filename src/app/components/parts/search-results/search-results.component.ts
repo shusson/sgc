@@ -56,7 +56,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         }));
 
         this.loadingVariants = true;
-        this.autocomplete.search(this.searchService, this.searchBarService.options)
+        this.autocomplete.search(this.searchService, this.searchBarService.options, [])
             .then(() => {
                 this.loadingVariants = false;
             })

@@ -1,4 +1,4 @@
-<div class="loading-message" *ngIf="loadingVariants">
+<div class="loading-message overview" *ngIf="loadingVariants">
     <md-spinner color="primary"></md-spinner>
 </div>
 
@@ -6,7 +6,10 @@
 
 <div class="search-result-content" *ngIf="searchService.commenced">
     <div class="overview">
-        <div class="meta-information">
+        <div class="loading-message subview" *ngIf="searchService.loading">
+            <md-spinner color="primary"></md-spinner>
+        </div>
+        <div class="meta-information" *ngIf="!searchService.loading">
             <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
             <app-region-information *ngIf="showRegionInformation()"></app-region-information>
         </div>
@@ -15,7 +18,11 @@
         </div>
     </div>
 
-
-    <app-genome-browser-resizable></app-genome-browser-resizable>
-    <app-variants-table [variants]="variants"></app-variants-table>
+    <div class="loading-message subview" *ngIf="searchService.loading">
+        <md-spinner color="primary"></md-spinner>
+    </div>
+    <div *ngIf="!searchService.loading">
+        <app-genome-browser-resizable></app-genome-browser-resizable>
+        <app-variants-table [variants]="variants"></app-variants-table>
+    </div>
 </div>
