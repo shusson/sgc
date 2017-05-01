@@ -23,3 +23,7 @@
 .detail-value i {
     margin-left: 5px;
 }
+
+.detail-value {
+    word-break: break-all;
+}
