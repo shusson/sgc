@@ -29,6 +29,10 @@
     flex-wrap: wrap;
 }
 
+.sibling .subgroup {
+    margin-right: 1rem;
+}
+
 .highlight-number {
     font-weight: bolder;
     font-size: large;

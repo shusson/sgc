@@ -27,8 +27,6 @@ export class Variant {
     }
 
     static displayName(variant: Variant) {
-        let r = variant.reference ? variant.reference : '*';
-        let a = variant.alternate ? variant.alternate : '*';
-        return `${ variant.chromosome }-${ variant.start }-${ r }-${ a }`;
+        return `${ variant.chromosome }-${ variant.start }-${ variant.reference }-${ variant.alternate }`;
     }
 }
