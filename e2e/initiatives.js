@@ -4,8 +4,8 @@ describe('initiatives', function () {
         browser.get('/initiatives');
     });
 
-    it('should display a navigation bar with 6 links', function () {
-        expect(element(by.css('nav')).all(by.tagName('a')).count()).toEqual(6);
+    it('should display a navigation bar with 7 links', function () {
+        expect(element(by.css('nav')).all(by.tagName('a')).count()).toEqual(7);
     });
 
     it('should display 3 initiatives', function () {

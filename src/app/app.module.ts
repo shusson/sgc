@@ -75,6 +75,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ErrorComponent } from './components/pages/error/error.component';
 import { ScoresComponent } from './components/parts/scores/scores.component';
 import { ConsequencesComponent } from './components/parts/consequences/consequences.component';
+import { AnalyticsComponent } from './components/pages/analytics/analytics.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -156,7 +157,8 @@ export class RavenErrorHandler implements ErrorHandler {
         PopFreqsComponent,
         ErrorComponent,
         ScoresComponent,
-        ConsequencesComponent
+        ConsequencesComponent,
+        AnalyticsComponent
     ],
     providers: [
         Auth,

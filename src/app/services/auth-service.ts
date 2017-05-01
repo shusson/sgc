@@ -76,6 +76,11 @@ export class Auth {
 
     public logout() {
         localStorage.removeItem('id_token');
+        let f = document.createElement("iframe");
+        f.style.display = "none";
+        f.setAttribute("src", environment.jhubUrl + "/hub/logout");
+        document.body.appendChild(f);
         this.location.href = `https://${ environment.auth0Domain }/v2/logout?returnTo=${ constants.ORIGIN_URL }`;
     };
+
 }
