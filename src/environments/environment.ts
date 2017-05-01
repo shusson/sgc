@@ -14,5 +14,6 @@ export const environment = {
     vsalUrl: '',
     elasticUrl: '',
     durlUrl: '',
-    sentryUrl: ''
+    sentryUrl: '',
+    jhubUrl: ''
 };
