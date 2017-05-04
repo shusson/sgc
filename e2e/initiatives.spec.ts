@@ -1,3 +1,5 @@
+import { browser, by, element } from 'protractor';
+
 describe('initiatives', function () {
     beforeEach(function () {
         browser.driver.manage().window().setSize(1201, 1000);
@@ -15,7 +17,7 @@ describe('initiatives', function () {
     it('should display a totals widget with some text', function () {
         expect(element.all(by.tagName('app-totals-widget')).count()).toEqual(1);
 
-        var textLength = element(by.tagName('app-totals-widget')).getText()
+        let textLength = element(by.tagName('app-totals-widget')).getText()
             .then(function (text) {
                 return text.length;
             });
