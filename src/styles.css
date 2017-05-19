@@ -7,7 +7,7 @@ html {
 body {
     height: 100%;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    color: #003263;
+    color: #484848;
     margin: 0;
     line-height: normal;
     font-size: 14px;
@@ -133,7 +133,7 @@ header nav a {
 a {
     cursor: pointer;
     text-decoration: none;
-    color: rgb(64, 196, 255);
+    color: #23b2c0;
 }
 
 rect.tnt_pane {

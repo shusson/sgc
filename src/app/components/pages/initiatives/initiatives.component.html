@@ -1,11 +1,6 @@
 
-<app-page-container [showTitle]="scrollService.currentScrollTop">
+<app-page-container>
     <div class="initiatives">
-        <div class="cover-parent">
-            <div class="shadow-cover" [ngStyle]="shadowStyle"></div>
-            <app-title-logo-banner class="band" [ngStyle]="shadowStyle"></app-title-logo-banner>
-        </div>
-
         <app-search-bar-with-options class="band" [expanded]="true"></app-search-bar-with-options>
         <div class="band-flex">
             <div class="program-cards">
@@ -18,8 +13,6 @@
                 <app-totals-widget></app-totals-widget>
             </div>
         </div>
-
-        <app-home-about class="band"></app-home-about>
 
         <app-home-footer class="band"></app-home-footer>
 

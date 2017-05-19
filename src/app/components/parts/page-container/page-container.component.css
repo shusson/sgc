@@ -16,7 +16,7 @@ md-sidenav-container {
     text-align: center;
     height: 30px;
     background-color: rgb(64, 196, 255);
-    color: white;
+    color: #484848;
 }
 
 .header-message i {
@@ -25,12 +25,13 @@ md-sidenav-container {
 }
 
 .header {
-    background: #003263;
+    background: white;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 10;
+    border-bottom: 1px solid lightgrey;
 }
 
 #header-title:hover {
@@ -50,7 +51,7 @@ md-sidenav-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: white;
+    color: #484848;
 }
 
 .menu-title .title {
@@ -80,11 +81,11 @@ main {
 
 md-sidenav-layout {
     background-color: whitesmoke;
-    color: #003263;
+    color: #484848;
 }
 
 md-sidenav {
-    background-color: #003263;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -97,7 +98,7 @@ md-sidenav .title {
 }
 
 .header-content i {
-    color: white
+    color: #484848;
 }
 
 .logo-small {
@@ -106,7 +107,7 @@ md-sidenav .title {
 
 .logo-small img {
     height: auto;
-    width: 60px;
+    width: 25px;
 }
 
 @media (min-width: 0px) and (max-width: 1200px) {

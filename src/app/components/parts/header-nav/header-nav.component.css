@@ -9,7 +9,7 @@
     width: 103px;
     left: 0;
     padding: 30px 50px 30px 0;
-    background-color: #336F9C;
+    background-color: #6550a3;
     margin-top: 23px;
     z-index: 10;
 }
@@ -21,7 +21,7 @@
 
 .sign-up {
     display: inline;
-    color: white;
+    color: black;
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -31,12 +31,12 @@
 }
 
 nav a.is-active {
-    border-bottom: 3px solid rgb(64, 196, 255);
+    border-bottom: 3px solid #23b2c0;
 }
 
 nav a.is-active.transparent {
     border-bottom: 0;
-    color: rgb(64, 196, 255) !important;
+    color: #23b2c0 !important;
 }
 
 nav {
@@ -46,7 +46,7 @@ nav {
 nav a {
     padding: 0 1rem 23px 1rem;
     position: relative;
-    color: white;
+    color: black;
     text-decoration: none;
     font-size: medium;
 }
@@ -55,5 +55,5 @@ nav a {
     display: inline;
     font-size: medium;
     padding: 0 1rem 23px 1rem;
-    color: white;
+    color: black;
 }
