@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TitleLogoBannerComponent implements OnInit {
     title = 'COHORTS AS A SERVICE';
-    // subtitle = 'EMPOWERING YOUR DATA';
+    subtitle = 'THE FUTURE OF PRECISION MEDICINE';
 
     constructor() {
     }
