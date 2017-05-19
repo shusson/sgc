@@ -12,31 +12,29 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $app-primary: mat-palette($mat-purple);
-$app-accent:  mat-palette($mat-red);
+$app-accent: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent);
-
 
 $foreground: map-get($app-theme, foreground);
 
 // Foreground palette for light themes.
 $foreground: map-merge($foreground, (
-  base:            #003263,
-  divider:         rgba(#003263, 0.12),
-  dividers:        rgba(#003263, 0.12),
-  disabled:        rgba(#003263, 0.38),
-  disabled-button: rgba(#003263, 0.38),
-  disabled-text:   rgba(#003263, 0.38),
-  hint-text:       rgba(#003263, 0.38),
-  secondary-text:  rgba(#003263, 0.54),
-  icon:            rgba(#003263, 0.54),
-  icons:           rgba(#003263, 0.54),
-  text:            rgba(#003263, 0.87)
+    base: #484848,
+    divider: rgba(#484848, 0.12),
+    dividers: rgba(#484848, 0.12),
+    disabled: rgba(#484848, 0.38),
+    disabled-button: rgba(#484848, 0.38),
+    disabled-text: rgba(#484848, 0.38),
+    hint-text: rgba(#484848, 0.38),
+    secondary-text: rgba(#484848, 0.54),
+    icon: rgba(#484848, 0.54),
+    icons: rgba(#484848, 0.54),
+    text: rgba(#484848, 0.87)
 ));
 
 $app-theme: map-merge($app-theme, (foreground: $foreground));
-
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

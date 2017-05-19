@@ -1,6 +1,11 @@
 
-<app-page-container>
+<app-page-container [showTitle]="scrollService.currentScrollTop">
     <div class="initiatives">
+        <div class="cover-parent">
+            <div class="shadow-cover" [ngStyle]="shadowStyle"></div>
+            <app-title-logo-banner class="band" [ngStyle]="shadowStyle"></app-title-logo-banner>
+        </div>
+
         <app-search-bar-with-options class="band" [expanded]="true"></app-search-bar-with-options>
         <div class="band-flex">
             <div class="program-cards">
