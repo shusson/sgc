@@ -10,9 +10,9 @@ import { RegionService } from '../autocomplete/region-service';
 import { TrackService } from './track-service';
 import { SearchFilterItem, SearchFilterItemSerialised } from '../../model/search-filter-item';
 
-const PIN_COLOR = '#4682b4';
-const PIN_SELECTED_COLOR = '#FFD658';
-const OVERLAY_COLOR = '#D54A0F';
+const PIN_COLOR = '#23b2c0';
+const PIN_SELECTED_COLOR = '#355DCA';
+const OVERLAY_COLOR = '#ff4539';
 
 export type GenomeBrowserOverlay = 'None' | 'Homozygotes' | 'Heterozygotes' | 'DbSNP';
 

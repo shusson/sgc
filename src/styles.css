@@ -148,3 +148,7 @@ rect.tnt_pane {
     min-height: 600px;
     width: 100%;
 }
+
+.ng2-pagination .current {
+    background: #23b2c0 !important;
+}
