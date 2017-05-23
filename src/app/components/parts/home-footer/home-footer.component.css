@@ -16,9 +16,21 @@
 }
 
 .logos img {
-    width: 180px;
-    height: auto !important;
-    margin-top: 1rem;
+    width: auto;
+    max-height: 80px;
+    margin: 2rem;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#gone-logo {
+    height: 62px;
 }
 
 .footer h6 {

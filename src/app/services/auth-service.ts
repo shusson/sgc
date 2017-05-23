@@ -7,7 +7,7 @@ import Auth0Lock from 'auth0-lock';
 
 const options: any = {
     theme: {
-        logo: constants.GARVAN_KCCG_LOGO,
+        logo: constants.GONE_LOGO,
         primaryColor: constants.PRIMARY_COLOR,
     },
     languageDictionary: {

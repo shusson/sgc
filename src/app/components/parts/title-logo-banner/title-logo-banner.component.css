@@ -12,14 +12,29 @@
     z-index: 100;
 }
 
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
 .spacer {
     height: 30px;
 }
 
 .logo img {
     margin: 1rem 1rem 0 1rem;
-    width: 150px;
+    height: 100%;
+    width: auto;
+    cursor: pointer;
 }
+
+.logo {
+    height: 30px;
+}
+
 
 .logo img.nswh {
     margin-left: 23px;
@@ -35,14 +50,15 @@
 }
 
 .title {
-    font-size: 33px;
-    margin-left: 22px !important;
+    font-size: xx-large;
     color: white;
+    margin: 0;
 }
 
 .subtitle {
-    font-size: x-small;
-    margin: 5px;
+    color: white;
+    font-size: medium;
+    margin-top: 10px;
 }
 
 .video-wrapper {

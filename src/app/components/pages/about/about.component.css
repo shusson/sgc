@@ -17,12 +17,18 @@ article {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    max-width: 300px;
+    margin-top: 4rem;
+}
+
+.sponsor-images a {
+    width: 100%;
+    height: 100%;
 }
 
 .sponsor-images img {
-    margin: 2rem;
-    width: 330px;
-    max-height: 380px;
+    margin: 4rem;
+    width: 100%;
     height: auto;
 }
 

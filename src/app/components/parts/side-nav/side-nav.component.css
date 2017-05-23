@@ -25,5 +25,9 @@ nav {
 
 .terms-dropdown {
     left: 0;
-    background-color: #6550a3;
+    background-color: #23b2c0;
+}
+
+nav a.terms-dropdown  {
+    color: white;
 }

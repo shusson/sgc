@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./title-logo-banner.component.css']
 })
 export class TitleLogoBannerComponent implements OnInit {
-    title = 'COHORTS AS A SERVICE';
-    subtitle = 'THE FUTURE OF PRECISION MEDICINE';
+    title = 'ROSTRUM';
+    subtitle = 'A platform for exploring population scale genomics';
 
     constructor() {
     }
