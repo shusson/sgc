@@ -50,14 +50,14 @@
 }
 
 .title {
-    font-size: xx-large;
+    font-size: 50px;
     color: white;
     margin: 0;
 }
 
 .subtitle {
     color: white;
-    font-size: medium;
+    font-size: large;
     margin-top: 10px;
 }
 
