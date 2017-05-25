@@ -12,8 +12,8 @@ let MIN_NAV_WIDTH = 1200;
 })
 export class PageContainerComponent implements OnInit, OnDestroy {
     @Input() showTitle = true;
-    title = 'ROSTRUM';
-    smallTitle = 'ROSTRUM';
+    title = 'DISCOVERY';
+    smallTitle = 'DISCOVERY';
     showHamburger = false;
     private subs: Subscription[] = [];
 
