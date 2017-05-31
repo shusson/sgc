@@ -18,8 +18,10 @@ $app-accent:  mat-palette($mat-light-blue);
 $app-theme: mat-light-theme($app-primary, $app-accent);
 
 
+$foreground: map-get($app-theme, foreground);
+
 // Foreground palette for light themes.
-$foreground: (
+$foreground: map-merge($foreground, (
   base:            #003263,
   divider:         rgba(#003263, 0.12),
   dividers:        rgba(#003263, 0.12),
@@ -31,7 +33,7 @@ $foreground: (
   icon:            rgba(#003263, 0.54),
   icons:           rgba(#003263, 0.54),
   text:            rgba(#003263, 0.87)
-);
+));
 
 $app-theme: map-merge($app-theme, (foreground: $foreground));
 

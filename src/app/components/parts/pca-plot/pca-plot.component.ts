@@ -3,6 +3,9 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import * as Papa from 'papaparse';
 
+
+const PLOT_WIDTH = window.innerWidth <= 500 ? 350 : 500;
+
 @Component({
     selector: 'app-pca-plot',
     templateUrl: './pca-plot.component.html',
@@ -24,6 +27,7 @@ export class PcaPlotComponent {
                 type: 'scatter',
                 zoomType: 'xy',
                 backgroundColor: 'rgba(0,0,0,0)',
+                width: PLOT_WIDTH,
             },
             title: {
                 text: this.title

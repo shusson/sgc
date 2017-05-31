@@ -27,7 +27,6 @@ import { RegionService } from './services/autocomplete/region-service';
 import { SearchBarComponent } from './components/parts/search-bar/search-bar.component';
 import { SearchOptionComponent } from './components/parts/search-option/search-option.component';
 import { GenomeBrowserResizeComponent } from './components/parts/genome-browser-resizable/genome-browser-resizable.component';
-import { Ng2PaginationModule } from 'ng2-pagination';
 import { BeaconComponent } from './components/pages/beacon/beacon.component';
 import { SearchBarWithOptionsComponent } from './components/parts/search-bar-with-options/search-bar-with-options.component';
 import { TitleLogoBannerComponent } from './components/parts/title-logo-banner/title-logo-banner.component';
@@ -75,6 +74,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ErrorComponent } from './components/pages/error/error.component';
 import { ScoresComponent } from './components/parts/scores/scores.component';
 import { ConsequencesComponent } from './components/parts/consequences/consequences.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -102,7 +102,7 @@ export class RavenErrorHandler implements ErrorHandler {
         routing,
         HttpModule,
         MaterialModule,
-        Ng2PaginationModule,
+        NgxPaginationModule,
         NgxDatatableModule,
         ChartModule
     ],
