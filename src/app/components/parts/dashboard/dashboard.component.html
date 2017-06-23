@@ -1,0 +1,120 @@
+<div class="loading-message" *ngIf="loading && !error">
+    <md-spinner color="primary"></md-spinner>
+</div>
+<div class="search-jumbo" *ngIf="!error">
+    <app-search-bar-with-options [expandable]="true" [action]="addGeneOrRegion"></app-search-bar-with-options>
+</div>
+<section>
+    <div class="message message-error" *ngIf="error"><md-icon>error_outline</md-icon> {{ error }}</div>
+    <div *ngIf="!error">
+        <div class="message message-warning">
+            <md-icon>help_outline</md-icon>
+            <div>While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
+                appreciated
+            </div>
+        </div>
+        <div class="results">
+            <div class="charts-toolbar" *ngIf="cf.x">
+                <div class="icons">
+                    <md-icon class="material-icons" (click)="clearFilters()" mdTooltip="Clear All Filters"
+                             mdTooltipPosition="above">cached
+                    </md-icon>
+                    <md-icon class="material-icons" (click)="toggleSql()" [mdTooltip]="sqlTooltip()"
+                             mdTooltipPosition="above">list
+                    </md-icon>
+                    <md-icon class="material-icons" (click)="openFeedback()" mdTooltip="Give feedback on the beta"
+                             mdTooltipPosition="above">feedback
+                    </md-icon>
+                </div>
+
+                <div class="count">
+                    <md-chip selected="true" color="accent" mdTooltip="Filtered number of Variants"
+                             mdTooltipPosition="above">
+                        {{ subtotal }}
+                    </md-chip>
+                    /
+                    <md-chip selected="true" color="accent" mdTooltip="Total number of Variants"
+                             mdTooltipPosition="above">
+                        {{ total }}
+                    </md-chip>
+                </div>
+            </div>
+            <div *ngIf="showSql" class="generated-sql">
+                <div>{{ cf.sql }}</div>
+                <div *ngIf="!cf.sql">No Active filters</div>
+            </div>
+
+            <div class="charts">
+                <div class="main">
+                    <div class="left">
+                        <div class="chart">
+                            <div class="toolbar">
+                                <h4 mdTooltip="Number of variants by chromosome" mdTooltipPosition="above">
+                                    Chromosome</h4>
+                                <a (click)="resetChrom()" *ngIf="chromHasFilter()">reset</a>
+                            </div>
+                            <div id="chromCount" [ngStyle]="thinChartStyle"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="combined-chart">
+                            <div class="chart main-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Avg Allele Frequency by start position" mdTooltipPosition="above">Avg
+                                        Allele Frequency</h4>
+                                    <a (click)="resetAfAvgChart()" *ngIf="afAvgHasFilter()">reset</a>
+                                </div>
+                                <div id="afAvg" [ngStyle]="largeChartStyle"></div>
+                            </div>
+                            <div class="range-chart">
+                                <div id="variantCount" [ngStyle]="rangeChartStyle"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by reference" mdTooltipPosition="above">
+                                        Reference</h4>
+                                    <a (click)="resetRefChart()" *ngIf="refHasFilter()">reset</a>
+                                </div>
+                                <div id="refCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by alternate" mdTooltipPosition="above">
+                                        Alternate</h4>
+                                    <a (click)="resetAltChart()" *ngIf="altHasFilter()">reset</a>
+                                </div>
+                                <div id="altCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by type" mdTooltipPosition="above">Type</h4>
+                                    <a (click)="resetTypeChart()" *ngIf="typeHasFilter()">reset</a>
+                                </div>
+                                <div id="typeCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by grouped Allele frequency"
+                                        mdTooltipPosition="above">Avg Allele Frequency</h4>
+                                    <a (click)="resetAfCountChart()" *ngIf="afCountHasFilter()">reset</a>
+                                </div>
+                                <div id="afCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="table" *ngIf="cf.x">
+                <app-variants-table-paginated></app-variants-table-paginated>
+            </div>
+        </div>
+    </div>
+
+</section>
+

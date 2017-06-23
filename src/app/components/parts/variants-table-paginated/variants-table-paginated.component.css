@@ -1,0 +1,16 @@
+:host /deep/ .ngx-datatable .datatable-body-cell {
+    -webkit-user-select: initial !important;
+    -moz-user-select: initial !important;
+    -ms-user-select: initial !important;
+    -o-user-select: initial !important;
+    user-select: initial !important;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+h4 {
+    text-align: center;
+}

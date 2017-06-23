@@ -5,6 +5,9 @@ import { environment } from '../../environments/environment';
 import { constants } from '../app.constants';
 import Auth0Lock from 'auth0-lock';
 
+const authKey = 'id_token';
+const cannyKey = 'canny_token';
+
 const options: any = {
     theme: {
         logo: constants.GARVAN_KCCG_LOGO,
@@ -33,7 +36,8 @@ export class Auth {
 
         this.lock.on('authenticated', (authResult: any) => {
             if (authResult.idToken && authResult.idToken !== 'undefined') {
-                localStorage.setItem('id_token', authResult.idToken);
+                localStorage.setItem(authKey, authResult.idToken);
+                localStorage.setItem(cannyKey, authResult.idTokenPayload['http://sgc/cannyToken']);
                 window.setTimeout(() => {
                     this.router.navigateByUrl(decodeURIComponent(authResult.state));
                 }, 100);
@@ -41,7 +45,8 @@ export class Auth {
         });
 
         this.lock.on('unrecoverable_error', (authResult: any) => {
-            localStorage.removeItem('id_token');
+            localStorage.removeItem(authKey);
+            localStorage.removeItem(cannyKey);
         });
 
     }
@@ -71,11 +76,16 @@ export class Auth {
     }
 
     public authenticated() {
-        return this.tokenExpiredFn();
+        return this.tokenExpiredFn(authKey);
     };
 
     public logout() {
-        localStorage.removeItem('id_token');
+        localStorage.removeItem(authKey);
+        localStorage.removeItem(cannyKey);
         this.location.href = `https://${ environment.auth0Domain }/v2/logout?returnTo=${ constants.ORIGIN_URL }`;
     };
+
+    cannyToken(): string {
+        return localStorage.getItem(cannyKey);
+    }
 }

@@ -11,6 +11,8 @@ import { ScrollService } from '../../../services/scroll-service';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { MaterialModule } from '@angular/material';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 describe('SearchBarWithOptionsComponent', () => {
     let component: SearchBarWithOptionsComponent;
@@ -32,7 +34,13 @@ describe('SearchBarWithOptionsComponent', () => {
                 {
                     provide: SearchBarService,
                     useValue: new MockSearchBarService()
-                }
+                },
+                {
+                    provide: Router,
+                    useValue: {
+                        events: Observable.empty()
+                    }
+                },
             ]
         })
             .compileComponents();

@@ -91,6 +91,9 @@ Our identity service. Provides identity and authentication.
 #### [Sentry](https://sentry.io/)
 Tracks any unhandled errors
 
+#### [MapD](https://github.com/mapd/mapd-core)
+In memory GPU Database that supports cross dimensional charts.
+
 ### Deployment
 
 Travis handles our build, testing and deployment. 

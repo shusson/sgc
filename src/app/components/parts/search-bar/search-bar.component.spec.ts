@@ -7,6 +7,8 @@ import { SearchOptionComponent } from '../search-option/search-option.component'
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { MaterialModule } from '@angular/material';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 describe('Component: SearchBar', () => {
     let component: SearchBarComponent;

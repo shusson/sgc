@@ -11,16 +11,25 @@ export class VariantStat {
 }
 
 export class Variant {
-    name: string;
+    id: string;
     dbSNP: string;
     chromosome: string;
     start: number;
     reference: string;
     alternate: string;
     type: string;
+    altType: string;
     variantStats: VariantStat[];
     annotation: VariantAnnotation;
     highlight = false;
+    AC: number;
+    AF: number;
+    nCalled: number;
+    nNotCalled: number;
+    nHomRef: number;
+    nHet: number;
+    consequence: string;
+    geneMapping: string;
 
     static dbSnpUrl(variant: Variant) {
         return `${DB_SNP_URL}?rs=${variant.dbSNP}`;

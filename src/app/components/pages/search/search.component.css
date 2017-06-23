@@ -1,20 +1,3 @@
-app-search-bar {
-    flex-grow: 1;
-    width: 100%;
-}
-
-.search-options {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.search-options div {
-    margin-right: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .search-jumbo {
     border-bottom: 1px solid lightgray;
 }

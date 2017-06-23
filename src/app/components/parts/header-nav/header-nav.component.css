@@ -51,6 +51,11 @@ nav a {
     font-size: medium;
 }
 
+.explore-beta span {
+    font-size: x-small;
+    font-style: italic;
+}
+
 .spacer {
     display: inline;
     font-size: medium;

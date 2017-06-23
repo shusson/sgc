@@ -75,6 +75,10 @@ import { ErrorComponent } from './components/pages/error/error.component';
 import { ScoresComponent } from './components/parts/scores/scores.component';
 import { ConsequencesComponent } from './components/parts/consequences/consequences.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ExploreComponent } from './components/pages/explore/explore.component';
+import { DashboardComponent } from './components/parts/dashboard/dashboard.component';
+import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
+import { FeedbackComponent } from './components/parts/feedback/feedback.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -86,11 +90,12 @@ export class RavenErrorHandler implements ErrorHandler {
     handleError(err: any): void {
         if (!environment.production) {
             console.error(err);
+        } else {
+            Raven.captureException(err);
+            window.setTimeout(() => {
+                window.location.href = 'error';
+            }, CRITICAL_ERROR_WAIT_DURATION);
         }
-        Raven.captureException(err);
-        window.setTimeout(() => {
-            window.location.href = 'error';
-        }, CRITICAL_ERROR_WAIT_DURATION);
     }
 }
 
@@ -156,7 +161,14 @@ export class RavenErrorHandler implements ErrorHandler {
         PopFreqsComponent,
         ErrorComponent,
         ScoresComponent,
-        ConsequencesComponent
+        ConsequencesComponent,
+        ExploreComponent,
+        DashboardComponent,
+        VariantsTablePaginatedComponent,
+        FeedbackComponent
+    ],
+    entryComponents: [
+        FeedbackComponent
     ],
     providers: [
         Auth,

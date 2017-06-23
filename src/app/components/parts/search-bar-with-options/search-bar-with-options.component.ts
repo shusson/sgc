@@ -1,6 +1,7 @@
 import { Component, Input, HostListener, ElementRef, AfterViewInit } from '@angular/core';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { ScrollService } from '../../../services/scroll-service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-search-bar-with-options',
@@ -10,6 +11,11 @@ import { ScrollService } from '../../../services/scroll-service';
 export class SearchBarWithOptionsComponent implements AfterViewInit {
     @Input() expanded = false;
     @Input() expandable = false;
+    @Input() action = (query) => {
+        this.searchBarService.query = query;
+        let obj = {query: query, timestamp: Date.now()};
+        this.router.navigate(['/search/results', obj]);
+    };
 
     @HostListener('document:click', ['$event']) onClick($event: Event) {
         this.toggleExpansion($event);
@@ -22,6 +28,7 @@ export class SearchBarWithOptionsComponent implements AfterViewInit {
     }
 
     constructor(public elf: ElementRef,
+                public router: Router,
                 public searchBarService: SearchBarService) {
     }
 

@@ -1,0 +1,113 @@
+.charts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.small-chart {
+    margin: 1rem;
+}
+
+h4 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.charts-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0 2rem 0;
+    border-bottom: 1px solid lightgrey;
+    padding: 5px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.charts-toolbar md-icon {
+    cursor: pointer;
+    margin: 0 1rem 0 0;
+}
+
+.count md-chip {
+    cursor: default;
+}
+
+.main {
+    display: flex;
+    /*flex-wrap: wrap;*/
+    justify-content: center;
+}
+
+.search-jumbo {
+    border-bottom: 1px solid lightgray;
+}
+
+.combined-chart {
+    margin-left: 1rem;
+}
+
+.generated-sql {
+    padding: 1rem;
+    margin: 1rem 0 1rem 0;
+    font-family: "Arial", Arial, serif;
+    background-color: white;
+    border: 1px solid lightgrey;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.results {
+    position: relative;
+}
+
+.loading-message {
+    background-color: whitesmoke;
+    position: absolute;
+    z-index: 100;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+}
+
+.message-error {
+    margin-top: 2rem;
+}
+
+.message md-icon {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-height: 35px;
+    margin-bottom: 5px;
+}
+
+:host /deep/ .dc-chart rect.bar {
+    cursor: default;
+}
