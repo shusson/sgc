@@ -58,7 +58,7 @@ karma start
 There are a minimum set of functional tests that check that critical 
 features work
 
-Serve the app e.g:
+To run tests
 ```bash
 ng e2e
 ```
