@@ -6,7 +6,7 @@ import { AlleleFreqComponent } from '../allele-freq/allele-freq.component';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { Observable } from 'rxjs';
 import { GenomeBrowserResizeComponent } from '../genome-browser-resizable/genome-browser-resizable.component';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
@@ -34,7 +34,7 @@ describe('Component: SearchResults', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                Ng2PaginationModule,
+                NgxPaginationModule,
                 MaterialModule,
                 RouterModule
             ],
@@ -45,7 +45,7 @@ describe('Component: SearchResults', () => {
                 VariantsTableComponent,
                 GenomeBrowserResizeComponent,
                 GeneInformationComponent,
-                RegionInformationComponent
+                RegionInformationComponent,
                 OverlayMenuComponent,
                 ColumnsMenuComponent,
                 FilterAutoComponent,

@@ -12,8 +12,8 @@ import { Auth } from '../../../services/auth-service';
 import { GenomeBrowserResizeComponent } from '../../parts/genome-browser-resizable/genome-browser-resizable.component';
 import { SearchBarComponent } from '../../parts/search-bar/search-bar.component';
 import { SearchOptionComponent } from '../../parts/search-option/search-option.component';
-import { Ng2PaginationModule } from 'ng2-pagination';
-import { ActivatedRoute, Router, RouterModule, RouterOutletMap } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
@@ -47,7 +47,7 @@ describe('Component: Search', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                Ng2PaginationModule,
+                NgxPaginationModule,
                 MaterialModule,
                 RouterModule
             ],
