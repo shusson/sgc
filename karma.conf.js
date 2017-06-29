@@ -14,7 +14,8 @@ module.exports = function (config) {
         files: [
             "node_modules/hammerjs/hammer.min.js",
             "node_modules/tnt.genome/build/tnt.genome.js",
-            {pattern: './src/test.ts', watched: false}
+            { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css' },
+            { pattern: './src/test.ts', watched: false }
         ],
         preprocessors: {
             './src/test.ts': ['@angular/cli']

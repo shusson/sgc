@@ -25,7 +25,7 @@ describe('AnnoTreeComponent', () => {
                     provide: AnnotationTreeService,
                     useValue: {
                         initNode: () => {},
-                        updates: Observable.empty();
+                        updates: Observable.empty()
                     }
                 }
             ]

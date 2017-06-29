@@ -16,7 +16,7 @@ import { MgrbTermsComponent } from '../mgrb-terms/mgrb-terms.component';
 import { MaterialModule, MdTabsModule } from '@angular/material';
 import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
 import { VariantAnnotationsComponent } from '../../parts/variant-annotations/variant-annotations.component';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { AnnoTreeComponent, JsonLabelPipe } from '../../parts/anno-tree/anno-tree.component';
 import { VsalService } from '../../../services/vsal-service';
@@ -39,7 +39,7 @@ describe('VariantComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                Ng2PaginationModule,
+                NgxPaginationModule,
                 FormsModule,
                 MdTabsModule,
                 NgxDatatableModule

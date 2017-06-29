@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BeaconTableComponent } from './beacon-table.component';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -14,7 +14,7 @@ describe('BeaconTableComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                Ng2PaginationModule,
+                NgxPaginationModule,
                 FormsModule,
                 NgxDatatableModule,
             ],

@@ -4,7 +4,7 @@ import { BeaconComponent } from './beacon.component';
 import { BeaconSearchService } from '../../../services/beacon/beacon-search-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MaterialModule } from '@angular/material';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
@@ -29,7 +29,7 @@ describe('BeaconComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                Ng2PaginationModule,
+                NgxPaginationModule,
                 MaterialModule,
                 NgxDatatableModule,
             ],

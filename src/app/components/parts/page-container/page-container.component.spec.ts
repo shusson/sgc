@@ -5,7 +5,7 @@ import { PrivacyFooterComponent } from '../privacy-footer/privacy-footer.compone
 import { MaterialModule } from '@angular/material';
 import { SideNavComponent } from '../side-nav/side-nav.component';
 import { HeaderNavComponent } from '../header-nav/header-nav.component';
-import { ActivatedRoute, Router, RouterOutletMap } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
 import { Observable } from 'rxjs';
 import { Auth } from '../../../services/auth-service';

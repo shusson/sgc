@@ -6,7 +6,7 @@ import { DebugElement } from '@angular/core';
 import { VariantsTableComponent } from './variants-table.component';
 import { MaterialModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AlleleFreqComponent } from '../allele-freq/allele-freq.component';
 import { GenomeBrowserComponent } from '../genome-browser/genome-browser.component';
 import { SearchResultsComponent } from '../search-results/search-results.component';
@@ -34,7 +34,7 @@ describe('VariantsTableComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                Ng2PaginationModule,
+                NgxPaginationModule,
                 MaterialModule,
                 RouterModule
             ],
