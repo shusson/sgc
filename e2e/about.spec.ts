@@ -8,8 +8,8 @@ describe('About Page', () => {
         page.navigateTo();
     });
 
-    it('should display a navigation bar with 6 links', function () {
-        expect(page.getNavBar().count()).toEqual(6);
+    it('should display a navigation bar with 7 links', function () {
+        expect(page.getNavBar().count()).toEqual(7);
     });
 
     it('should display 1 articles with some text', function () {

@@ -31,14 +31,7 @@ export class SearchBarService {
         this.query = '';
         this.options = [
             new SearchOption('Cohorts', '', ['MGRB'], 'MGRB'),
-            new SearchOption('Type', 'type', ['SNV', 'MNV', 'CNV', 'SV', 'INDEL'], ''),
-            new SearchOption('Reference', 'refAllele', ['A', 'C', 'G', 'T'], ''),
-            new SearchOption('Alternate', 'altAllele', ['A', 'C', 'G', 'T'], ''),
         ];
-    }
-
-    reload() {
-        this.search(this.query);
     }
 
     searchWithParams(params: Params): Promise<AutocompleteResult<any>> {
@@ -82,11 +75,6 @@ export class SearchBarService {
         });
     }
 
-    searchWithAutocompleteResult(result: AutocompleteResult<any>): void {
-        this.query = result.displayName();
-        this.navigateToSearch(result.symbol);
-    }
-
     search(query: string): void {
         this.query = query;
         this.navigateToSearch(query);
@@ -118,13 +106,7 @@ export class SearchBarService {
     }
 
     private navigateToSearch(query: string) {
-        let options = this.options
-            .filter(v => v.getValue() && v.key)
-            .map(v => {
-                return v.urlOption();
-            });
         let obj = {query: query, timestamp: Date.now()};
-        Object.assign(obj, ...options);
         this.router.navigate(['/search/results', obj]);
     }
 

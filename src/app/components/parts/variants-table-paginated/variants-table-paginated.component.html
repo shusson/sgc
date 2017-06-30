@@ -1,0 +1,32 @@
+<div *ngIf="!error">
+    <h4 mdTooltip="The first 100 filtered variants" mdTooltipPosition="above">Variant samples</h4>
+    <ngx-datatable
+        class="material"
+        [rows]="variants"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [offset]="offset"
+        (page)="onChange($event)"
+        [loadingIndicator]="loading">
+        <ngx-datatable-column name="Variant" prop="VARIANT">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <a *ngIf="row.TYPE === 'SNP'" target="_blank" [href]="variantUrl(value)">{{value}}</a>
+                <span *ngIf="row.TYPE !== 'SNP'">{{value}}</span>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Type" prop="TYPE"></ngx-datatable-column>
+        <ngx-datatable-column name="AF" prop="AF"></ngx-datatable-column>
+        <ngx-datatable-column name="RSID" prop="RSID">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                <a target="_blank" [href]="rsidUrl(value)">{{value}}</a>
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+</div>
+<!--<div class="loading-message" *ngIf="loading">-->
+    <!--<md-spinner color="primary"></md-spinner>-->
+<!--</div>-->
+<div class="message message-error" *ngIf="error">{{ error }}</div>

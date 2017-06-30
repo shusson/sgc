@@ -27,8 +27,5 @@ export class SearchOptionComponent implements OnInit {
 
     selectOption(selected: string) {
         this.option.setValue(selected);
-        if (this.searchBarService.query) {
-            this.searchBarService.reload();
-        }
     }
 }

@@ -11,6 +11,10 @@ export class RegionAutocomplete extends AutocompleteResult<Region> {
         return vsal.getVariants(new SearchQuery(this.result.chromosome, this.result.start, this.result.end, options));
     }
 
+    region(): Promise<Region> {
+        return Promise.resolve(new Region(this.result.chromosome, this.result.start, this.result.end));
+    }
+
     displayName(): string {
         return this.symbol;
     }

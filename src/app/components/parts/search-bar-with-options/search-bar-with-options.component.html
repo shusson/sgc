@@ -1,8 +1,7 @@
 <div class="search-band">
     <div class="search-content" [ngClass]="{'expanded': expanded}">
         <div class="search-bar">
-            <app-search-bar [options]="{autofocus: false}" (focused)="onFocus()">
-            </app-search-bar>
+            <app-search-bar [options]="{autofocus: false}" (focused)="onFocus()" [action]="action"></app-search-bar>
         </div>
         <div class="search-bar-results" *ngIf="expanded">
             <div class="search-options">
@@ -12,8 +11,8 @@
 
             <div class="message message-error" *ngIf="searchBarService.error">{{ searchBarService.error }}</div>
             <div class="search-examples">
-                Examples: <a (click)="searchBarService.search('FAM110C')">FAM110C</a> or
-                <a (click)="searchBarService.search('22:46546424-46639653')">22:46546424-46639653</a>
+                Examples: <a (click)="action('FAM110C')">FAM110C</a> or
+                <a (click)="action('22:46546424-46639653')">22:46546424-46639653</a>
                 (GRCh37 coordinates)
             </div>
         </div>

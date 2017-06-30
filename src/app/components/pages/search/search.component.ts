@@ -1,7 +1,7 @@
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Auth } from '../../../services/auth-service';
 import { Subscription } from 'rxjs';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { VariantSearchService } from '../../../services/variant-search-service';
@@ -21,10 +21,11 @@ export class SearchComponent implements OnDestroy {
     constructor(public searchBarService: SearchBarService,
                 private auth: Auth,
                 private route: ActivatedRoute,
-                private cd: ChangeDetectorRef) {
+                private cd: ChangeDetectorRef,
+                router: Router) {
         if (!auth.authenticated()) {
             auth.lock.on('hide', () => {
-                window.history.back();
+                router.navigate(['/initiatives']);
             });
             auth.login();
         } else {

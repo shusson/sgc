@@ -3,13 +3,13 @@
         <input #searchBox
                id="search-query"
                name="search-query" type="search"
-               placeholder="Search for a gene or region, e.g BRCA1 or 17:41322498-41363708"
+               [placeholder]="placeholder"
                [ngModel]="searchBarService.query"
-               (ngModelChange)="searchAutocomplete(searchBox.value)"
+               (ngModelChange)="searchAutocomplete($event)"
                (keydown)="onKeyDown($event, searchBox)"
                (blur)="onBlur()"
                (focus)="onFocused(searchBox.value)">
-        <button md-mini-fab (click)="searchBarService.search(searchBox.value)"><md-icon>search</md-icon></button>
+        <button md-mini-fab (click)="action(searchBox.value)"><md-icon>search</md-icon></button>
     </form>
     <div *ngIf="autocompleteResults.length > 0 && !loading" class="search-results">
         <div *ngFor="let result of autocompleteResults; let i = index;"

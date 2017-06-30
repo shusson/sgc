@@ -10,6 +10,18 @@ declare var tooltip: any;
 
 declare var saveAs: any;
 
+declare var mapdc: any;
+
+declare var d3: any;
+
+declare var reductio: any;
+
+declare var MapdCon: any;
+
+declare var dc: any;
+
+declare var Canny: any;
+
 declare module 'auth0-lock';
 
 declare module 'js-worker-search';

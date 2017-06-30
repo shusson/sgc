@@ -1,7 +1,11 @@
-import { Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+    Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitter, OnDestroy,
+    ChangeDetectorRef
+} from '@angular/core';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { Router } from '@angular/router';
 
 export class SearchBarOptions {
     autofocus = false;
@@ -15,6 +19,8 @@ export class SearchBarOptions {
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
     @Input() options = new SearchBarOptions();
+    @Input() placeholder = 'Search genes or regions, e.g BRCA1 or 17:41322498-41363708';
+    @Input() action;
     @Output() focused = new EventEmitter();
     loading = false;
     selectedIndex = 0;
@@ -33,7 +39,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
 
     constructor(public searchBarService: SearchBarService,
-                private elf: ElementRef) {
+                private elf: ElementRef,
+                private cd: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
@@ -56,6 +63,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             this.selectedIndex = 0;
             this.autocompleteResults = results;
             this.loading = false;
+            this.cd.detectChanges();
         }));
     }
 
@@ -70,7 +78,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             this.search(event, searchBox, this.autocompleteResults[this.selectedIndex]);
         } else if (event.code === 'Enter') {
             this.searchTerms.next(''); // clear any pending results
-            this.searchBarService.search(searchBox.value);
+            this.action(searchBox.value);
         }
     }
 
@@ -89,7 +97,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         event.preventDefault();
         searchBox.blur();
         this.searchTerms.next(''); // clear any pending results
-        this.searchBarService.searchWithAutocompleteResult(result);
+        this.action(result.displayName());
     }
 
     private handleError = (error: any): void => {

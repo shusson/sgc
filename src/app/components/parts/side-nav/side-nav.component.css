@@ -23,6 +23,11 @@ nav {
     align-items: center;
 }
 
+.explore-beta span {
+    font-size: x-small;
+    font-style: italic;
+}
+
 .terms-dropdown {
     left: 0;
     background-color: #336F9C;

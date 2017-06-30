@@ -70,17 +70,6 @@ describe('SearchBar Service', () => {
         });
     });
 
-    describe('reload', () => {
-        it('should search the last searched query', fakeAsync(
-            inject([SearchBarService], (searchBarService: SearchBarService) => {
-                expect(crumbs.length).toEqual(0);
-                searchBarService.reload();
-                expect(crumbs.length).toEqual(1);
-                expect(crumbs[0][0]).toEqual('/search/results');
-            })
-        ));
-    });
-
     describe('search', () => {
         it('should route to the correct url', fakeAsync(
             inject([SearchBarService], (searchBarService: SearchBarService) => {

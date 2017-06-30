@@ -7,9 +7,9 @@ import { GcmpComponent } from './components/pages/programmes/gcmp/gcmp.component
 import { NswgpComponent } from './components/pages/programmes/nswgp/nswgp.component';
 import { MgrbComponent } from './components/pages/programmes/mgrb/mgrb.component';
 import { MgrbTermsComponent } from './components/pages/mgrb-terms/mgrb-terms.component';
-import { ModuleWithProviders} from '@angular/core';
 import { VariantComponent } from './components/pages/variant/variant.component';
 import { ErrorComponent } from './components/pages/error/error.component';
+import { ExploreComponent } from './components/pages/explore/explore.component';
 
 const appRoutes: Routes = [
     { path: 'initiatives', component: InitiativesComponent },
@@ -17,6 +17,7 @@ const appRoutes: Routes = [
     { path: 'search/results', component: SearchComponent },
     { path: 'search/variant', component: VariantComponent },
     { path: 'search', component: SearchComponent },
+    { path: 'explore', component: ExploreComponent },
     { path: 'beacon', component: BeaconComponent },
     { path: 'initiatives/mgrb', component: MgrbComponent },
     { path: 'initiatives/nswgp', component: NswgpComponent },
