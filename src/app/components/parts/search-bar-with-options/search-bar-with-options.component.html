@@ -11,8 +11,8 @@
 
             <div class="message message-error" *ngIf="searchBarService.error">{{ searchBarService.error }}</div>
             <div class="search-examples">
-                Examples: <a (click)="action('FAM110C')">FAM110C</a> or
-                <a (click)="action('22:46546424-46639653')">22:46546424-46639653</a>
+                Examples: <a (click)="action(example1)">{{ example1 }}</a> or
+                <a (click)="action(example2)">{{ example2 }}</a>
                 (GRCh37 coordinates)
             </div>
         </div>
