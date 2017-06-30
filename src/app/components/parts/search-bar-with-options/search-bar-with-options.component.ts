@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class SearchBarWithOptionsComponent implements AfterViewInit {
     @Input() expanded = false;
     @Input() expandable = false;
+    @Input() example1 = 'FAM110C';
+    @Input() example2 = '22:46546424-46639653';
     @Input() action = (query) => {
         this.searchBarService.query = query;
         let obj = {query: query, timestamp: Date.now()};

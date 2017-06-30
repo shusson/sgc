@@ -2,7 +2,7 @@
     <md-spinner color="primary"></md-spinner>
 </div>
 <div class="search-jumbo" *ngIf="!error">
-    <app-search-bar-with-options [expandable]="true" [action]="addGeneOrRegion"></app-search-bar-with-options>
+    <app-search-bar-with-options [expandable]="true" [action]="addGeneOrRegion" [example1]="'BRCA1'" example2="22:16000000-17000000"></app-search-bar-with-options>
 </div>
 <section>
     <div class="message message-error" *ngIf="error"><md-icon>error_outline</md-icon> {{ error }}</div>
