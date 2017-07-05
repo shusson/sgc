@@ -29,17 +29,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     afCountChart: any;
     rangeChart: any;
     chromChart: any;
+    rsidChart: any;
 
-    LARGE_WIDTH = this.calcWidth();
-    LARGE_HEIGHT = 230;
-    SMALL_WIDTH = 180;
-    SMALL_HEIGHT = 180;
+    LARGE_WIDTH = window.innerWidth / 1.3 > 1090 ? 1090 : window.innerWidth / 1.3;
+    LARGE_HEIGHT = 280;
+    SMALL_WIDTH = 280;
+    SMALL_HEIGHT = 280;
 
-    RANGE_WIDTH = this.calcWidth();
-    RANGE_HEIGHT = 50;
-
-    THIN_WIDTH = 100;
-    THIN_HEIGHT = 520;
+    RANGE_HEIGHT = 70;
 
     subscriptions: Subscription[] = [];
     rangeBounds = [MIN_BOUNDS, MAX_BOUNDS];
@@ -58,8 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     largeChartStyle = {'width': `${this.LARGE_WIDTH}px`, 'height': `${this.LARGE_HEIGHT}px`};
     smallChartStyle = {'width': `${this.SMALL_WIDTH}px`, 'height': `${this.SMALL_HEIGHT}px`};
-    rangeChartStyle = {'width': `${this.RANGE_WIDTH}px`, 'height': `${this.RANGE_HEIGHT}px`};
-    thinChartStyle = {'width': `${this.THIN_WIDTH}px`, 'height': `${this.THIN_HEIGHT}px`};
+    rangeChartStyle = {'width': `${this.LARGE_WIDTH}px`, 'height': `${this.RANGE_HEIGHT}px`};
 
     constructor(public searchBarService: SearchBarService,
                 private cd: ChangeDetectorRef,
@@ -125,14 +121,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }).catch((e) => this.errors.next(e));
     }
 
-    calcWidth() {
-        if (window.innerWidth >= 1030) {
-            return 1000;
-        } else {
-            return window.innerWidth / 1.6;
-        }
-    }
-
     initialise() {
         return this.mapd.connect().then((session) => {
             return this.cf.create(session, 'mgrb').then((x: any) => {
@@ -152,6 +140,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         let refDim = x.dimension('c4_REF');
         let afDim = x.dimension('AF');
 
+        let rsid = x.dimension('case when RSID = \'.\' then False else True end');
+
+        this.rsidChart = dc.pieChart('#rsidCount')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .innerRadius(45)
+            .slicesCap(100)
+            .othersGrouper(false)
+            .dimension(rsid)
+            .group(rsid.group().reduceCount());
+
         let afGroup = afDim.group().binParams([{
             numBins: 10,
             binBounds: [0, 1],
@@ -168,15 +167,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         let chromGroup = this.chromDim.group().reduceCount();
 
         this.chromChart = dc.rowChart('#chromCount')
-            .width(this.THIN_WIDTH)
-            .height(this.THIN_HEIGHT)
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
             .dimension(this.chromDim)
             .cap(30)
             .elasticX(true)
-            .margins({top: 0, right: 10, bottom: 0, left: 5})
+            .margins({top: 0, right: 0, bottom: 20, left: 5})
             .group(chromGroup);
 
-        this.chromChart.xAxis().tickValues([]);
+        this.chromChart.xAxis().ticks(2);
 
         this.afCountChart = dc.rowChart('#afCount')
             .width(this.SMALL_WIDTH)
@@ -190,7 +189,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.altChart = dc.pieChart('#altCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
-            .innerRadius(30)
+            .innerRadius(45)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(altDim)
@@ -199,7 +198,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.refChart = dc.pieChart('#refCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
-            .innerRadius(30)
+            .innerRadius(45)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(refDim)
@@ -216,7 +215,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.typeChart.xAxis().ticks(2);
 
         this.rangeChart = dc.barChart('#variantCount')
-            .width(this.RANGE_WIDTH)
+            .width(this.LARGE_WIDTH)
             .height(this.RANGE_HEIGHT)
             .x(d3.scale.linear().domain(this.rangeBounds))
             .brushOn(true)
@@ -225,8 +224,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .dimension(startDim)
             .centerBar(true)
             .gap(1)
-            .margins({top: 0, right: 0, bottom: 20, left: 70})
+            .margins({top: 0, right: 0, bottom: 35, left: 70})
             .renderLabel(false)
+            .xAxisLabel(`Chromosomal Coordinates`)
             .group(startDim.group().setBinParams([{
                 numBins: 50,
                 binBounds: this.rangeBounds,
@@ -246,7 +246,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .elasticY(true)
             .yAxisLabel(`AVG AF`)
             .dimension(startDim)
-            .margins({top: 10, right: 0, bottom: 30, left: 70})
+            .margins({top: 10, right: 0, bottom: 30, left: 60})
             .valueAccessor((d) => d.afavg)
             .renderLabel(false)
             .group(startDim.group().setBinParams([{
@@ -376,11 +376,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return this.afCountChart && this.afCountChart.filters().length > 0;
     }
 
-    resetRangeChart() {
-        this.rangeChart.filterAll();
-        dc.redrawAllAsync();
-    }
-
     rangeHasFilter() {
         return this.rangeChart && this.rangeChart.filters().length > 0;
     }
@@ -392,5 +387,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     sqlTooltip() {
         let v = this.showSql ? 'Hide' : 'Show';
         return `${v} generated SQL`;
+    }
+
+    resetdbSNPChart() {
+        this.rsidChart.filterAll();
+        dc.redrawAllAsync();
+    }
+
+    dbSNPHasFilter() {
+        return this.rsidChart && this.rsidChart.filters().length > 0;
     }
 }

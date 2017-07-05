@@ -46,16 +46,6 @@
 
             <div class="charts">
                 <div class="main">
-                    <div class="left">
-                        <div class="chart">
-                            <div class="toolbar">
-                                <h4 mdTooltip="Number of variants by chromosome" mdTooltipPosition="above">
-                                    Chromosome</h4>
-                                <a (click)="resetChrom()" *ngIf="chromHasFilter()">reset</a>
-                            </div>
-                            <div id="chromCount" [ngStyle]="thinChartStyle"></div>
-                        </div>
-                    </div>
                     <div class="right">
                         <div class="combined-chart">
                             <div class="chart main-chart">
@@ -70,25 +60,15 @@
                                 <div id="variantCount" [ngStyle]="rangeChartStyle"></div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="chart small-chart">
                                 <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by reference" mdTooltipPosition="above">
-                                        Reference</h4>
-                                    <a (click)="resetRefChart()" *ngIf="refHasFilter()">reset</a>
+                                    <h4 mdTooltip="Number of variants by chromosome" mdTooltipPosition="above">
+                                        Chromosome</h4>
+                                    <a (click)="resetChrom()" *ngIf="chromHasFilter()">reset</a>
                                 </div>
-                                <div id="refCount" [ngStyle]="smallChartStyle"></div>
+                                <div id="chromCount" [ngStyle]="smallChartStyle"></div>
                             </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by alternate" mdTooltipPosition="above">
-                                        Alternate</h4>
-                                    <a (click)="resetAltChart()" *ngIf="altHasFilter()">reset</a>
-                                </div>
-                                <div id="altCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
                             <div class="chart small-chart">
                                 <div class="toolbar">
                                     <h4 mdTooltip="Number of variants by type" mdTooltipPosition="above">Type</h4>
@@ -105,8 +85,31 @@
                                 </div>
                                 <div id="afCount" [ngStyle]="smallChartStyle"></div>
                             </div>
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by reference" mdTooltipPosition="above">
+                                        Reference</h4>
+                                    <a (click)="resetRefChart()" *ngIf="refHasFilter()">reset</a>
+                                </div>
+                                <div id="refCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by alternate" mdTooltipPosition="above">
+                                        Alternate</h4>
+                                    <a (click)="resetAltChart()" *ngIf="altHasFilter()">reset</a>
+                                </div>
+                                <div id="altCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by dbSNP" mdTooltipPosition="above">
+                                        dbSNP</h4>
+                                    <a (click)="resetdbSNPChart()" *ngIf="dbSNPHasFilter()">reset</a>
+                                </div>
+                                <div id="rsidCount" [ngStyle]="smallChartStyle"></div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
