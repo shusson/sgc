@@ -224,7 +224,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .dimension(startDim)
             .centerBar(true)
             .gap(1)
-            .margins({top: 0, right: 0, bottom: 35, left: 70})
+            .margins({top: 0, right: 0, bottom: 35, left: 60})
             .renderLabel(false)
             .xAxisLabel(`Chromosomal Coordinates`)
             .group(startDim.group().setBinParams([{
