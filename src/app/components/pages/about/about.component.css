@@ -17,6 +17,7 @@ article {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    margin-top: 5rem;
 }
 
 .sponsor-images img {

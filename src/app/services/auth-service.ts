@@ -12,8 +12,8 @@ const cannyKey = 'canny_token';
 
 const options: any = {
     theme: {
-        logo: constants.GARVAN_KCCG_LOGO,
-        primaryColor: constants.PRIMARY_COLOR,
+        logo: 'assets/logos/agha-h.png',
+        primaryColor: '#004D95',
     },
     languageDictionary: {
         title: ''

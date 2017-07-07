@@ -31,12 +31,12 @@
 }
 
 nav a.is-active {
-    border-bottom: 3px solid rgb(64, 196, 255);
+    border-bottom: 3px solid #00aedb;
 }
 
 nav a.is-active.transparent {
     border-bottom: 0;
-    color: rgb(64, 196, 255) !important;
+    color: #00aedb !important;
 }
 
 nav {
