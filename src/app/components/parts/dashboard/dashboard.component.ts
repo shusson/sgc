@@ -318,7 +318,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
 
     openFeedback() {
-        let dialogRef = this.dialog.open(FeedbackComponent);
+        this.dialog.open(FeedbackComponent);
     }
 
     resetChrom() {

@@ -79,6 +79,7 @@ import { ExploreComponent } from './components/pages/explore/explore.component';
 import { DashboardComponent } from './components/parts/dashboard/dashboard.component';
 import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
 import { FeedbackComponent } from './components/parts/feedback/feedback.component';
+import { ErrorDialogComponent } from './components/parts/error-dialog/error-dialog.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -165,10 +166,12 @@ export class RavenErrorHandler implements ErrorHandler {
         ExploreComponent,
         DashboardComponent,
         VariantsTablePaginatedComponent,
-        FeedbackComponent
+        FeedbackComponent,
+        ErrorDialogComponent
     ],
     entryComponents: [
-        FeedbackComponent
+        FeedbackComponent,
+        ErrorDialogComponent
     ],
     providers: [
         Auth,
