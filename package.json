@@ -18,7 +18,7 @@
     "@angular/core": "^4.0.0",
     "@angular/forms": "^4.0.0",
     "@angular/http": "^4.0.0",
-    "@angular/material": "^2.0.0-beta.7",
+    "@angular/material": "2.0.0-beta.7",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
@@ -58,7 +58,7 @@
     "@types/node": "~6.0.60",
     "@types/papaparse": "^4.1.27",
     "@types/uuid": "^2.0.29",
-    "codelyzer": "~2.0.0",
+    "codelyzer": "~2.1.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -70,7 +70,7 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "protractor": "~5.1.2",
     "ts-node": "~3.0.4",
-    "tslint": "~5.3.2",
+    "tslint": "~4.5.1",
     "typescript": "~2.3.3",
     "ultron": "^1.1.0"
   }

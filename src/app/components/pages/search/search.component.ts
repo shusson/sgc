@@ -42,8 +42,8 @@ export class SearchComponent implements OnDestroy {
         this.searching = true;
         this.searchBarService.searchWithParams(params).then((v) => {
             this.autocomplete = v;
-            this.cd.detectChanges();
-        });
+            this.cd.detectChanges();          
+        }).catch(() => {});
     }
 
     ngOnDestroy() {

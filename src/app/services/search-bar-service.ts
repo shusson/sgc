@@ -47,23 +47,22 @@ export class SearchBarService {
 
         this.searchedEvent.next();
 
-        let handleAutocompleteError = (e: any) => {
-            this.autocompleteError = e.message ? e.message : e;
+        let handleAutocompleteError = (e: string): Promise<any> => {
+            this.autocompleteError = e;
+            return Promise.reject(e);
         };
 
         return this.searchAutocompleteServices(query).take(1).toPromise().then(v => {
             if (v.length <= 0) {
-                handleAutocompleteError('Failed to find any results for: ' + query);
-                return null;
+                return handleAutocompleteError('Failed to find any results for: ' + query);
             }
             let bestMatch = v[0];
             if (bestMatch.match(query)) {
                 return bestMatch;
             } else {
-                handleAutocompleteError('Failed to find any results for: ' + query);
-                return null;
+                return handleAutocompleteError('Failed to find any results for: ' + query);
             }
-        }).catch(handleAutocompleteError);
+        });
 
     }
 

@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     query: string = null;
     regionFilter: any;
     error = '';
+    searchError = '';
     loading = true;
     showSql = false;
     total = 0;
@@ -303,8 +304,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     addGeneOrRegion = (q) => {
         this.searchBarService.query = q;
         let obj = {query: q};
+        this.searchError = '';
 
         this.searchBarService.searchWithParams(obj).then((v) => {
+            if (!v) {
+                return;
+            }
             v.region().then((r) => {
                 dc.filterAll();
                 this.chromChart.filter(r.chromosome);
@@ -314,6 +319,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.ranges.next();
                 dc.redrawAllAsync();
             });
+        }).catch(e => {
+            this.searchError = e;
+            this.cd.detectChanges();
         });
     };
 
