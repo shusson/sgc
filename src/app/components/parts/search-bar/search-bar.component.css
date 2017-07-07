@@ -34,7 +34,7 @@ form input {
 }
 
 .gene-search-result.selected {
-    background-color: orange;
+    background-color: #00aedb;
 }
 
 .gene-search-result {

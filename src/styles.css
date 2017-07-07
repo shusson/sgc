@@ -121,7 +121,7 @@ header nav a {
 a {
     cursor: pointer;
     text-decoration: none;
-    color: rgb(64, 196, 255);
+    color: #00aedb;
 }
 
 rect.tnt_pane {
@@ -160,4 +160,8 @@ rect.tnt_pane {
 
 .custom-mat-short-column {
     max-height: 300px !important;
+}
+
+.mat-progress-bar-fill::after {
+    background-color: #00aedb !important;
 }

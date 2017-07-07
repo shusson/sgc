@@ -10,8 +10,8 @@ import { RegionService } from '../autocomplete/region-service';
 import { TrackService } from './track-service';
 import * as tnt from 'tnt.genome';
 
-const PIN_COLOR = '#4682b4';
-const PIN_SELECTED_COLOR = '#FFD658';
+const PIN_COLOR = '#004D95';
+const PIN_SELECTED_COLOR = '#00aedb';
 const OVERLAY_COLOR = '#D54A0F';
 
 export type GenomeBrowserOverlay = 'None' | 'Homozygotes' | 'Heterozygotes' | 'DbSNP';

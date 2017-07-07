@@ -5,6 +5,10 @@ div {
     cursor: pointer;
 }
 
+div.active {
+    background-color: #004D95;
+}
+
 .chart {
     display: flex;
 }

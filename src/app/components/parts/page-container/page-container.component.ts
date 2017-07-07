@@ -13,8 +13,8 @@ export class PageContainerComponent implements OnInit {
     @Input() showTitle = true;
     @Input() showPrivacy = true;
     @Input() showBanner = false;
-    title = 'SYDNEY GENOMICS COLLABORATIVE';
-    smallTitle = 'SGC';
+    title = '';
+    smallTitle = '';
     showHamburger = false;
 
     @HostListener('window:resize') windowResized() {

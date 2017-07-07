@@ -20,7 +20,7 @@ mat-sidenav-container {
 }
 
 .header {
-    background: #003263;
+    background: #004D95;
     position: fixed;
     top: 0;
     left: 0;
@@ -75,11 +75,11 @@ main {
 
 mat-sidenav-layout {
     background-color: whitesmoke;
-    color: #003263;
+    color: #004D95;
 }
 
 mat-sidenav {
-    background-color: #003263;
+    background-color: #004D95;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -96,12 +96,13 @@ mat-sidenav .title {
 }
 
 .logo-small {
+    margin-top: 10px;
     margin-left: 1rem;
 }
 
 .logo-small img {
     height: auto;
-    width: 60px;
+    width: 260px;
 }
 
 @media (min-width: 0px) and (max-width: 1285px) {

@@ -16,7 +16,7 @@
     position: relative;
     display: inline-block;
     max-width: 320px;
-    background-color: #fff;
+    background-color: white;
     border-radius: 4px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     -webkit-transition: all 0.3s cubic-bezier(0.17, 0.8, 0.4, 1);
