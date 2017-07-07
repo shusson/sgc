@@ -112,3 +112,7 @@ h4 {
 :host /deep/ .dc-chart rect.bar {
     cursor: default;
 }
+
+.message-error.search {
+    margin-top: 1rem;
+}
