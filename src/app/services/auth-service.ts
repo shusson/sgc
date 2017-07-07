@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { constants } from '../app.constants';
 import Auth0Lock from 'auth0-lock';
+import { MdDialog } from '@angular/material';
+import { ErrorDialogComponent } from '../components/parts/error-dialog/error-dialog.component';
 
 const authKey = 'id_token';
 const cannyKey = 'canny_token';
@@ -27,6 +29,7 @@ const options: any = {
 export class Auth {
 
     constructor(private router: Router,
+                public dialog: MdDialog,
                 @Inject('NULL_VALUE') @Optional() private tokenExpiredFn?: any,
                 @Inject('NULL_VALUE') @Optional() private location?: any,
                 @Inject('NULL_VALUE') @Optional() public lock?: any) {
@@ -35,11 +38,21 @@ export class Auth {
         this.location = location ? location : window.location;
 
         this.lock.on('authenticated', (authResult: any) => {
-            if (authResult.idToken && authResult.idToken !== 'undefined') {
-                localStorage.setItem(authKey, authResult.idToken);
-                localStorage.setItem(cannyKey, authResult.idTokenPayload['http://sgc/cannyToken']);
+            try {
+                if (authResult.idToken && authResult.idToken !== 'undefined') {
+                    localStorage.setItem(authKey, authResult.idToken);
+                    localStorage.setItem(cannyKey, authResult.idTokenPayload['http://sgc/cannyToken']);
+                    window.setTimeout(() => {
+                        console.log('HUH!');
+                        this.router.navigateByUrl(decodeURIComponent(authResult.state));
+                    }, 100);
+                }
+            } catch (e) {
                 window.setTimeout(() => {
-                    this.router.navigateByUrl(decodeURIComponent(authResult.state));
+                    this.dialog.open(
+                        ErrorDialogComponent,
+                        { data: "An error occurred while trying to authenticate. Please ensure private browsing is disabled and try again."}
+                    );
                 }, 100);
             }
         });

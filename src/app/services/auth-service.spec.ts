@@ -31,7 +31,7 @@ describe('Auth Service', () => {
         mockLock = new MockLock();
         mockRouter = new MockRouter();
         mockLocation = {href: ''};
-        authService = new Auth(mockRouter, mockTokenFn, mockLocation, mockLock);
+        authService = new Auth(mockRouter, null, mockTokenFn, mockLocation, mockLock);
     });
 
     describe('login', () => {
