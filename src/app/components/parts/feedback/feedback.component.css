@@ -8,8 +8,6 @@ section {
     width: 1000px;
 }
 
-
-
 @media (min-width: 0px) and (max-width: 600px) {
 
     section {
