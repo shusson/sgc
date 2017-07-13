@@ -10,6 +10,9 @@ import { FeedbackComponent } from '../feedback/feedback.component';
 import { Subject } from 'rxjs/Subject';
 import * as Raven from 'raven-js';
 import { environment } from '../../../../environments/environment';
+import { ChartsService } from '../../../services/charts.service';
+import { SaveDialogComponent } from '../save-dialog/save-dialog.component';
+import { CompareDialogComponent } from '../compare-dialog/compare-dialog.component';
 
 const MAX_BOUNDS = 249240280;
 const MIN_BOUNDS = 0;
@@ -18,18 +21,10 @@ const MIN_BOUNDS = 0;
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
-    providers: [SearchBarService, MapdService, CrossfilterService],
+    providers: [SearchBarService, MapdService, CrossfilterService, ChartsService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-    altChart: any;
-    refChart: any;
-    typeChart: any;
-    afAvgChart: any;
-    afCountChart: any;
-    rangeChart: any;
-    chromChart: any;
-    rsidChart: any;
 
     LARGE_WIDTH = window.innerWidth / 1.3 > 1090 ? 1090 : window.innerWidth / 1.3;
     LARGE_HEIGHT = 280;
@@ -62,7 +57,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 private cd: ChangeDetectorRef,
                 private mapd: MapdService,
                 public cf: CrossfilterService,
-                public dialog: MdDialog) {
+                public dialog: MdDialog,
+                public cs: ChartsService) {
 
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
@@ -79,39 +75,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions.push(this.cf.updates.debounceTime(100).subscribe(() => {
-            let p1 = this.cf.x.sizeAsync().then((v) => {
+            const p1 = this.cf.x.sizeAsync().then((v) => {
                 this.total = v;
             });
-            let p2 = this.cf.all.valueAsync().then((v) => {
+            const p2 = this.cf.all.valueAsync().then((v) => {
                 this.subtotal = v;
             });
             Promise.all([p1, p2]).then(() => this.cd.detectChanges());
         }));
 
         this.subscriptions.push(this.ranges.debounceTime(100).subscribe(() => {
-            let f = this.rangeChart.filter();
+            const rangeChart = this.cs.getChart("range").dc;
+            const afAvgChart = this.cs.getChart("afAvg").dc;
+            const f = rangeChart.filter();
             if (f) {
-                let range = [f[0], f[1]];
-                this.afAvgChart.binParams([{
+                const range = [f[0], f[1]];
+                afAvgChart.binParams([{
                     numBins: 200,
                     binBounds: range,
                     timeBin: false
                 }]);
-                this.afAvgChart.x(d3.scale.linear().domain(range));
+                afAvgChart.x(d3.scale.linear().domain(range));
             } else {
-                this.afAvgChart.binParams([{
+                afAvgChart.binParams([{
                     numBins: 100,
                     binBounds: this.rangeBounds,
                     timeBin: false
                 }]);
-                this.afAvgChart.x(d3.scale.linear().domain(this.rangeBounds));
+                afAvgChart.x(d3.scale.linear().domain(this.rangeBounds));
             }
-            this.afAvgChart.xAxis().scale(this.afAvgChart.x());
+            afAvgChart.xAxis().scale(afAvgChart.x());
 
-            this.afAvgChart.redrawAsync().then(() => {
+            afAvgChart.redrawAsync().then(() => {
                 this.cf.updates.next();
             });
-
         }));
 
         this.initialise().then(() => {
@@ -141,14 +138,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         let rsid = x.dimension('case when RSID = \'.\' then False else True end');
 
-        this.rsidChart = dc.pieChart('#rsidCount')
+        this.cs.setChart("rsid", dc.pieChart('#rsidCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .innerRadius(45)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(rsid)
-            .group(rsid.group().reduceCount());
+            .group(rsid.group().reduceCount()));
 
         let afGroup = afDim.group().binParams([{
             numBins: 10,
@@ -163,9 +160,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 name: 'afavg'
             }];
 
-        let chromGroup = this.chromDim.group().reduceCount();
-
-        this.chromChart = dc.rowChart('#chromCount')
+        let cc = this.cs.setChart("chrom", dc.rowChart('#chromCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(this.chromDim)
@@ -173,11 +168,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .othersGrouper(false)
             .elasticX(true)
             .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(chromGroup);
+            .group(this.chromDim.group().reduceCount()));
 
-        this.chromChart.xAxis().ticks(2);
+        cc.dc.xAxis().ticks(2);
 
-        this.afCountChart = dc.rowChart('#afCount')
+        let afc = this.cs.setChart("afCount", dc.rowChart('#afCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(afDim)
@@ -185,28 +180,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .othersGrouper(false)
             .elasticX(true)
             .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(afGroup.reduceCount());
-        this.afCountChart.xAxis().ticks(2);
+            .group(afGroup.reduceCount()));
+        afc.dc.xAxis().ticks(2);
 
-        this.altChart = dc.pieChart('#altCount')
+        this.cs.setChart("alt", dc.pieChart('#altCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .innerRadius(45)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(altDim)
-            .group(altDim.group().reduceCount());
+            .group(altDim.group().reduceCount()));
 
-        this.refChart = dc.pieChart('#refCount')
+        this.cs.setChart("ref", dc.pieChart('#refCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .innerRadius(45)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(refDim)
-            .group(refDim.group().reduceCount());
+            .group(refDim.group().reduceCount()));
 
-        this.typeChart = dc.rowChart('#typeCount')
+        let tc = this.cs.setChart("type", dc.rowChart('#typeCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(typeDim)
@@ -214,10 +209,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .othersGrouper(false)
             .elasticX(true)
             .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(typeDim.group().reduceCount());
-        this.typeChart.xAxis().ticks(2);
+            .group(typeDim.group().reduceCount()));
+        tc.dc.xAxis().ticks(2);
 
-        this.rangeChart = dc.barChart('#variantCount')
+        const rc = this.cs.setChart("range", dc.barChart('#variantCount')
             .width(this.LARGE_WIDTH)
             .height(this.RANGE_HEIGHT)
             .x(d3.scale.linear().domain(this.rangeBounds))
@@ -234,14 +229,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 numBins: 50,
                 binBounds: this.rangeBounds,
                 timeBin: false
-            }]).reduceCount());
+            }]).reduceCount()));
 
-        this.rangeChart.prepareLabelEdit = () => {
-        };
+        rc.dc.prepareLabelEdit = () => {};
 
-        this.rangeChart.xAxis().scale(this.rangeChart.x()).orient('bottom');
+        rc.dc.xAxis().scale(rc.dc.x()).orient('bottom');
 
-        this.afAvgChart = dc.barChart('#afAvg')
+        const afa = this.cs.setChart("afAvg", dc.barChart('#afAvg')
             .width(this.LARGE_WIDTH)
             .height(this.LARGE_HEIGHT)
             .x(d3.scale.linear().domain(this.rangeBounds))
@@ -256,12 +250,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 numBins: 100,
                 binBounds: this.rangeBounds,
                 timeBin: false
-            }]).reduce(afExpression));
+            }]).reduce(afExpression)));
 
-        this.afAvgChart.prepareLabelEdit = () => {
-        };
+        afa.dc.prepareLabelEdit = () => {};
 
-        this.afAvgChart.xAxis().scale(this.afAvgChart.x()).orient('bottom');
+        afa.dc.xAxis().scale(afa.dc.x()).orient('bottom');
 
         // TODO: handle click
         // this.afAvgChart.on("renderlet.foo", (chart) => {
@@ -270,20 +263,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
         //     });
         // });
 
-        this.rangeChart.on('preRedraw', (c) => this.ranges.next());
+        rc.dc.on('preRedraw', (c) => this.ranges.next());
 
-        let detectChanges = (ct, type) => {
+        const detectChanges = (ct, type) => {
             ct.on(type, (chart) => {
                 this.cf.updates.next(chart);
             });
         };
 
-        detectChanges(this.chromChart, 'preRedraw');
-        detectChanges(this.afAvgChart, 'preRedraw');
-        detectChanges(this.altChart, 'preRedraw');
-        detectChanges(this.typeChart, 'preRedraw');
-        detectChanges(this.afCountChart, 'preRedraw');
-        detectChanges(this.refChart, 'preRedraw');
+        detectChanges(this.cs.getChart("chrom").dc, 'preRedraw');
+        detectChanges(this.cs.getChart("afAvg").dc, 'preRedraw');
+        detectChanges(this.cs.getChart("alt").dc, 'preRedraw');
+        detectChanges(this.cs.getChart("type").dc, 'preRedraw');
+        detectChanges(this.cs.getChart("afCount").dc, 'preRedraw');
+        detectChanges(this.cs.getChart("ref").dc, 'preRedraw');
 
         this.loading = false;
     }
@@ -314,8 +307,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
             v.region().then((r) => {
                 dc.filterAll();
-                this.chromChart.filter(r.chromosome);
-                this.rangeChart.filter([r.start, r.end]);
+                this.cs.getChart("chrom").dc.filter(r.chromosome);
+                this.cs.getChart("range").dc.filter([r.start, r.end]);
                 // let filterString = `((c3_START >= ${r.start} AND c3_START <= ${r.end}))`;
                 // this.regionFilter.filter(filterString);
                 dc.redrawAllAsync().then(() => {
@@ -332,63 +325,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.dialog.open(FeedbackComponent);
     }
 
-    resetChrom() {
-        this.chromChart.filterAll();
-        dc.redrawAllAsync();
-    }
-
-    chromHasFilter() {
-        return this.chromChart && this.chromChart.filters().length > 0;
-    }
-
-    resetAltChart() {
-        this.altChart.filterAll();
-        dc.redrawAllAsync();
-    }
-
-    altHasFilter() {
-        return this.altChart && this.altChart.filters().length > 0;
-    }
-
-    resetRefChart() {
-        this.refChart.filterAll();
-        dc.redrawAllAsync();
-    }
-
-    refHasFilter() {
-        return this.refChart && this.refChart.filters().length > 0;
-    }
-
-    resetTypeChart() {
-        this.typeChart.filterAll();
-        dc.redrawAllAsync();
-    }
-
-    typeHasFilter() {
-        return this.typeChart && this.typeChart.filters().length > 0;
-    }
-
     resetAfAvgChart() {
-        this.afAvgChart.filterAll();
-        this.rangeChart.filterAll();
+        this.cs.getChart("afAvg").dc.filterAll();
+        this.cs.getChart("range").dc.filterAll();
         dc.redrawAllAsync();
     }
 
     afAvgHasFilter() {
-        return this.afAvgChart && this.afAvgChart.filters().length > 0 || this.rangeHasFilter();
-    }
-
-    resetAfCountChart() {
-        this.afCountChart.filterAll();
-        dc.redrawAllAsync();
-    }
-
-    afCountHasFilter() {
-        return this.afCountChart && this.afCountChart.filters().length > 0;
-    }
-
-    rangeHasFilter() {
-        return this.rangeChart && this.rangeChart.filters().length > 0;
+        let c = this.cs.getChart("afAvg").dc;
+        return c && c.filters().length > 0 || this.cs.hasFilter("range");
     }
 
     toggleSql() {
@@ -400,12 +345,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return `${v} generated SQL`;
     }
 
-    resetdbSNPChart() {
-        this.rsidChart.filterAll();
-        dc.redrawAllAsync();
+    saveFilters() {
+        this.dialog.open(SaveDialogComponent, {
+            data: {
+                sql: this.cf.sql,
+                cs: this.cs
+            }
+        });
     }
 
-    dbSNPHasFilter() {
-        return this.rsidChart && this.rsidChart.filters().length > 0;
+    getTags() {
+        return this.cs.getTags();
+    }
+
+    loadFilters(tag) {
+        this.cs.loadFilters(tag);
+    }
+
+    compare() {
+        this.dialog.open(CompareDialogComponent, {
+            data: {
+                cs: this.cs,
+                mapd: this.mapd
+            }
+        });
     }
 }

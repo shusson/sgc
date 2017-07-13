@@ -13,4 +13,6 @@
 
 h4 {
     text-align: center;
+    color: rgba(0, 60, 105, 0.5);
+    font-weight: bold;
 }

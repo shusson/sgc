@@ -1,0 +1,12 @@
+
+.details {
+    font-size: small;
+}
+
+.detail .detail-label {
+    min-width: 15px;
+}
+
+.detail {
+    display: flex;
+}
