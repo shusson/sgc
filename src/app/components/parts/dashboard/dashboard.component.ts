@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(this.cf.updates.debounceTime(500).subscribe(() => {
+        this.subscriptions.push(this.cf.updates.debounceTime(100).subscribe(() => {
             let p1 = this.cf.x.sizeAsync().then((v) => {
                 this.total = v;
             });
@@ -108,11 +108,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
             this.afAvgChart.xAxis().scale(this.afAvgChart.x());
 
-            window.setTimeout(() => {
-                this.afAvgChart.redrawAsync().then(() => {
-                    this.cf.updates.next();
-                });
-            }, 300);
+            this.afAvgChart.redrawAsync().then(() => {
+                this.cf.updates.next();
+            });
 
         }));
 
@@ -172,6 +170,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .height(this.SMALL_HEIGHT)
             .dimension(this.chromDim)
             .cap(30)
+            .othersGrouper(false)
             .elasticX(true)
             .margins({top: 0, right: 0, bottom: 20, left: 5})
             .group(chromGroup);
@@ -182,6 +181,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(afDim)
+            .cap(30)
+            .othersGrouper(false)
             .elasticX(true)
             .margins({top: 0, right: 0, bottom: 20, left: 5})
             .group(afGroup.reduceCount());
@@ -210,6 +211,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .height(this.SMALL_HEIGHT)
             .dimension(typeDim)
             .cap(10)
+            .othersGrouper(false)
             .elasticX(true)
             .margins({top: 0, right: 0, bottom: 20, left: 5})
             .group(typeDim.group().reduceCount());
@@ -316,8 +318,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.rangeChart.filter([r.start, r.end]);
                 // let filterString = `((c3_START >= ${r.start} AND c3_START <= ${r.end}))`;
                 // this.regionFilter.filter(filterString);
-                this.ranges.next();
-                dc.redrawAllAsync();
+                dc.redrawAllAsync().then(() => {
+                    this.ranges.next();
+                });
             });
         }).catch(e => {
             this.searchError = e;

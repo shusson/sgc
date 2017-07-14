@@ -43,7 +43,6 @@ export class Auth {
                     localStorage.setItem(authKey, authResult.idToken);
                     localStorage.setItem(cannyKey, authResult.idTokenPayload['http://sgc/cannyToken']);
                     window.setTimeout(() => {
-                        console.log('HUH!');
                         this.router.navigateByUrl(decodeURIComponent(authResult.state));
                     }, 100);
                 }
