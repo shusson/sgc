@@ -1,0 +1,35 @@
+<div *ngIf="stats" class="details">
+    <div class="detail">
+        <div class="detail-label">
+            N:
+        </div>
+        <div *ngIf="stats.n" class="detail-value">
+            {{stats.n}}
+        </div>
+        <div *ngIf="!stats.n" class="detail-value">
+            null
+        </div>
+    </div>
+    <div class="detail">
+        <div class="detail-label">
+            μ:
+        </div>
+        <div *ngIf="stats.mean" class="detail-value">
+            {{stats.mean.toFixed(3)}}
+        </div>
+        <div *ngIf="!stats.n" class="detail-value">
+            null
+        </div>
+    </div>
+    <div class="detail">
+        <div class="detail-label">
+            σ:
+        </div>
+        <div *ngIf="stats.dev" class="detail-value">
+            {{stats.dev.toFixed(3)}}
+        </div>
+        <div *ngIf="!stats.dev" class="detail-value">
+            null
+        </div>
+    </div>
+</div>

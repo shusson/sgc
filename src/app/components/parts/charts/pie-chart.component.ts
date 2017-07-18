@@ -1,26 +1,28 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-pie-chart',
     template: `
-        <chart [options]="options" (load)="saveInstance($event.context)">
+        <chart *ngIf="this.options" [options]="options" (load)="saveInstance($event.context)">
             <series>
                 <point (click)="onPointSelect($event)"></point>
             </series>
         </chart>
     `
 })
-export class PieChartComponent {
+export class PieChartComponent implements OnInit {
     @Input() title: string;
     @Input() data: number[];
     @Input() width: string;
     @Input() height: string;
+    @Input() labels = true;
 
     options: any;
     chart: any;
 
-    constructor(private router: Router) {
+    constructor() {}
+
+    ngOnInit() {
         this.options = {
             chart: {
                 width: 100,
@@ -32,10 +34,9 @@ export class PieChartComponent {
             plotOptions: {
                 pie: {
                     dataLabels: {
-                        enabled: true,
+                        enabled: this.labels,
                         distance: 2
                     }
-
                 },
             },
             credits: {

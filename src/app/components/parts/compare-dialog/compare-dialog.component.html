@@ -1,0 +1,40 @@
+<div class="view">
+    <div class="message message-error" *ngIf="error"><md-icon>error_outline</md-icon> {{ error }}</div>
+    <md-select placeholder="Chart" [ngModel]="dim" (ngModelChange)="updateDim($event)" name="dim" required>
+        <md-option *ngFor="let chart of data.cs.names()" [value]="chart">
+            {{chart}}
+        </md-option>
+    </md-select>
+    <div class="subjects" *ngIf="dim">
+        <div class="subject left">
+            <md-select placeholder="Sample 1" [ngModel]="f0" (ngModelChange)="updateS1($event)" name="f0" required>
+                <md-option *ngFor="let tag of data.cs.getTags()" [value]="tag">
+                    {{tag}}
+                </md-option>
+            </md-select>
+            <div class="preview">
+                <app-stats-details [stats]="stats0"></app-stats-details>
+                <app-pie-chart *ngIf="data0" [title]="''" [data]="data0" [height]="100" [width]="100" [labels]="false"></app-pie-chart>
+            </div>
+        </div>
+        <div class="subject right">
+            <md-select placeholder="Sample 2" [ngModel]="f1" (ngModelChange)="updateS2($event)" name="f1" required>
+                <md-option *ngFor="let tag of data.cs.getTags()" [value]="tag">
+                    {{tag}}
+                </md-option>
+            </md-select>
+            <div class="preview">
+                <app-stats-details [stats]="stats1"></app-stats-details>
+                <app-pie-chart *ngIf="data1" [title]="''" [data]="data1" [height]="100" [width]="100" [labels]="false"></app-pie-chart>
+            </div>
+
+        </div>
+    </div>
+
+    <button *ngIf="dim" color="accent" md-raised-button [disabled]="isInvalid()" (click)="tTest()">Independent 2-sample t-test</button>
+
+    <div class="t-value" *ngIf="tValue != null">
+        <div>t-value: {{ tValue }}</div>
+        <!--<div>p-value: 0.05</div>-->
+    </div>
+</div>
