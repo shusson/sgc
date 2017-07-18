@@ -84,7 +84,7 @@ const INITIATIVES = new Map<string, Initiative>([
             cohorts: ['most', 'crs'],
             people: ['johnsimes', 'davidthomas', 'dominiquehess'],
             genomes: '2000',
-            sequenced: '0',
+            sequenced: '242',
             logo: '',
             heights: [],
             sex: [],
