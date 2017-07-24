@@ -9,5 +9,13 @@ export const environment = {
     vsalUrl: 'https://sgc.garvan.org.au:8443/vsal/core/find',
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',
     durlUrl: 'https://wt-ec1ac815dce38c76c2e7662693b82189-0.run.webtask.io/durl',
-    sentryUrl: 'https://4126e3ee842b4f079400ccf84980e84e@sentry.io/158608'
+    sentryUrl: 'https://4126e3ee842b4f079400ccf84980e84e@sentry.io/158608',
+    mapd: {
+        protocol: 'https',
+        host: 'vectis-api.com',
+        port: '443',
+        dbName: 'mapd',
+        user: 'mapd',
+        pwd: 'HyperInteractive',
+    }
 };
