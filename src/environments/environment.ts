@@ -3,6 +3,8 @@
 // you can create your own and use it with the --env flag.
 // The build system defaults to the dev environment.
 
+import { MapDSettings } from '../app/services/mapd.service';
+
 export const environment = {
     production: false,
     ensemblDomain: '',
@@ -14,5 +16,6 @@ export const environment = {
     vsalUrl: '',
     elasticUrl: '',
     durlUrl: '',
-    sentryUrl: ''
+    sentryUrl: '',
+    mapd: new MapDSettings()
 };

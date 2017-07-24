@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
-const protocol = 'https';
-const host = 'vectis-api.com';
-const port = '443';
-const dbName = 'mapd';
-const user = 'mapd';
-const pwd = 'HyperInteractive';
+export class MapDSettings {
+    protocol = '';
+    host = '';
+    port = '';
+    dbName = '';
+    user = '';
+    pwd = '';
+}
 
 @Injectable()
 export class MapdService {
@@ -17,12 +20,12 @@ export class MapdService {
     connect(): Promise<any> {
         return new Promise((resolve, reject) => {
             new MapdCon()
-                .protocol([protocol])
-                .host([host])
-                .port([port])
-                .dbName([dbName])
-                .user([user])
-                .password([pwd])
+                .protocol([environment.mapd.protocol])
+                .host([environment.mapd.host])
+                .port([environment.mapd.port])
+                .dbName([environment.mapd.dbName])
+                .user([environment.mapd.user])
+                .password([environment.mapd.pwd])
                 .connect((error, session) => {
                     if (error) {
                         reject(error);
