@@ -11,24 +11,28 @@ export class SearchPage {
     }
 
     getAutocompleteResult(v: string) {
-        let EC = protractor.ExpectedConditions;
+        const EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element(by.cssContainingText('.search-results .symbol', v))), 5000);
         return element(by.cssContainingText('.search-results .symbol', v));
     }
 
     getGeneId(v: string) {
-        let EC = protractor.ExpectedConditions;
-        let g = element(by.css('#gene_en_id'));
+        const EC = protractor.ExpectedConditions;
+        const g = element(by.css('#gene_en_id'));
         browser.wait(EC.visibilityOf(g), 5000);
-        expect(g.getText()).toEqual(v);
+        g.getText().then(t => {
+            expect(t).toEqual(v);
+        });
         return g;
     }
 
     getRegionId(v: string) {
-        let EC = protractor.ExpectedConditions;
-        let r = element(by.css('#region_location_id'));
+        const EC = protractor.ExpectedConditions;
+        const r = element(by.css('#region_location_id'));
         browser.wait(EC.visibilityOf(r), 5000);
-        expect(r.getText()).toEqual(v);
+        r.getText().then(t => {
+            expect(t).toEqual(v);
+        });
         return r;
     }
 }

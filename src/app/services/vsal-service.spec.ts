@@ -8,7 +8,7 @@ import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 
 describe('VSAL Service', () => {
-    let mockOptions: any[] = [];
+    const mockOptions: any[] = [];
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             providers: [
@@ -29,7 +29,7 @@ describe('VSAL Service', () => {
     describe('getVariants', () => {
         it('should get the variants sorted by position', fakeAsync(
             inject([VsalService, MockBackend], (vsal: VsalService, mockBackend: MockBackend) => {
-                let expectedVariants = [
+                const expectedVariants = [
                     {
                         name: 'fred',
                         dbSNP: '',
@@ -60,7 +60,7 @@ describe('VSAL Service', () => {
                     },
                 ];
                 mockBackend.connections.subscribe((connection: MockConnection) => {
-                    let options = new ResponseOptions({
+                    const options = new ResponseOptions({
                         body: JSON.stringify({
                             success: true,
                             variants: expectedVariants,
@@ -71,7 +71,7 @@ describe('VSAL Service', () => {
                     connection.mockRespond(new Response(options));
                 });
 
-                vsal.getVariants(new SearchQuery('1', 2, 3, mockOptions)).toPromise().then((variantStream: VariantRequest) => {
+                vsal.getVariants(new SearchQuery('1', 2, 3, mockOptions)).toPromise().then((variantStream: any) => {
                     expect(variantStream.variants).toEqual(expectedVariants.sort((a, b) => {
                         return Math.sign(Number(a.start) - Number(b.start));
                     }));
@@ -103,7 +103,7 @@ describe('VSAL Service', () => {
                     if (count > 1) {
                         variantResponse = [];
                     }
-                    let options = new ResponseOptions({
+                    const options = new ResponseOptions({
                         body: JSON.stringify({
                             success: true,
                             variants: variantResponse,
@@ -129,10 +129,10 @@ describe('VSAL Service', () => {
         ));
 
         it('should send the correct query', inject([VsalService, MockBackend], (vsal: VsalService, mockBackend: MockBackend) => {
-            let chrom = '2';
-            let start = 1;
-            let end = 10;
-            let params = new URLSearchParams();
+            const chrom = '2';
+            const start = 1;
+            const end = 10;
+            const params = new URLSearchParams();
             params.append('chromosome', chrom);
             params.append('positionStart', start.toString());
             params.append('positionEnd', end.toString());
@@ -145,10 +145,10 @@ describe('VSAL Service', () => {
         }));
 
         it('should support X chromosome', inject([VsalService, MockBackend], (vsal: VsalService, mockBackend: MockBackend) => {
-            let chrom = 'X';
-            let start = 1;
-            let end = 10;
-            let params = new URLSearchParams();
+            const chrom = 'X';
+            const start = 1;
+            const end = 10;
+            const params = new URLSearchParams();
             params.append('chromosome', chrom);
             params.append('positionStart', start.toString());
             params.append('positionEnd', end.toString());
@@ -162,9 +162,9 @@ describe('VSAL Service', () => {
 
         it('should have an error if there is an error in the response but the status is 200', fakeAsync(
             inject([VsalService, MockBackend], (vsal: VsalService, mockBackend: MockBackend) => {
-                let expectedErrorName = 'I LOVE CARPET';
-                let expectedErrorDescription = 'I LOVE LAMP';
-                let options = new ResponseOptions({
+                const expectedErrorName = 'I LOVE CARPET';
+                const expectedErrorDescription = 'I LOVE LAMP';
+                const options = new ResponseOptions({
                     body: JSON.stringify({
                         success: true,
                         error: {name: expectedErrorName, description: expectedErrorDescription},
@@ -172,7 +172,7 @@ describe('VSAL Service', () => {
                     }),
                     status: 200,
                 });
-                let response = new Response(options);
+                const response = new Response(options);
                 mockBackend.connections.subscribe((connection: MockConnection) => {
                     connection.mockRespond(response);
                 });
@@ -188,14 +188,14 @@ describe('VSAL Service', () => {
 
         it('should have an error if the response is not OK', fakeAsync(
             inject([VsalService, MockBackend], (vsal: VsalService, mockBackend: MockBackend) => {
-                let options = new ResponseOptions({
+                const options = new ResponseOptions({
                     body: JSON.stringify({
                         success: true,
                         total: [2],
                     }),
                     status: 404,
                 });
-                let response = new Response(options);
+                const response = new Response(options);
                 mockBackend.connections.subscribe((connection: MockConnection) => {
                     connection.mockRespond(response);
                 });
