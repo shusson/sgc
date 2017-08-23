@@ -7,21 +7,25 @@ describe('initiatives', function () {
     });
 
     it('should display a navigation bar with 7 links', function () {
-        expect(element(by.css('nav')).all(by.tagName('a')).count()).toEqual(7);
+        element(by.css('nav')).all(by.tagName('a')).count().then(v => {
+            expect(v).toEqual(7);
+        })
+
     });
 
     it('should display 3 initiatives', function () {
-        expect(element.all(by.tagName('app-program-card')).count()).toEqual(3);
+        element.all(by.tagName('app-program-card')).count().then(v => {
+            expect(v).toEqual(3);
+        });
     });
 
     it('should display a totals widget with some text', function () {
-        expect(element.all(by.tagName('app-totals-widget')).count()).toEqual(1);
-
-        let textLength = element(by.tagName('app-totals-widget')).getText()
-            .then(function (text) {
-                return text.length;
-            });
-
-        expect(textLength).toBeGreaterThan(10);
+        element.all(by.tagName('app-totals-widget')).count().then(v => {
+            expect(v).toEqual(1);
+            element(by.tagName('app-totals-widget')).getText()
+                .then(function (text) {
+                    expect(text.length).toBeGreaterThan(10);
+                });
+        });
     });
 });

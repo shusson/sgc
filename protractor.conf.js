@@ -8,7 +8,7 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome',
         'chromeOptions': {
-            'args': ['--no-sandbox', '--user-data-dir=/tmp']
+            'args': ['--headless', '--disable-gpu', '--no-sandbox', '--user-data-dir=/tmp', '--window-size=1400,1000']
         }
     },
     directConnect: true,

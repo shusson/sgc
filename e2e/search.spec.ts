@@ -3,19 +3,19 @@ import { User } from './user.po';
 import { SearchPage } from './search.po';
 
 describe('search', () => {
-    let sp = new SearchPage();
-    let user = new User();
+    const sp = new SearchPage();
+    const user = new User();
 
-    let searchGene = (v: string, expectedGene: string) => {
+    const searchGene = (v: string, expectedGene: string) => {
         sp.search(v);
-        let r = sp.getAutocompleteResult(v);
+        const r = sp.getAutocompleteResult(v);
         r.click();
         sp.getGeneId(expectedGene);
     };
 
-    let searchRegion = (v: string) => {
+    const searchRegion = (v: string) => {
         sp.search(v);
-        let r = sp.getAutocompleteResult(v);
+        const r = sp.getAutocompleteResult(v);
         r.click();
         sp.getRegionId(v);
     };
@@ -57,7 +57,7 @@ describe('search', () => {
 
     it('should be able to find ENSG00000157764', () => {
         sp.search('ENSG00000157764');
-        let r = sp.getAutocompleteResult('BRAF');
+        const r = sp.getAutocompleteResult('BRAF');
         r.click();
         sp.getGeneId('ENSG00000157764');
     });
