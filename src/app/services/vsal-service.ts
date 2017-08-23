@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Variant } from '../model/variant';
+import { HETEROZYGOTES_KEY, HOMOZYGOTES_KEY, Variant } from '../model/variant';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
-export const VSAL_VARIANT_LIMIT = 500;
+export const VSAL_VARIANT_LIMIT = 10000;
 export const VSAL_TIMEOUT = 20000;
 
 @Injectable()
@@ -77,13 +78,49 @@ export class VsalService {
                 if (data['error']) {
                     return new VariantRequest([], `${data['error'].name}: ${data['error'].description}`);
                 }
-                const vs = new VariantRequest(data['variants']);
-                if (data['total'] && data['total'].length > 0) {
-                    vs.total = data['total'][0];
-                }
+                const variants = data['v'].map(v => {
+
+                    const variant = new Variant();
+                    //     // virtual cohort-wide alt allele stats
+                    // private Integer     vac; // alt allele count
+                    // private Float       vaf; // alt allele freq
+                    // private Integer   vhomc; // alt allele hom count
+                    // private Integer   vhetc; // alt allele het count
+
+                    variant.start = v.s;
+                    variant.chromosome = v.c;
+                    variant.dbSNP = v.rs;
+                    variant.alternate = v.a;
+                    variant.reference = v.r;
+                    variant.type = v.type;
+
+                    variant.AC = v.ac;
+                    variant.AF = v.af;
+                    variant.nHomRef = v.homc; // nHomHOME
+                    variant.nHet = v.hetc;
+
+                    const stats: any = {
+                        altAlleleFreq: v.af,
+                        altAlleleCount: v.ac
+                    };
+
+                    stats.genotypesCount = {};
+                    stats.genotypesCount[HOMOZYGOTES_KEY] = v.homc;
+                    stats.genotypesCount[HETEROZYGOTES_KEY] = v.hetc;
+                    variant.variantStats = [stats];
+
+                    // variant.type = v.type;
+                    // variant.type = v.type;
+                    // variant.type = v.type;
+                    // variant.type = v.type;
+                    return variant;
+                });
+                const vs = new VariantRequest(variants);
+                vs.total = data['total'];
                 return vs;
             })
-            .catch(() => {
+            .catch((e) => {
+                console.log(e);
                 return Observable.of(new VariantRequest([], 'An error occurred while trying to connect to VSAL'));
             });
     }
