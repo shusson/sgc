@@ -5,6 +5,8 @@ import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { VariantSearchService } from '../../../services/variant-search-service';
+import { MdSnackBar } from '@angular/material';
+import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.component';
 
 @Component({
     selector: 'app-search',
@@ -22,7 +24,8 @@ export class SearchComponent implements OnDestroy {
                 private auth: Auth,
                 private route: ActivatedRoute,
                 private cd: ChangeDetectorRef,
-                router: Router) {
+                public snackBar: MdSnackBar,
+                private router: Router) {
         if (!auth.authenticated()) {
             auth.lock.on('hide', () => {
                 router.navigate(['/initiatives']);
@@ -37,12 +40,20 @@ export class SearchComponent implements OnDestroy {
         if (!params['query']) {
             return;
         }
+        if (params['demo']) {
+            const sb = this.snackBar.openFromComponent(SnackbarDemoComponent, {});
+            sb.afterDismissed().subscribe(() => {
+                this.searchBarService.search(params['query']);
+            });
+        } else {
+            this.snackBar.dismiss();
+        }
         this.error = '';
         this.autocomplete = null;
         this.searching = true;
         this.searchBarService.searchWithParams(params).then((v) => {
             this.autocomplete = v;
-            this.cd.detectChanges();          
+            this.cd.detectChanges();
         }).catch(() => {});
     }
 

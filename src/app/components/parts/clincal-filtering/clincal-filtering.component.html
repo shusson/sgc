@@ -1,0 +1,29 @@
+<div *ngIf="!error && !denied">
+    <div>
+        <div class="toolbar">
+            <div class='dc-data-count'>
+                <span class='filter-count'></span>
+                selected out of <span class='total-count'></span> patient records.
+            </div>
+            <div class="actions">
+                <md-icon (click)="resetFilters()" md-tooltip="Reset" mdTooltipPosition="above">refresh</md-icon>
+                <md-icon [mdMenuTriggerFor]="menu" md-tooltip="Add/Remove Filters" mdTooltipPosition="above">toc</md-icon>
+                <md-menu #menu="mdMenu">
+                    <div class="filter-option" *ngFor="let c of charts" (click)="$event.stopPropagation(); $event.stopImmediatePropagation()">
+                        <span>{{c.name}}</span>
+                        <md-slide-toggle [(ngModel)]="c.enabled"></md-slide-toggle>
+                    </div>
+                </md-menu>
+            </div>
+        </div>
+
+
+        <div class="charts" *ngIf="charts">
+            <div *ngFor="let c of charts">
+                <app-clinical-chart *ngIf="c.enabled" [data]="c"></app-clinical-chart>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="denied" class="message message-error">You do not have permission to view this data. You can apply for <a routerLink="/terms/mgrb">access</a> or view a <a (click)="viewDemo()">demo</a></div>
+<div *ngIf="error" class="message message-error">An unexpected error occurred, please try again or contact support</div>

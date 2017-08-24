@@ -1,0 +1,10 @@
+.snack {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+button {
+    color: #000088;
+}

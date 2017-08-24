@@ -24,5 +24,6 @@ export const environment = {
     elasticUrl: '',
     durlUrl: '',
     sentryUrl: '',
+    clinicalUrl: '',
     mapd: new MapDSettings()
 };

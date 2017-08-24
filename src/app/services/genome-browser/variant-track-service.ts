@@ -29,6 +29,7 @@ export class VariantTrackService implements TrackService {
     trackLabel: any;
     highlightedVariant = new Subject<Variant>();
     clickedVariant = new Subject<Variant>();
+    data: any;
 
     readonly overlays: GenomeBrowserOverlay[] = ['None', 'Homozygotes', 'Heterozygotes', 'DbSNP'];
     private activeOverlay: GenomeBrowserOverlay = 'None';
@@ -48,14 +49,14 @@ export class VariantTrackService implements TrackService {
             v.highlight ? this.highlightPin(v) : this.unHighlightPin(v);
         });
 
-        let data = this.createDataMethod();
-        let display = this.createDisplayMethod();
+        this.data = this.createDataMethod();
+        const display = this.createDisplayMethod();
 
         this.track = tnt.board.track()
             .height(100)
             .color('white')
             .display(display)
-            .data(data);
+            .data(this.data);
 
         this.trackLabel = tnt.board.track()
             .label('MGRB Variants')
@@ -83,21 +84,21 @@ export class VariantTrackService implements TrackService {
     }
 
     private drawYAxis(this: any, width: number) {
-        let labelSpacer = 10; // magic number comes from tnt.pin which is hardcoded for labels
+        const labelSpacer = 10; // magic number comes from tnt.pin which is hardcoded for labels
 
-        let domain = this.display().domain();
-        let startRange = domain[0];
-        let endRange = domain[1];
-        let range = startRange + endRange;
-        let midRange = (range / 2).toFixed(1);
+        const domain = this.display().domain();
+        const startRange = domain[0];
+        const endRange = domain[1];
+        const range = startRange + endRange;
+        const midRange = (range / 2).toFixed(1);
 
-        let left = 0;
-        let marginLeft = 5;
-        let top = labelSpacer;
-        let bottom = this.height();
-        let middle = (top + bottom) / 2;
+        const left = 0;
+        const marginLeft = 5;
+        const top = labelSpacer;
+        const bottom = this.height();
+        const middle = (top + bottom) / 2;
 
-        let drawText = (g: d3.Selection<any>, x: number, y: number, text: string) => {
+        const drawText = (g: d3.Selection<any>, x: number, y: number, text: string) => {
             g.append('text')
                 .attr('x', x)
                 .attr('y', y)
@@ -107,7 +108,7 @@ export class VariantTrackService implements TrackService {
                 .text(text);
         };
 
-        let drawLine = (g: d3.Selection<any>, x1: number, x2: number, y1: number, y2: number) => {
+        const drawLine = (g: d3.Selection<any>, x1: number, x2: number, y1: number, y2: number) => {
             g.append('line')
                 .attr('x1', x1)
                 .attr('x2', x2)
@@ -130,7 +131,7 @@ export class VariantTrackService implements TrackService {
     }
 
     private createDisplayMethod(): () => any {
-        let that = this;
+        const that = this;
         return this.pinFeature
             .domain([0, 1])
             .color(PIN_COLOR)
@@ -160,7 +161,7 @@ export class VariantTrackService implements TrackService {
     }
 
     private createDataMethod(): () => any {
-        let createPin = (variant: Variant) => {
+        const createPin = (variant: Variant) => {
             return new VariantPin(
                 variant.start,
                 variant.variantStats[0] ? variant.variantStats[0].altAlleleFreq : 0,
@@ -171,12 +172,12 @@ export class VariantTrackService implements TrackService {
         return tnt.board.track.data.async()
             .retriever((loc: any) => {
 
-                let region = new Region(String(this.searchService.lastQuery.chromosome),
+                const region = new Region(String(this.searchService.lastQuery.chromosome),
                     loc.from,
                     loc.to
                 );
 
-                let regionAutocomplete = new RegionAutocomplete(
+                const regionAutocomplete = new RegionAutocomplete(
                     region,
                     region.name(),
                     '',
@@ -195,8 +196,8 @@ export class VariantTrackService implements TrackService {
     }
 
     private initCreateMethod() {
-        let that = this;
-        let create = this.pinFeature.create();
+        const that = this;
+        const create = this.pinFeature.create();
         this.createMethod = function (pins: any) {
             create.call(this, pins);
             pins.attr('data-variant-id', function (pin: VariantPin) {
@@ -210,7 +211,7 @@ export class VariantTrackService implements TrackService {
     }
 
     private initOverlayMap() {
-        let that = this;
+        const that = this;
         this.overlayMap.set('None', (overlay: any) => {
             this.pinFeature.create(function (pins: any) {
                 that.createMethod.call(this, pins);
@@ -221,7 +222,7 @@ export class VariantTrackService implements TrackService {
             this.pinFeature.create(function (pins: any) {
                 that.createMethod.call(this, pins);
 
-                let homoz = pins.filter((d: VariantPin) => {
+                const homoz = pins.filter((d: VariantPin) => {
                     return d.variant.variantStats[0] ? d.variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : false;
                 });
                 homoz.select('line').attr('stroke', OVERLAY_COLOR);
@@ -233,7 +234,7 @@ export class VariantTrackService implements TrackService {
             this.pinFeature.create(function (pins: any) {
                 that.createMethod.call(this, pins);
 
-                let hetz = pins.filter((d: VariantPin) => {
+                const hetz = pins.filter((d: VariantPin) => {
                     return d.variant.variantStats[0] ? d.variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : false;
                 });
                 hetz.select('line').attr('stroke', OVERLAY_COLOR);
@@ -244,7 +245,7 @@ export class VariantTrackService implements TrackService {
         this.overlayMap.set('DbSNP', (overlay: any) => {
             this.pinFeature.create(function (pins: any) {
                 that.createMethod.call(this, pins);
-                let dbSNPs = pins.filter((d: VariantPin) => {
+                const dbSNPs = pins.filter((d: VariantPin) => {
                     return d.variant.dbSNP;
                 });
                 dbSNPs.select('line').attr('stroke', OVERLAY_COLOR);
@@ -254,10 +255,10 @@ export class VariantTrackService implements TrackService {
     }
 
     private highlightPin(v: Variant) {
-        let hash = this.variantHash(v);
-        let e = <HTMLElement>d3.select(`[data-variant-id='${ hash }']`)[0][0];
-        let dPin = d3.select(e);
-        let circle = dPin.select('circle');
+        const hash = this.variantHash(v);
+        const e = <HTMLElement>d3.select(`[data-variant-id='${ hash }']`)[0][0];
+        const dPin = d3.select(e);
+        const circle = dPin.select('circle');
 
         if (circle.empty() || circle.attr('fill') === PIN_SELECTED_COLOR) {
             return;
@@ -266,16 +267,16 @@ export class VariantTrackService implements TrackService {
         this.highlightCache[hash] = circle.attr('fill');
         circle.attr('fill', PIN_SELECTED_COLOR)
             .attr('r', '10');
-        let line = dPin.select('line');
+        const line = dPin.select('line');
         line.attr('stroke', PIN_SELECTED_COLOR)
             .attr('stroke-width', '3px');
     }
 
     private unHighlightPin(v: Variant) {
-        let hash = this.variantHash(v);
-        let e = <HTMLElement>d3.select(`[data-variant-id='${ hash }']`)[0][0];
-        let dPin = d3.select(e);
-        let circle = dPin.select('circle');
+        const hash = this.variantHash(v);
+        const e = <HTMLElement>d3.select(`[data-variant-id='${ hash }']`)[0][0];
+        const dPin = d3.select(e);
+        const circle = dPin.select('circle');
 
         if (circle.empty()) {
             return;
@@ -283,13 +284,13 @@ export class VariantTrackService implements TrackService {
 
         circle.attr('fill', this.highlightCache[hash])
             .attr('r', '5');
-        let line = dPin.select('line');
+        const line = dPin.select('line');
         line.attr('stroke', this.highlightCache[hash])
             .attr('stroke-width', '1px');
     }
 
     private variantHash(variant: Variant) {
-        let d = [
+        const d = [
             variant.chromosome,
             variant.dbSNP,
             variant.variantStats,
