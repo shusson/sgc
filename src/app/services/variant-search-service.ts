@@ -15,7 +15,7 @@ export class VariantSearchService {
     errors = new Subject<any>();
     commenced = false;
     lastQuery: SearchQuery;
-    startingRegion: Region;
+    startingQuery: SearchQuery;
     private searchQuery = new Subject<SearchQuery>();
     private variantsObserver: Observable<VariantRequest>;
 
@@ -34,8 +34,12 @@ export class VariantSearchService {
         this.results = this.variantsObserver;
 
         this.results.subscribe((cs) => {
-            if (!this.startingRegion) {
-                this.startingRegion = new Region(this.lastQuery.chromosome, this.lastQuery.start, this.lastQuery.end);
+            if (!this.startingQuery) {
+                this.startingQuery = new SearchQuery(this.lastQuery.chromosome,
+                    this.lastQuery.start,
+                    this.lastQuery.end,
+                    this.lastQuery.options,
+                    this.lastQuery.samples);
             }
             this.variants = cs.variants;
             this.commenced = true;
@@ -44,7 +48,7 @@ export class VariantSearchService {
 
     getVariants(query: SearchQuery): Promise<Variant[]> {
         this.lastQuery = query;
-        let promise = new Promise((resolve, reject) => {
+        const promise = new Promise((resolve, reject) => {
             this.results.take(1).subscribe(
                 (vr: VariantRequest) => {
                     if (vr.error) {
@@ -72,7 +76,9 @@ export class VariantSearchService {
     }
 
     hasMoved() {
-        return this.startingRegion.start !== this.lastQuery.start || this.startingRegion.end !== this.lastQuery.end;
+        return this.startingQuery.start !== this.lastQuery.start ||
+            this.startingQuery.end !== this.lastQuery.end ||
+            this.startingQuery.samples !== this.lastQuery.samples;
     }
 }
 

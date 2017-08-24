@@ -22,6 +22,10 @@ export class VsalService {
             .append('positionEnd', String(query.end))
             .append('limit', VSAL_VARIANT_LIMIT.toString());
 
+        if (query.samples.length > 0) {
+            urlParams = urlParams.append('samples', query.samples.join(","));
+        }
+
         query.options.forEach(o => {
             if (o.key) {
                 urlParams = urlParams.append(o.key, o.getValue());
@@ -94,25 +98,20 @@ export class VsalService {
                     variant.reference = v.r;
                     variant.type = v.type;
 
-                    variant.AC = v.ac;
-                    variant.AF = v.af;
+                    variant.AC = v.ac ? v.ac : 0;
+                    variant.AF = v.af ? v.af : 0;
                     variant.nHomRef = v.homc; // nHomHOME
                     variant.nHet = v.hetc;
 
                     const stats: any = {
-                        altAlleleFreq: v.af,
-                        altAlleleCount: v.ac
+                        altAlleleFreq: variant.AF,
+                        altAlleleCount: variant.AC
                     };
 
                     stats.genotypesCount = {};
                     stats.genotypesCount[HOMOZYGOTES_KEY] = v.homc;
                     stats.genotypesCount[HETEROZYGOTES_KEY] = v.hetc;
                     variant.variantStats = [stats];
-
-                    // variant.type = v.type;
-                    // variant.type = v.type;
-                    // variant.type = v.type;
-                    // variant.type = v.type;
                     return variant;
                 });
                 const vs = new VariantRequest(variants);

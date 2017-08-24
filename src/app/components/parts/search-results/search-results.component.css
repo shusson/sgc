@@ -1,3 +1,8 @@
 .search-result-content {
     margin-top: 1rem;
 }
+
+.tab-content {
+    min-height: 182px;
+    padding: 1rem;
+}

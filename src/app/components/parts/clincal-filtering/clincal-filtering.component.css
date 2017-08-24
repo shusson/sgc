@@ -1,0 +1,40 @@
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sidebar {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    justify-content: space-between;
+}
+
+.dc-data-count {
+    margin: 0;
+}
+
+md-sidenav-container {
+    min-height: 182px;
+}
+
+md-sidenav {
+    min-width: 150px;
+}
+
+md-icon {
+    cursor: pointer;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}

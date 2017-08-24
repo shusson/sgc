@@ -1,0 +1,30 @@
+<md-sidenav-container>
+    <md-sidenav #sidenav>
+        <div class="sidebar">
+            <div class="filter-option" *ngFor="let c of charts">
+                {{c.name}}
+                <md-checkbox [(ngModel)]="c.enabled"></md-checkbox>
+            </div>
+        </div>
+
+    </md-sidenav>
+
+    <div class="toolbar">
+        <div class="actions">
+            <md-icon (click)="resetFilters()" md-tooltip="Reset" mdTooltipPosition="above">refresh</md-icon>
+            <md-icon (click)="sidenav.open()" md-tooltip="Add/Remove Filters" mdTooltipPosition="above">toc</md-icon>
+        </div>
+
+        <div class='dc-data-count'>
+            <span class='filter-count'></span>
+            selected out of <span class='total-count'></span> patient records.
+        </div>
+    </div>
+
+
+    <div class="charts" *ngIf="charts">
+        <div *ngFor="let c of charts">
+            <app-clinical-chart *ngIf="c.enabled" [data]="c"></app-clinical-chart>
+        </div>
+    </div>
+</md-sidenav-container>
