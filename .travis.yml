@@ -20,7 +20,7 @@ addons:
       - google-chrome-stable
 
 node_js:
-  - "6.9"
+  - "8.1.3"
 
 env:
   - TEST_SUITE=build
