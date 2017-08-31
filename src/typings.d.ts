@@ -22,6 +22,4 @@ declare var dc: any;
 
 declare var Canny: any;
 
-declare module 'auth0-lock';
-
 declare module 'js-worker-search';
