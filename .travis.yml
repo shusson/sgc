@@ -10,14 +10,20 @@ cache:
 language: node_js
 
 addons:
+  artifacts:
+    s3_region: ap-southeast-2
+    paths:
+      - prod.tar.gz
+      - stag.tar.gz
   apt:
     packages:
       - google-chrome-stable
 
 node_js:
-  - "6.9"
+  - "8.1.3"
 
 env:
+  - TEST_SUITE=build
   - TEST_SUITE=unit
   - TEST_SUITE=e2e
 
@@ -33,3 +39,4 @@ script:
   - if [ "$TEST_SUITE" == "e2e" ]; then ng e2e --environment=staging --target=production --aot; fi
   - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" != "false" ]; then sh deploy/staging.sh; fi
   - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then sh deploy/prod.sh; fi
+  - if [ "$TEST_SUITE" == "build" ]; then sh deploy/build.sh; fi
