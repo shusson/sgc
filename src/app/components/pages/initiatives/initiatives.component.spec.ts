@@ -32,6 +32,7 @@ import { PositionService } from '../../../services/autocomplete/position-service
 import { MgrbDownloadBannerComponent } from '../../parts/mgrb-download-banner/mgrb-download-banner.component';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('Component: Initiatives', () => {
     let component: InitiativesComponent;
@@ -39,6 +40,7 @@ describe('Component: Initiatives', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 FormsModule,
                 MdProgressBarModule,
                 MdCheckboxModule,

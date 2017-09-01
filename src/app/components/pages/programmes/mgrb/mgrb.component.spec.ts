@@ -25,6 +25,7 @@ import { Auth } from '../../../../services/auth-service';
 import { MockRouter } from '../../../../mocks/router.mock';
 import { MockLocationStrategy } from '../../../../mocks/locationstrategy.mock';
 import { LocationStrategy } from '@angular/common';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MgrbComponent', () => {
     let component: MgrbComponent;
@@ -33,6 +34,7 @@ describe('MgrbComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MdCheckboxModule,
                 MdProgressBarModule,
                 RouterModule,

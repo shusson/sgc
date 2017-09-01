@@ -25,6 +25,7 @@ import { MockLocationStrategy } from '../../../../mocks/locationstrategy.mock';
 import { MockRouter } from '../../../../mocks/router.mock';
 import { MockAuth } from '../../../../mocks/auth.mock';
 import { Auth } from '../../../../services/auth-service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GcmpComponent', () => {
     let component: GcmpComponent;
@@ -33,6 +34,7 @@ describe('GcmpComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MdCheckboxModule,
                 MdProgressBarModule,
                 RouterModule,

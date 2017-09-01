@@ -13,6 +13,7 @@ import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-foote
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
 import { MaterialModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ErrorComponent', () => {
     let component: ErrorComponent;
@@ -21,6 +22,7 @@ describe('ErrorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule
             ],
             declarations: [

@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MockRouter } from '../../../mocks/router.mock';
 import { Auth } from '../../../services/auth-service';
 import { MockAuth } from '../../../mocks/auth.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MgrbTermsComponent', () => {
     let component: MgrbTermsComponent;
@@ -24,6 +25,7 @@ describe('MgrbTermsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule
             ],
             declarations: [

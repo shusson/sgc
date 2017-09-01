@@ -19,6 +19,7 @@ import { ScrollService } from '../../../services/scroll-service';
 import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BeaconComponent', () => {
 
@@ -28,6 +29,7 @@ describe('BeaconComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 FormsModule,
                 NgxPaginationModule,
                 MaterialModule,
