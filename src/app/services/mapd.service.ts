@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-export class MapDSettings {
-    protocol = '';
-    host = '';
-    port = '';
-    dbName = '';
-    user = '';
-    pwd = '';
-}
-
 @Injectable()
 export class MapdService {
     session = null;

@@ -14,16 +14,16 @@ export class RegionService implements AutocompleteService<Region> {
     }
 
     search(query: string): Observable<AutocompleteResult<Region>[]> {
-        let results = this.parseQuery(query.trim());
+        const results = this.parseQuery(query.trim());
         if (results) {
-            let chromosome = results[1];
-            let start = Number(results[2]);
-            let end = Number(results[3]);
+            const chromosome = results[1];
+            const start = Number(results[2]);
+            const end = Number(results[3]);
             if (start > end) {
                 throw new Error('Start position cannot be greater than end');
             }
-            let r = new Region(chromosome, start, end);
-            let regions = [new RegionAutocomplete(r, r.name(), '', this)];
+            const r = new Region(chromosome, start, end);
+            const regions = [new RegionAutocomplete(r, r.name(), '', this)];
             return Observable.of<AutocompleteResult<Region>[]>(regions);
         } else {
             return Observable.of<AutocompleteResult<Region>[]>([]);
@@ -36,13 +36,11 @@ export class RegionService implements AutocompleteService<Region> {
 
     getGenesInRegion(r: Region): Observable<Gene[]> {
         return this.ensemblService.getGenesInRegion(r.name())
-            .map((response) => {
-                if (response.ok) {
-                    return response.json().map((g: any) => {
-                        g.symbol = g.external_name;
-                        return g;
-                    });
-                }
+            .map((data) => {
+                return data.map((g: any) => {
+                    g.symbol = g.external_name;
+                    return g;
+                });
             });
     }
 

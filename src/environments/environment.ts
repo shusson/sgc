@@ -3,7 +3,14 @@
 // you can create your own and use it with the --env flag.
 // The build system defaults to the dev environment.
 
-import { MapDSettings } from '../app/services/mapd.service';
+export class MapDSettings {
+    protocol = '';
+    host = '';
+    port = '';
+    dbName = '';
+    user = '';
+    pwd = '';
+}
 
 export const environment = {
     production: false,

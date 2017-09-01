@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
-import { URLSearchParams, Headers, Response, Http } from '@angular/http';
 import { Variant } from '../model/variant';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
 export const VSAL_VARIANT_LIMIT = 500;
 export const VSAL_TIMEOUT = 20000;
 
 @Injectable()
 export class VsalService {
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     getVariants(query: SearchQuery): Observable<VariantRequest> {
-        let urlParams = new URLSearchParams();
-        urlParams.append('chromosome', query.chromosome);
-        urlParams.append('positionStart', String(query.start));
-        urlParams.append('positionEnd', String(query.end));
-        urlParams.append('limit', VSAL_VARIANT_LIMIT.toString());
+        let urlParams = new HttpParams()
+            .append('chromosome', query.chromosome)
+            .append('positionStart', String(query.start))
+            .append('positionEnd', String(query.end))
+            .append('limit', VSAL_VARIANT_LIMIT.toString());
 
         query.options.forEach(o => {
             if (o.key) {
-                urlParams.append(o.key, o.getValue());
+                urlParams = urlParams.append(o.key, o.getValue());
             }
         });
 
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', '*/*');
+        const headers = new HttpHeaders()
+            .append('Content-Type', 'application/json')
+            .append('Accept', '*/*');
         return this.requests(urlParams, headers).reduce((acc: VariantRequest, x: VariantRequest, i: number) => {
             acc.variants = acc.variants.concat(x.variants);
             acc.error += x.error;
@@ -40,8 +40,8 @@ export class VsalService {
         });
     }
 
-    private requests(params: URLSearchParams, headers: Headers): Observable<VariantRequest> {
-        params.append('count', 'true');
+    private requests(params: HttpParams, headers: HttpHeaders): Observable<VariantRequest> {
+        params = params.append('count', 'true');
         return Observable.create((observer) => {
             this.request(params, headers).subscribe((vs: VariantRequest) => {
                 observer.next(vs);
@@ -51,9 +51,9 @@ export class VsalService {
                     if (vs.total > VSAL_VARIANT_LIMIT) {
                         let i: number;
                         let completed = 0;
-                        let queued = Math.floor(vs.total / VSAL_VARIANT_LIMIT);
+                        const queued = Math.floor(vs.total / VSAL_VARIANT_LIMIT);
                         for (i = VSAL_VARIANT_LIMIT; i < vs.total; i += VSAL_VARIANT_LIMIT) {
-                            params.set('skip', String(i));
+                            params = params.set('skip', String(i));
                             this.request(params, headers).subscribe((svs: VariantRequest) => {
                                 observer.next(svs);
                                 completed++;
@@ -70,20 +70,16 @@ export class VsalService {
         });
     }
 
-    private request(params: URLSearchParams, headers: Headers): Observable<VariantRequest> {
-        return this.http.get(environment.vsalUrl, {search: params, headers: headers})
+    private request(params: HttpParams, headers: HttpHeaders): Observable<VariantRequest> {
+        return this.http.get(environment.vsalUrl, {params: params, headers: headers})
             .timeout(VSAL_TIMEOUT)
-            .map((response: Response) => {
-                if (!response.ok) {
-                    return new VariantRequest([], response.toString());
+            .map((data) => {
+                if (data['error']) {
+                    return new VariantRequest([], `${data['error'].name}: ${data['error'].description}`);
                 }
-                let res = response.json();
-                if (res.error) {
-                    return new VariantRequest([], `${res.error.name}: ${res.error.description}`);
-                }
-                let vs = new VariantRequest(res.variants);
-                if (res.total && res.total.length > 0) {
-                    vs.total = res.total[0];
+                const vs = new VariantRequest(data['variants']);
+                if (data['total'] && data['total'].length > 0) {
+                    vs.total = data['total'][0];
                 }
                 return vs;
             })
