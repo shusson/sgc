@@ -3,12 +3,12 @@ import { Http, Response, Headers } from '@angular/http';
 import { Beacon } from '../../model/beacon';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { MGRB_ID } from './beacon-search-service';
 import { Subject } from 'rxjs/Subject';
 
 const TIMEOUT = 20000;
 
 const SUPPORTED_REFERENCES = new Set(['HG19', 'GRCH37']);
+const MGRB_ID = 'garvan';
 
 export class NetworkBeacon {
     id: string;

@@ -9,7 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
 const REFERENCE = 'HG19';
-export const MGRB_ID = 'garvan';
+const MGRB_ID = 'garvan';
 const QUERY_LIMIT = 6; // limit of concurrent requests in most browsers
 
 export class BeaconCache {
