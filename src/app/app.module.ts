@@ -3,7 +3,6 @@ import 'hammerjs';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { ProgramCardComponent } from './components/parts/program-card/program-card.component';
@@ -82,6 +81,8 @@ import { ErrorDialogComponent } from './components/parts/error-dialog/error-dial
 import { SaveDialogComponent } from './components/parts/save-dialog/save-dialog.component';
 import { CompareDialogComponent } from './components/parts/compare-dialog/compare-dialog.component';
 import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -108,7 +109,7 @@ export class RavenErrorHandler implements ErrorHandler {
         BrowserAnimationsModule,
         FormsModule,
         routing,
-        HttpModule,
+        HttpClientModule,
         MaterialModule,
         NgxPaginationModule,
         NgxDatatableModule,

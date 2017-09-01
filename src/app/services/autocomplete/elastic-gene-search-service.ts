@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams, Headers, Response } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { Gene } from '../../model/gene';
 import { AutocompleteResult } from '../../model/autocomplete-result';
@@ -7,43 +6,37 @@ import { Observable } from 'rxjs';
 import { GeneAutocomplete } from '../../model/gene-autocomplete';
 import { AutocompleteService } from './autocomplete-service';
 import { Chromosome } from '../../model/chromosome';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const TIMEOUT = 5000;
 
 @Injectable()
 export class ElasticGeneSearch implements AutocompleteService<Gene> {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     getChromosome(chromosome: string): Observable<Chromosome> {
-        let urlParams = new URLSearchParams();
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        let options = {search: urlParams, headers: headers};
-        return this.http.get(`${ environment.elasticUrl }/chromosomes/chromosome/${chromosome}`, options)
+        const headers = new HttpHeaders()
+            .append('Accept', 'application/json');
+        return this.http.get(`${ environment.elasticUrl }/chromosomes/chromosome/${chromosome}`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
                 return Observable.throw('An error occurred while trying to connect to elasticsearch');
             })
-            .map((response: Response) => {
-                if (response.ok) {
-                    let source = response.json()._source;
-                    let result = new Chromosome();
-                    result.name = source.id;
-                    result.length = source.length;
-                    return result;
-                } else {
-                    throw new Error('Failed to get chromosome' + chromosome);
-                }
+            .map(data => {
+                const source = data['_source'];
+                const result = new Chromosome();
+                result.name = source.id;
+                result.length = source.length;
+                return result;
             });
     }
 
     search(query: string): Observable<AutocompleteResult<Gene>[]> {
-        let urlParams = new URLSearchParams();
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        let body = {
+        const headers = new HttpHeaders()
+            .append('Accept', 'application/json');
+        const body = {
             'from': 0, 'size': 5,
             'query': {
                 'dis_max': {
@@ -89,28 +82,23 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
                 {'_score': {'order': 'desc'}},
             ]
         };
-        let options = {search: urlParams, headers: headers};
-        return this.http.post(environment.elasticUrl + '/_search', body, options)
+        return this.http.post(environment.elasticUrl + '/_search', body, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
                 return Observable.throw('An error occurred while trying to connect to elasticsearch');
             })
-            .map((response: Response) => {
-                if (response.ok) {
-                    return response.json().hits.hits.map((j: any) => {
-                        let g = new Gene();
-                        let source = j._source;
-                        g.id = source.id;
-                        g.name = source.description;
-                        g.symbol = source.symbol;
-                        g.chromosome = source.chromosome;
-                        g.start = source.start;
-                        g.end = source.end;
-                        return new GeneAutocomplete(g, g.id, g.name, this);
-                    });
-                } else {
-                    throw new Error('Failed to get gene search results for query:' + query);
-                }
+            .map(data => {
+                return data.hits.hits.map((j: any) => {
+                    let g = new Gene();
+                    const source = j._source;
+                    g.id = source.id;
+                    g.name = source.description;
+                    g.symbol = source.symbol;
+                    g.chromosome = source.chromosome;
+                    g.start = source.start;
+                    g.end = source.end;
+                    return new GeneAutocomplete(g, g.id, g.name, this);
+                });
             });
     }
 

@@ -1,4 +1,4 @@
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 const INDEX_BASE = 1;
 
@@ -15,12 +15,11 @@ export class Beacon {
         this.allele = data.allele ? data.allele : null;
     }
 
-    getSearchParams(): URLSearchParams {
-        let params: URLSearchParams = new URLSearchParams();
-        params.set('ref', this.reference);
-        params.set('chrom', this.chromosome);
-        params.set('pos', String(Number(this.position) - INDEX_BASE));
-        params.set('allele', this.allele);
-        return params;
+    getSearchParams(): HttpParams {
+        return new HttpParams()
+            .set('ref', this.reference)
+            .set('chrom', this.chromosome)
+            .set('pos', String(Number(this.position) - INDEX_BASE))
+            .set('allele', this.allele);
     }
 }
