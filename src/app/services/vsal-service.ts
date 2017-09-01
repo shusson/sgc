@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Variant } from '../model/variant';
 import { HETEROZYGOTES_KEY, HOMOZYGOTES_KEY, Variant } from '../model/variant';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
