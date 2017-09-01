@@ -14,6 +14,7 @@ import { SearchBarService } from '../../../services/search-bar-service';
 import { MockAuth } from '../../../mocks/auth.mock';
 import { MockLocationStrategy } from '../../../mocks/locationstrategy.mock';
 import { MockRouter } from '../../../mocks/router.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PageContainerComponent', () => {
     let component: PageContainerComponent;
@@ -22,6 +23,7 @@ describe('PageContainerComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule
             ],
             declarations: [

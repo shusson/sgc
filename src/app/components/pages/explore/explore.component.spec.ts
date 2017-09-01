@@ -26,6 +26,7 @@ import { CrossfilterService } from '../../../services/crossfilter.service';
 import { CfMock } from '../../../mocks/cf.mock';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ExploreComponent', () => {
     let component: ExploreComponent;
@@ -34,6 +35,7 @@ describe('ExploreComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 FormsModule,
                 MaterialModule,
                 NgxDatatableModule

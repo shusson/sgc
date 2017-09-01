@@ -17,6 +17,7 @@ import { Auth } from '../../../services/auth-service';
 import { MockAuth } from '../../../mocks/auth.mock';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MgrbDownloadComponent', () => {
     let component: MgrbDownloadComponent;
@@ -25,6 +26,7 @@ describe('MgrbDownloadComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule
             ],
             declarations: [

@@ -41,7 +41,6 @@ import { EnsemblService } from './services/ensembl-service';
 import { GeneInformationComponent } from './components/parts/gene-information/gene-information.component';
 import { MaterialModule } from '@angular/material';
 import { BeaconNetworkService } from './services/beacon/beacon-network-service';
-import { BeaconSearchService } from './services/beacon/beacon-search-service';
 import { ChartModule } from 'angular2-highcharts';
 import { HomeFooterComponent } from './components/parts/home-footer/home-footer.component';
 import { HomeAboutComponent } from './components/parts/home-about/home-about.component';

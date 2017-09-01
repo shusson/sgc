@@ -24,6 +24,7 @@ import { SideNavComponent } from '../../../parts/side-nav/side-nav.component';
 import { PrivacyFooterComponent } from '../../../parts/privacy-footer/privacy-footer.component';
 import { MockLocationStrategy } from '../../../../mocks/locationstrategy.mock';
 import { MockRouter } from '../../../../mocks/router.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NswgpComponent', () => {
   let component: NswgpComponent;
@@ -32,6 +33,7 @@ describe('NswgpComponent', () => {
   beforeEach(async(() => {
             TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MdCheckboxModule,
                 MdProgressBarModule,
                 RouterModule,

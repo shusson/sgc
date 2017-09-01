@@ -37,6 +37,7 @@ import { RegionInformationComponent } from '../../parts/region-information/regio
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { PositionService } from '../../../services/autocomplete/position-service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('Component: Search', () => {
 
@@ -46,6 +47,7 @@ describe('Component: Search', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 FormsModule,
                 NgxPaginationModule,
                 MaterialModule,

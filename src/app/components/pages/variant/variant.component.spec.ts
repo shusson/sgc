@@ -30,6 +30,7 @@ import { PopFreqsComponent } from '../../parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ScoresComponent } from '../../parts/scores/scores.component';
 import { ConsequencesComponent } from '../../parts/consequences/consequences.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -38,6 +39,7 @@ describe('VariantComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAnimationsModule,
                 MaterialModule,
                 NgxPaginationModule,
                 FormsModule,
