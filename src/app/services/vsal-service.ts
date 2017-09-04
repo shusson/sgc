@@ -97,8 +97,8 @@ export class VsalService {
                     variant.reference = v.r;
                     variant.type = v.type;
 
-                    variant.AC = v.ac ? v.ac : 0;
-                    variant.AF = v.af ? v.af : 0;
+                    variant.AC = v.ac ? v.ac : v.vac;
+                    variant.AF = v.af ? v.af : v.vaf;
                     variant.nHomRef = v.homc; // nHomHOME
                     variant.nHet = v.hetc;
 
