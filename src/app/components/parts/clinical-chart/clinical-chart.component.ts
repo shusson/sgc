@@ -68,7 +68,7 @@ export class ClinicalChartComponent implements AfterViewInit, OnDestroy {
             .yAxisLabel(this.data.yAxisLabel)
             .xAxisLabel(this.data.xAxisLabel)
             .dimension(this.data.dim)
-            .margins({top: 30, right: 20, bottom: 50, left: 50})
+            .margins({top: 15, right: 20, bottom: 45, left: 50})
             .group(this.data.dim.group().reduceCount());
 
         this.chart.yAxis().ticks(3);

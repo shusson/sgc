@@ -4,5 +4,12 @@
 
 .tab-content {
     min-height: 182px;
-    padding: 1rem;
+}
+
+.meta-information {
+    margin: 1rem;
+}
+
+.clinical-filters {
+    margin-top: 1rem;
 }

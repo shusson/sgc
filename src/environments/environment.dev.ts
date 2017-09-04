@@ -12,7 +12,7 @@ export const environment = {
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',
     durlUrl: 'https://wt-ec1ac815dce38c76c2e7662693b82189-0.run.webtask.io/durl-dev',
     sentryUrl: 'https://90b2013bdfef4fef9491990e6ad379c6@sentry.io/158605',
-    clinicalUrl: 'http://129.94.14.221:3100/data',
+    clinicalUrl: 'http://localhost:3100/data',
     mapd: {
         protocol: 'https',
         host: 'vectis-api.com',

@@ -1,30 +1,29 @@
-<md-sidenav-container>
-    <md-sidenav #sidenav>
-        <div class="sidebar">
-            <div class="filter-option" *ngFor="let c of charts">
-                {{c.name}}
-                <md-checkbox [(ngModel)]="c.enabled"></md-checkbox>
+<div *ngIf="!error && !denied">
+    <div>
+        <div class="toolbar">
+            <div class='dc-data-count'>
+                <span class='filter-count'></span>
+                selected out of <span class='total-count'></span> patient records.
+            </div>
+            <div class="actions">
+                <md-icon (click)="resetFilters()" md-tooltip="Reset" mdTooltipPosition="above">refresh</md-icon>
+                <md-icon [mdMenuTriggerFor]="menu" md-tooltip="Add/Remove Filters" mdTooltipPosition="above">toc</md-icon>
+                <md-menu #menu="mdMenu">
+                    <div class="filter-option" *ngFor="let c of charts" (click)="$event.stopPropagation(); $event.stopImmediatePropagation()">
+                        <span>{{c.name}}</span>
+                        <md-slide-toggle [(ngModel)]="c.enabled"></md-slide-toggle>
+                    </div>
+                </md-menu>
             </div>
         </div>
 
-    </md-sidenav>
 
-    <div class="toolbar">
-        <div class="actions">
-            <md-icon (click)="resetFilters()" md-tooltip="Reset" mdTooltipPosition="above">refresh</md-icon>
-            <md-icon (click)="sidenav.open()" md-tooltip="Add/Remove Filters" mdTooltipPosition="above">toc</md-icon>
-        </div>
-
-        <div class='dc-data-count'>
-            <span class='filter-count'></span>
-            selected out of <span class='total-count'></span> patient records.
+        <div class="charts" *ngIf="charts">
+            <div *ngFor="let c of charts">
+                <app-clinical-chart *ngIf="c.enabled" [data]="c"></app-clinical-chart>
+            </div>
         </div>
     </div>
-
-
-    <div class="charts" *ngIf="charts">
-        <div *ngFor="let c of charts">
-            <app-clinical-chart *ngIf="c.enabled" [data]="c"></app-clinical-chart>
-        </div>
-    </div>
-</md-sidenav-container>
+</div>
+<div *ngIf="denied" class="message message-error">You do not have permission to view this data. You can apply for access <a routerLink="/terms/mgrb">here</a></div>
+<div *ngIf="error" class="message message-error">An unexpected error occurred, please try again or contact support</div>

@@ -25,6 +25,8 @@ export class ClinicalChart {
 })
 export class ClincalFilteringComponent implements OnInit {
 
+    error: any;
+    denied = false;
     patients = [];
     ndx: any;
     charts: ClinicalChart[];
@@ -140,12 +142,19 @@ export class ClincalFilteringComponent implements OnInit {
                 .dimension(this.ndx)
                 .group(all)
                 .html({
-                    some: '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records',
-                    all: '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records'
+                    some: '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> patients',
+                    all: '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> patients'
                 });
 
             dc.renderAll();
 
+        },
+        e => {
+            if (e.status && e.status === 401) {
+                this.denied = true;
+            } else {
+                this.error = e;
+            }
         });
     }
 
