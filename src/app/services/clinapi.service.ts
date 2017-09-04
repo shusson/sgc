@@ -17,7 +17,15 @@ export class ClinapiService {
                 private vts: VariantTrackService) {
         this.changes.debounceTime(300).subscribe(v => {
             this.samples = this.samplesGroup.all().filter(s => s.value > 0).map(s => s.key);
-            this.vss.lastQuery.samples = this.samples;
+
+            // HACK
+            if (this.samples.length >= 1139) {
+                this.vss.lastQuery.samples = [];
+            } else {
+                this.vss.lastQuery.samples = this.samples;
+            }
+            // HACK
+
             this.vts.updateData();
         });
     }

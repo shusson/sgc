@@ -66,8 +66,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     tabSelected(v) {
         if (v.index === 1) {
             this.showClin = true;
-        } else {
-            this.showClin = false;
         }
     }
 }
