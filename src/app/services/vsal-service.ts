@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HETEROZYGOTES_KEY, HOMOZYGOTES_KEY, Variant } from '../model/variant';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
 export const VSAL_VARIANT_LIMIT = 10000;
-export const VSAL_TIMEOUT = 20000;
+export const VSAL_TIMEOUT = 60000;
 
 @Injectable()
 export class VsalService {
