@@ -72,8 +72,8 @@ export class VariantTrackService implements TrackService {
     public updateData() {
         const that = this;
         const loc = {
-            from: that.searchService.startingQuery.start,
-            to: that.searchService.startingQuery.end,
+            from: that.searchService.lastQuery.start,
+            to: that.searchService.lastQuery.end,
         };
 
         that.track.data().call(that.track, {
@@ -198,7 +198,9 @@ export class VariantTrackService implements TrackService {
                     this.regionService
                 );
 
-                if (this.searchService.hasMoved()) {
+                if ((this.searchService.startingQuery.start !== loc.from ||
+                        this.searchService.startingQuery.end !== loc.to ||
+                        this.searchService.startingQuery.samples !== this.searchService.lastQuery.samples)) {
                     return regionAutocomplete.search(this.searchService,
                                                      this.searchService.lastQuery.options,
                                                      this.searchService.lastQuery.samples)

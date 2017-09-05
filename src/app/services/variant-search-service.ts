@@ -77,8 +77,7 @@ export class VariantSearchService {
 
     hasMoved() {
         return this.startingQuery.start !== this.lastQuery.start ||
-            this.startingQuery.end !== this.lastQuery.end ||
-            this.startingQuery.samples !== this.lastQuery.samples;
+            this.startingQuery.end !== this.lastQuery.end;
     }
 }
 

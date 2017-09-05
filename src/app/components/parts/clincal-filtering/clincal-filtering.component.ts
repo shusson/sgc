@@ -88,7 +88,7 @@ export class ClincalFilteringComponent implements OnInit {
                     }),
                     0,
                     10,
-                    'Blood Glucose Level (mmol/L',
+                    'Blood Glucose Level (mmol/L)',
                     '# Patients'
                 ),
                 new ClinicalChart(
