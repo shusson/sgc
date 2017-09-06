@@ -1,12 +1,10 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { Http } from '@angular/http';
 
 import { PcaPlotComponent } from './pca-plot.component';
 import { ChartModule } from 'angular2-highcharts';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 describe('PcaPlotComponent', () => {
     let component: PcaPlotComponent;
@@ -18,7 +16,7 @@ describe('PcaPlotComponent', () => {
             declarations: [PcaPlotComponent],
             providers: [
                     {
-                        provide: Http,
+                        provide: HttpClient,
                         useValue: {
                             get: () => Observable.empty()
                         }

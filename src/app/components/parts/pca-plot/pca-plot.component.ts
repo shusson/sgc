@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import * as Papa from 'papaparse';
+import { HttpClient } from '@angular/common/http';
 
 
 const PLOT_WIDTH = window.innerWidth <= 500 ? 350 : 500;
@@ -20,7 +20,7 @@ export class PcaPlotComponent {
     chart: Highcharts.ChartObject;
     loaded = false;
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
 
         this.options = {
             chart: {
@@ -92,14 +92,14 @@ export class PcaPlotComponent {
     }
 
     getData(): Observable<any> {
-        return this.http.get('assets/mgrb_pca.tsv').delay(1000).map(this.parseData);
+        return this.http.get('assets/mgrb_pca.tsv', {responseType: 'text'}).delay(1000).map(this.parseData);
     }
 
-    parseData = (r: Response) => {
-        let tsv = Papa.parse(r.text(), {delimiter: '\t', header: true});
+    parseData = (data) => {
+        const tsv = Papa.parse(data, {delimiter: '\t', header: true});
 
-        let points: PCAData[] = tsv.data;
-        let series: any = {};
+        const points: PCAData[] = tsv.data;
+        const series: any = {};
 
         for (let d of points) {
             if (!d.SuperPopulation) {
@@ -121,7 +121,7 @@ export class PcaPlotComponent {
         }
 
         return series;
-    }
+    };
 
     update() {
         if (!this.loaded) {
