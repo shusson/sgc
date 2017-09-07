@@ -114,10 +114,11 @@
                 <div class="subgroup">
                     <div class="beacon">
                         <div *ngIf="!beaconSupported">Not supported (SNP only)</div>
-                        <div class="loading-message" *ngIf="beaconSupported && !beacons.totalCount()">
+                        <div class="loading-message" *ngIf="beaconSupported && !beacons.totalCount() && !beaconError">
                             <md-spinner color="primary"></md-spinner>
                         </div>
-                        <div class="card" *ngIf="beaconSupported && beacons.totalCount()">
+                        <div class="message message-error" *ngIf="beaconError">{{ beaconError }}</div>
+                        <div class="card" *ngIf="beaconSupported && beacons.totalCount() && !beaconError">
                             <div class="card-row" (click)="toggleBeacon()">
                                 <div>
                                     <span class="highlight-number">{{ beacons.foundCount() }}</span>

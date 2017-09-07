@@ -43,7 +43,7 @@ export class BeaconComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        let obj = {query: this.searchInput, timestamp: Date.now()};
+        const obj = {query: this.searchInput, timestamp: Date.now()};
         this.router.navigate(['/beacon', obj]);
     }
 

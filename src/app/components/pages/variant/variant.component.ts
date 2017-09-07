@@ -33,6 +33,7 @@ export class VariantComponent implements OnInit, OnDestroy {
     showConsequence = false;
     showAnnotations = false;
     error = '';
+    beaconError = '';
     loading = true;
     beaconSupported = true;
     displayName = Variant.displayName;
@@ -56,20 +57,23 @@ export class VariantComponent implements OnInit, OnDestroy {
             });
             this.auth.login();
         } else {
+            this.subscriptions.push(this.bss.errors.subscribe((e: any) => {
+                this.beaconError = e.message ? e.message : e;
+            }));
             this.subscriptions.push(this.route.params.subscribe(p => this.parseParams(p)));
         }
     }
 
     parseParams(params: Params) {
         try {
-            let r = /([\dxy]*)-(\d*)-([AGTC\*]*)-([AGTC\*]*)+/ig;
-            let m = r.exec(params['query']);
-            let chromo = m[1];
-            let start = Number(m[2]);
-            let reference = m[3];
-            let alternate = m[4];
+            const r = /([\dxy]*)-(\d*)-([AGTC\*]*)-([AGTC\*]*)+/ig;
+            const m = r.exec(params['query']);
+            const chromo = m[1];
+            const start = Number(m[2]);
+            const reference = m[3];
+            const alternate = m[4];
 
-            let sq = new SearchQuery(chromo, start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
+            const sq = new SearchQuery(chromo, start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
             this.getVariant(sq, reference, alternate);
         } catch (e) {
             this.error = 'Could not find specified variant';
@@ -108,7 +112,7 @@ export class VariantComponent implements OnInit, OnDestroy {
     private getVariant(sq: SearchQuery, reference: string, alternate: string) {
         this.vss.getVariants(sq).then(variants => {
             this.loading = false;
-            let vf = variants.filter((v) => v.alternate === alternate && v.reference === reference);
+            const vf = variants.filter((v) => v.alternate === alternate && v.reference === reference);
             if (vf.length > 1) {
                 this.error = 'Found more than one variant for query';
             } else if (vf.length > 0) {
