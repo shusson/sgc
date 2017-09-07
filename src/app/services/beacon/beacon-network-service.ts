@@ -44,6 +44,8 @@ export class BeaconNetworkService {
     constructor(private http: HttpClient) {
         this.getOrganisations().subscribe((o) => {
             this.orgs = o;
+        }, e => {
+            this.orgs = [];
         });
     }
 
@@ -62,15 +64,6 @@ export class BeaconNetworkService {
             });
     }
 
-    getOrganisation(id: string): Observable<NetworkOrganization> {
-        const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json')
-            .append('Accept', '*/*');
-        return this.http.get(`${ environment.beaconNetworkUrl }/organizations/${ id }`, {headers: headers})
-            .timeout(TIMEOUT)
-            .catch(this.handleError);
-    }
-
     getOrganisations(): Observable<NetworkOrganization[]> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json')
@@ -78,20 +71,6 @@ export class BeaconNetworkService {
         return this.http.get(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError);
-    }
-
-    queryBeacons(ids: string[], beacon: Beacon): Observable<BeaconResponse[]> {
-        const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json')
-            .append('Accept', '*/*');
-        const params = beacon.getSearchParams()
-            .append('beacon', `[${ ids.toString() }]`);
-        return this.http.get(`${ environment.beaconNetworkUrl }/responses`, {headers: headers, params: params})
-            .timeout(TIMEOUT)
-            .catch(this.handleError)
-            .map(data => {
-                return data.map(this.parseBeacon);
-            });
     }
 
     queryBeacon(id: string, beacon: Beacon): Observable<BeaconResponse> {

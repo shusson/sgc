@@ -33,17 +33,17 @@ export class BeaconCache {
         this.results = this.buffered
             .debounceTime(100)
             .mergeMap(() => {
-                let obs = [];
+                const obs = [];
                 while (this.pending <= QUERY_LIMIT && this.buffer.length > 0) {
                     this.pending++;
-                    let id = this.buffer.shift();
+                    const id = this.buffer.shift();
                     if (this.buffer.length <= 0) {
                         this.loading = false;
                         this.responses.forEach(r => r.getDisplayUrl());
                     }
                     obs.push(this.bns.queryBeacon(id, this.beacon)
                         .catch(e => {
-                            let br = new BeaconResponse();
+                            const br = new BeaconResponse();
                             br.beacon = new NetworkBeacon();
                             br.beacon.id = id;
                             br.error = 'error: ' + JSON.stringify(e);
@@ -81,7 +81,7 @@ export class BeaconCache {
     }
 
     addBeacon(id: BeaconId) {
-        let asyncResult = new BeaconAsyncResult(id, this.beacon, this.bns);
+        const asyncResult = new BeaconAsyncResult(id, this.beacon, this.bns);
         this.idMap.set(id, asyncResult);
         this.responses.push(asyncResult);
         this.queue.next(id);
@@ -130,7 +130,7 @@ export class BeaconSearchService implements OnDestroy {
     }
 
     searchBeacon(query: string, useCache = true): BeaconCache {
-        let beacon = this.parseQuery(query);
+        const beacon = this.parseQuery(query);
         if (!beacon) {
             this.errors.emit(`Could not parse query: ${ query }`);
             return new BeaconCache(beacon, this.bns);
@@ -141,7 +141,7 @@ export class BeaconSearchService implements OnDestroy {
         this.cache = new BeaconCache(beacon, this.bns);
         this.bns.supported.subscribe(
             (beacons: NetworkBeacon[]) => {
-                let beaconIds = [MGRB_ID].concat(beacons.map((v) => v.id));
+                const beaconIds = [MGRB_ID].concat(beacons.map((v) => v.id));
                 beaconIds.forEach((id) => {
                     this.cache.addBeacon(id);
                 });
@@ -154,11 +154,11 @@ export class BeaconSearchService implements OnDestroy {
     }
 
     private parseQuery(query: string): Beacon {
-        let results = /^\s*([\dxXyY]+)\s*:\s*(\d+)\s*([ACGTDI]*)\s*>\s*([ACGTDI]+)\s*$/.exec(query);
+        const results = /^\s*([\dxXyY]+)\s*:\s*(\d+)\s*([ACGTDI]*)\s*>\s*([ACGTDI]+)\s*$/.exec(query);
         if (!results) {
             return null;
         }
-        let beacon = new Beacon({});
+        const beacon = new Beacon({});
         beacon.chromosome = results[1];
         beacon.position = results[2];
         beacon.allele = results[4];
@@ -214,7 +214,7 @@ export class BeaconAsyncResult {
 
     getDisplayUrl() {
         if (this.result && this.bns.orgs) {
-            let org = this.bns.orgs.find((o: NetworkOrganization) => {
+            const org = this.bns.orgs.find((o: NetworkOrganization) => {
                 return o.name === this.result.beacon.organization;
             });
             this.orgUrl = org ? org.url : '';
