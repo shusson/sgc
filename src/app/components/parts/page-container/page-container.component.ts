@@ -11,8 +11,8 @@ let MIN_NAV_WIDTH = 1200;
 })
 export class PageContainerComponent implements OnInit {
     @Input() showTitle = true;
-    title = 'SYDNEY GENOMICS COLLABORATIVE';
-    smallTitle = 'SGC';
+    title = '';
+    smallTitle = '';
     showHamburger = false;
 
     @HostListener('window:resize') windowResized() {

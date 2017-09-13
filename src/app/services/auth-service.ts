@@ -14,8 +14,8 @@ export const cannyKey = 'canny_token';
 export class Auth {
     lock = new Auth0Lock(environment.auth0ClientId, environment.auth0Domain, {
         theme: {
-            logo: constants.GARVAN_KCCG_LOGO,
-            primaryColor: constants.PRIMARY_COLOR,
+            logo: 'assets/logos/acrc.svg',
+            primaryColor: '#1d1752',
         },
         languageDictionary: {
             title: ''

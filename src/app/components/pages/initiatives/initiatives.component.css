@@ -56,6 +56,7 @@ app-home-footer {
 
 app-search-bar-with-options {
     border-bottom: 1px solid lightgrey;
+    border-top: 0.8rem solid #00c0f3;
 }
 
 app-title-logo-banner {

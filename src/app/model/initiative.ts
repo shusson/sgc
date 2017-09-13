@@ -21,4 +21,5 @@ export class Initiative implements DistributionData {
     weights: any;
     ages: any;
     sex: any;
+    color: string;
 }

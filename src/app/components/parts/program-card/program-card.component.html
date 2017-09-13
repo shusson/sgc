@@ -1,4 +1,4 @@
-<div class="initiative-card" (click)="gotoDetail(initiative)">
+<div class="initiative-card" (click)="gotoDetail(initiative)" [ngStyle]="{'background-color': initiative.color}">
     <div class="title">
         <div class="title-text">{{ initiative.title }}</div>
     </div>
