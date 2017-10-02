@@ -3,7 +3,7 @@ import { Variant } from '../../../model/variant';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { Subscription } from 'rxjs';
-import { VariantTrackService} from '../../../services/genome-browser/variant-track-service';
+import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
@@ -18,6 +18,7 @@ import { Region } from '../../../model/region';
 export class SearchResultsComponent implements OnInit, OnDestroy {
     @Input() autocomplete: AutocompleteResult<any>;
     @Output() errorEvent = new EventEmitter();
+    showClin = false;
     public variants: Variant[] = [];
     public loadingVariants = false;
     private subscriptions: Subscription[] = [];
@@ -60,5 +61,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     showRegionInformation() {
         return this.searchService.hasMoved() || this.autocomplete.result instanceof Region;
+    }
+
+    tabSelected(v) {
+        if (v.index === 1) {
+            this.showClin = true;
+        }
     }
 }

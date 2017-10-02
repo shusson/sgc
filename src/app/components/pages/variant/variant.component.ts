@@ -5,7 +5,6 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { SearchQuery } from '../../../model/search-query';
 import { Variant } from '../../../model/variant';
 import { BeaconCache, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
-import { EnsemblService } from '../../../services/ensembl-service';
 import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
