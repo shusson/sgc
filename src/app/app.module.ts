@@ -82,7 +82,9 @@ import { SaveDialogComponent } from './components/parts/save-dialog/save-dialog.
 import { CompareDialogComponent } from './components/parts/compare-dialog/compare-dialog.component';
 import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
+import { ClinicalComponent } from './components/pages/clinical/clinical.component';
+import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
+import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -173,7 +175,10 @@ export class RavenErrorHandler implements ErrorHandler {
         ErrorDialogComponent,
         SaveDialogComponent,
         CompareDialogComponent,
-        StatsDetailsComponent
+        StatsDetailsComponent,
+        ClinicalComponent,
+        ClinicalChartComponent,
+        ClincalFilteringComponent
     ],
     entryComponents: [
         FeedbackComponent,

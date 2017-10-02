@@ -1,0 +1,9 @@
+<div class="chart">
+    <div class="content">
+        <div class="labels" *ngIf="data.type === 'bar'">
+            <label>Min: {{selectedMin.toFixed(2)}}</label>
+            <label>Max: {{selectedMax.toFixed(2)}}</label>
+        </div>
+        <div [ngClass]="data.name"></div>
+    </div>
+</div>

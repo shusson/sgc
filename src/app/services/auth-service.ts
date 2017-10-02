@@ -8,6 +8,7 @@ import { ErrorDialogComponent } from '../components/parts/error-dialog/error-dia
 import * as jwtDecode from 'jwt-decode';
 
 export const expiredAtKey = 'expired_at';
+export const authKey = 'id_token';
 export const cannyKey = 'canny_token';
 
 @Injectable()
@@ -30,6 +31,10 @@ export class Auth {
             }
         }
     });
+
+    static getToken() {
+        return localStorage.getItem(authKey);
+    }
 
     constructor(private router: Router,
                 public dialog: MdDialog) {
@@ -98,6 +103,7 @@ export class Auth {
     public logout() {
         localStorage.removeItem(expiredAtKey);
         localStorage.removeItem(cannyKey);
+        localStorage.removeItem(authKey);
         window.location.href = `https://${ environment.auth0Domain }/v2/logout?returnTo=${ constants.ORIGIN_URL }`;
     };
 
@@ -105,6 +111,7 @@ export class Auth {
         const idToken = jwtDecode(authResult.idToken);
         localStorage.setItem(cannyKey, idToken['http://sgc/cannyToken']);
         const expiresAt = JSON.stringify(idToken.exp * 1000);
+        localStorage.setItem(authKey, authResult.idToken);
         localStorage.setItem(expiredAtKey, expiresAt);
         window.setTimeout(() => {
             this.router.navigateByUrl(decodeURIComponent(authResult.state));
