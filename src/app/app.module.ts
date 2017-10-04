@@ -38,7 +38,6 @@ import { ScrollService } from './services/scroll-service';
 import { SideNavComponent } from './components/parts/side-nav/side-nav.component';
 import { EnsemblService } from './services/ensembl-service';
 import { GeneInformationComponent } from './components/parts/gene-information/gene-information.component';
-import { MaterialModule, MdSnackBarModule } from '@angular/material';
 import { BeaconNetworkService } from './services/beacon/beacon-network-service';
 import { ChartModule } from 'angular2-highcharts';
 import { HomeFooterComponent } from './components/parts/home-footer/home-footer.component';
@@ -86,6 +85,7 @@ import { ClinicalComponent } from './components/pages/clinical/clinical.componen
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
 import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
 import { SnackbarDemoComponent } from './components/parts/snackbar-demo/snackbar-demo.component';
+import { MaterialModule } from './app.material';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -113,10 +113,10 @@ export class RavenErrorHandler implements ErrorHandler {
         FormsModule,
         routing,
         HttpClientModule,
-        MaterialModule,
         NgxPaginationModule,
         NgxDatatableModule,
-        ChartModule
+        ChartModule,
+        MaterialModule
     ],
     declarations: [
         AppComponent,
