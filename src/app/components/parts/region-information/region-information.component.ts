@@ -44,7 +44,7 @@ export class RegionInformationComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.regionService.getGenesInRegion(this.region).subscribe((genes) => {
             this.genes = genes;
             this.cd.detectChanges();
-        }));
+        }, (e) => {}));
     }
 
     gotoGene(gene: Gene) {

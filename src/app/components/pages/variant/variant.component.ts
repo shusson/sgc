@@ -125,12 +125,12 @@ export class VariantComponent implements OnInit, OnDestroy {
                     }));
                 }
 
-                let r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
+                const r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
                 this.rs.getGenesInRegion(r).subscribe((g) => {
                     if (g.length > 0) {
                         this.gene = g[0];
                     }
-                });
+                }, (e) => {});
             } else {
                 this.error = 'Found no variants for query';
             }
