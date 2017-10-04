@@ -140,6 +140,11 @@ rect.tnt_pane {
     cursor: pointer;
 }
 
+.snack-bar-demo-container {
+    background-color: #f2dede !important;
+    color: #a94442 !important;
+}
+
 .loading-message {
     display: flex;
     justify-content: center;

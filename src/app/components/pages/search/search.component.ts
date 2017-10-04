@@ -41,7 +41,10 @@ export class SearchComponent implements OnDestroy {
             return;
         }
         if (params['demo']) {
-            const sb = this.snackBar.openFromComponent(SnackbarDemoComponent, {});
+            const sb = this.snackBar.openFromComponent(SnackbarDemoComponent, {
+                extraClasses: ['snack-bar-demo-container'],
+                verticalPosition: 'top'
+            });
             sb.afterDismissed().subscribe(() => {
                 this.searchBarService.search(params['query']);
             });

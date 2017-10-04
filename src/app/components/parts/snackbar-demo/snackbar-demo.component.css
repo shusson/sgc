@@ -3,8 +3,9 @@
     justify-content: center;
     flex-direction: column;
     align-content: center;
+    align-items: center;
 }
 
 button {
-    color: #000088;
+    color: rgb(64, 196, 255);
 }
