@@ -5,7 +5,7 @@
 <div *ngIf="!loadingVariants && variants.length <= 0">No Variants found for the query</div>
 
 <div class="search-result-content" *ngIf="searchService.commenced">
-    <md-tab-group (selectChange)="tabSelected($event)">
+    <md-tab-group (selectChange)="tabSelected($event)" [selectedIndex]="selectedTabIndex">
         <md-tab label="Summary">
             <div class="meta-information tab-content">
                 <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
