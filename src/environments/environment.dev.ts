@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     ensemblDomain: 'grch37.rest.ensembl.org',
-    ensemblProtocol: 'http',
+    ensemblProtocol: 'https',
     baseHref: '',
     auth0ClientId: 'eS2HA6aSYnxCXFvo9bzHpV1DI6H1yw0l',
     auth0Domain: 'sgc.au.auth0.com',

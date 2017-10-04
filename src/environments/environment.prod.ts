@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    ensemblDomain: 'sgc.garvan.org.au/ensembl',
+    ensemblDomain: 'grch37.rest.ensembl.org',
     ensemblProtocol: 'https',
     baseHref: '',
     auth0ClientId: 'KLhFZDgUFeUyO6CnslMoGAoQ1lV0uWzM',
