@@ -1,19 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { VariantTrackService } from './genome-browser/variant-track-service';
 import { FAKE_CLINICAL_DATA } from '../mocks/clindata';
 import { VariantSearchService } from './variant-search-service';
 import * as seedrandom from 'seedrandom';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
-export class ClinapiService {
+export class ClinapiService implements OnDestroy {
     samples = [];
     samplesGroup: any;
     changes = new Subject();
+    subs: Subscription[] = [];
+
     constructor(private vss: VariantSearchService,
                 private vts: VariantTrackService) {
-        this.changes.debounceTime(300).subscribe(v => {
+        this.subs.push(this.changes.debounceTime(300).subscribe(v => {
             this.samples = this.samplesGroup.all().filter(s => s.value > 0).map(s => s.key);
 
 
@@ -30,7 +33,7 @@ export class ClinapiService {
                     vts.track.display().update.call(vts.track, loc);
                 }
             });
-        });
+        }));
     }
 
     getPatients(demo = false): Observable<any> {
@@ -56,6 +59,10 @@ export class ClinapiService {
             }
         }
         return vf;
+    }
+
+    ngOnDestroy() {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
 }

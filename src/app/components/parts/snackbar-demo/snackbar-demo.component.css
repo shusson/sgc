@@ -4,6 +4,11 @@
     flex-direction: column;
     align-content: center;
     align-items: center;
+    max-width: 400px;
+}
+
+.snack p {
+    text-align: center;
 }
 
 button {

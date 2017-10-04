@@ -5,7 +5,7 @@ import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.component';
 
 @Component({
@@ -16,9 +16,11 @@ import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.c
 })
 export class SearchComponent implements OnDestroy {
     subscriptions: Subscription[] = [];
+    sbSub: Subscription = null;
     autocomplete: AutocompleteResult<any>;
     error = '';
     searching = false;
+    sb: MdSnackBarRef<SnackbarDemoComponent> = null;
 
     constructor(public searchBarService: SearchBarService,
                 private auth: Auth,
@@ -41,15 +43,15 @@ export class SearchComponent implements OnDestroy {
             return;
         }
         if (params['demo']) {
-            const sb = this.snackBar.openFromComponent(SnackbarDemoComponent, {
+            this.sb = this.snackBar.openFromComponent(SnackbarDemoComponent, {
                 extraClasses: ['snack-bar-demo-container'],
                 verticalPosition: 'top'
             });
-            sb.afterDismissed().subscribe(() => {
+            this.sbSub = this.sb.afterDismissed().subscribe(() => {
                 this.searchBarService.search(params['query']);
             });
         } else {
-            this.snackBar.dismiss();
+            this.dismissSnackBar();
         }
         this.error = '';
         this.autocomplete = null;
@@ -62,9 +64,19 @@ export class SearchComponent implements OnDestroy {
 
     ngOnDestroy() {
         this.subscriptions.forEach((s => s.unsubscribe()));
+        this.dismissSnackBar();
     }
 
     handleError(e: string) {
         this.error = e;
+    }
+
+    private dismissSnackBar() {
+        if (this.sb) {
+            this.sbSub.unsubscribe();
+            this.sbSub = null;
+            this.sb.dismiss();
+            this.sb = null;
+        }
     }
 }

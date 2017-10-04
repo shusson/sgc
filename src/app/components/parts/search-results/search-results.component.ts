@@ -61,7 +61,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
                 this.selectedTabIndex = 1;
                 window.setTimeout(() => {
                     this.showClin = true;
-                }, 1000);
+                }, 1000)
             }
         });
     }
