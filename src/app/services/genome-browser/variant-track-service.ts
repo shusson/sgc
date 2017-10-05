@@ -8,6 +8,7 @@ import { Region } from '../../model/region';
 import { RegionAutocomplete } from '../../model/region-autocomplete';
 import { RegionService } from '../autocomplete/region-service';
 import { TrackService } from './track-service';
+import * as tnt from 'tnt.genome';
 
 const PIN_COLOR = '#4682b4';
 const PIN_SELECTED_COLOR = '#FFD658';
@@ -40,7 +41,7 @@ export class VariantTrackService implements TrackService {
 
     constructor(private searchService: VariantSearchService,
                 private regionService: RegionService) {
-        this.pinFeature = tnt.board.track.feature.pin().fixed(this.drawYAxis);
+        this.pinFeature = tnt.track.feature.pin().fixed(this.drawYAxis);
 
         this.initCreateMethod();
         this.initOverlayMap();
@@ -52,18 +53,18 @@ export class VariantTrackService implements TrackService {
         this.data = this.createDataMethod();
         const display = this.createDisplayMethod();
 
-        this.track = tnt.board.track()
+        this.track = tnt.track()
             .height(100)
             .color('white')
             .display(display)
             .data(this.data);
 
-        this.trackLabel = tnt.board.track()
+        this.trackLabel = tnt.track()
             .label('MGRB Variants')
             .height(20)
             .color('white')
-            .display(tnt.board.track.feature.block())
-            .data(tnt.board.track.data.sync()
+            .display(tnt.track.feature.block())
+            .data(tnt.track.data.sync()
                 .retriever(function (): any[] {
                     return [];
                 })
@@ -153,7 +154,7 @@ export class VariantTrackService implements TrackService {
                     that.highlightedVariant.next(pin.variant);
                 }
             })
-            .layout(tnt.board.track.layout()
+            .layout(tnt.track.layout()
                 .elements((elems: VariantPin[]) => {
                     CttvService.filterValuesAndLabelGroups(elems, that.pinFeature.scale());
                 })
@@ -169,7 +170,7 @@ export class VariantTrackService implements TrackService {
                 variant
             );
         };
-        return tnt.board.track.data.async()
+        return tnt.track.data.async()
             .retriever((loc: any) => {
 
                 const region = new Region(String(this.searchService.lastQuery.chromosome),

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
+import * as tooltip from 'tnt.tooltip';
 
 /*
  This file contains significant code from https://github.com/CTTV/targetGenomeBrowser.

@@ -25,8 +25,6 @@
                 "../node_modules/@mapd/mapdc/dist/chart.css"
             ],
             "scripts": [
-                "../node_modules/tnt.genome/build/tnt.genome.js",
-                "../node_modules/tnt.tooltip/build/tnt.tooltip.min.js",
                 "../node_modules/file-saver/FileSaver.js",
                 "../node_modules/@mapd/connector/dist/browser-connector.js",
                 "../node_modules/mapbox-gl/dist/mapbox-gl.js",

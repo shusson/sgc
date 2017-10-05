@@ -10,6 +10,7 @@ import { Variant } from '../../../model/variant';
 import { Subscription } from 'rxjs';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { EnsemblService } from '../../../services/ensembl-service';
+import * as tnt from 'tnt.genome';
 
 const MAX_REGION_SIZE = 100000;
 const MIN_REGION_SIZE = 100;
@@ -62,7 +63,7 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
         const end = this.searchService.lastQuery.end - this.searchService.lastQuery.start < MIN_REGION_SIZE ?
         this.searchService.lastQuery.start + MIN_REGION_SIZE : this.searchService.lastQuery.end;
 
-        this.genomeBrowser = tnt.board.genome()
+        this.genomeBrowser = tnt.genome()
             .species('human')
             .chr(this.searchService.lastQuery.chromosome)
             .from(this.searchService.lastQuery.start).to(end)
@@ -76,9 +77,9 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
 
         this.genomeBrowser.zoom_in(MIN_REGION_SIZE);
 
-        const sequenceData = tnt.board.track.data.genome.sequence().limit(200);
+        const sequenceData = tnt.track.data.genome.sequence().limit(200);
 
-        const sequenceDataFunction = tnt.board.track.data.async()
+        const sequenceDataFunction = tnt.track.data.async()
             .retriever(function (loc: any) {
                 const track = this;
                 return sequenceData.retriever().call(this, loc).then(function (sequence: string[]) {
@@ -92,10 +93,10 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
                 });
             });
 
-        const sequenceTrack = tnt.board.track()
+        const sequenceTrack = tnt.track()
             .height(20)
             .color('white')
-            .display(tnt.board.track.feature.genome.sequence())
+            .display(tnt.track.feature.genome.sequence())
             .data(sequenceDataFunction);
 
         this.transcriptTrackService.init(this.genomeBrowser);

@@ -4,10 +4,6 @@
 
 declare var System: any;
 
-declare var tnt: any;
-
-declare var tooltip: any;
-
 declare var saveAs: any;
 
 declare var mapdc: any;
