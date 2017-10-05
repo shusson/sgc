@@ -24,6 +24,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
     public loadingVariants = false;
     private subscriptions: Subscription[] = [];
     selectedTabIndex = 0;
+    timeout = null;
 
     constructor(public searchService: VariantSearchService,
                 private cd: ChangeDetectorRef,
@@ -59,14 +60,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
         this.route.params.subscribe(p => {
             if (p['demo']) {
                 this.selectedTabIndex = 1;
-                window.setTimeout(() => {
-                    this.showClin = true;
-                }, 1000)
+                this.showClinicalFilters();
             }
         });
     }
 
     ngOnDestroy() {
+        if (this.timeout) {
+            window.clearTimeout(this.timeout);
+        }
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
 
@@ -78,9 +80,23 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
         return this.searchService.hasMoved() || this.autocomplete.result instanceof Region;
     }
 
+    // workaround because dc.js is not playing nice with angular and material tabs
+    // in particular dc.js is trying to access an element with is not available
+    // ngAfterViewInit in the clinical-chart
+    showClinicalFilters() {
+        const c = document.getElementsByClassName('clinical-filters');
+        if (c.length) {
+            this.showClin = true;
+        } else {
+            this.timeout = window.setTimeout(() => {
+                this.showClinicalFilters();
+            }, 200)
+        }
+    }
+
     tabSelected(v) {
         if (v.index === 1) {
-            this.showClin = true;
+            this.showClinicalFilters();
         }
     }
 }

@@ -4,6 +4,7 @@ import * as dc from 'dc';
 import * as crossfilter from 'crossfilter2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { element } from 'protractor';
 
 export class ClinicalChart {
 
