@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MgrbDownloadBannerComponent } from './mgrb-download-banner.component';
-import { MaterialModule } from '@angular/material';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
+import { MaterialModule } from '../../../app.material';
 
 describe('MgrbDownloadBannerComponent', () => {
     let component: MgrbDownloadBannerComponent;

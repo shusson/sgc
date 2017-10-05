@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-footer.component';

@@ -12,8 +12,6 @@ import { MockInitiativeService } from '../../../../mocks/initiative.mock';
 import { NswgpComponent } from './nswgp.component';
 import { CohortService } from '../../../../services/project-data/cohort-service';
 import { ScrollService } from '../../../../services/scroll-service';
-import { Observable } from 'rxjs';
-import { MdProgressBarModule, MdCheckboxModule, MaterialModule } from '@angular/material';
 import { ChartModule } from 'angular2-highcharts';
 import { PageContainerComponent } from '../../../parts/page-container/page-container.component';
 import { MockAuth } from '../../../../mocks/auth.mock';
@@ -25,6 +23,7 @@ import { PrivacyFooterComponent } from '../../../parts/privacy-footer/privacy-fo
 import { MockLocationStrategy } from '../../../../mocks/locationstrategy.mock';
 import { MockRouter } from '../../../../mocks/router.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../../../app.material';
 
 describe('NswgpComponent', () => {
   let component: NswgpComponent;
@@ -34,8 +33,6 @@ describe('NswgpComponent', () => {
             TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
-                MdCheckboxModule,
-                MdProgressBarModule,
                 RouterModule,
                 ChartModule,
                 MaterialModule

@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
-import { MaterialModule, MdDialogRef } from '@angular/material';
 import { SearchBarWithOptionsComponent } from '../search-bar-with-options/search-bar-with-options.component';
 import { VariantsTablePaginatedComponent } from '../variants-table-paginated/variants-table-paginated.component';
 import { SearchBarService } from '../../../services/search-bar-service';
@@ -19,6 +18,7 @@ import { RegionService } from '../../../services/autocomplete/region-service';
 import { PositionService } from '../../../services/autocomplete/position-service';
 import { MockRouter } from '../../../mocks/router.mock';
 import { Router } from '@angular/router';
+import { MaterialModule } from '../../../app.material';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;

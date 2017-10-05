@@ -4,7 +4,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import {AboutComponent} from './about.component';
 import { ChartModule } from 'angular2-highcharts';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-footer.component';

@@ -81,7 +81,6 @@ import { SaveDialogComponent } from './components/parts/save-dialog/save-dialog.
 import { CompareDialogComponent } from './components/parts/compare-dialog/compare-dialog.component';
 import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ClinicalComponent } from './components/pages/clinical/clinical.component';
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
 import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
 import { SnackbarDemoComponent } from './components/parts/snackbar-demo/snackbar-demo.component';
@@ -177,7 +176,6 @@ export class RavenErrorHandler implements ErrorHandler {
         SaveDialogComponent,
         CompareDialogComponent,
         StatsDetailsComponent,
-        ClinicalComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
         SnackbarDemoComponent

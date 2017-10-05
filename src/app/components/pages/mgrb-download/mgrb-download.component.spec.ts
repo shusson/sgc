@@ -5,7 +5,6 @@ import { PageContainerComponent } from '../../parts/page-container/page-containe
 import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-footer.component';
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
-import { MaterialModule } from '@angular/material';
 import { DurlService } from '../../../services/durl.service';
 import { Observable } from 'rxjs';
 import { MockRouter } from '../../../mocks/router.mock';
@@ -18,6 +17,7 @@ import { MockAuth } from '../../../mocks/auth.mock';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../../app.material';
 
 describe('MgrbDownloadComponent', () => {
     let component: MgrbDownloadComponent;

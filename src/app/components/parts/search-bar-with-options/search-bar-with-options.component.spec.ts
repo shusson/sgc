@@ -10,9 +10,9 @@ import { SearchOptionComponent } from '../search-option/search-option.component'
 import { ScrollService } from '../../../services/scroll-service';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
-import { MaterialModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { MaterialModule } from '../../../app.material';
 
 describe('SearchBarWithOptionsComponent', () => {
     let component: SearchBarWithOptionsComponent;

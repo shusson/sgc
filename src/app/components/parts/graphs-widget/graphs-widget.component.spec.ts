@@ -8,7 +8,7 @@ import { CohortListComponent } from '../cohort-list/cohort-list.component';
 import { ColumnChartComponent } from '../charts/column-chart.component';
 import { PieChartComponent } from '../charts/pie-chart.component';
 import { Router } from '@angular/router';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { ChartModule } from 'angular2-highcharts';
 import { Initiative } from '../../../model/initiative';
 import { QueryList } from '@angular/core';

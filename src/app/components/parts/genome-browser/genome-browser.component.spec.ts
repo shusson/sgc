@@ -6,7 +6,7 @@ import { VariantTrackService } from '../../../services/genome-browser/variant-tr
 import { TranscriptTrackService } from '../../../services/genome-browser/transcript-track-service';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { EnsemblService } from '../../../services/ensembl-service';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { Observable } from 'rxjs';
