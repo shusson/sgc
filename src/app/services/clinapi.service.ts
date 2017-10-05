@@ -17,19 +17,17 @@ export class ClinapiService implements OnDestroy {
     constructor(private vss: VariantSearchService,
                 private vts: VariantTrackService) {
         this.subs.push(this.changes.debounceTime(300).subscribe(v => {
+            this.vss.filter = this.filterVariants;
             this.samples = this.samplesGroup.all().filter(s => s.value > 0).map(s => s.key);
 
-
             const loc = {
-                from: this.vss.startingRegion.start,
-                to: this.vss.startingRegion.end,
+                from: this.vss.lastQuery.start,
+                to: this.vss.lastQuery.end,
             };
 
             vts.track.data().call(vts.track, {
                 'loc' : loc,
                 'on_success' : () => {
-                    const filtered = this.filterVariants(vts.data.elements(), this.samples);
-                    vts.data.elements(filtered);
                     vts.track.display().update.call(vts.track, loc);
                 }
             });
@@ -44,14 +42,14 @@ export class ClinapiService implements OnDestroy {
         }
     }
 
-    filterVariants(v: any[], s: any[]) {
-        if (s.length >= 1139) {
+    filterVariants = (v: any[]) => {
+        if (this.samples.length >= 1139) {
             return v;
-        } else if (s.length === 0) {
+        } else if (this.samples.length === 0) {
             return [];
         }
-        const rng = seedrandom(s.join(""));
-        const p = (s.length / 1139.0) + 0.025;
+        const rng = seedrandom(this.samples.join(""));
+        const p = (this.samples.length / 1139.0) + 0.025;
         const vf = [];
         for (let i = 0; i < v.length; i++) {
             if (rng() < p ) {
@@ -59,10 +57,11 @@ export class ClinapiService implements OnDestroy {
             }
         }
         return vf;
-    }
+    };
 
     ngOnDestroy() {
         this.subs.forEach(s => s.unsubscribe());
+        this.vss.filter = null;
     }
 
 }

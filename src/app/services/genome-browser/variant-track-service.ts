@@ -186,7 +186,8 @@ export class VariantTrackService implements TrackService {
                 );
 
                 if (this.searchService.startingRegion.start !== loc.from ||
-                    this.searchService.startingRegion.end !== loc.to) {
+                    this.searchService.startingRegion.end !== loc.to ||
+                    this.searchService.filter !== null) {
                     return regionAutocomplete.search(this.searchService, this.searchService.lastQuery.options).then(() => {
                         return Promise.resolve(this.searchService.variants.map(createPin));
                     });
