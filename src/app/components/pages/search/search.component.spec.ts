@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { GeneInformationComponent } from '../../parts/gene-information/gene-information.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { SearchResultsComponent } from '../../parts/search-results/search-results.component';
 import { VariantsTableComponent } from '../../parts/variants-table/variants-table.component';
 import { OverlayMenuComponent } from '../../parts/overlay-menu/overlay-menu.component';
@@ -38,6 +38,8 @@ import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-s
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { PositionService } from '../../../services/autocomplete/position-service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ClincalFilteringComponent } from '../../parts/clincal-filtering/clincal-filtering.component';
+import { ClinicalChartComponent } from '../../parts/clinical-chart/clinical-chart.component';
 
 describe('Component: Search', () => {
 
@@ -71,7 +73,9 @@ describe('Component: Search', () => {
                 PageContainerComponent,
                 PrivacyFooterComponent,
                 SideNavComponent,
-                HeaderNavComponent
+                HeaderNavComponent,
+                ClincalFilteringComponent,
+                ClinicalChartComponent
             ],
             providers: [
                 ScrollService,

@@ -1,0 +1,18 @@
+.labels {
+    display: flex;
+    justify-content: space-between;
+    /*margin: 0 2rem 0 2rem;*/
+}
+
+.chart {
+    margin: 1rem;
+    min-width: 320px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 0px) and (max-width: 320px) {
+    .chart {
+        min-width: 200px;
+    }
+}

@@ -14,9 +14,9 @@ import { ScrollService } from '../../../services/scroll-service';
 import { GeneInformationComponent } from '../gene-information/gene-information.component';
 import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EnsemblService } from '../../../services/ensembl-service';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { SearchResultsComponent } from './search-results.component';
 import { VariantsTableComponent } from '../variants-table/variants-table.component';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
@@ -24,6 +24,8 @@ import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
 import { ColumnService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
+import { ClincalFilteringComponent } from '../clincal-filtering/clincal-filtering.component';
+import { ClinicalChartComponent } from '../clinical-chart/clinical-chart.component';
 
 describe('Component: SearchResults', () => {
 
@@ -49,12 +51,20 @@ describe('Component: SearchResults', () => {
                 OverlayMenuComponent,
                 ColumnsMenuComponent,
                 FilterAutoComponent,
+                ClincalFilteringComponent,
+                ClinicalChartComponent
 
             ],
             providers: [
                 {
                     provide: VariantSearchService,
                     useValue: new MockVariantSearchService()
+                },
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        params: Observable.empty()
+                    }
                 },
                 {
                     provide: Router,

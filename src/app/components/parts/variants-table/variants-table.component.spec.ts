@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { VariantsTableComponent } from './variants-table.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AlleleFreqComponent } from '../allele-freq/allele-freq.component';
@@ -25,6 +25,8 @@ import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
 import { ColumnService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
+import { ClincalFilteringComponent, ClinicalChart } from '../clincal-filtering/clincal-filtering.component';
+import { ClinicalChartComponent } from '../clinical-chart/clinical-chart.component';
 
 describe('VariantsTableComponent', () => {
     let component: VariantsTableComponent;
@@ -48,7 +50,9 @@ describe('VariantsTableComponent', () => {
                 RegionInformationComponent,
                 OverlayMenuComponent,
                 ColumnsMenuComponent,
-                FilterAutoComponent
+                FilterAutoComponent,
+                ClincalFilteringComponent,
+                ClinicalChartComponent
             ],
             providers: [
                 {

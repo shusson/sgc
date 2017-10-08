@@ -1,0 +1,16 @@
+.snack {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    max-width: 400px;
+}
+
+.snack p {
+    text-align: center;
+}
+
+button {
+    color: rgb(64, 196, 255);
+}

@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ColumnsMenuComponent } from './columns-menu.component';
-import { MaterialModule } from '@angular/material';
 import { ColumnService } from '../../../services/column-service';
+import { MaterialModule } from '../../../app.material';
 
 describe('ColumnsMenuComponent', () => {
     let component: ColumnsMenuComponent;

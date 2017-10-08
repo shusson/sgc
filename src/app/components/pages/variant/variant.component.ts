@@ -5,7 +5,6 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { SearchQuery } from '../../../model/search-query';
 import { Variant } from '../../../model/variant';
 import { BeaconCache, BeaconSearchService } from '../../../services/beacon/beacon-search-service';
-import { EnsemblService } from '../../../services/ensembl-service';
 import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
@@ -126,12 +125,12 @@ export class VariantComponent implements OnInit, OnDestroy {
                     }));
                 }
 
-                let r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
+                const r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
                 this.rs.getGenesInRegion(r).subscribe((g) => {
                     if (g.length > 0) {
                         this.gene = g[0];
                     }
-                });
+                }, (e) => {});
             } else {
                 this.error = 'Found no variants for query';
             }

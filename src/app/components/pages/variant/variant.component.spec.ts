@@ -13,7 +13,6 @@ import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-footer.component';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MgrbTermsComponent } from '../mgrb-terms/mgrb-terms.component';
-import { MaterialModule, MdTabsModule } from '@angular/material';
 import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
 import { VariantAnnotationsComponent } from '../../parts/variant-annotations/variant-annotations.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -31,6 +30,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ScoresComponent } from '../../parts/scores/scores.component';
 import { ConsequencesComponent } from '../../parts/consequences/consequences.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../../app.material';
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -43,7 +43,6 @@ describe('VariantComponent', () => {
                 MaterialModule,
                 NgxPaginationModule,
                 FormsModule,
-                MdTabsModule,
                 NgxDatatableModule
             ],
             declarations: [

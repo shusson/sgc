@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageContainerComponent } from './page-container.component';
 import { PrivacyFooterComponent } from '../privacy-footer/privacy-footer.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { SideNavComponent } from '../side-nav/side-nav.component';
 import { HeaderNavComponent } from '../header-nav/header-nav.component';
 import { ActivatedRoute, Router } from '@angular/router';

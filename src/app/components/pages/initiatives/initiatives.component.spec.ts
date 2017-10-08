@@ -13,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SearchBarWithOptionsComponent } from '../../parts/search-bar-with-options/search-bar-with-options.component';
 import { TitleLogoBannerComponent } from '../../parts/title-logo-banner/title-logo-banner.component';
 import { ScrollService } from '../../../services/scroll-service';
-import { MdProgressBarModule, MdCheckboxModule, MaterialModule } from '@angular/material';
 import { HomeFooterComponent } from '../../parts/home-footer/home-footer.component';
 import { HomeAboutComponent } from '../../parts/home-about/home-about.component';
 import { ChartModule } from 'angular2-highcharts';
@@ -33,6 +32,7 @@ import { MgrbDownloadBannerComponent } from '../../parts/mgrb-download-banner/mg
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../../app.material';
 
 describe('Component: Initiatives', () => {
     let component: InitiativesComponent;
@@ -42,8 +42,6 @@ describe('Component: Initiatives', () => {
             imports: [
                 NoopAnimationsModule,
                 FormsModule,
-                MdProgressBarModule,
-                MdCheckboxModule,
                 ChartModule,
                 MaterialModule
             ],

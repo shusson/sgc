@@ -12,8 +12,6 @@ import { MockInitiativeService } from '../../../../mocks/initiative.mock';
 import { MgrbComponent } from './mgrb.component';
 import { CohortService } from '../../../../services/project-data/cohort-service';
 import { ScrollService } from '../../../../services/scroll-service';
-import { Observable } from 'rxjs';
-import { MdProgressBarModule, MdCheckboxModule, MaterialModule } from '@angular/material';
 import { ChartModule } from 'angular2-highcharts';
 import { PcaPlotComponent } from '../../../parts/pca-plot/pca-plot.component';
 import { PageContainerComponent } from '../../../parts/page-container/page-container.component';
@@ -26,6 +24,7 @@ import { MockRouter } from '../../../../mocks/router.mock';
 import { MockLocationStrategy } from '../../../../mocks/locationstrategy.mock';
 import { LocationStrategy } from '@angular/common';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../../../app.material';
 
 describe('MgrbComponent', () => {
     let component: MgrbComponent;
@@ -35,8 +34,6 @@ describe('MgrbComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
-                MdCheckboxModule,
-                MdProgressBarModule,
                 RouterModule,
                 ChartModule,
                 MaterialModule

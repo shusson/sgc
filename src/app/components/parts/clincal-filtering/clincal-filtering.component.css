@@ -1,0 +1,37 @@
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sidebar {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.filter-option md-slide-toggle {
+    height: auto;
+    margin-left: 5px;
+}
+
+.dc-data-count {
+    margin: 0;
+}
+
+md-icon {
+    cursor: pointer;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}

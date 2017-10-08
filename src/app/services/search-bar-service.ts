@@ -35,7 +35,7 @@ export class SearchBarService {
     }
 
     searchWithParams(params: Params): Promise<AutocompleteResult<any>> {
-        let query = params['query'];
+        const query = params['query'];
         if (!query) {
             return <any>Promise.resolve();
         }
@@ -47,7 +47,7 @@ export class SearchBarService {
 
         this.searchedEvent.next();
 
-        let handleAutocompleteError = (e: string): Promise<any> => {
+        const handleAutocompleteError = (e: string): Promise<any> => {
             this.autocompleteError = e;
             return Promise.reject(e);
         };
@@ -56,7 +56,7 @@ export class SearchBarService {
             if (v.length <= 0) {
                 return handleAutocompleteError('Failed to find any results for: ' + query);
             }
-            let bestMatch = v[0];
+            const bestMatch = v[0];
             if (bestMatch.match(query)) {
                 return bestMatch;
             } else {
@@ -95,7 +95,7 @@ export class SearchBarService {
         if (!desc) {
             return '';
         } else {
-            let results = desc.match(/(.*)\s\[Source:.*;Acc:.*\]$/);
+            const results = desc.match(/(.*)\s\[Source:.*;Acc:.*\]$/);
             if (results) {
                 return results[1];
             } else {
@@ -105,7 +105,7 @@ export class SearchBarService {
     }
 
     private navigateToSearch(query: string) {
-        let obj = {query: query, timestamp: Date.now()};
+        const obj = {query: query, timestamp: Date.now()};
         this.router.navigate(['/search/results', obj]);
     }
 

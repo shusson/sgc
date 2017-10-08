@@ -10,6 +10,7 @@ import { Variant } from '../../../model/variant';
 import { Subscription } from 'rxjs';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { EnsemblService } from '../../../services/ensembl-service';
+import * as tnt from 'tnt.genome';
 
 const MAX_REGION_SIZE = 100000;
 const MIN_REGION_SIZE = 100;
@@ -38,7 +39,6 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
         this.variants = searchService.variants;
         this.subscription = searchService.results.subscribe(v => {
             this.variants = v.variants;
-            cd.detectChanges();
         });
     }
 
@@ -59,11 +59,11 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
     }
 
     drawBoard() {
-        let that = this;
-        let end = this.searchService.lastQuery.end - this.searchService.lastQuery.start < MIN_REGION_SIZE ?
+        const that = this;
+        const end = this.searchService.lastQuery.end - this.searchService.lastQuery.start < MIN_REGION_SIZE ?
         this.searchService.lastQuery.start + MIN_REGION_SIZE : this.searchService.lastQuery.end;
 
-        this.genomeBrowser = tnt.board.genome()
+        this.genomeBrowser = tnt.genome()
             .species('human')
             .chr(this.searchService.lastQuery.chromosome)
             .from(this.searchService.lastQuery.start).to(end)
@@ -71,17 +71,17 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
             .width(this.width)
             .max_coord(this.elastic.getChromosome(this.searchService.lastQuery.chromosome).toPromise());
 
-        let rest = this.genomeBrowser.rest();
+        const rest = this.genomeBrowser.rest();
         rest.domain(environment.ensemblDomain);
         rest.protocol(environment.ensemblProtocol);
 
         this.genomeBrowser.zoom_in(MIN_REGION_SIZE);
 
-        let sequenceData = tnt.board.track.data.genome.sequence().limit(200);
+        const sequenceData = tnt.track.data.genome.sequence().limit(200);
 
-        let sequenceDataFunction = tnt.board.track.data.async()
+        const sequenceDataFunction = tnt.track.data.async()
             .retriever(function (loc: any) {
-                let track = this;
+                const track = this;
                 return sequenceData.retriever().call(this, loc).then(function (sequence: string[]) {
                     if (sequence.length <= 0) {
                         track.height(0);
@@ -93,10 +93,10 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
                 });
             });
 
-        let sequenceTrack = tnt.board.track()
+        const sequenceTrack = tnt.track()
             .height(20)
             .color('white')
-            .display(tnt.board.track.feature.genome.sequence())
+            .display(tnt.track.feature.genome.sequence())
             .data(sequenceDataFunction);
 
         this.transcriptTrackService.init(this.genomeBrowser);
@@ -111,13 +111,13 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
     }
 
     showTranscripts() {
-        let tracks: any[] = this.genomeBrowser.tracks();
+        const tracks: any[] = this.genomeBrowser.tracks();
         this.genomeBrowser.tracks(tracks.concat([this.transcriptTrackService.trackLabel, this.transcriptTrackService.track]));
         this.transcriptsShown = true;
     }
 
     hideTranscripts() {
-        let tracks = this.genomeBrowser.tracks();
+        const tracks = this.genomeBrowser.tracks();
         tracks.pop();
         tracks.pop();
         this.genomeBrowser.tracks(tracks);
@@ -137,7 +137,7 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
     }
 
     zoomOut() {
-        let range = this.genomeBrowser.to() - this.genomeBrowser.from();
+        const range = this.genomeBrowser.to() - this.genomeBrowser.from();
         if (range > MAX_REGION_SIZE) {
             return;
         }
@@ -145,7 +145,7 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
     }
 
     zoomIn() {
-        let range = this.genomeBrowser.to() - this.genomeBrowser.from();
+        const range = this.genomeBrowser.to() - this.genomeBrowser.from();
         if (range < MIN_REGION_SIZE) {
             return;
         }

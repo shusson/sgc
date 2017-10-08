@@ -13,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MockRouter } from '../../../mocks/router.mock';
 import { Auth } from '../../../services/auth-service';
 import { MockAuth } from '../../../mocks/auth.mock';
-import { MaterialModule } from '@angular/material';
 import { SearchBarWithOptionsComponent } from '../../parts/search-bar-with-options/search-bar-with-options.component';
 import { VariantsTablePaginatedComponent } from '../../parts/variants-table-paginated/variants-table-paginated.component';
 import { SearchBarComponent } from '../../parts/search-bar/search-bar.component';
@@ -27,6 +26,7 @@ import { CfMock } from '../../../mocks/cf.mock';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../../app.material';
 
 describe('ExploreComponent', () => {
     let component: ExploreComponent;

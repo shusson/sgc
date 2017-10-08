@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import { CttvService } from '../cttv-service';
 import { TrackService } from './track-service';
+import * as tnt from 'tnt.genome';
 
 @Injectable()
 export class TranscriptTrackService implements TrackService {
@@ -10,7 +11,7 @@ export class TranscriptTrackService implements TrackService {
 
     init(genomeBrowser: any) {
         let gene_legend_div = d3.select(document.getElementById('genome-browser-gene-legend'));
-        let mixedData = tnt.board.track.data.genome.transcript();
+        let mixedData = tnt.track.data.genome.transcript();
         let gene_updater = mixedData.retriever();
         mixedData.retriever(function (loc: any) {
             loc.chr = genomeBrowser.chr();
@@ -24,10 +25,10 @@ export class TranscriptTrackService implements TrackService {
         });
 
         let geneTrackHeight = 0;
-        this.track = tnt.board.track()
+        this.track = tnt.track()
             .height(geneTrackHeight)
             .color('white')
-            .display(tnt.board.track.feature.genome.transcript()
+            .display(tnt.track.feature.genome.transcript()
                 .color(function (t: any) {
                     return t.featureColor;
                 })
@@ -42,12 +43,12 @@ export class TranscriptTrackService implements TrackService {
             .fixed_slot_type('expanded')
             .on_layout_run(CttvService.slotLayout(geneTrackHeight, this.track, genomeBrowser));
 
-        this.trackLabel = tnt.board.track()
+        this.trackLabel = tnt.track()
             // .label('Genes Transcripts')
             .height(5)
             .color('white')
-            .display(tnt.board.track.feature.block())
-            .data(tnt.board.track.data.sync()
+            .display(tnt.track.feature.block())
+            .data(tnt.track.data.sync()
                 .retriever(function (): any[] {
                     return [];
                 })

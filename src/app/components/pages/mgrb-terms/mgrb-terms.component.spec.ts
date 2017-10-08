@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { MgrbTermsComponent } from './mgrb-terms.component';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-footer.component';

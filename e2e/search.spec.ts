@@ -69,4 +69,28 @@ describe('search', () => {
     it('should be able to find 2:0-100000', () => {
         searchRegion('2:0-100000');
     });
+
+    it('should show clinical filtering banner', () => {
+        sp.search('BRCA1');
+        const r = sp.getAutocompleteResult('BRCA1');
+        r.click().then(() => {
+            sp.navigateToClinicalFiltering().then(() => {
+                sp.getClinicalFilteringBannerText().then((t) => {
+                    expect(t).toEqual("You do not have permission to view this data. You can apply for access or view a demo.");
+                });
+            });
+        });
+    });
+
+    it('should show clinical filtering demo', () => {
+        sp.navigateToDemo().then(() => {
+            sp.getDemoBannerText().then((t) => {
+                expect(t).toEqual("Demo mode enabled. Data is for demonstrations purposes only.");
+            });
+
+            sp.getClinicalFilteringCount().then((t) => {
+                expect(t).toEqual("1,139");
+            });
+        });
+    });
 });

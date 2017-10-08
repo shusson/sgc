@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { OverlayMenuComponent } from './overlay-menu.component';
-import { MaterialModule } from '@angular/material';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
+import { MaterialModule } from '../../../app.material';
 
 describe('OverlayMenuComponent', () => {
     let component: OverlayMenuComponent;

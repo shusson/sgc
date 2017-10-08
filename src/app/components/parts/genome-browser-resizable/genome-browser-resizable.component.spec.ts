@@ -9,7 +9,7 @@ import { ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ScrollService } from '../../../services/scroll-service';
 import { EnsemblService } from '../../../services/ensembl-service';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { Observable } from 'rxjs';

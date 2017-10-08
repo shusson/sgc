@@ -5,10 +5,20 @@
 <div *ngIf="!loadingVariants && variants.length <= 0">No Variants found for the query</div>
 
 <div class="search-result-content" *ngIf="searchService.commenced">
-    <div class="meta-information">
-        <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
-        <app-region-information *ngIf="showRegionInformation()"></app-region-information>
-    </div>
+    <md-tab-group (selectChange)="tabSelected($event)" [selectedIndex]="selectedTabIndex">
+        <md-tab label="Summary">
+            <div class="meta-information tab-content">
+                <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
+                <app-region-information *ngIf="showRegionInformation()"></app-region-information>
+            </div>
+
+        </md-tab>
+        <md-tab #tab label="Clinical Filtering" >
+            <div class="clinical-filters tab-content">
+                <app-clincal-filtering *ngIf="showClin"></app-clincal-filtering>
+            </div>
+        </md-tab>
+    </md-tab-group>
 
     <app-genome-browser-resizable></app-genome-browser-resizable>
     <app-variants-table [variants]="variants"></app-variants-table>

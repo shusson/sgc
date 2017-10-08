@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    ensemblDomain: 'sgc.garvan.org.au/ensembl',
+    ensemblDomain: 'grch37.rest.ensembl.org',
     ensemblProtocol: 'https',
     baseHref: '',
     auth0ClientId: 'KLhFZDgUFeUyO6CnslMoGAoQ1lV0uWzM',
@@ -10,6 +10,7 @@ export const environment = {
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',
     durlUrl: 'https://wt-ec1ac815dce38c76c2e7662693b82189-0.run.webtask.io/durl',
     sentryUrl: 'https://4126e3ee842b4f079400ccf84980e84e@sentry.io/158608',
+    clinicalUrl: 'http://localhost:3000',
     mapd: {
         protocol: 'https',
         host: 'vectis-api.com',
