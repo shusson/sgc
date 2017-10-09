@@ -4,7 +4,8 @@ import * as Papa from 'papaparse';
 import { HttpClient } from '@angular/common/http';
 
 
-const PLOT_WIDTH = window.innerWidth <= 500 ? 350 : 500;
+const PLOT_WIDTH = window.innerWidth <= 500 ? 320 : 500;
+const PLOT_HEIGHT = window.innerWidth <= 500 ? 300 : 400;
 
 @Component({
     selector: 'app-pca-plot',
@@ -28,6 +29,7 @@ export class PcaPlotComponent {
                 zoomType: 'xy',
                 backgroundColor: 'rgba(0,0,0,0)',
                 width: PLOT_WIDTH,
+                height: PLOT_HEIGHT
             },
             title: {
                 text: this.title
