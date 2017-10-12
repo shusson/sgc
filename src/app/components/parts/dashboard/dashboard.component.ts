@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     LARGE_WIDTH = window.innerWidth / 1.3 > 1090 ? 1090 : window.innerWidth / 1.3;
     LARGE_HEIGHT = 200;
     SMALL_WIDTH = 200;
-    SMALL_HEIGHT = 230;
+    SMALL_HEIGHT = 200;
     INNER_RADIUS = 30;
 
     RANGE_HEIGHT = 70;
@@ -186,9 +186,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .cap(30)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(this.chromDim.group().reduceCount()));
-
+            .group(this.chromDim.group().reduceCount())
+            .autoScroll(true));
+        cc.dc.margins().left = 5;
+        cc.dc.margins().right = 0;
         cc.dc.xAxis().ticks(2);
 
         const afc = this.cs.setChart("afCount", dc.rowChart('#afCount')
@@ -198,8 +199,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .cap(30)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(afGroup.reduceCount()));
+            .group(afGroup.reduceCount())
+            .autoScroll(true));
+        afc.dc.margins().left = 5;
+        afc.dc.margins().right = 0;
         afc.dc.xAxis().ticks(2);
 
         const eigenChart = this.cs.setChart("eigen", dc.rowChart('#eigen')
@@ -209,8 +212,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .cap(30)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(eigenGroup.reduceCount()));
+            .group(eigenGroup.reduceCount())
+            .autoScroll(true));
+        eigenChart.dc.margins().left = 5;
+        eigenChart.dc.margins().right = 0;
         eigenChart.dc.xAxis().ticks(2);
 
         this.cs.setChart("polyPhen", dc.pieChart('#polyPhen')
@@ -238,30 +243,36 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .cap(30)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(gnomadAFGroup.reduceCount()));
+            .group(gnomadAFGroup.reduceCount())
+            .autoScroll(true));
+        gafc.dc.margins().left = 5;
+        gafc.dc.margins().right = 0;
         gafc.dc.xAxis().ticks(2);
 
         const consequencesChart = this.cs.setChart("consequences", dc.rowChart('#consequences')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(conDim)
-            .cap(20)
+            .cap(100)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(conDim.group().reduceCount()));
+            .group(conDim.group().reduceCount())
+            .autoScroll(true));
+        consequencesChart.dc.margins().left = 5;
+        consequencesChart.dc.margins().right = 0;
         consequencesChart.dc.xAxis().ticks(2);
 
         const clinvarChart = this.cs.setChart("clinvar", dc.rowChart('#clinvar')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(clinvarDim)
-            .cap(20)
+            .cap(100)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(clinvarDim.group().reduceCount()));
+            .group(clinvarDim.group().reduceCount())
+            .autoScroll(true));
+        clinvarChart.dc.margins().left = 5;
+        clinvarChart.dc.margins().right = 0;
         clinvarChart.dc.xAxis().ticks(2);
 
         this.cs.setChart("alt", dc.pieChart('#altCount')
@@ -289,8 +300,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .cap(10)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(typeDim.group().reduceCount()));
+            .group(typeDim.group().reduceCount())
+            .autoScroll(true));
+
+        tc.dc.margins().left = 5;
+        tc.dc.margins().right = 0;
         tc.dc.xAxis().ticks(2);
 
         const rc = this.cs.setChart("range", dc.barChart('#variantCount')
