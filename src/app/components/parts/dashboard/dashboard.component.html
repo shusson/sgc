@@ -125,6 +125,61 @@
                                 </div>
                                 <div id="rsidCount" [ngStyle]="smallChartStyle"></div>
                             </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by clinvar" mdTooltipPosition="above">
+                                        Clinvar</h4>
+                                    <a (click)="cs.reset('clinvar')" *ngIf="cs.hasFilter('clinvar')">reset</a>
+                                </div>
+                                <div id="clinvar" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by consequences" mdTooltipPosition="above">
+                                        Consequences</h4>
+                                    <a (click)="cs.reset('consequences')" *ngIf="cs.hasFilter('consequences')">reset</a>
+                                </div>
+                                <div id="consequences" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by GnomadAF" mdTooltipPosition="above">
+                                        GnomadAF</h4>
+                                    <a (click)="cs.reset('gnomadAF')" *ngIf="cs.hasFilter('gnomadAF')">reset</a>
+                                </div>
+                                <div id="gnomadAF" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by PolyPhen" mdTooltipPosition="above">
+                                        PolyPhen</h4>
+                                    <a (click)="cs.reset('polyPhen')" *ngIf="cs.hasFilter('polyPhen')">reset</a>
+                                </div>
+                                <div id="polyPhen" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by sift" mdTooltipPosition="above">
+                                        Sift</h4>
+                                    <a (click)="cs.reset('sift')" *ngIf="cs.hasFilter('sift')">reset</a>
+                                </div>
+                                <div id="sift" [ngStyle]="smallChartStyle"></div>
+                            </div>
+
+                            <div class="chart small-chart">
+                                <div class="toolbar">
+                                    <h4 mdTooltip="Number of variants by eigen" mdTooltipPosition="above">
+                                        Eigen</h4>
+                                    <a (click)="cs.reset('eigen')" *ngIf="cs.hasFilter('eigen')">reset</a>
+                                </div>
+                                <div id="eigen" [ngStyle]="smallChartStyle"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,13 @@ export class ChartsService {
         new Chart("afCount"),
         new Chart("range"),
         new Chart("chrom"),
-        new Chart("rsid")];
+        new Chart("rsid"),
+        new Chart("clinvar"),
+        new Chart("consequences"),
+        new Chart("gnomadAF"),
+        new Chart("polyPhen"),
+        new Chart("sift"),
+        new Chart("eigen")];
 
     constructor() {
     }
