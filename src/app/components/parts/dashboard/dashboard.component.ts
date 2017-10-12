@@ -130,13 +130,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.regionFilter = x.filter(false);
         this.chromDim = x.dimension('chromosome').order('val');
-        let startDim = x.dimension('c3_START');
-        let altDim = x.dimension('ALT');
-        let typeDim = x.dimension('TYPE');
-        let refDim = x.dimension('c4_REF');
-        let afDim = x.dimension('AF');
+        const startDim = x.dimension('c3_START');
+        const altDim = x.dimension('ALT');
+        const typeDim = x.dimension('TYPE');
+        const refDim = x.dimension('c4_REF');
+        const afDim = x.dimension('AF');
 
-        let rsid = x.dimension('case when RSID = \'.\' then False else True end');
+        const rsid = x.dimension('case when RSID is NULL then False else True end');
 
         this.cs.setChart("rsid", dc.pieChart('#rsidCount')
             .width(this.SMALL_WIDTH)
@@ -147,20 +147,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .dimension(rsid)
             .group(rsid.group().reduceCount()));
 
-        let afGroup = afDim.group().binParams([{
+        const afGroup = afDim.group().binParams([{
             numBins: 10,
             binBounds: [0, 1],
             timeBin: false
         }]);
 
-        let afExpression = [
+        const afExpression = [
             {
                 expression: 'AF',
                 agg_mode: 'avg',
                 name: 'afavg'
             }];
 
-        let cc = this.cs.setChart("chrom", dc.rowChart('#chromCount')
+        const cc = this.cs.setChart("chrom", dc.rowChart('#chromCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(this.chromDim)
@@ -172,7 +172,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         cc.dc.xAxis().ticks(2);
 
-        let afc = this.cs.setChart("afCount", dc.rowChart('#afCount')
+        const afc = this.cs.setChart("afCount", dc.rowChart('#afCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(afDim)
@@ -201,7 +201,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .dimension(refDim)
             .group(refDim.group().reduceCount()));
 
-        let tc = this.cs.setChart("type", dc.rowChart('#typeCount')
+        const tc = this.cs.setChart("type", dc.rowChart('#typeCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(typeDim)

@@ -13,7 +13,7 @@ export const environment = {
     clinicalUrl: 'http://localhost:3000',
     mapd: {
         protocol: 'https',
-        host: 'vectis-api.com',
+        host: 'mapd.vectis-api.com',
         port: '443',
         dbName: 'mapd',
         user: 'mapd',
