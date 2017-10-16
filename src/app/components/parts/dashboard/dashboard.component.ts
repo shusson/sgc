@@ -27,9 +27,10 @@ const MIN_BOUNDS = 0;
 export class DashboardComponent implements OnInit, OnDestroy {
 
     LARGE_WIDTH = window.innerWidth / 1.3 > 1090 ? 1090 : window.innerWidth / 1.3;
-    LARGE_HEIGHT = 280;
-    SMALL_WIDTH = 280;
-    SMALL_HEIGHT = 280;
+    LARGE_HEIGHT = 200;
+    SMALL_WIDTH = 200;
+    SMALL_HEIGHT = 200;
+    INNER_RADIUS = 30;
 
     RANGE_HEIGHT = 70;
 
@@ -130,63 +131,154 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.regionFilter = x.filter(false);
         this.chromDim = x.dimension('chromosome').order('val');
-        let startDim = x.dimension('c3_START');
-        let altDim = x.dimension('ALT');
-        let typeDim = x.dimension('TYPE');
-        let refDim = x.dimension('c4_REF');
-        let afDim = x.dimension('AF');
+        const startDim = x.dimension('c3_START');
+        const altDim = x.dimension('ALT');
+        const typeDim = x.dimension('TYPE');
+        const refDim = x.dimension('c4_REF');
+        const afDim = x.dimension('AF');
+        const clinvarDim = x.dimension('clinvar');
+        const conDim = x.dimension('consequences');
+        const gnomadDim = x.dimension('gnomadAF');
+        const ployphenDim = x.dimension('polyPhen');
+        const siftDim = x.dimension('sift');
+        const eigenDim = x.dimension('eigen');
 
-        let rsid = x.dimension('case when RSID = \'.\' then False else True end');
+        const rsid = x.dimension('case when RSID is NULL then False else True end');
 
         this.cs.setChart("rsid", dc.pieChart('#rsidCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
-            .innerRadius(45)
+            .innerRadius(this.INNER_RADIUS)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(rsid)
             .group(rsid.group().reduceCount()));
 
-        let afGroup = afDim.group().binParams([{
+        const afGroup = afDim.group().binParams([{
             numBins: 10,
             binBounds: [0, 1],
             timeBin: false
         }]);
 
-        let afExpression = [
+        const gnomadAFGroup = gnomadDim.group().binParams([{
+            numBins: 10,
+            binBounds: [0, 1],
+            timeBin: false
+        }]);
+
+        const eigenGroup = eigenDim.group().binParams([{
+            numBins: 12,
+            binBounds: [-4.2, 1.4],
+            timeBin: false
+        }]);
+
+        const afExpression = [
             {
                 expression: 'AF',
                 agg_mode: 'avg',
                 name: 'afavg'
             }];
 
-        let cc = this.cs.setChart("chrom", dc.rowChart('#chromCount')
+        const cc = this.cs.setChart("chrom", dc.rowChart('#chromCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(this.chromDim)
             .cap(30)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(this.chromDim.group().reduceCount()));
-
+            .group(this.chromDim.group().reduceCount())
+            .autoScroll(true));
+        cc.dc.margins().left = 5;
+        cc.dc.margins().right = 0;
         cc.dc.xAxis().ticks(2);
 
-        let afc = this.cs.setChart("afCount", dc.rowChart('#afCount')
+        const afc = this.cs.setChart("afCount", dc.rowChart('#afCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(afDim)
             .cap(30)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(afGroup.reduceCount()));
+            .group(afGroup.reduceCount())
+            .autoScroll(true));
+        afc.dc.margins().left = 5;
+        afc.dc.margins().right = 0;
         afc.dc.xAxis().ticks(2);
+
+        const eigenChart = this.cs.setChart("eigen", dc.rowChart('#eigen')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .dimension(eigenDim)
+            .cap(30)
+            .othersGrouper(false)
+            .elasticX(true)
+            .group(eigenGroup.reduceCount())
+            .autoScroll(true));
+        eigenChart.dc.margins().left = 5;
+        eigenChart.dc.margins().right = 0;
+        eigenChart.dc.xAxis().ticks(2);
+
+        this.cs.setChart("polyPhen", dc.pieChart('#polyPhen')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .innerRadius(this.INNER_RADIUS)
+            .slicesCap(100)
+            .othersGrouper(false)
+            .dimension(ployphenDim)
+            .group(ployphenDim.group().reduceCount()));
+
+        this.cs.setChart("sift", dc.pieChart('#sift')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .innerRadius(this.INNER_RADIUS)
+            .slicesCap(100)
+            .othersGrouper(false)
+            .dimension(siftDim)
+            .group(siftDim.group().reduceCount()));
+
+        const gafc = this.cs.setChart("gnomadAF", dc.rowChart('#gnomadAF')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .dimension(gnomadDim)
+            .cap(30)
+            .othersGrouper(false)
+            .elasticX(true)
+            .group(gnomadAFGroup.reduceCount())
+            .autoScroll(true));
+        gafc.dc.margins().left = 5;
+        gafc.dc.margins().right = 0;
+        gafc.dc.xAxis().ticks(2);
+
+        const consequencesChart = this.cs.setChart("consequences", dc.rowChart('#consequences')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .dimension(conDim)
+            .cap(100)
+            .othersGrouper(false)
+            .elasticX(true)
+            .group(conDim.group().reduceCount())
+            .autoScroll(true));
+        consequencesChart.dc.margins().left = 5;
+        consequencesChart.dc.margins().right = 0;
+        consequencesChart.dc.xAxis().ticks(2);
+
+        const clinvarChart = this.cs.setChart("clinvar", dc.rowChart('#clinvar')
+            .width(this.SMALL_WIDTH)
+            .height(this.SMALL_HEIGHT)
+            .dimension(clinvarDim)
+            .cap(100)
+            .othersGrouper(false)
+            .elasticX(true)
+            .group(clinvarDim.group().reduceCount())
+            .autoScroll(true));
+        clinvarChart.dc.margins().left = 5;
+        clinvarChart.dc.margins().right = 0;
+        clinvarChart.dc.xAxis().ticks(2);
 
         this.cs.setChart("alt", dc.pieChart('#altCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
-            .innerRadius(45)
+            .innerRadius(this.INNER_RADIUS)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(altDim)
@@ -195,21 +287,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.cs.setChart("ref", dc.pieChart('#refCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
-            .innerRadius(45)
+            .innerRadius(this.INNER_RADIUS)
             .slicesCap(100)
             .othersGrouper(false)
             .dimension(refDim)
             .group(refDim.group().reduceCount()));
 
-        let tc = this.cs.setChart("type", dc.rowChart('#typeCount')
+        const tc = this.cs.setChart("type", dc.rowChart('#typeCount')
             .width(this.SMALL_WIDTH)
             .height(this.SMALL_HEIGHT)
             .dimension(typeDim)
             .cap(10)
             .othersGrouper(false)
             .elasticX(true)
-            .margins({top: 0, right: 0, bottom: 20, left: 5})
-            .group(typeDim.group().reduceCount()));
+            .group(typeDim.group().reduceCount())
+            .autoScroll(true));
+
+        tc.dc.margins().left = 5;
+        tc.dc.margins().right = 0;
         tc.dc.xAxis().ticks(2);
 
         const rc = this.cs.setChart("range", dc.barChart('#variantCount')
