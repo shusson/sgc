@@ -44,7 +44,7 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
         if (fs) {
             fs = 'WHERE ' + fs;
         }
-        this.mapd.session.query(`SELECT VARIANT, TYPE, AF, RSID FROM MGRB ${fs} LIMIT ${this.limit}`, {}, (error, data) => {
+        this.mapd.session.query(`SELECT VARIANT, TYPE, AF, RSID, gnomadAF, clinvar, consequences FROM MGRB ${fs} LIMIT ${this.limit}`, {}, (error, data) => {
             if (error) {
                 this.error = error;
                 return;
