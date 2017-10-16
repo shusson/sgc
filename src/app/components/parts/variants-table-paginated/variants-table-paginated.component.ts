@@ -40,11 +40,14 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
     getServerResult() {
         this.loading = true;
         this.cd.detectChanges();
-        let fs = this.cf.x.getFilterString();
+        const fs = this.cf.x.getFilterString();
+        let where = 'WHERE c3_START > 1';
         if (fs) {
-            fs = 'WHERE ' + fs;
+            where = where + 'AND ' + fs;
         }
-        this.mapd.session.query(`SELECT VARIANT, TYPE, AF, RSID, gnomadAF, clinvar, consequences FROM MGRB ${fs} LIMIT ${this.limit}`, {}, (error, data) => {
+        this.mapd.session.query(
+                `SELECT VARIANT, TYPE, AF, RSID, gnomadAF, clinvar, consequences FROM MGRB ${where} ORDER BY c3_START LIMIT ${this.limit}`
+            , {}, (error, data) => {
             if (error) {
                 this.error = error;
                 return;
