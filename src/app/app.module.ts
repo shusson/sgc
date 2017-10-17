@@ -48,7 +48,7 @@ import { VariantsTableComponent } from './components/parts/variants-table/varian
 import { PositionService } from './services/autocomplete/position-service';
 import { OverlayMenuComponent } from './components/parts/overlay-menu/overlay-menu.component';
 import { ColumnsMenuComponent } from './components/parts/columns-menu/columns-menu.component';
-import { ColumnService } from './services/column-service';
+import { TableService } from './services/column-service';
 import { PcaPlotComponent } from './components/parts/pca-plot/pca-plot.component';
 import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -198,7 +198,7 @@ export class RavenErrorHandler implements ErrorHandler {
         ScrollService,
         EnsemblService,
         PositionService,
-        ColumnService,
+        TableService,
         DurlService,
         LocalStorageService,
         { provide: ErrorHandler, useClass: RavenErrorHandler },

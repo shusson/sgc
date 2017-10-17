@@ -1,19 +1,31 @@
-import { Variant, HOMOZYGOTES_KEY, HETEROZYGOTES_KEY, MISSED_GENOTYPES_KEY } from '../model/variant';
+import { Variant } from '../model/variant';
 
-export class ColumnService {
+export class TableService {
+
+    showScales = true;
 
     private displayMap: any = {
         'Location': (v: Variant) => this.locationString(v),
         'Reference': (v: Variant) => v.reference,
         'Alternate': (v: Variant) => v.alternate,
-        'Type': (v: Variant) => v.type,
+        'Type': (v: Variant) => v.altType,
         'dbSNP': (v: Variant) => v.dbSNP,
-        'Homozygotes Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : null,
-        'Heterozygotes Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : null,
-        'Missed Genotypes': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : null,
-        'Allele Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleCount : null,
-        'Allele Freq.': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq.toExponential(4) : null,
-        'Allele Scale': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : null
+        'Homozygotes Count': (v: Variant) => v.nHomVar,
+        'Heterozygotes Count': (v: Variant) => v.nHet,
+        'Allele Count': (v: Variant) => v.AC,
+        'Allele Freq.': (v: Variant) => v.AF.toExponential(4),
+        'Allele Scale': (v: Variant) => v.AF,
+        'cato': (v: Variant) => v.cato,
+        'eigen': (v: Variant) => v.eigen,
+        'sift': (v: Variant) => v.sift,
+        'polyPhen': (v: Variant) => v.polyPhen,
+        'tgpAF': (v: Variant) => v.tgpAF,
+        'hrcAF': (v: Variant) => v.hrcAF,
+        'GnomadAF': (v: Variant) => v.gnomadAF,
+        'feature': (v: Variant) => v.feature,
+        'consequences': (v: Variant) => v.consequences,
+        'gene': (v: Variant) => v.gene,
+        'clinvar': (v: Variant) => v.clinvar
     };
 
     private searchResultKeys: any[] = [
@@ -21,46 +33,51 @@ export class ColumnService {
         ['Reference', true],
         ['Alternate', true],
         ['Type', true],
-        ['dbSNP', true],
-        ['Homozygotes Count', true],
+        ['dbSNP', false],
+        ['Homozygotes Count', false],
         ['Heterozygotes Count', false],
-        ['Missed Genotypes', false],
-        ['Allele Count', true],
-        ['Allele Freq.', true],
-        ['Allele Scale', true]
+        ['Allele Count', false],
+        ['cato', false],
+        ['eigen', false],
+        ['sift', false],
+        ['polyPhen', false],
+        ['tgpAF', false],
+        ['hrcAF', false],
+        ['feature', false],
+        ['consequences', true],
+        ['gene', false],
+        ['clinvar', false],
+        ['GnomadAF', true],
+        ['Allele Freq', true]
     ];
 
     private columns: Map<string, boolean> = new Map<string, boolean>(this.searchResultKeys);
 
-    private sortMap: any = {
+    readonly sortMap: any = {
         'Location': (v: Variant) => v.start,
         'Reference': (v: Variant) => v.reference,
         'Alternate': (v: Variant) => v.alternate,
-        'Type': (v: Variant) => v.type,
+        'Type': (v: Variant) => v.altType,
         'dbSNP': (v: Variant) => v.dbSNP ? v.dbSNP.match(/rs(\d+)/)[1] : 0,
         'Homozygotes Count': (v: Variant) => {
-            if (!v.variantStats[0]) {
-                return 0;
-            }
-            return v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : 0;
+            return v.nHomVar;
         },
         'Heterozygotes Count': (v: Variant) => {
-            if (!v.variantStats[0]) {
-                return 0;
-            }
-            return v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] ?
-                v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : 0;
+            return v.nHet;
         },
-        'Missed Genotypes': (v: Variant) => {
-            if (!v.variantStats[0]) {
-                return 0;
-            }
-            return v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] ?
-                v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : 0;
-        },
-        'Allele Count': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleCount : 0,
-        'Allele Freq.': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : 0,
-        'Allele Scale': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : 0
+        'Allele Count': (v: Variant) => v.AC,
+        'Allele Freq': (v: Variant) => v.AF,
+        'cato': (v: Variant) => v.cato,
+        'eigen': (v: Variant) => v.eigen,
+        'sift': (v: Variant) => v.sift ? v.sift : '',
+        'polyPhen': (v: Variant) => v.polyPhen ? v.polyPhen : '',
+        'tgpAF': (v: Variant) => v.tgpAF,
+        'hrcAF': (v: Variant) => v.hrcAF,
+        'GnomadAF': (v: Variant) => v.gnomadAF,
+        'feature': (v: Variant) => v.feature ? v.feature : '',
+        'consequences': (v: Variant) => v.consequences ? v.consequences : '',
+        'gene': (v: Variant) => v.gene ? v.gene : '',
+        'clinvar': (v: Variant) => v.clinvar ? v.clinvar : ''
     };
 
     private tooltips: any = {
@@ -89,7 +106,7 @@ export class ColumnService {
             this.lastSortedLabel = label;
             this.lastSortedOrder = true;
         }
-        let fn = this.sortMap[label];
+        const fn = this.sortMap[label];
         if (this.lastSortedOrder) {
             variants.sort((a: any, b: any) => {
                 if (fn(a) < fn(b)) {
@@ -126,7 +143,7 @@ export class ColumnService {
     }
 
     minimalView() {
-        let keys: any[] = [
+        const keys: any[] = [
             ['Location', true],
             ['Reference', true],
             ['Alternate', true],
@@ -137,13 +154,24 @@ export class ColumnService {
             ['Missed Genotypes', false],
             ['Allele Count', false],
             ['Allele Freq.', true],
-            ['Allele Scale', false]
+            ['Allele Scale', false],
+            ['cato', false],
+            ['eigen', false],
+            ['sift', false],
+            ['polyPhen', false],
+            ['tgpAF', false],
+            ['hrcAF', false],
+            ['gnomadAF', false],
+            ['feature', false],
+            ['consequences', false],
+            ['gene', false],
+            ['clinvar', false]
         ];
         this.columns = new Map<string, boolean>(keys);
     }
 
     activeColumns(): string[] {
-        let ac: string[] = [];
+        const ac: string[] = [];
         this.columns.forEach((v, k) => {
             if (v) {
                 ac.push(k);

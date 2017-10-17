@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Variant, HOMOZYGOTES_KEY, HETEROZYGOTES_KEY, MISSED_GENOTYPES_KEY } from '../model/variant';
 import SearchApi from 'js-worker-search';
 import { isUndefined } from 'util';
+import { TableService } from './column-service';
 
 export type FilterOperator = '<' | '>' | '=' | '!=';
 
@@ -14,25 +15,11 @@ const VALUE_INDEX = 4;
 @Injectable()
 export class FilterService {
 
-    readonly commandMap: any = {
-        'dbSNP': (v: Variant) => v.dbSNP,
-        'chromosome': (v: Variant) => v.chromosome,
-        'start': (v: Variant) => v.start,
-        'reference': (v: Variant) => v.reference,
-        'alternate': (v: Variant) => v.alternate,
-        'type': (v: Variant) => v.type,
-        'alleleFrequency': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleFreq : null,
-        'alleleCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].altAlleleCount : null,
-        'homozygotesCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : null,
-        'heterozygotesCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : null,
-        'missedGenotypesCount': (v: Variant) => v.variantStats[0] ? v.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : null
-    };
-
     readonly operators: FilterOperator[] = ['<', '>', '=', '!='];
 
     private searchApi: any;
 
-    constructor() {
+    constructor(public ts: TableService) {
         this.searchApi = new SearchApi();
         this.keys().sort().forEach((k) => {
             this.searchApi.indexDocument(k, COMMAND_TOKEN + k);
@@ -44,33 +31,33 @@ export class FilterService {
     }
 
     keys() {
-        return Object.keys(this.commandMap);
+        return Object.keys(this.ts.sortMap);
     }
 
     isValidCommand(s: string): boolean {
-        let r = this.parseCommand(s);
+        const r = this.parseCommand(s);
         return r !== null && r.length === 5 && r[COMMAND_INDEX] !== '' && r[OP_INDEX] !== '';
     }
 
     nextTokens(s: string): Promise<string[]> {
-        let m = s.match(this.regex());
+        const m = s.match(this.regex());
         if (!m) {
             return Promise.resolve([]);
         }
-        let slash = m[SLASH_INDEX];
-        let command = m[COMMAND_INDEX];
-        let op = m[OP_INDEX];
+        const slash = m[SLASH_INDEX];
+        const command = m[COMMAND_INDEX];
+        const op = m[OP_INDEX];
         if (slash && command && op) {
             return Promise.resolve([]);
         } else if (slash && command) {
-            let lo = m.input.substr(m.input.indexOf(command) + command.length, m.input.length);
+            const lo = m.input.substr(m.input.indexOf(command) + command.length, m.input.length);
             if (lo) {
                 return this.searchApi.search(lo);
             } else {
                 return Promise.resolve(this.operators);
             }
         } else if (slash) {
-            let lo = m.input.substr(1);
+            const lo = m.input.substr(1);
             if (lo) {
                 return this.searchApi.search(lo);
             } else {
@@ -87,7 +74,7 @@ export class FilterService {
         if (!this.isValidCommand(command)) {
             return variants;
         }
-        let args = this.parseCommand(command);
+        const args = this.parseCommand(command);
         return this.filter(args[COMMAND_INDEX], <FilterOperator>args[OP_INDEX], args[VALUE_INDEX], variants);
     }
 
@@ -99,7 +86,7 @@ export class FilterService {
         value = this.isNumeric(value) ? Number(value) : value;
 
         return variants.filter(v => {
-            let a = this.commandMap[command](v);
+            let a = this.ts.sortMap[command](v);
             if (a === null || isUndefined(a)) {
                 a = '';
             }
@@ -121,12 +108,12 @@ export class FilterService {
     }
 
     clean(s: string): string {
-        let match = s.match(this.regex());
+        const match = s.match(this.regex());
         return match.slice(1, 4).join('');
     }
 
     private regex(): RegExp {
-        let s = `(\/)(?:.*(${ this.keys().join('|') })(?:.*?((?:!=)|[<>=])([^!<>=\n]*))*)*`;
+        const s = `(\/)(?:.*(${ this.keys().join('|') })(?:.*?((?:!=)|[<>=])([^!<>=\n]*))*)*`;
         return new RegExp(s, 'i');
     }
 

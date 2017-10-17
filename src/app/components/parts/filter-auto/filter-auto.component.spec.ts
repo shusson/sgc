@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterAutoComponent } from './filter-auto.component';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/column-service';
 import { FormsModule } from '@angular/forms';
 
 describe('FilterAutoComponent', () => {
@@ -16,7 +16,7 @@ describe('FilterAutoComponent', () => {
             declarations: [FilterAutoComponent],
             providers: [
                 {
-                    provide: ColumnService,
+                    provide: TableService,
                     useValue: {
                         activeColumns: (): any[] => []
                     }

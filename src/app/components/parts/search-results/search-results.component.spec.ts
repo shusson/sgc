@@ -21,7 +21,7 @@ import { SearchResultsComponent } from './search-results.component';
 import { VariantsTableComponent } from '../variants-table/variants-table.component';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
 import { ClincalFilteringComponent } from '../clincal-filtering/clincal-filtering.component';
@@ -84,7 +84,7 @@ describe('Component: SearchResults', () => {
                     useValue: {}
                 },
                 {
-                    provide: ColumnService,
+                    provide: TableService,
                     useValue: {
                         activeColumns: (): any[] => []
                     }

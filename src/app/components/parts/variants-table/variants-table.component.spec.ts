@@ -22,7 +22,7 @@ import { MockVsalService } from '../../../mocks/vsal-service.mock';
 import { EnsemblService } from '../../../services/ensembl-service';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
 import { ClincalFilteringComponent, ClinicalChart } from '../clincal-filtering/clincal-filtering.component';
@@ -60,7 +60,7 @@ describe('VariantsTableComponent', () => {
                     useValue: new MockVariantSearchService()
                 },
                 {
-                    provide: ColumnService,
+                    provide: TableService,
                     useValue: {
                         activeColumns: (): any[] => []
                     }

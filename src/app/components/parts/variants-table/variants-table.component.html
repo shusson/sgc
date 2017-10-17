@@ -4,10 +4,29 @@
         <app-filter-auto [variants]="variants" (output)="onFilter($event)"></app-filter-auto>
 
         <div class="options">
-            <span *ngIf="!columnService.activeColumns().length">Select columns to view</span>
+            <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
             <app-columns-menu></app-columns-menu>
             <i (click)="downloadFile()" md-tooltip="Download Variants (CSV)" mdTooltipPosition="above"
                class="material-icons">file_download</i>
+            <i [mdMenuTriggerFor]="tableSettings" md-tooltip="Table Settings" class="material-icons">
+                settings
+            </i>
+            <md-menu #tableSettings="mdMenu">
+                <div md-menu-item (click)="$event.stopPropagation()">
+                    <md-slide-toggle
+                        [(ngModel)]="ts.showScales"
+                        [checked]="ts.showScales">
+                        <span *ngIf="!ts.showScales">Show AF as scale</span>
+                        <span *ngIf="ts.showScales">Show AF as float</span>
+                    </md-slide-toggle>
+                </div>
+                <button md-menu-item [mdMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
+            </md-menu>
+            <md-menu #activeColumns="mdMenu">
+                <div md-menu-item *ngFor="let key of ts.keys()" (click)="$event.stopPropagation()">
+                    <md-slide-toggle [checked]="ts.get(key)" (change)="this.ts.set(key, $event.checked)">{{ key }}</md-slide-toggle>
+                </div>
+            </md-menu>
         </div>
     </div>
 
@@ -15,8 +34,8 @@
         <table>
             <tbody>
             <tr>
-                <th *ngFor="let key of columnService.activeColumns()" (click)="sortVariants(key)">
-                    <span md-tooltip="{{ columnService.tooltip(key) }}" mdTooltipPosition="above">{{ key }}</span>
+                <th *ngFor="let key of ts.activeColumns()" (click)="sortVariants(key)">
+                    <span md-tooltip="{{ ts.tooltip(key) }}" mdTooltipPosition="above">{{ key }}</span>
                     <i class="material-icons">code</i>
 
                 </th>
@@ -26,13 +45,16 @@
                 (mouseover)="highlightVariant(variant)"
                 (mouseout)="unHighlightVariant(variant)">
 
-                <td *ngFor="let label of columnService.activeColumns()">
+                <td *ngFor="let label of ts.activeColumns()">
 
-                    <span *ngIf="label !== 'Allele Scale' && label !== 'Location'"
-                          class="value">{{ columnService.display(label, variant) }}</span>
-                    <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ columnService.display(label, variant) }}</a>
-                    <app-allele-freq *ngIf="label === 'Allele Scale' && variant.variantStats[0]"
-                                     [freq]="variant.variantStats[0].altAlleleFreq"></app-allele-freq>
+                    <span *ngIf="label !== 'Allele Freq' && label !== 'GnomadAF' && label !== 'Location'"
+                          class="value">{{ ts.display(label, variant) }}</span>
+                    <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ ts.display(label, variant) }}</a>
+                    <app-allele-freq *ngIf="label === 'Allele Freq'"
+                                     [freq]="variant.AF"></app-allele-freq>
+                    <app-allele-freq *ngIf="label === 'GnomadAF'"
+                                     [freq]="variant.gnomadAF"></app-allele-freq>
+
                 </td>
             </tr>
             </tbody>

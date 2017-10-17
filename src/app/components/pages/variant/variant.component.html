@@ -64,7 +64,7 @@
                                     <span>Type:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.type }}</span>
+                                    <span>{{ variant.altType }}</span>
                                 </div>
                             </div>
 
@@ -73,7 +73,7 @@
                                     <span>Frequency:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span *ngIf="variant.variantStats[0]">{{ variant.variantStats[0].altAlleleFreq.toExponential(4) }}</span>
+                                    <span *ngIf="variant.AF">{{ variant.AF.toExponential(4) }}</span>
                                 </div>
                             </div>
 

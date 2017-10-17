@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ColumnsMenuComponent } from './columns-menu.component';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/column-service';
 import { MaterialModule } from '../../../app.material';
 
 describe('ColumnsMenuComponent', () => {
@@ -17,7 +17,7 @@ describe('ColumnsMenuComponent', () => {
             declarations: [ColumnsMenuComponent],
             providers: [
                 {
-                    provide: ColumnService,
+                    provide: TableService,
                     useValue: {
                         activeColumns: (): any[] => []
                     }

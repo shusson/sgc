@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/column-service';
 import { MdSlideToggleChange } from '@angular/material';
 
 @Component({
@@ -23,7 +23,7 @@ export class ColumnsMenuComponent implements OnInit {
     }
 
     constructor(private elf: ElementRef,
-                public cs: ColumnService) {
+                public ts: TableService) {
     }
 
     ngOnInit() {
@@ -31,7 +31,7 @@ export class ColumnsMenuComponent implements OnInit {
     }
 
     switchValue(k: string, v: MdSlideToggleChange) {
-        this.cs.set(k, v.checked);
+        this.ts.set(k, v.checked);
     }
 
     toggle() {

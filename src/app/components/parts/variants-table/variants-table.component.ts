@@ -9,7 +9,7 @@ import { VariantTrackService } from '../../../services/genome-browser/variant-tr
 
 import * as Papa from 'papaparse';
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/column-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 
 const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
@@ -29,7 +29,7 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     private highlightedVariant: Variant;
     private subscriptions: Subscription[] = [];
 
-    constructor(public  columnService: ColumnService,
+    constructor(public  ts: TableService,
                 private searchService: VariantSearchService,
                 private variantTrack: VariantTrackService,
                 private cd: ChangeDetectorRef,
@@ -38,7 +38,7 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
     ngOnInit() {
         if (window.screen.width < MINIMAL_VIEW) {
-            this.columnService.minimalView();
+            this.ts.minimalView();
         }
 
         this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: Variant) => {
@@ -51,13 +51,13 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         }));
 
         this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((variant: Variant) => {
-            let index = this.variants.findIndex((v => this.compare(v, variant)));
+            const index = this.variants.findIndex((v => this.compare(v, variant)));
             this.currentPage = Math.ceil((index + 1) / this.pageSize);
             this.cd.detectChanges();
         }));
 
         this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((variant: Variant) => {
-            let index = this.variants.findIndex((v => this.compare(v, variant)));
+            const index = this.variants.findIndex((v => this.compare(v, variant)));
             this.currentPage = Math.ceil((index + 1) / this.pageSize);
             this.cd.detectChanges();
         }));
@@ -83,27 +83,37 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     sortVariants(label: string) {
-        this.columnService.sort(label, this.variants);
+        this.ts.sort(label, this.variants);
     }
 
     downloadFile() {
-        let data = this.variants.map((variant: Variant) => {
+        const data = this.variants.map((v: Variant) => {
             return {
-                'Chrom': variant.chromosome,
-                'Position': variant.start,
-                'RSID': variant.dbSNP,
-                'Reference': variant.reference,
-                'Alternate': variant.alternate,
-                'Type': variant.type,
-                'Homozygotes Count': variant.variantStats[0] ? variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : '',
-                'Heterozygotes Count': variant.variantStats[0] ? variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : '',
-                'Missed Genotypes': variant.variantStats[0] ? variant.variantStats[0].genotypesCount[MISSED_GENOTYPES_KEY] : '',
-                'Allele Count': variant.variantStats[0] ? variant.variantStats[0].altAlleleCount : '',
-                'Allele Frequency': variant.variantStats[0] ? variant.variantStats[0].altAlleleFreq : '',
+                'Chrom': v.chromosome,
+                'Position': v.start,
+                'RSID': v.dbSNP,
+                'Reference': v.reference,
+                'Alternate': v.alternate,
+                'Type': v.altType,
+                'Homozygotes Count': v.nHomVar,
+                'Heterozygotes Count': v.nHet,
+                'Allele Count': v.AC,
+                'Allele Frequency': v.AF,
+                'cato': v.cato,
+                'eigen': v.eigen,
+                'sift': v.sift,
+                'polyPhen': v.polyPhen,
+                'tgpAF': v.tgpAF,
+                'hrcAF': v.hrcAF,
+                'gnomadAF': v.gnomadAF,
+                'feature': v.feature,
+                'consequences': v.consequences,
+                'gene': v.gene,
+                'clinvar': v.clinvar
             };
         });
-        let csv = Papa.unparse(data);
-        let blob = new Blob([csv], {type: 'text/plain'});
+        const csv = Papa.unparse(data);
+        const blob = new Blob([csv], {type: 'text/plain'});
         saveAs(blob, 'mgrb_' + this.searchService.getCurrentRegion().name() + '_' + new Date().getTime() + '.csv');
     }
 

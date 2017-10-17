@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TableService } from '../../../services/column-service';
 
 @Component({
     selector: 'app-allele-freq',
@@ -17,8 +18,13 @@ export class AlleleFreqComponent implements OnInit {
         1 / 2.0
     ];
 
+    constructor(public ts: TableService) {}
+
     ngOnInit() {
-        this.formattedFreq = this.freq.toFixed(6);
+        if (this.freq !== null) {
+            this.formattedFreq = this.freq.toFixed(6);
+        }
     }
+
 }
 
