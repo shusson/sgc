@@ -16,7 +16,7 @@
     justify-content: space-between;
 }
 
-.filter-option md-slide-toggle {
+.filter-option mat-slide-toggle {
     height: auto;
     margin-left: 5px;
 }
@@ -25,7 +25,7 @@
     margin: 0;
 }
 
-md-icon {
+mat-icon {
     cursor: pointer;
 }
 

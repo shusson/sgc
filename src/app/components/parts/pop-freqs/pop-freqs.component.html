@@ -1,6 +1,6 @@
 <div class="overview">
-    <md-tab-group [selectedIndex]="selectedIndex">
-        <md-tab *ngFor="let study of studies" [label]="study">
+    <mat-tab-group [selectedIndex]="selectedIndex">
+        <mat-tab *ngFor="let study of studies" [label]="study">
             <ngx-datatable class="material"
                            [rows]="freqStudies[study]"
                            [limit]="10"
@@ -58,6 +58,6 @@
                     </ng-template>
                 </ngx-datatable-column>
             </ngx-datatable>
-        </md-tab>
-    </md-tab-group>
+        </mat-tab>
+    </mat-tab-group>
 </div>

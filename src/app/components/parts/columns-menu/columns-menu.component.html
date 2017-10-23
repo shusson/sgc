@@ -1,12 +1,12 @@
 <div>
     <div class="option" (click)="toggle()">
         <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
-        <i class="material-icons" md-tooltip="Show/hide columns" mdTooltipPosition="above">view_column</i>
+        <i class="material-icons" matTooltip="Show/hide columns" matTooltipPosition="above">view_column</i>
     </div>
 
-    <md-list class="column-options" *ngIf="showList">
-        <md-list-item *ngFor="let key of ts.keys()">
-            <md-slide-toggle [checked]="ts.get(key)" (change)="switchValue(key, $event)">{{ key }}</md-slide-toggle>
-        </md-list-item>
-    </md-list>
+    <mat-list class="column-options" *ngIf="showList">
+        <mat-list-item *ngFor="let key of ts.keys()">
+            <mat-slide-toggle [checked]="ts.get(key)" (change)="switchValue(key, $event)">{{ key }}</mat-slide-toggle>
+        </mat-list-item>
+    </mat-list>
 </div>

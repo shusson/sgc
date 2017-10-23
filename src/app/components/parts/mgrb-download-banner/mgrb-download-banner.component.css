@@ -92,11 +92,11 @@
     margin: 0;
 }
 
-.banner-message md-icon {
+.banner-message mat-icon {
     margin-right: 1rem;
     margin-left: 1rem;
 }
 
-md-icon {
+mat-icon {
     cursor: pointer;
 }

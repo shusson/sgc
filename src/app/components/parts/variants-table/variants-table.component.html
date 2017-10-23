@@ -6,27 +6,27 @@
         <div class="options">
             <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
             <app-columns-menu></app-columns-menu>
-            <i (click)="downloadFile()" md-tooltip="Download Variants (CSV)" mdTooltipPosition="above"
+            <i (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
                class="material-icons">file_download</i>
-            <i [mdMenuTriggerFor]="tableSettings" md-tooltip="Table Settings" class="material-icons">
+            <i [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
                 settings
             </i>
-            <md-menu #tableSettings="mdMenu">
-                <div md-menu-item (click)="$event.stopPropagation()">
-                    <md-slide-toggle
+            <mat-menu #tableSettings="matMenu">
+                <div mat-menu-item (click)="$event.stopPropagation()">
+                    <mat-slide-toggle
                         [(ngModel)]="ts.showScales"
                         [checked]="ts.showScales">
                         <span *ngIf="!ts.showScales">Show AF as scale</span>
                         <span *ngIf="ts.showScales">Show AF as float</span>
-                    </md-slide-toggle>
+                    </mat-slide-toggle>
                 </div>
-                <button md-menu-item [mdMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
-            </md-menu>
-            <md-menu #activeColumns="mdMenu">
-                <div md-menu-item *ngFor="let key of ts.keys()" (click)="$event.stopPropagation()">
-                    <md-slide-toggle [checked]="ts.get(key)" (change)="this.ts.set(key, $event.checked)">{{ key }}</md-slide-toggle>
+                <button mat-menu-item [matMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
+            </mat-menu>
+            <mat-menu #activeColumns="matMenu">
+                <div mat-menu-item *ngFor="let key of ts.keys()" (click)="$event.stopPropagation()">
+                    <mat-slide-toggle [checked]="ts.get(key)" (change)="this.ts.set(key, $event.checked)">{{ key }}</mat-slide-toggle>
                 </div>
-            </md-menu>
+            </mat-menu>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
             <tbody>
             <tr>
                 <th *ngFor="let key of ts.activeColumns()" (click)="sortVariants(key)">
-                    <span md-tooltip="{{ ts.tooltip(key) }}" mdTooltipPosition="above">{{ key }}</span>
+                    <span matTooltip="{{ ts.tooltip(key) }}" matTooltipPosition="above">{{ key }}</span>
                     <i class="material-icons">code</i>
 
                 </th>

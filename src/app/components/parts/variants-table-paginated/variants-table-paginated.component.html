@@ -1,5 +1,5 @@
 <div *ngIf="!error">
-    <h4 mdTooltip="The first 100 filtered variants" mdTooltipPosition="above">Variant samples</h4>
+    <h4 matTooltip="The first 100 filtered variants" matTooltipPosition="above">Variant samples</h4>
     <ngx-datatable
         class="material"
         [rows]="variants"
@@ -30,6 +30,6 @@
     </ngx-datatable>
 </div>
 <!--<div class="loading-message" *ngIf="loading">-->
-    <!--<md-spinner color="primary"></md-spinner>-->
+    <!--<mat-spinner color="primary"></mat-spinner>-->
 <!--</div>-->
 <div class="message message-error" *ngIf="error">{{ error }}</div>

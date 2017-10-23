@@ -24,13 +24,13 @@
     align-items: center;
 }
 
-.material-icons, app-overlay-menu, md-slide-toggle {
+.material-icons, app-overlay-menu, mat-slide-toggle {
     z-index: 1000;
     margin-right: 1rem;
     cursor: pointer;
 }
 
-md-slide-toggle {
+mat-slide-toggle {
     margin: 0;
 }
 

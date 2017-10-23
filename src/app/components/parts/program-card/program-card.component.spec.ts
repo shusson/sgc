@@ -12,7 +12,7 @@ describe('Component: ProgramCard', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdProgressBarModule,
+                MatProgressBarModule,
             ],
             declarations: [
                 ProgramCardComponent

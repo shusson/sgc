@@ -21,7 +21,7 @@
     flex-basis: 0;
 }
 
-md-checkbox, .material-icons {
+mat-checkbox, .material-icons {
     flex-grow: 1;
     margin: 1em;
     flex-basis: 0;
@@ -31,6 +31,6 @@ md-checkbox, .material-icons {
     width: 200px;
 }
 
-.md-checkbox-background {
+.mat-checkbox-background {
     background-color: #000088 !important;
 }
