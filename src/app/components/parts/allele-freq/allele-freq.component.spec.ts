@@ -3,7 +3,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AlleleFreqComponent } from './allele-freq.component';
 import { MatTooltipModule } from '@angular/material';
-import { TableService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 
 describe('Component: AlleleFreq', () => {
 

@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterAutoComponent } from './filter-auto.component';
-import { TableService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 import { FormsModule } from '@angular/forms';
+import { FilterService } from '../../../services/filter.service';
 
 describe('FilterAutoComponent', () => {
     let component: FilterAutoComponent;
@@ -18,12 +19,15 @@ describe('FilterAutoComponent', () => {
                 {
                     provide: TableService,
                     useValue: {
-                        activeColumns: (): any[] => []
+                        activeColumns: (): any[] => [],
+                        sortMap: {}
                     }
                 },
                 {
-                    provide: FilterAutoComponent,
-                    useValue: {}
+                    provide: FilterService,
+                    useValue: {
+
+                    }
                 }
             ]
         })
@@ -33,11 +37,10 @@ describe('FilterAutoComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FilterAutoComponent);
         component = fixture.componentInstance;
-        component.variants = [];
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should be created', () => {
         expect(component).toBeTruthy();
     });
 });

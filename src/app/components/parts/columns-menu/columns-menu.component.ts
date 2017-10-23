@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { TableService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 import { MatSlideToggleChange } from '@angular/material';
 
 @Component({

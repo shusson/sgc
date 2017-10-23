@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Variant, HOMOZYGOTES_KEY, HETEROZYGOTES_KEY, MISSED_GENOTYPES_KEY } from '../model/variant';
 import SearchApi from 'js-worker-search';
 import { isUndefined } from 'util';
-import { TableService } from './column-service';
+import { TableService } from './table-service';
 
 export type FilterOperator = '<' | '>' | '=' | '!=';
 

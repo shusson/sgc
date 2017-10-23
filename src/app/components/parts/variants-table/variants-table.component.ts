@@ -9,7 +9,7 @@ import { VariantTrackService } from '../../../services/genome-browser/variant-tr
 
 import * as Papa from 'papaparse';
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { TableService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 
 const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';

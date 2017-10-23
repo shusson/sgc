@@ -2,7 +2,7 @@ import {
     Component, OnInit, Input, EventEmitter, Output, OnDestroy, AfterViewInit,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { TableService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 import { Variant } from '../../../model/variant';
 import { FilterService } from '../../../services/filter.service';
 
@@ -96,7 +96,7 @@ export class FilterAutoComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedIndex = 0;
         this.autoComplete.splice(0, this.autoComplete.length);
 
-        let p: Promise<string[]> = Promise.resolve(this.fs.nextTokens(s));
+        const p: Promise<string[]> = Promise.resolve(this.fs.nextTokens(s));
         p.then(v => v.forEach(x => this.autoComplete.push(x)));
     }
 
