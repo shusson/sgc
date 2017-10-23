@@ -13,8 +13,7 @@ export class TableService {
         'Homozygotes Count': (v: Variant) => v.nHomVar,
         'Heterozygotes Count': (v: Variant) => v.nHet,
         'Allele Count': (v: Variant) => v.AC,
-        'Allele Freq.': (v: Variant) => v.AF.toExponential(4),
-        'Allele Scale': (v: Variant) => v.AF,
+        'Allele Freq': (v: Variant) => v.AF.toExponential(4),
         'cato': (v: Variant) => v.cato,
         'eigen': (v: Variant) => v.eigen,
         'sift': (v: Variant) => v.sift,
@@ -81,7 +80,7 @@ export class TableService {
     };
 
     private tooltips: any = {
-        'Allele Scale': 'Allele frequency on a discrete scale: <1/10000, <1/1000, <1%, <5%, <50% and >50%'
+        'Allele Freq': () => this.showScales ? 'Allele frequency on a discrete scale: <1/10000, <1/1000, <1%, <5%, <50% and >50%' : ''
     };
 
     private lastSortedLabel = '';
@@ -92,7 +91,7 @@ export class TableService {
     }
 
     tooltip(key) {
-        return this.tooltips[key];
+        return this.tooltips[key] ? this.tooltips[key]() : '';
     }
 
     display(label: string, variant: Variant): string {
@@ -153,8 +152,7 @@ export class TableService {
             ['Heterozygotes Count', false],
             ['Missed Genotypes', false],
             ['Allele Count', false],
-            ['Allele Freq.', true],
-            ['Allele Scale', false],
+            ['Allele Freq', true],
             ['cato', false],
             ['eigen', false],
             ['sift', false],

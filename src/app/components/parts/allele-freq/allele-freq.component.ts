@@ -9,6 +9,8 @@ import { TableService } from '../../../services/table-service';
 
 export class AlleleFreqComponent implements OnInit {
     @Input() freq: number;
+    @Input() color = 'steelblue';
+    style = {'background-color': 'steelblue'};
     formattedFreq: string;
     scales: number[] = [
         1 / 10000.0,
@@ -21,6 +23,7 @@ export class AlleleFreqComponent implements OnInit {
     constructor(public ts: TableService) {}
 
     ngOnInit() {
+        this.style = {'background-color': this.color};
         if (this.freq !== null) {
             this.formattedFreq = this.freq.toFixed(6);
         }

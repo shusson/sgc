@@ -7,7 +7,7 @@
             <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
             <i (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
                class="material-icons">file_download</i>
-            <i [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
+            <i *ngIf="showSettings" [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
                 settings
             </i>
         </div>
@@ -36,7 +36,7 @@
                     <app-allele-freq *ngIf="label === 'Allele Freq'"
                                      [freq]="variant.AF"></app-allele-freq>
                     <app-allele-freq *ngIf="label === 'GnomadAF'"
-                                     [freq]="variant.gnomadAF"></app-allele-freq>
+                                     [freq]="variant.gnomadAF" color="seagreen"></app-allele-freq>
 
                 </td>
             </tr>
@@ -55,19 +55,19 @@
 </div>
 
 <mat-menu #tableSettings="matMenu">
-    <div mat-menu-item (click)="$event.stopPropagation()">
+    <div mat-menu-item (click)="toggleScales($event)">
         <mat-slide-toggle
             [(ngModel)]="ts.showScales"
             [checked]="ts.showScales">
-            <span *ngIf="!ts.showScales">Show AF as scale</span>
-            <span *ngIf="ts.showScales">Show AF as float</span>
+            Show AF on a discrete scale
         </mat-slide-toggle>
     </div>
     <button mat-menu-item [matMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
 </mat-menu>
 
-<mat-menu #activeColumns="matMenu">
-    <div mat-menu-item *ngFor="let key of ts.keys()" (click)="$event.stopPropagation()">
-        <mat-slide-toggle [checked]="ts.get(key)" (change)="this.ts.set(key, $event.checked)">{{ key }}</mat-slide-toggle>
+<mat-menu class="active-columns-list" #activeColumns="matMenu">
+    <div mat-menu-item *ngFor="let key of ts.keys()" (click)="activateColumn($event, key)">
+        <mat-slide-toggle [checked]="ts.get(key)">{{ key }}
+        </mat-slide-toggle>
     </div>
 </mat-menu>

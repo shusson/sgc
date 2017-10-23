@@ -26,6 +26,7 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     pageSize = 10;
     currentPage = 1;
     dbSnpUrl = Variant.dbSnpUrl;
+    showSettings = true;
     private highlightedVariant: Variant;
     private subscriptions: Subscription[] = [];
 
@@ -39,6 +40,7 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     ngOnInit() {
         if (window.screen.width < MINIMAL_VIEW) {
             this.ts.minimalView();
+            this.showSettings = false;
         }
 
         this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: Variant) => {
@@ -131,6 +133,16 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
     variantUrl(v: Variant) {
         return this.router.createUrlTree(['/search/variant', {query: Variant.displayName(v)}]).toString();
+    }
+
+    toggleScales($event) {
+        $event.stopPropagation();
+        this.ts.showScales = !this.ts.showScales;
+    }
+
+    activateColumn($event, key) {
+        $event.stopPropagation();
+        this.ts.set(key, !this.ts.get(key))
     }
 
 }

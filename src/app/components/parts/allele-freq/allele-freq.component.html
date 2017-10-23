@@ -1,11 +1,11 @@
 <!--Inspired by http://exac.broadinstitute.org/ allele frequency-->
 <div class="chart" *ngIf="formattedFreq && ts.showScales" [matTooltip]="formattedFreq">
-    <div [ngClass]="{ active: freq > 0 }"></div>
-    <div [ngClass]="{ active: freq > scales[0] }"></div>
-    <div [ngClass]="{ active: freq > scales[1] }"></div>
-    <div [ngClass]="{ active: freq > scales[2] }"></div>
-    <div [ngClass]="{ active: freq > scales[3] }"></div>
-    <div [ngClass]="{ active: freq > scales[4] }"></div>
+    <div [ngStyle]="freq > 0  ? style : {}"></div>
+    <div [ngStyle]="freq > scales[0] ? style : {}"></div>
+    <div [ngStyle]="freq > scales[1] ? style : {}"></div>
+    <div [ngStyle]="freq > scales[2] ? style : {}"></div>
+    <div [ngStyle]="freq > scales[3] ? style : {}"></div>
+    <div [ngStyle]="freq > scales[4] ? style : {}"></div>
 </div>
 
 <div *ngIf="!ts.showScales">
