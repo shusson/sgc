@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CohortListComponent } from './cohort-list.component';
 import { CohortService } from '../../../services/project-data/cohort-service';
 import { MockCohortService } from '../../../mocks/cohort.mock';
-import { MdCheckboxModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material';
 
 describe('Component: CohortList', () => {
 
@@ -12,7 +12,7 @@ describe('Component: CohortList', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdCheckboxModule
+                MatCheckboxModule
             ],
             declarations: [
                 CohortListComponent

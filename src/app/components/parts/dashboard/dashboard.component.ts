@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MapdService } from '../../../services/mapd.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { Subject } from 'rxjs/Subject';
 import * as Raven from 'raven-js';
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 private cd: ChangeDetectorRef,
                 private mapd: MapdService,
                 public cf: CrossfilterService,
-                public dialog: MdDialog,
+                public dialog: MatDialog,
                 public cs: ChartsService) {
 
         this.subscriptions.push(this.errors.subscribe((e) => {

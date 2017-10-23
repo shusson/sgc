@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VariantAnnotationsComponent } from './variant-annotations.component';
 import { AnnoTreeComponent, JsonLabelPipe } from '../anno-tree/anno-tree.component';
-import { MdIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material';
 import { VirtualListComponent } from '../virtual-list/virtual-list.component';
 import { VirtualListItemComponent } from '../virtual-list-item/virtual-list-item.component';
 
@@ -12,7 +12,7 @@ describe('VariantAnnotationsComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MdIconModule],
+            imports: [MatIconModule],
             declarations: [
                 VariantAnnotationsComponent,
                 AnnoTreeComponent,
