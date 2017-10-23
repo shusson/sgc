@@ -5,28 +5,11 @@
 
         <div class="options">
             <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
-            <app-columns-menu></app-columns-menu>
             <i (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
                class="material-icons">file_download</i>
             <i [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
                 settings
             </i>
-            <mat-menu #tableSettings="matMenu">
-                <div mat-menu-item (click)="$event.stopPropagation()">
-                    <mat-slide-toggle
-                        [(ngModel)]="ts.showScales"
-                        [checked]="ts.showScales">
-                        <span *ngIf="!ts.showScales">Show AF as scale</span>
-                        <span *ngIf="ts.showScales">Show AF as float</span>
-                    </mat-slide-toggle>
-                </div>
-                <button mat-menu-item [matMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
-            </mat-menu>
-            <mat-menu #activeColumns="matMenu">
-                <div mat-menu-item *ngFor="let key of ts.keys()" (click)="$event.stopPropagation()">
-                    <mat-slide-toggle [checked]="ts.get(key)" (change)="this.ts.set(key, $event.checked)">{{ key }}</mat-slide-toggle>
-                </div>
-            </mat-menu>
         </div>
     </div>
 
@@ -70,3 +53,21 @@
         <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>
 </div>
+
+<mat-menu #tableSettings="matMenu">
+    <div mat-menu-item (click)="$event.stopPropagation()">
+        <mat-slide-toggle
+            [(ngModel)]="ts.showScales"
+            [checked]="ts.showScales">
+            <span *ngIf="!ts.showScales">Show AF as scale</span>
+            <span *ngIf="ts.showScales">Show AF as float</span>
+        </mat-slide-toggle>
+    </div>
+    <button mat-menu-item [matMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
+</mat-menu>
+
+<mat-menu #activeColumns="matMenu">
+    <div mat-menu-item *ngFor="let key of ts.keys()" (click)="$event.stopPropagation()">
+        <mat-slide-toggle [checked]="ts.get(key)" (change)="this.ts.set(key, $event.checked)">{{ key }}</mat-slide-toggle>
+    </div>
+</mat-menu>

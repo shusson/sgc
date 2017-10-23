@@ -19,9 +19,7 @@ import { Router, RouterModule } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
-import { EnsemblService } from '../../../services/ensembl-service';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
 import { TableService } from '../../../services/table-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
@@ -49,7 +47,6 @@ describe('VariantsTableComponent', () => {
                 GeneInformationComponent,
                 RegionInformationComponent,
                 OverlayMenuComponent,
-                ColumnsMenuComponent,
                 FilterAutoComponent,
                 ClincalFilteringComponent,
                 ClinicalChartComponent

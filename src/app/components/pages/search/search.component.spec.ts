@@ -22,7 +22,6 @@ import { MaterialModule } from '../../../app.material';
 import { SearchResultsComponent } from '../../parts/search-results/search-results.component';
 import { VariantsTableComponent } from '../../parts/variants-table/variants-table.component';
 import { OverlayMenuComponent } from '../../parts/overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from '../../parts/columns-menu/columns-menu.component';
 import { FilterAutoComponent } from '../../parts/filter-auto/filter-auto.component';
 import { SearchBarWithOptionsComponent } from '../../parts/search-bar-with-options/search-bar-with-options.component';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
@@ -67,7 +66,6 @@ describe('Component: Search', () => {
                 GeneInformationComponent,
                 RegionInformationComponent,
                 OverlayMenuComponent,
-                ColumnsMenuComponent,
                 FilterAutoComponent,
                 SearchBarWithOptionsComponent,
                 PageContainerComponent,
