@@ -5,7 +5,7 @@ import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { MdSnackBar, MdSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.component';
 
 @Component({
@@ -20,13 +20,13 @@ export class SearchComponent implements OnDestroy {
     autocomplete: AutocompleteResult<any>;
     error = '';
     searching = false;
-    sb: MdSnackBarRef<SnackbarDemoComponent> = null;
+    sb: MatSnackBarRef<SnackbarDemoComponent> = null;
 
     constructor(public searchBarService: SearchBarService,
                 private auth: Auth,
                 private route: ActivatedRoute,
                 private cd: ChangeDetectorRef,
-                public snackBar: MdSnackBar,
+                public snackBar: MatSnackBar,
                 private router: Router) {
         if (!auth.authenticated()) {
             auth.lock.on('hide', () => {

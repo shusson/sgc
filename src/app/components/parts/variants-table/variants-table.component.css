@@ -12,15 +12,6 @@
     float: right;
 }
 
-button {
-    width: auto;
-    height: 45px;
-    font-size: small;
-    margin-top: 0;
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
-
 .options, .task-bar {
     display: flex;
     justify-content: flex-end;

@@ -19,10 +19,8 @@ import { Router, RouterModule } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
-import { EnsemblService } from '../../../services/ensembl-service';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
 import { ClincalFilteringComponent, ClinicalChart } from '../clincal-filtering/clincal-filtering.component';
@@ -49,7 +47,6 @@ describe('VariantsTableComponent', () => {
                 GeneInformationComponent,
                 RegionInformationComponent,
                 OverlayMenuComponent,
-                ColumnsMenuComponent,
                 FilterAutoComponent,
                 ClincalFilteringComponent,
                 ClinicalChartComponent
@@ -60,9 +57,11 @@ describe('VariantsTableComponent', () => {
                     useValue: new MockVariantSearchService()
                 },
                 {
-                    provide: ColumnService,
+                    provide: TableService,
                     useValue: {
-                        activeColumns: (): any[] => []
+                        activeColumns: (): any[] => [],
+                        sortMap: {},
+                        keys: () => []
                     }
                 },
                 {
@@ -82,15 +81,7 @@ describe('VariantsTableComponent', () => {
                 {
                     provide: VsalService,
                     useValue: new MockVsalService([])
-                },
-                {
-                    provide: EnsemblService,
-                    useValue: {
-                        healthCheck: () => {
-                            return Promise.resolve();
-                        }
-                    }
-                },
+                }
             ]
         })
             .compileComponents();

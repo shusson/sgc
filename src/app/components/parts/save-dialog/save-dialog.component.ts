@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ChartsService } from '../../../services/charts.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { ChartsService } from '../../../services/charts.service';
 export class SaveDialogComponent implements OnInit {
     tag = "";
 
-    constructor(public dialogRef: MdDialogRef<SaveDialogComponent>,
-                @Inject(MD_DIALOG_DATA) public data: any) {
+    constructor(public dialogRef: MatDialogRef<SaveDialogComponent>,
+                @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     ngOnInit() {

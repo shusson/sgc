@@ -153,3 +153,7 @@ rect.tnt_pane {
     min-height: 600px;
     width: 100%;
 }
+
+.active-columns-list {
+    max-height: 300px !important;
+}

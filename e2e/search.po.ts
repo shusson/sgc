@@ -24,8 +24,8 @@ export class SearchPage {
 
     navigateToClinicalFiltering() {
         const EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.css('#md-tab-label-0-1'))), 5000);
-        const g = element(by.css('#md-tab-label-0-1'));
+        browser.wait(EC.visibilityOf(element(by.css('#mat-tab-label-0-1'))), 5000);
+        const g = element(by.css('#mat-tab-label-0-1'));
         return g.click();
     }
 

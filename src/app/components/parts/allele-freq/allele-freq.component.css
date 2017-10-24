@@ -1,5 +1,8 @@
-div.active {
-    background-color: steelblue;
+
+
+div {
+    min-height: 17px;
+    cursor: pointer;
 }
 
 .chart {

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VirtualListComponent } from './virtual-list.component';
 import { VirtualListItemComponent } from '../virtual-list-item/virtual-list-item.component';
 import { AnnoTreeComponent, JsonLabelPipe } from '../anno-tree/anno-tree.component';
-import { MdIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material';
 
 describe('VirtualListComponent', () => {
     let component: VirtualListComponent;
@@ -11,7 +11,7 @@ describe('VirtualListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MdIconModule],
+            imports: [MatIconModule],
             declarations: [
                 AnnoTreeComponent,
                 VirtualListComponent,

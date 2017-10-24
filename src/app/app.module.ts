@@ -47,8 +47,7 @@ import { ElasticGeneSearch } from './services/autocomplete/elastic-gene-search-s
 import { VariantsTableComponent } from './components/parts/variants-table/variants-table.component';
 import { PositionService } from './services/autocomplete/position-service';
 import { OverlayMenuComponent } from './components/parts/overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from './components/parts/columns-menu/columns-menu.component';
-import { ColumnService } from './services/column-service';
+import { TableService } from './services/table-service';
 import { PcaPlotComponent } from './components/parts/pca-plot/pca-plot.component';
 import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -150,7 +149,6 @@ export class RavenErrorHandler implements ErrorHandler {
         PrivacyFooterComponent,
         VariantsTableComponent,
         OverlayMenuComponent,
-        ColumnsMenuComponent,
         PcaPlotComponent,
         FilterAutoComponent,
         PageContainerComponent,
@@ -198,7 +196,7 @@ export class RavenErrorHandler implements ErrorHandler {
         ScrollService,
         EnsemblService,
         PositionService,
-        ColumnService,
+        TableService,
         DurlService,
         LocalStorageService,
         { provide: ErrorHandler, useClass: RavenErrorHandler },

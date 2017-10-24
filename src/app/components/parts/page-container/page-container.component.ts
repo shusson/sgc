@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
 
-let MIN_NAV_WIDTH = 1200;
+const MIN_NAV_WIDTH = 1200;
 
 @Component({
     selector: 'app-page-container',
@@ -24,12 +24,8 @@ export class PageContainerComponent implements OnInit {
         this.windowResized();
         this.router.events
             .filter((x, idx) => x instanceof NavigationEnd)
-            .subscribe((event: any) => {
+            .subscribe(() => {
                 window.scrollTo(0, 0);
-                let anchor = new RegExp(/#/);
-                if (!event.url.match(anchor)) {
-                    this.scrollService.scrollToTop();
-                }
             });
     }
 

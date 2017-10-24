@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { constants } from '../app.constants';
 import Auth0Lock from 'auth0-lock';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from '../components/parts/error-dialog/error-dialog.component';
 import * as jwtDecode from 'jwt-decode';
 
@@ -32,7 +32,7 @@ export class Auth {
     });
 
     constructor(private router: Router,
-                public dialog: MdDialog) {
+                public dialog: MatDialog) {
 
         this.lock.on('authenticated', (authResult: any) => {
             try {

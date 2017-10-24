@@ -39,7 +39,7 @@
     margin: 1rem;
 }
 
-md-progress-circle {
+mat-progress-circle {
     height: 20px;
     width: 20px;
 }
@@ -66,6 +66,6 @@ md-progress-circle {
     width: 40px;
 }
 
-.beacon .loading-message md-icon {
+.beacon .loading-message mat-icon {
     height: 40px;
 }

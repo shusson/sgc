@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MdSnackBar, MdSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 
 @Component({
     selector: 'app-snackbar-demo',
@@ -9,7 +9,7 @@ import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 export class SnackbarDemoComponent implements OnInit {
     query: any;
 
-    constructor(private sb: MdSnackBar) {
+    constructor(private sb: MatSnackBar) {
     }
 
     ngOnInit() {

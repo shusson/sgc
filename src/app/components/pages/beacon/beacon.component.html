@@ -13,7 +13,7 @@
                        type="search"
                        [(ngModel)]="searchInput"
                        placeholder="e.g 13 : 32936732 > C" required>
-                <button md-mini-fab><md-icon>search</md-icon></button>
+                <button mat-mini-fab><mat-icon>search</mat-icon></button>
 
             </form>
             <div class="example">
@@ -30,7 +30,7 @@
         </div>
 
         <div class="loading-message" *ngIf="beacons && !beacons.totalCount() && beacons.totalProcessed() <= 0 && !errorMessage">
-            <md-spinner color="primary"></md-spinner>
+            <mat-spinner color="primary"></mat-spinner>
         </div>
 
         <app-beacon-table *ngIf="beacons" [beacons]="beacons" [limit]="20"></app-beacon-table>

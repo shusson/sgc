@@ -6,14 +6,14 @@
                 selected out of <span class='total-count'></span> patient records.
             </div>
             <div class="actions">
-                <md-icon (click)="resetFilters()" md-tooltip="Reset" mdTooltipPosition="above">refresh</md-icon>
-                <md-icon [mdMenuTriggerFor]="menu" md-tooltip="Add/Remove Filters" mdTooltipPosition="above">toc</md-icon>
-                <md-menu #menu="mdMenu">
+                <mat-icon (click)="resetFilters()" matTooltip="Reset" matTooltipPosition="above">refresh</mat-icon>
+                <mat-icon [matMenuTriggerFor]="menu" matTooltip="Add/Remove Filters" matTooltipPosition="above">toc</mat-icon>
+                <mat-menu #menu="matMenu">
                     <div class="filter-option" *ngFor="let c of charts" (click)="$event.stopPropagation(); $event.stopImmediatePropagation()">
                         <span>{{c.name}}</span>
-                        <md-slide-toggle [(ngModel)]="c.enabled"></md-slide-toggle>
+                        <mat-slide-toggle [(ngModel)]="c.enabled"></mat-slide-toggle>
                     </div>
-                </md-menu>
+                </mat-menu>
             </div>
         </div>
 
