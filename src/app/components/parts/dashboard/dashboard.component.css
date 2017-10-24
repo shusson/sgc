@@ -33,12 +33,12 @@ h4 {
     justify-content: flex-start;
 }
 
-.charts-toolbar md-icon {
+.charts-toolbar mat-icon {
     cursor: pointer;
     margin: 0 1rem 0 0;
 }
 
-.count md-chip {
+.count mat-chip {
     cursor: default;
 }
 
@@ -93,7 +93,7 @@ h4 {
     margin-top: 2rem;
 }
 
-.message md-icon {
+.message mat-icon {
     margin-left: 1rem;
     margin-right: 1rem;
 }

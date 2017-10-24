@@ -17,8 +17,8 @@
                 <div class="label-array" (click)="toggleShow(k)">
                     <p><span class="label">{{ k | jsonLabel }}</span><span> ({{ object[k].length }})</span></p>
 
-                    <md-icon *ngIf="!isShown(k)">keyboard_arrow_down</md-icon>
-                    <md-icon *ngIf="isShown(k)">keyboard_arrow_up</md-icon>
+                    <mat-icon *ngIf="!isShown(k)">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="isShown(k)">keyboard_arrow_up</mat-icon>
                 </div>
                 <div class="container" *ngIf="isShown(k)">
                     <app-virtual-list [items]="object[k]"></app-virtual-list>
@@ -40,8 +40,8 @@
                 <div class="label-array" (click)="toggleShow(k)">
                     <p><span class="label">{{ k | jsonLabel }}</span></p>
 
-                    <md-icon *ngIf="!isShown(k)">keyboard_arrow_down</md-icon>
-                    <md-icon *ngIf="isShown(k)">keyboard_arrow_up</md-icon>
+                    <mat-icon *ngIf="!isShown(k)">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="isShown(k)">keyboard_arrow_up</mat-icon>
                 </div>
                 <div class="object-list" *ngIf="isShown(k)">
                     <div class="object-item">

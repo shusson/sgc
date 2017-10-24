@@ -14,7 +14,7 @@ describe('SGC', function () {
                 browser.driver.manage().window().setSize(500, 1000);
                 browser.get('/about');
                 element(by.css('.header-content i')).click().then(function () {
-                    const link = element.all(by.css('md-sidenav nav')).all(by.cssContainingText('a', 'INITIATIVES')).first();
+                    const link = element.all(by.css('mat-sidenav nav')).all(by.cssContainingText('a', 'INITIATIVES')).first();
                     link.isDisplayed().then(function () {
                         browser.wait(EC.elementToBeClickable(link)).then(function () {
                             link.click();
@@ -28,7 +28,7 @@ describe('SGC', function () {
                 browser.driver.manage().window().setSize(500, 1000);
                 browser.get('/initiatives');
                 element(by.css('.header-content i')).click().then(function () {
-                    const link = element.all(by.css('md-sidenav nav')).all(by.cssContainingText('a', 'ABOUT')).first();
+                    const link = element.all(by.css('mat-sidenav nav')).all(by.cssContainingText('a', 'ABOUT')).first();
                     link.isDisplayed().then(function () {
                         browser.wait(EC.elementToBeClickable(link)).then(function () {
                             link.click();

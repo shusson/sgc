@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import * as Raven from 'raven-js';
 import { TStats } from '../../../model/t-stats';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'app-compare-dialog',
@@ -25,8 +25,8 @@ export class CompareDialogComponent implements OnInit {
 
     error: string;
 
-    constructor(public dialogRef: MdDialogRef<CompareDialogComponent>,
-                @Inject(MD_DIALOG_DATA) public data: any,
+    constructor(public dialogRef: MatDialogRef<CompareDialogComponent>,
+                @Inject(MAT_DIALOG_DATA) public data: any,
                 public cd: ChangeDetectorRef) {
     }
 

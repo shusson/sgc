@@ -1,4 +1,4 @@
-md-sidenav-container {
+mat-sidenav-container {
     height: 100%;
 }
 
@@ -78,19 +78,19 @@ main {
     justify-content: space-between;
 }
 
-md-sidenav-layout {
+mat-sidenav-layout {
     background-color: whitesmoke;
     color: #003263;
 }
 
-md-sidenav {
+mat-sidenav {
     background-color: #003263;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-md-sidenav .title {
+mat-sidenav .title {
     font-size: larger;
     margin: 2rem;
     color: white;
@@ -119,7 +119,7 @@ md-sidenav .title {
         margin: 0 1rem 0 1rem;
     }
 
-    md-sidenav {
+    mat-sidenav {
         z-index: 30;
         min-width: 200px;
     }

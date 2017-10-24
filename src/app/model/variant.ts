@@ -17,19 +17,28 @@ export class Variant {
     start: number;
     reference: string;
     alternate: string;
-    type: string;
     altType: string;
     variantStats: VariantStat[];
     annotation: VariantAnnotation;
     highlight = false;
     AC: number;
     AF: number;
-    nCalled: number;
-    nNotCalled: number;
     nHomRef: number;
     nHet: number;
-    consequence: string;
-    geneMapping: string;
+    nHomVar: number;
+    cato: number;
+    eigen: number;
+    sift: string;
+    hgbsc: string;
+    hgvsp: string;
+    polyPhen: string;
+    tgpAF: string;
+    hrcAF: string;
+    gnomadAF: string;
+    feature: string;
+    consequences: string;
+    gene: string;
+    clinvar: string;
 
     static dbSnpUrl(variant: Variant) {
         return `${DB_SNP_URL}?rs=${variant.dbSNP}`;

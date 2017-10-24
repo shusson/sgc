@@ -165,7 +165,7 @@ export class VariantTrackService implements TrackService {
         const createPin = (variant: Variant) => {
             return new VariantPin(
                 variant.start,
-                variant.variantStats[0] ? variant.variantStats[0].altAlleleFreq : 0,
+                variant.AF,
                 this.variantName(variant),
                 variant
             );
@@ -225,7 +225,7 @@ export class VariantTrackService implements TrackService {
                 that.createMethod.call(this, pins);
 
                 const homoz = pins.filter((d: VariantPin) => {
-                    return d.variant.variantStats[0] ? d.variant.variantStats[0].genotypesCount[HOMOZYGOTES_KEY] : false;
+                    return d.variant.nHomVar;
                 });
                 homoz.select('line').attr('stroke', OVERLAY_COLOR);
                 homoz.select('circle').attr('fill', OVERLAY_COLOR);
@@ -237,7 +237,7 @@ export class VariantTrackService implements TrackService {
                 that.createMethod.call(this, pins);
 
                 const hetz = pins.filter((d: VariantPin) => {
-                    return d.variant.variantStats[0] ? d.variant.variantStats[0].genotypesCount[HETEROZYGOTES_KEY] : false;
+                    return d.variant.nHet;
                 });
                 hetz.select('line').attr('stroke', OVERLAY_COLOR);
                 hetz.select('circle').attr('fill', OVERLAY_COLOR);
@@ -295,11 +295,12 @@ export class VariantTrackService implements TrackService {
         const d = [
             variant.chromosome,
             variant.dbSNP,
-            variant.variantStats,
+            variant.AF,
+            variant.AC,
             variant.alternate,
             variant.reference,
             variant.start,
-            variant.type
+            variant.altType
         ];
         return window.btoa(JSON.stringify(d));
     }
@@ -309,6 +310,6 @@ export class VariantTrackService implements TrackService {
             variant.start +
             variant.reference +
             variant.alternate +
-            variant.type;
+            variant.altType;
     }
 }
