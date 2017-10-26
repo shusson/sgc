@@ -14,7 +14,8 @@ export class Chart {
                 public dimension: string,
                 public type: ChartType,
                 public groupFn: any = null,
-                public enabled = true) {
+                public enabled = true,
+                public cap = 100) {
     }
 
     tooltip() {
@@ -50,6 +51,7 @@ export class ChartsService {
         new Chart("Consequences", "consequences", ChartType.Row),
         new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
         new Chart("Sift", "sift", ChartType.Pie, null, false),
+        new Chart("Top 100 Genes", "gene", ChartType.Row, null, false, 100),
         new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 12,
@@ -72,70 +74,28 @@ export class ChartsService {
         return this.charts.filter(c => c.enabled);
     }
 
-    names() {
-        return this.charts.map((c) => c.name);
+    getChart(dimension: string): Chart {
+        return this.charts.find((c) => c.dimension === dimension);
     }
 
-    getChart(name: string): Chart {
-        return this.charts.find((c) => c.name == name);
-    }
-
-    setChart(name: string, chart: any) {
-        const cc = this.charts.find((c) => c.name == name);
+    setChart(dimension: string, chart: any) {
+        const cc = this.charts.find((c) => c.dimension === dimension);
         cc.dc = chart;
         return cc;
     }
 
-    hasFilter(name: string) {
-        const c = this.getChart(name).dc;
+    hasFilter(dimension: string) {
+        const c = this.getChart(dimension).dc;
         return c && c.filters().length > 0;
     }
 
-    reset(name: string) {
-        this.getChart(name).dc.filterAll();
+    reset(dimension: string) {
+        this.getChart(dimension).dc.filterAll();
         dc.redrawAllAsync();
-    }
-
-    saveFilters(tag: string, allFilter: string) {
-        const d = {
-            allFilter: allFilter,
-            charts: this.charts.map((c) => {
-                return {name: c.name, filters: c.dc.filters()};
-            })
-        };
-
-        let tags = localStorage.getItem('tags');
-        if (!tags) {
-            tags = "[]";
-        }
-        const jtags = JSON.parse(tags);
-        jtags.push(tag);
-        localStorage.setItem('tags', JSON.stringify(jtags));
-        localStorage.setItem(tag, JSON.stringify(d));
     }
 
     getFilter(tag: string): string {
         const d = localStorage.getItem(tag);
         return JSON.parse(d).allFilter;
-    }
-
-    loadFilters(tag: string) {
-        dc.filterAll();
-        const d = localStorage.getItem(tag);
-        const charts = JSON.parse(d).charts;
-        charts.forEach((c: SerializedChart) => {
-            c.filters.forEach((f) => {
-                this.getChart(c.name).dc.filter(f);
-            });
-        });
-        dc.redrawAllAsync();
-    }
-
-    getTags(): string[] {
-        let t = localStorage.getItem('tags');
-        if (!t) {
-            t = "[]";
-        }
-        return JSON.parse(t);
     }
 }

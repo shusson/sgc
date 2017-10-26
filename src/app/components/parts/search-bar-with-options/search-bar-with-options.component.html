@@ -9,7 +9,7 @@
                                    [option]="option"></app-search-option>
             </div>
 
-            <div class="message message-error" *ngIf="searchBarService.error">{{ searchBarService.error }}</div>
+            <div class="message message-error" *ngIf="searchBarService.autocompleteError">{{ searchBarService.autocompleteError }}</div>
             <div class="search-examples">
                 Examples: <a (click)="action(example1)">{{ example1 }}</a> or
                 <a (click)="action(example2)">{{ example2 }}</a>

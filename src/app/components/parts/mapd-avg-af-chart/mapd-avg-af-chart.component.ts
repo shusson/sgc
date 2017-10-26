@@ -17,9 +17,8 @@ const MIN_BOUNDS = 0;
     templateUrl: './mapd-avg-af-chart.component.html',
     styleUrls: ['./mapd-avg-af-chart.component.css']
 })
-export class MapdAvgAfChartComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapdAvgAfChartComponent implements AfterViewInit, OnDestroy {
     @Input() filter: any;
-    @Input() ranges: Subject<any>;
     rangeChart = new Chart('range', 'c3_START', ChartType.Custom);
     afAvgChart = new Chart('AvgAF', 'c3_START', ChartType.Custom);
     rangeBounds = [MIN_BOUNDS, MAX_BOUNDS];
@@ -30,41 +29,7 @@ export class MapdAvgAfChartComponent implements OnInit, AfterViewInit, OnDestroy
     rangeChartStyle = {'width': `${LARGE_WIDTH}px`, 'height': `${RANGE_HEIGHT}px`};
 
 
-    constructor(public cs: ChartsService, private cfs: CrossfilterService) {
-    }
-
-    ngOnInit() {
-        this.subscriptions.push(this.ranges.debounceTime(100).subscribe((r: Region) => {
-            if (r) {
-                this.rangeChart.dc.filter([r.start, r.end]);
-            }
-            const f = this.rangeChart.dc.filter();
-            if (f) {
-                const range = [f[0], f[1]];
-                this.afAvgChart.dc.binParams([{
-                    numBins: 200,
-                    binBounds: range,
-                    timeBin: false
-                }]);
-                this.afAvgChart.dc.x(d3.scale.linear().domain(range));
-            } else {
-                this.afAvgChart.dc.binParams([{
-                    numBins: 100,
-                    binBounds: this.rangeBounds,
-                    timeBin: false
-                }]);
-                this.afAvgChart.dc.x(d3.scale.linear().domain(this.rangeBounds));
-            }
-            this.afAvgChart.dc.xAxis().scale(this.afAvgChart.dc.x());
-
-            this.rangeChart.dc.redrawAsync();
-            this.afAvgChart.dc.redrawAsync().then(() => {
-                this.cfs.updates.next();
-            });
-
-        }));
-    }
-
+    constructor(public cs: ChartsService, private cfs: CrossfilterService) {}
 
     ngAfterViewInit(): void {
         const startDim = this.filter.dimension('c3_START');
@@ -81,7 +46,7 @@ export class MapdAvgAfChartComponent implements OnInit, AfterViewInit, OnDestroy
             .x(d3.scale.linear().domain(this.rangeBounds))
             .brushOn(true)
             .elasticY(true)
-            // .elasticX(true)
+            .elasticX(true)
             .dimension(startDim)
             .centerBar(true)
             .gap(1)
@@ -94,8 +59,7 @@ export class MapdAvgAfChartComponent implements OnInit, AfterViewInit, OnDestroy
                 timeBin: false
             }]).reduceCount());
 
-        this.rangeChart.dc.prepareLabelEdit = () => {
-        };
+        this.rangeChart.dc.prepareLabelEdit = () => {};
 
         this.rangeChart.dc.xAxis().scale(this.rangeChart.dc.x()).orient('bottom');
         this.rangeChart.dc.render();
@@ -106,11 +70,13 @@ export class MapdAvgAfChartComponent implements OnInit, AfterViewInit, OnDestroy
             .x(d3.scale.linear().domain(this.rangeBounds))
             .brushOn(false)
             .elasticY(true)
+            .elasticX(true)
             .yAxisLabel(`AVG AF`)
             .dimension(startDim)
             .margins({top: 10, right: 0, bottom: 30, left: 60})
             .valueAccessor((d) => d.afavg)
             .renderLabel(false)
+            .rangeChart(this.rangeChart.dc)
             .group(startDim.group().setBinParams([{
                 numBins: 100,
                 binBounds: this.rangeBounds,
@@ -129,8 +95,6 @@ export class MapdAvgAfChartComponent implements OnInit, AfterViewInit, OnDestroy
         //         console.log("click!", d);
         //     });
         // });
-
-        this.rangeChart.dc.on('preRedraw', (c) => this.ranges.next());
     }
 
 

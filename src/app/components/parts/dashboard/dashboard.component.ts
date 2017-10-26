@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import '@mapd/mapdc/dist/mapdc.js';
 import { Subscription } from 'rxjs/Subscription';
@@ -12,6 +12,9 @@ import * as Raven from 'raven-js';
 import { environment } from '../../../../environments/environment';
 import { ChartsService, ChartType } from '../../../services/charts.service';
 import { Region } from '../../../model/region';
+import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { Gene } from '../../../model/gene';
+import { Position } from '../../../model/position';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,11 +23,11 @@ import { Region } from '../../../model/region';
     providers: [SearchBarService, MapdService, CrossfilterService, ChartsService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     query: string = null;
-    regionFilter: any;
+    globalFilter: any;
     error = '';
     searchError = '';
     loading = true;
@@ -34,7 +37,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     sql = '';
 
     errors = new Subject<any>();
-    ranges = new Subject<Region>();
     dx: any;
 
     chartType = ChartType;
@@ -45,7 +47,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
                 public cs: ChartsService) {
-
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
                 Raven.captureMessage(e);
@@ -70,37 +71,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.sql = this.dx.getFilterString();
             Promise.all([p1, p2]).then(() => this.cd.detectChanges());
         }));
-
-        this.initialise().then(() => {
-            this.cd.detectChanges();
-            this.cf.updates.next();
-        }).catch((e) => this.errors.next(e));
     }
 
-    initialise() {
-        return this.mapd.connect().then((session) => {
+    ngAfterViewInit(): void {
+        this.loading = true;
+        this.mapd.connect().then((session) => {
             return this.cf.create(session, 'mgrb').then((x: any) => {
                 // session.getFields('mgrb', (err, res) => console.log(res));
-                this.setupCharts(x);
+                this.globalFilter = x.filter(true);
                 this.dx = x;
             });
-        });
-    }
-
-    setupCharts(x) {
-        this.loading = true;
-        this.regionFilter = x.filter(false);
-        this.loading = false;
+        }).then(() => {
+            this.cf.updates.next();
+            this.loading = false;
+            this.cd.detectChanges();
+        }).catch((e) => this.errors.next(e));
     }
 
     clearFilters() {
         this.searchBarService.query = '';
-        this.regionFilter.filterAll();
+        this.globalFilter.filterAll();
         dc.filterAll();
         dc.redrawAllAsync().then(() => {
-            return dc.redrawAllAsync().then(() => {
-                this.cf.updates.next();
-            });
+            this.cf.updates.next();
         }).catch((e) => this.errors.next(e));
     }
 
@@ -113,19 +106,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
         const obj = {query: q};
         this.searchError = '';
 
-        this.searchBarService.searchWithParams(obj).then((v) => {
+        this.searchBarService.searchWithParams(obj).then((v: AutocompleteResult<Gene | Region | Position>) => {
             if (!v) {
                 return;
             }
-            v.region().then((r) => {
-                dc.filterAll();
-                this.cs.getChart("Chromosome").dc.filter(r.chromosome);
-                // let filterString = `((c3_START >= ${r.start} AND c3_START <= ${r.end}))`;
-                // this.regionFilter.filter(filterString);
-                dc.redrawAllAsync().then(() => {
-                    this.ranges.next(r);
-                });
-            });
+            if (v.result instanceof Gene) {
+                this.globalFilter.filter(`gene='${(<Gene>v.result).id}'`);
+            } else if (v.result instanceof Region) {
+                const r = (<Region>v.result);
+                this.globalFilter.filter(`chromosome='${r.chromosome}' AND c3_START >= ${r.start} AND c3_START <= ${r.end}`);
+            } else if (v.result instanceof Position) {
+                const p = (<Position>v.result);
+                this.globalFilter.filter(`chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`);
+            }
+            dc.redrawAllAsync().then(() => {
+                this.cf.updates.next();
+            }).catch((e) => this.errors.next(e));
         }).catch(e => {
             this.searchError = e;
             this.cd.detectChanges();

@@ -24,11 +24,11 @@ export class MapdRowChartComponent implements AfterViewInit {
     ngAfterViewInit() {
         const dim = this.filter.dimension(this.chart.dimension);
         const group = this.chart.group(dim).reduceCount();
-        const chart = this.cs.setChart(this.chart.name, dc.rowChart(`#${this.chart.dimension}`)
+        const chart = this.cs.setChart(this.chart.dimension, dc.rowChart(`#${this.chart.dimension}`)
             .width(SMALL_WIDTH)
             .height(SMALL_HEIGHT)
             .dimension(dim)
-            .cap(100)
+            .cap(this.chart.cap)
             .othersGrouper(false)
             .elasticX(true)
             .group(group)

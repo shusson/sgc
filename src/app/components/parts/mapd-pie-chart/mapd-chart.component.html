@@ -8,7 +8,7 @@
             <i *ngIf="hover" class="option material-icons" (click)="chart.enabled = false">clear</i>
         </div>
 
-        <a (click)="cs.reset(chart.name)" *ngIf="cs.hasFilter(chart.name)">reset</a>
+        <a (click)="cs.reset(chart.dimension)" *ngIf="cs.hasFilter(chart.dimension)">reset</a>
     </div>
     <div [id]="chart.dimension" [ngStyle]="smallChartStyle"></div>
 </div>

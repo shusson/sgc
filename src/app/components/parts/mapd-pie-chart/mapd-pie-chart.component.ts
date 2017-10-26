@@ -24,11 +24,11 @@ export class MapdPieChartComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         const dim = this.filter.dimension(this.chart.dimension);
         const group = this.chart.group(dim).reduceCount();
-        const chart = this.cs.setChart(this.chart.name, dc.pieChart(`#${this.chart.dimension}`)
+        const chart = this.cs.setChart(this.chart.dimension, dc.pieChart(`#${this.chart.dimension}`)
             .width(SMALL_WIDTH)
             .height(SMALL_HEIGHT)
             .innerRadius(INNER_RADIUS)
-            .slicesCap(100)
+            .slicesCap(this.chart.cap)
             .othersGrouper(false)
             .dimension(dim)
             .group(group.reduceCount()));

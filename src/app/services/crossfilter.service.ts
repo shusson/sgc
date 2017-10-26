@@ -13,9 +13,7 @@ export class CrossfilterService implements OnDestroy {
 
     constructor() {
         this.subscriptions.push(this.updates.debounceTime(500).subscribe(() => {
-            // this.currentFilters = dc.chartRegistry.list().map(c => c.filters().length).reduce((a, b) => a + b, 0);
             this.currentFilters = this.x.getFilter().filter((x) => x).length;
-            // update table
         }));
     }
 
