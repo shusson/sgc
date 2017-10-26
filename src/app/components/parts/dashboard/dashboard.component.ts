@@ -11,8 +11,6 @@ import { Subject } from 'rxjs/Subject';
 import * as Raven from 'raven-js';
 import { environment } from '../../../../environments/environment';
 import { ChartsService, ChartType } from '../../../services/charts.service';
-import { SaveDialogComponent } from '../save-dialog/save-dialog.component';
-import { CompareDialogComponent } from '../compare-dialog/compare-dialog.component';
 import { Region } from '../../../model/region';
 
 @Component({
@@ -33,6 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     showSql = false;
     total = 0;
     subtotal = 0;
+    sql = '';
 
     errors = new Subject<any>();
     ranges = new Subject<Region>();
@@ -68,6 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             const p2 = this.cf.all.valueAsync().then((v) => {
                 this.subtotal = v;
             });
+            this.sql = this.dx.getFilterString();
             Promise.all([p1, p2]).then(() => this.cd.detectChanges());
         }));
 
@@ -136,7 +136,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.dialog.open(FeedbackComponent);
     }
 
-    toggleSql() {
+    toggleSql($event) {
+        $event.stopPropagation();
         this.showSql = !this.showSql;
     }
 
@@ -145,29 +146,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return `${v} generated SQL`;
     }
 
-    saveFilters() {
-        this.dialog.open(SaveDialogComponent, {
-            data: {
-                sql: this.cf.sql,
-                cs: this.cs
-            }
-        });
-    }
-
-    getTags() {
-        return this.cs.getTags();
-    }
-
-    loadFilters(tag) {
-        this.cs.loadFilters(tag);
-    }
-
-    compare() {
-        this.dialog.open(CompareDialogComponent, {
-            data: {
-                cs: this.cs,
-                mapd: this.mapd
-            }
-        });
+    toggleChart($event, chart) {
+        $event.stopPropagation();
+        chart.enabled = !chart.enabled;
     }
 }

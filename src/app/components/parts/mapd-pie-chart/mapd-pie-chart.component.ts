@@ -8,23 +8,23 @@ const INNER_RADIUS = 30;
 
 @Component({
     selector: 'app-mapd-pie-chart',
-    templateUrl: './mapd-pie-chart.component.html',
-    styleUrls: ['./mapd-pie-chart.component.css']
+    templateUrl: './mapd-chart.component.html',
+    styleUrls: ['./mapd-chart.component.css']
 })
 export class MapdPieChartComponent implements AfterViewInit {
     @Input() filter: any;
     @Input() chart: Chart;
 
     smallChartStyle = {'width': `${SMALL_WIDTH}px`, 'height': `${SMALL_HEIGHT}px`};
+    hover = false;
 
     constructor(public cs: ChartsService, private cfs: CrossfilterService) {
     }
 
-
     ngAfterViewInit(): void {
         const dim = this.filter.dimension(this.chart.dimension);
         const group = this.chart.group(dim).reduceCount();
-        const chart = this.cs.setChart(this.chart.name, dc.pieChart(`#${this.chart.name}`)
+        const chart = this.cs.setChart(this.chart.name, dc.pieChart(`#${this.chart.dimension}`)
             .width(SMALL_WIDTH)
             .height(SMALL_HEIGHT)
             .innerRadius(INNER_RADIUS)

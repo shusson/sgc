@@ -67,7 +67,7 @@ h4 {
 
 .row {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 1rem;

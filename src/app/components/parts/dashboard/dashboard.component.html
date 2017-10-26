@@ -21,29 +21,9 @@
                     <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
                              matTooltipPosition="above">refresh
                     </mat-icon>
-                    <mat-icon class="material-icons" (click)="toggleSql()" [matTooltip]="sqlTooltip()"
-                             matTooltipPosition="above">list
-                    </mat-icon>
-                    <mat-icon class="material-icons" (click)="openFeedback()" matTooltip="Give feedback on the beta"
-                             matTooltipPosition="above">feedback
-                    </mat-icon>
-                    <mat-icon [matMenuTriggerFor]="dimensions" matTooltip="Table Settings" class="material-icons">
+                    <mat-icon [matMenuTriggerFor]="dashBoardSettings" matTooltip="Dashboard Settings" class="material-icons">
                         settings
                     </mat-icon>
-                    <!--<mat-icon class="material-icons" (click)="saveFilters()" matTooltip="Save the current filter"-->
-                             <!--matTooltipPosition="above">save-->
-                    <!--</mat-icon>-->
-                    <!--<mat-icon class="material-icons" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="load filters"-->
-                             <!--matTooltipPosition="above">folder_open-->
-                    <!--</mat-icon>-->
-                    <!--<mat-menu #menu="matMenu">-->
-                        <!--<button *ngFor="let t of getTags()" (click)="loadFilters(t)" mat-menu-item>-->
-                            <!--<span >{{t}}</span>-->
-                        <!--</button>-->
-                    <!--</mat-menu>-->
-                    <!--<mat-icon class="material-icons" (click)="compare()" matTooltip="Compare saved filters"-->
-                             <!--matTooltipPosition="above">compare_arrows-->
-                    <!--</mat-icon>-->
                 </div>
 
                 <div class="count">
@@ -59,15 +39,15 @@
                 </div>
             </div>
             <div *ngIf="showSql" class="generated-sql">
-                <div>{{ cf.sql }}</div>
-                <div *ngIf="!cf.sql">No Active filters</div>
+                <div>{{ sql }}</div>
+                <div *ngIf="!sql">No Active filters</div>
             </div>
 
             <div class="charts" *ngIf="dx">
                 <div class="main">
                     <div class="right">
                         <div class="row" >
-                            <div class="chart" *ngFor="let c of cs.charts">
+                            <div class="chart" *ngFor="let c of cs.enabledCharts()">
                                 <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom" [filter]="dx" [ranges]="ranges"></app-mapd-avg-af-chart>
                                 <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c" [filter]="dx"></app-mapd-row-chart>
                                 <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c" [filter]="dx"></app-mapd-pie-chart>
@@ -84,9 +64,23 @@
 
 </section>
 
+<mat-menu #dashBoardSettings="matMenu">
+    <div mat-menu-item (click)="toggleSql($event)" [matTooltip]="sqlTooltip()" matTooltipPosition="above">
+        <mat-slide-toggle
+            [checked]="showSql">
+            Show Generated SQL Filter
+        </mat-slide-toggle>
+    </div>
+    <button mat-menu-item class="material-icons" (click)="openFeedback()" matTooltipPosition="above">
+        Give feedback
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="dimensions">Show/Hide Charts</button>
+</mat-menu>
+
 <mat-menu #dimensions="matMenu">
-    <div mat-menu-item *ngFor="let c of cs.charts">
-        {{ c.name }}
+    <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
+        <mat-slide-toggle [checked]="c.enabled">{{ c.name }}
+        </mat-slide-toggle>
     </div>
 </mat-menu>
 

@@ -76,8 +76,6 @@ import { DashboardComponent } from './components/parts/dashboard/dashboard.compo
 import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
 import { FeedbackComponent } from './components/parts/feedback/feedback.component';
 import { ErrorDialogComponent } from './components/parts/error-dialog/error-dialog.component';
-import { SaveDialogComponent } from './components/parts/save-dialog/save-dialog.component';
-import { CompareDialogComponent } from './components/parts/compare-dialog/compare-dialog.component';
 import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
@@ -174,8 +172,6 @@ export class RavenErrorHandler implements ErrorHandler {
         VariantsTablePaginatedComponent,
         FeedbackComponent,
         ErrorDialogComponent,
-        SaveDialogComponent,
-        CompareDialogComponent,
         StatsDetailsComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
@@ -187,8 +183,6 @@ export class RavenErrorHandler implements ErrorHandler {
     entryComponents: [
         FeedbackComponent,
         ErrorDialogComponent,
-        SaveDialogComponent,
-        CompareDialogComponent,
         SnackbarDemoComponent
     ],
     providers: [

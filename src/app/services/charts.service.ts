@@ -13,7 +13,8 @@ export class Chart {
     constructor(public name: string,
                 public dimension: string,
                 public type: ChartType,
-                public groupFn: any = null) {
+                public groupFn: any = null,
+                public enabled = true) {
     }
 
     tooltip() {
@@ -33,39 +34,42 @@ class SerializedChart {
 @Injectable()
 export class ChartsService {
     charts = [
-        new Chart("afAvg", "AF", ChartType.Custom),
-        new Chart("Alt", "ALT", ChartType.Pie),
-        new Chart("Ref", "c4_REF", ChartType.Pie),
+        new Chart("Avg AF", "AF", ChartType.Custom),
+        new Chart("Alternate", "ALT", ChartType.Pie),
+        new Chart("Reference", "c4_REF", ChartType.Pie),
         new Chart("Category", "TYPE", ChartType.Row),
-        new Chart("AF", "AF", ChartType.Row, (dim) => {
+        new Chart("Binned AF", "AF", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 10,
                 binBounds: [0, 1],
                 timeBin: false
             }]);
-        }),
-        new Chart("Chromosome", "chromosome", ChartType.Row),
+        }, false),
+        new Chart("Chromosome", "chromosome", ChartType.Row, null, false),
         new Chart("Clinvar", "clinvar", ChartType.Row),
         new Chart("Consequences", "consequences", ChartType.Row),
-        new Chart("PolyPhen", "polyPhen", ChartType.Pie),
-        new Chart("Sift", "sift", ChartType.Pie),
+        new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
+        new Chart("Sift", "sift", ChartType.Pie, null, false),
         new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 12,
                 binBounds: [-4.2, 1.4],
                 timeBin: false
             }]);
-        })];
+        }, false),
+        new Chart("Binned Gnomad AF", "gnomadAF", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 10,
+                binBounds: [0, 1],
+                timeBin: false
+            }]);
+        }, false)];
 
     constructor() {
     }
 
-    rowCharts() {
-        return this.charts.filter(c => c.type === ChartType.Row);
-    }
-
-    pieCharts() {
-        return this.charts.filter(c => c.type === ChartType.Pie);
+    enabledCharts() {
+        return this.charts.filter(c => c.enabled);
     }
 
     names() {
