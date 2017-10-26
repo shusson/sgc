@@ -1,0 +1,13 @@
+<div class="combined-chart">
+    <div class="chart main-chart">
+        <div class="toolbar">
+            <h4 matTooltip="Avg Allele Frequency by start position" matTooltipPosition="above">Avg
+                Allele Frequency</h4>
+            <a (click)="resetAfAvgChart()" *ngIf="afAvgHasFilter()">reset</a>
+        </div>
+        <div id="afAvg" [ngStyle]="largeChartStyle"></div>
+    </div>
+    <div class="range-chart">
+        <div id="variantCount" [ngStyle]="rangeChartStyle"></div>
+    </div>
+</div>

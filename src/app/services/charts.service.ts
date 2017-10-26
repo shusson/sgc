@@ -2,9 +2,26 @@ import { Injectable } from '@angular/core';
 
 import '@mapd/mapdc/dist/mapdc.js';
 
+export enum ChartType {
+    Row,
+    Pie,
+    Custom
+}
+
 export class Chart {
     dc: any;
-    constructor(public name: string = "") {
+    constructor(public name: string,
+                public dimension: string,
+                public type: ChartType,
+                public groupFn: any = null) {
+    }
+
+    tooltip() {
+        return `Number of variants by ${this.name}`;
+    }
+
+    group(dim: any) {
+        return this.groupFn ? this.groupFn(dim) : dim.group();
     }
 }
 
@@ -15,22 +32,40 @@ class SerializedChart {
 
 @Injectable()
 export class ChartsService {
-    charts = [new Chart("alt"),
-        new Chart("ref"),
-        new Chart("type"),
-        new Chart("afAvg"),
-        new Chart("afCount"),
-        new Chart("range"),
-        new Chart("chrom"),
-        new Chart("rsid"),
-        new Chart("clinvar"),
-        new Chart("consequences"),
-        new Chart("gnomadAF"),
-        new Chart("polyPhen"),
-        new Chart("sift"),
-        new Chart("eigen")];
+    charts = [
+        new Chart("afAvg", "AF", ChartType.Custom),
+        new Chart("Alt", "ALT", ChartType.Pie),
+        new Chart("Ref", "c4_REF", ChartType.Pie),
+        new Chart("Category", "TYPE", ChartType.Row),
+        new Chart("AF", "AF", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 10,
+                binBounds: [0, 1],
+                timeBin: false
+            }]);
+        }),
+        new Chart("Chromosome", "chromosome", ChartType.Row),
+        new Chart("Clinvar", "clinvar", ChartType.Row),
+        new Chart("Consequences", "consequences", ChartType.Row),
+        new Chart("PolyPhen", "polyPhen", ChartType.Pie),
+        new Chart("Sift", "sift", ChartType.Pie),
+        new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 12,
+                binBounds: [-4.2, 1.4],
+                timeBin: false
+            }]);
+        })];
 
     constructor() {
+    }
+
+    rowCharts() {
+        return this.charts.filter(c => c.type === ChartType.Row);
+    }
+
+    pieCharts() {
+        return this.charts.filter(c => c.type === ChartType.Pie);
     }
 
     names() {
@@ -42,9 +77,9 @@ export class ChartsService {
     }
 
     setChart(name: string, chart: any) {
-        const c = this.charts.find((c) => c.name == name);
-        c.dc = chart;
-        return c;
+        const cc = this.charts.find((c) => c.name == name);
+        cc.dc = chart;
+        return cc;
     }
 
     hasFilter(name: string) {

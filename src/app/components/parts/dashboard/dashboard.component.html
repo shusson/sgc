@@ -27,6 +27,9 @@
                     <mat-icon class="material-icons" (click)="openFeedback()" matTooltip="Give feedback on the beta"
                              matTooltipPosition="above">feedback
                     </mat-icon>
+                    <mat-icon [matMenuTriggerFor]="dimensions" matTooltip="Table Settings" class="material-icons">
+                        settings
+                    </mat-icon>
                     <!--<mat-icon class="material-icons" (click)="saveFilters()" matTooltip="Save the current filter"-->
                              <!--matTooltipPosition="above">save-->
                     <!--</mat-icon>-->
@@ -60,125 +63,14 @@
                 <div *ngIf="!cf.sql">No Active filters</div>
             </div>
 
-            <div class="charts">
+            <div class="charts" *ngIf="dx">
                 <div class="main">
                     <div class="right">
-                        <div class="combined-chart">
-                            <div class="chart main-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Avg Allele Frequency by start position" matTooltipPosition="above">Avg
-                                        Allele Frequency</h4>
-                                    <a (click)="resetAfAvgChart()" *ngIf="afAvgHasFilter()">reset</a>
-                                </div>
-                                <div id="afAvg" [ngStyle]="largeChartStyle"></div>
-                            </div>
-                            <div class="range-chart">
-                                <div id="variantCount" [ngStyle]="rangeChartStyle"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by chromosome" matTooltipPosition="above">
-                                        Chromosome</h4>
-                                    <a (click)="cs.reset('chrom')" *ngIf="cs.hasFilter('chrom')">reset</a>
-                                </div>
-                                <div id="chromCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by type" matTooltipPosition="above">Type</h4>
-                                    <a (click)="cs.reset('type')" *ngIf="cs.hasFilter('type')">reset</a>
-                                </div>
-                                <div id="typeCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by grouped Allele frequency"
-                                        matTooltipPosition="above">Avg Allele Frequency</h4>
-                                    <a (click)="cs.reset('afCount')" *ngIf="cs.hasFilter('afCount')">reset</a>
-                                </div>
-                                <div id="afCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by reference" matTooltipPosition="above">
-                                        Reference</h4>
-                                    <a (click)="cs.reset('ref')" *ngIf="cs.hasFilter('ref')">reset</a>
-                                </div>
-                                <div id="refCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by alternate" matTooltipPosition="above">
-                                        Alternate</h4>
-                                    <a (click)="cs.reset('alt')" *ngIf="cs.hasFilter('alt')">reset</a>
-                                </div>
-                                <div id="altCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by dbSNP" matTooltipPosition="above">
-                                        dbSNP</h4>
-                                    <a (click)="cs.reset('rsid')" *ngIf="cs.hasFilter('rsid')">reset</a>
-                                </div>
-                                <div id="rsidCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by clinvar" matTooltipPosition="above">
-                                        Clinvar</h4>
-                                    <a (click)="cs.reset('clinvar')" *ngIf="cs.hasFilter('clinvar')">reset</a>
-                                </div>
-                                <div id="clinvar" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by consequences" matTooltipPosition="above">
-                                        Consequences</h4>
-                                    <a (click)="cs.reset('consequences')" *ngIf="cs.hasFilter('consequences')">reset</a>
-                                </div>
-                                <div id="consequences" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by GnomadAF" matTooltipPosition="above">
-                                        GnomadAF</h4>
-                                    <a (click)="cs.reset('gnomadAF')" *ngIf="cs.hasFilter('gnomadAF')">reset</a>
-                                </div>
-                                <div id="gnomadAF" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by PolyPhen" matTooltipPosition="above">
-                                        PolyPhen</h4>
-                                    <a (click)="cs.reset('polyPhen')" *ngIf="cs.hasFilter('polyPhen')">reset</a>
-                                </div>
-                                <div id="polyPhen" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by sift" matTooltipPosition="above">
-                                        Sift</h4>
-                                    <a (click)="cs.reset('sift')" *ngIf="cs.hasFilter('sift')">reset</a>
-                                </div>
-                                <div id="sift" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by eigen" matTooltipPosition="above">
-                                        Eigen</h4>
-                                    <a (click)="cs.reset('eigen')" *ngIf="cs.hasFilter('eigen')">reset</a>
-                                </div>
-                                <div id="eigen" [ngStyle]="smallChartStyle"></div>
+                        <div class="row" >
+                            <div class="chart" *ngFor="let c of cs.charts">
+                                <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom" [filter]="dx" [ranges]="ranges"></app-mapd-avg-af-chart>
+                                <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c" [filter]="dx"></app-mapd-row-chart>
+                                <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c" [filter]="dx"></app-mapd-pie-chart>
                             </div>
                         </div>
                     </div>
@@ -191,4 +83,10 @@
     </div>
 
 </section>
+
+<mat-menu #dimensions="matMenu">
+    <div mat-menu-item *ngFor="let c of cs.charts">
+        {{ c.name }}
+    </div>
+</mat-menu>
 

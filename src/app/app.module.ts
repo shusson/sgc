@@ -84,6 +84,9 @@ import { ClinicalChartComponent } from './components/parts/clinical-chart/clinic
 import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
 import { SnackbarDemoComponent } from './components/parts/snackbar-demo/snackbar-demo.component';
 import { MaterialModule } from './app.material';
+import { MapdRowChartComponent } from './components/parts/mapd-row-chart/mapd-row-chart.component';
+import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pie-chart.component';
+import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -176,7 +179,10 @@ export class RavenErrorHandler implements ErrorHandler {
         StatsDetailsComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
-        SnackbarDemoComponent
+        SnackbarDemoComponent,
+        MapdRowChartComponent,
+        MapdPieChartComponent,
+        MapdAvgAfChartComponent
     ],
     entryComponents: [
         FeedbackComponent,
