@@ -21,8 +21,7 @@
                 "styles.css",
                 "../node_modules/tnt.tooltip/_site//build/tnt.tooltip.css",
                 "app-theme.scss",
-                "../node_modules/@mapd/mapdc/mapdc.css",
-                "../node_modules/@mapd/mapdc/dist/chart.css"
+                "../node_modules/@mapd/mapdc/dist/mapdc.css"
             ],
             "scripts": [
                 "../node_modules/file-saver/FileSaver.js",

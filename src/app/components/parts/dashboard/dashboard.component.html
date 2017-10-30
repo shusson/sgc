@@ -2,12 +2,17 @@
     <mat-spinner color="primary"></mat-spinner>
 </div>
 <div class="search-jumbo" *ngIf="!error">
-    <app-search-bar-with-options [expandable]="true" [action]="addGeneOrRegion" [example1]="'BRCA1'" example2="22:16000000-17000000"></app-search-bar-with-options>
+    <app-search-bar-with-options
+        [expandable]="true"
+        [action]="addGeneOrRegion"
+        example1="BRCA1"
+        example2="TTN"></app-search-bar-with-options>
 </div>
 
 <section>
     <div class="message message-error search" *ngIf="searchError"><mat-icon>error_outline</mat-icon> {{ searchError }}. Please Try again</div>
     <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
+
     <div *ngIf="!error">
         <div class="message message-warning">
             <mat-icon>help_outline</mat-icon>
@@ -21,26 +26,9 @@
                     <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
                              matTooltipPosition="above">refresh
                     </mat-icon>
-                    <mat-icon class="material-icons" (click)="toggleSql()" [matTooltip]="sqlTooltip()"
-                             matTooltipPosition="above">list
+                    <mat-icon [matMenuTriggerFor]="dashBoardSettings" matTooltip="Dashboard Settings" class="material-icons">
+                        settings
                     </mat-icon>
-                    <mat-icon class="material-icons" (click)="openFeedback()" matTooltip="Give feedback on the beta"
-                             matTooltipPosition="above">feedback
-                    </mat-icon>
-                    <!--<mat-icon class="material-icons" (click)="saveFilters()" matTooltip="Save the current filter"-->
-                             <!--matTooltipPosition="above">save-->
-                    <!--</mat-icon>-->
-                    <!--<mat-icon class="material-icons" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="load filters"-->
-                             <!--matTooltipPosition="above">folder_open-->
-                    <!--</mat-icon>-->
-                    <!--<mat-menu #menu="matMenu">-->
-                        <!--<button *ngFor="let t of getTags()" (click)="loadFilters(t)" mat-menu-item>-->
-                            <!--<span >{{t}}</span>-->
-                        <!--</button>-->
-                    <!--</mat-menu>-->
-                    <!--<mat-icon class="material-icons" (click)="compare()" matTooltip="Compare saved filters"-->
-                             <!--matTooltipPosition="above">compare_arrows-->
-                    <!--</mat-icon>-->
                 </div>
 
                 <div class="count">
@@ -56,129 +44,18 @@
                 </div>
             </div>
             <div *ngIf="showSql" class="generated-sql">
-                <div>{{ cf.sql }}</div>
-                <div *ngIf="!cf.sql">No Active filters</div>
+                <div>{{ sql }}</div>
+                <div *ngIf="!sql">No Active filters</div>
             </div>
-
-            <div class="charts">
+            <div class="message message-info" *ngIf="subtotal <=0 && !loading"><mat-icon>info_outline</mat-icon> No variants found for your query. Please widen your search.</div>
+            <div class="charts" *ngIf="subtotal > 0">
                 <div class="main">
                     <div class="right">
-                        <div class="combined-chart">
-                            <div class="chart main-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Avg Allele Frequency by start position" matTooltipPosition="above">Avg
-                                        Allele Frequency</h4>
-                                    <a (click)="resetAfAvgChart()" *ngIf="afAvgHasFilter()">reset</a>
-                                </div>
-                                <div id="afAvg" [ngStyle]="largeChartStyle"></div>
-                            </div>
-                            <div class="range-chart">
-                                <div id="variantCount" [ngStyle]="rangeChartStyle"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by chromosome" matTooltipPosition="above">
-                                        Chromosome</h4>
-                                    <a (click)="cs.reset('chrom')" *ngIf="cs.hasFilter('chrom')">reset</a>
-                                </div>
-                                <div id="chromCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by type" matTooltipPosition="above">Type</h4>
-                                    <a (click)="cs.reset('type')" *ngIf="cs.hasFilter('type')">reset</a>
-                                </div>
-                                <div id="typeCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by grouped Allele frequency"
-                                        matTooltipPosition="above">Avg Allele Frequency</h4>
-                                    <a (click)="cs.reset('afCount')" *ngIf="cs.hasFilter('afCount')">reset</a>
-                                </div>
-                                <div id="afCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by reference" matTooltipPosition="above">
-                                        Reference</h4>
-                                    <a (click)="cs.reset('ref')" *ngIf="cs.hasFilter('ref')">reset</a>
-                                </div>
-                                <div id="refCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by alternate" matTooltipPosition="above">
-                                        Alternate</h4>
-                                    <a (click)="cs.reset('alt')" *ngIf="cs.hasFilter('alt')">reset</a>
-                                </div>
-                                <div id="altCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by dbSNP" matTooltipPosition="above">
-                                        dbSNP</h4>
-                                    <a (click)="cs.reset('rsid')" *ngIf="cs.hasFilter('rsid')">reset</a>
-                                </div>
-                                <div id="rsidCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by clinvar" matTooltipPosition="above">
-                                        Clinvar</h4>
-                                    <a (click)="cs.reset('clinvar')" *ngIf="cs.hasFilter('clinvar')">reset</a>
-                                </div>
-                                <div id="clinvar" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by consequences" matTooltipPosition="above">
-                                        Consequences</h4>
-                                    <a (click)="cs.reset('consequences')" *ngIf="cs.hasFilter('consequences')">reset</a>
-                                </div>
-                                <div id="consequences" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by GnomadAF" matTooltipPosition="above">
-                                        GnomadAF</h4>
-                                    <a (click)="cs.reset('gnomadAF')" *ngIf="cs.hasFilter('gnomadAF')">reset</a>
-                                </div>
-                                <div id="gnomadAF" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by PolyPhen" matTooltipPosition="above">
-                                        PolyPhen</h4>
-                                    <a (click)="cs.reset('polyPhen')" *ngIf="cs.hasFilter('polyPhen')">reset</a>
-                                </div>
-                                <div id="polyPhen" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by sift" matTooltipPosition="above">
-                                        Sift</h4>
-                                    <a (click)="cs.reset('sift')" *ngIf="cs.hasFilter('sift')">reset</a>
-                                </div>
-                                <div id="sift" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 matTooltip="Number of variants by eigen" matTooltipPosition="above">
-                                        Eigen</h4>
-                                    <a (click)="cs.reset('eigen')" *ngIf="cs.hasFilter('eigen')">reset</a>
-                                </div>
-                                <div id="eigen" [ngStyle]="smallChartStyle"></div>
+                        <div class="row" >
+                            <div class="chart" *ngFor="let c of cs.enabledCharts()">
+                                <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
+                                <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>
+                                <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
                             </div>
                         </div>
                     </div>
@@ -191,4 +68,24 @@
     </div>
 
 </section>
+
+<mat-menu #dashBoardSettings="matMenu">
+    <div mat-menu-item (click)="toggleSql($event)" [matTooltip]="sqlTooltip()" matTooltipPosition="above">
+        <mat-slide-toggle
+            [checked]="showSql">
+            Show Generated SQL Filter
+        </mat-slide-toggle>
+    </div>
+    <button mat-menu-item class="material-icons" (click)="openFeedback()" matTooltipPosition="above">
+        Give feedback
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="dimensions">Show/Hide Charts</button>
+</mat-menu>
+
+<mat-menu class="custom-mat-short-column" #dimensions="matMenu">
+    <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
+        <mat-slide-toggle [checked]="c.enabled">{{ c.name }}
+        </mat-slide-toggle>
+    </div>
+</mat-menu>
 

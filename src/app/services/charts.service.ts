@@ -2,9 +2,28 @@ import { Injectable } from '@angular/core';
 
 import '@mapd/mapdc/dist/mapdc.js';
 
+export enum ChartType {
+    Row,
+    Pie,
+    Custom
+}
+
 export class Chart {
     dc: any;
-    constructor(public name: string = "") {
+    constructor(public name: string,
+                public dimension: string,
+                public type: ChartType,
+                public groupFn: any = null,
+                public enabled = true,
+                public cap = 100) {
+    }
+
+    tooltip() {
+        return `Number of variants by ${this.name}`;
+    }
+
+    group(dim: any) {
+        return this.groupFn ? this.groupFn(dim) : dim.group();
     }
 }
 
@@ -15,88 +34,68 @@ class SerializedChart {
 
 @Injectable()
 export class ChartsService {
-    charts = [new Chart("alt"),
-        new Chart("ref"),
-        new Chart("type"),
-        new Chart("afAvg"),
-        new Chart("afCount"),
-        new Chart("range"),
-        new Chart("chrom"),
-        new Chart("rsid"),
-        new Chart("clinvar"),
-        new Chart("consequences"),
-        new Chart("gnomadAF"),
-        new Chart("polyPhen"),
-        new Chart("sift"),
-        new Chart("eigen")];
+    charts = [
+        new Chart("Avg AF", "AF", ChartType.Custom),
+        new Chart("Alternate", "ALT", ChartType.Pie),
+        new Chart("Reference", "c4_REF", ChartType.Pie),
+        new Chart("Category", "TYPE", ChartType.Row),
+        new Chart("Binned AF", "AF", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 10,
+                binBounds: [0, 1],
+                timeBin: false
+            }]);
+        }, false),
+        new Chart("Chromosome", "chromosome", ChartType.Row, null, false),
+        new Chart("Clinvar", "clinvar", ChartType.Row),
+        new Chart("Consequences", "consequences", ChartType.Row),
+        new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
+        new Chart("Sift", "sift", ChartType.Pie, null, false),
+        new Chart("Top 100 Genes", "gene", ChartType.Row, null, false, 100),
+        new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 12,
+                binBounds: [-4.2, 1.4],
+                timeBin: false
+            }]);
+        }, false),
+        new Chart("Binned Gnomad AF", "gnomadAF", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 10,
+                binBounds: [0, 1],
+                timeBin: false
+            }]);
+        }, false)];
 
     constructor() {
     }
 
-    names() {
-        return this.charts.map((c) => c.name);
+    enabledCharts() {
+        return this.charts.filter(c => c.enabled);
     }
 
-    getChart(name: string): Chart {
-        return this.charts.find((c) => c.name == name);
+    getChart(dimension: string): Chart {
+        return this.charts.find((c) => c.dimension === dimension);
     }
 
-    setChart(name: string, chart: any) {
-        const c = this.charts.find((c) => c.name == name);
-        c.dc = chart;
-        return c;
+    setChart(dimension: string, chart: any) {
+        const cc = this.charts.find((c) => c.dimension === dimension);
+        cc.dc = chart;
+        return cc;
     }
 
-    hasFilter(name: string) {
-        const c = this.getChart(name).dc;
+    hasFilter(dimension: string) {
+        const c = this.getChart(dimension).dc;
         return c && c.filters().length > 0;
     }
 
-    reset(name: string) {
-        this.getChart(name).dc.filterAll();
+    reset(dimension: string) {
+        this.getChart(dimension).dc.filterAll();
         dc.redrawAllAsync();
-    }
-
-    saveFilters(tag: string, allFilter: string) {
-        const d = {
-            allFilter: allFilter,
-            charts: this.charts.map((c) => {
-                return {name: c.name, filters: c.dc.filters()};
-            })
-        };
-
-        let tags = localStorage.getItem('tags');
-        if (!tags) {
-            tags = "[]";
-        }
-        const jtags = JSON.parse(tags);
-        jtags.push(tag);
-        localStorage.setItem('tags', JSON.stringify(jtags));
-        localStorage.setItem(tag, JSON.stringify(d));
     }
 
     getFilter(tag: string): string {
         const d = localStorage.getItem(tag);
         return JSON.parse(d).allFilter;
-    }
-
-    loadFilters(tag: string) {
-        dc.filterAll();
-        const d = localStorage.getItem(tag);
-        const charts = JSON.parse(d).charts;
-        charts.forEach((c: SerializedChart) => {
-            c.filters.forEach((f) => {
-                this.getChart(c.name).dc.filter(f);
-            });
-        });
-        dc.redrawAllAsync();
-    }
-
-    getTags(): string[] {
-        let t = localStorage.getItem('tags');
-        if (!t) {
-            t = "[]";
-        }
-        return JSON.parse(t);
     }
 }

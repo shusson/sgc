@@ -14,7 +14,7 @@ export const environment = {
     mapd: {
         protocol: 'https',
         host: 'mapd.vectis-api.com',
-        port: '443',
+        port: '445',
         dbName: 'mapd',
         user: 'mapd',
         pwd: 'HyperInteractive',

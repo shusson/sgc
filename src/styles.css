@@ -154,6 +154,6 @@ rect.tnt_pane {
     width: 100%;
 }
 
-.active-columns-list {
+.custom-mat-short-column {
     max-height: 300px !important;
 }
