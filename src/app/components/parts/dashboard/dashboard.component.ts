@@ -37,7 +37,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     sql = '';
 
     errors = new Subject<any>();
-    dx: any;
 
     chartType = ChartType;
 
@@ -67,8 +66,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             });
             const p2 = this.cf.all.valueAsync().then((v) => {
                 this.subtotal = v;
+                this.loading = false;
             });
-            this.sql = this.dx.getFilterString();
+            this.sql = this.cf.getFilterString();
             Promise.all([p1, p2]).then(() => this.cd.detectChanges());
         }));
     }
@@ -79,11 +79,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             return this.cf.create(session, 'mgrb').then((x: any) => {
                 // session.getFields('mgrb', (err, res) => console.log(res));
                 this.globalFilter = x.filter(true);
-                this.dx = x;
             });
         }).then(() => {
             this.cf.updates.next();
-            this.loading = false;
             this.cd.detectChanges();
         }).catch((e) => this.errors.next(e));
     }

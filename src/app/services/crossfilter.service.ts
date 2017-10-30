@@ -17,6 +17,20 @@ export class CrossfilterService implements OnDestroy {
         }));
     }
 
+    getFilterString() {
+        let fs = this.x.getFilterString();
+        const gfs = this.x.getGlobalFilterString();
+        if (gfs && fs) {
+            fs += ' AND ' + gfs;
+        } else if (gfs) {
+            fs = gfs;
+        }
+        if (fs) {
+            fs = 'WHERE ' + fs;
+        }
+        return fs;
+    }
+
     create(session: any, name): Promise<any> {
         return crossfilter.crossfilter(session, name).then((cf) => {
             this.x = cf;

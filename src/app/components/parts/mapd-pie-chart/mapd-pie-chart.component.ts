@@ -12,17 +12,21 @@ const INNER_RADIUS = 30;
     styleUrls: ['./mapd-chart.component.css']
 })
 export class MapdPieChartComponent implements AfterViewInit {
-    @Input() filter: any;
     @Input() chart: Chart;
 
     smallChartStyle = {'width': `${SMALL_WIDTH}px`, 'height': `${SMALL_HEIGHT}px`};
     hover = false;
+    error = '';
 
     constructor(public cs: ChartsService, private cfs: CrossfilterService) {
     }
 
     ngAfterViewInit(): void {
-        const dim = this.filter.dimension(this.chart.dimension);
+        if (!this.chart) {
+            this.error = 'This chart could not be displayed';
+            return;
+        }
+        const dim = this.cfs.x.dimension(this.chart.dimension);
         const group = this.chart.group(dim).reduceCount();
         const chart = this.cs.setChart(this.chart.dimension, dc.pieChart(`#${this.chart.dimension}`)
             .width(SMALL_WIDTH)

@@ -1,4 +1,4 @@
-<div class="chart small-chart" (mouseenter)="hover=true" (mouseleave)="hover=false">
+<div class="chart small-chart" *ngIf="chart" (mouseenter)="hover=true" (mouseleave)="hover=false">
     <div class="toolbar">
         <div class="row">
             <div class="option"></div>
@@ -10,5 +10,6 @@
 
         <a (click)="cs.reset(chart.dimension)" *ngIf="cs.hasFilter(chart.dimension)">reset</a>
     </div>
+    <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> <span>{{error}}</span></div>
     <div [id]="chart.dimension" [ngStyle]="smallChartStyle"></div>
 </div>

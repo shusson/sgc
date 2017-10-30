@@ -12,8 +12,8 @@
 <section>
     <div class="message message-error search" *ngIf="searchError"><mat-icon>error_outline</mat-icon> {{ searchError }}. Please Try again</div>
     <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
-    <div class="message message-info" *ngIf="subtotal <=0 && !error && !loading"><mat-icon>info_outline</mat-icon> No variants found for your query. Please widen your search.</div>
-    <div *ngIf="!error && subtotal > 0">
+
+    <div *ngIf="!error">
         <div class="message message-warning">
             <mat-icon>help_outline</mat-icon>
             <div>While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
@@ -47,15 +47,15 @@
                 <div>{{ sql }}</div>
                 <div *ngIf="!sql">No Active filters</div>
             </div>
-
-            <div class="charts" *ngIf="dx">
+            <div class="message message-info" *ngIf="subtotal <=0 && !loading"><mat-icon>info_outline</mat-icon> No variants found for your query. Please widen your search.</div>
+            <div class="charts" *ngIf="subtotal > 0">
                 <div class="main">
                     <div class="right">
                         <div class="row" >
                             <div class="chart" *ngFor="let c of cs.enabledCharts()">
-                                <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom" [filter]="dx"></app-mapd-avg-af-chart>
-                                <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c" [filter]="dx"></app-mapd-row-chart>
-                                <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c" [filter]="dx"></app-mapd-pie-chart>
+                                <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
+                                <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>
+                                <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
                             </div>
                         </div>
                     </div>

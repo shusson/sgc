@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { Chart, ChartsService, ChartType } from '../../../services/charts.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
@@ -15,24 +15,30 @@ const MIN_BOUNDS = 0;
 @Component({
     selector: 'app-mapd-avg-af-chart',
     templateUrl: './mapd-avg-af-chart.component.html',
-    styleUrls: ['./mapd-avg-af-chart.component.css']
+    styleUrls: ['./mapd-avg-af-chart.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapdAvgAfChartComponent implements AfterViewInit, OnDestroy {
-    @Input() filter: any;
     rangeChart = new Chart('range', 'c3_START', ChartType.Custom);
     afAvgChart = new Chart('AvgAF', 'c3_START', ChartType.Custom);
     rangeBounds = [MIN_BOUNDS, MAX_BOUNDS];
-
+    error = '';
     subscriptions: Subscription[] = [];
 
     largeChartStyle = {'width': `${LARGE_WIDTH}px`, 'height': `${LARGE_HEIGHT}px`};
     rangeChartStyle = {'width': `${LARGE_WIDTH}px`, 'height': `${RANGE_HEIGHT}px`};
 
 
-    constructor(public cs: ChartsService, private cfs: CrossfilterService) {}
+    constructor(private cf: CrossfilterService, private cd: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
-        const startDim = this.filter.dimension('c3_START');
+        const startDim = this.cf.x.dimension('c3_START');
+
+        if (!startDim) {
+            this.error = 'This chart could not be displayed';
+            this.cd.detectChanges();
+            return;
+        }
 
         const afExpression = [{
             expression: 'AF',
