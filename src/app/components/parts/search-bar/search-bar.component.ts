@@ -5,7 +5,6 @@ import {
 import { Subject, Observable, Subscription } from 'rxjs';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
-import { Router } from '@angular/router';
 
 export class SearchBarOptions {
     autofocus = false;

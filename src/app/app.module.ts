@@ -76,14 +76,15 @@ import { DashboardComponent } from './components/parts/dashboard/dashboard.compo
 import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
 import { FeedbackComponent } from './components/parts/feedback/feedback.component';
 import { ErrorDialogComponent } from './components/parts/error-dialog/error-dialog.component';
-import { SaveDialogComponent } from './components/parts/save-dialog/save-dialog.component';
-import { CompareDialogComponent } from './components/parts/compare-dialog/compare-dialog.component';
 import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
 import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
 import { SnackbarDemoComponent } from './components/parts/snackbar-demo/snackbar-demo.component';
 import { MaterialModule } from './app.material';
+import { MapdRowChartComponent } from './components/parts/mapd-row-chart/mapd-row-chart.component';
+import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pie-chart.component';
+import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -171,18 +172,17 @@ export class RavenErrorHandler implements ErrorHandler {
         VariantsTablePaginatedComponent,
         FeedbackComponent,
         ErrorDialogComponent,
-        SaveDialogComponent,
-        CompareDialogComponent,
         StatsDetailsComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
-        SnackbarDemoComponent
+        SnackbarDemoComponent,
+        MapdRowChartComponent,
+        MapdPieChartComponent,
+        MapdAvgAfChartComponent
     ],
     entryComponents: [
         FeedbackComponent,
         ErrorDialogComponent,
-        SaveDialogComponent,
-        CompareDialogComponent,
         SnackbarDemoComponent
     ],
     providers: [

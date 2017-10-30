@@ -18,8 +18,16 @@
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Type" prop="TYPE"></ngx-datatable-column>
-        <ngx-datatable-column name="AF" prop="AF"></ngx-datatable-column>
-        <ngx-datatable-column name="gnomadAF" prop="gnomadAF"></ngx-datatable-column>
+        <ngx-datatable-column name="AF" prop="AF">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value.toExponential(4)}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="gnomadAF" prop="gnomadAF">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                <span *ngIf="value">{{value.toExponential(4)}}</span>
+            </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column name="RSID" prop="RSID">
             <ng-template let-value="value" ngx-datatable-cell-template>
                 <a target="_blank" [href]="rsidUrl(value)">{{value}}</a>

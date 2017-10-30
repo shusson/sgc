@@ -67,10 +67,16 @@ h4 {
 
 .row {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 1rem;
+}
+
+.chart {
+    margin-bottom: 10px;
+    margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 .results {
@@ -96,21 +102,6 @@ h4 {
 .message mat-icon {
     margin-left: 1rem;
     margin-right: 1rem;
-}
-
-.toolbar {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: space-between;
-    flex-direction: column;
-    flex-wrap: wrap;
-    min-height: 35px;
-    margin-bottom: 5px;
-}
-
-:host /deep/ .dc-chart rect.bar {
-    cursor: default;
 }
 
 .message-error.search {

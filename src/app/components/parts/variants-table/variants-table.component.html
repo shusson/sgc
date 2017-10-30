@@ -65,7 +65,7 @@
     <button mat-menu-item [matMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
 </mat-menu>
 
-<mat-menu class="active-columns-list" #activeColumns="matMenu">
+<mat-menu class="custom-mat-short-column" #activeColumns="matMenu">
     <div mat-menu-item *ngFor="let key of ts.keys()" (click)="activateColumn($event, key)">
         <mat-slide-toggle [checked]="ts.get(key)">{{ key }}
         </mat-slide-toggle>

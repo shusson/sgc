@@ -19,6 +19,9 @@ import { PositionService } from '../../../services/autocomplete/position-service
 import { MockRouter } from '../../../mocks/router.mock';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../../app.material';
+import { MapdRowChartComponent } from '../mapd-row-chart/mapd-row-chart.component';
+import { MapdPieChartComponent } from '../mapd-pie-chart/mapd-pie-chart.component';
+import { MapdAvgAfChartComponent } from '../mapd-avg-af-chart/mapd-avg-af-chart.component';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -37,6 +40,9 @@ describe('DashboardComponent', () => {
                 VariantsTablePaginatedComponent,
                 SearchBarComponent,
                 SearchOptionComponent,
+                MapdRowChartComponent,
+                MapdPieChartComponent,
+                MapdAvgAfChartComponent
             ],
             providers: [
                 {
