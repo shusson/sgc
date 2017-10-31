@@ -39,6 +39,9 @@ export class ChartsService {
         new Chart("Reference", "c4_REF", ChartType.Pie),
         new Chart("Alternate", "ALT", ChartType.Pie),
         new Chart("Category", "TYPE", ChartType.Row),
+        new Chart("Clinvar", "clinvar", ChartType.Row),
+        new Chart("Consequences", "consequences", ChartType.Row),
+        new Chart("Chromosome", "chromosome", ChartType.Row, null, false),
         new Chart("Binned AF", "AF", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 10,
@@ -46,9 +49,6 @@ export class ChartsService {
                 timeBin: false
             }]);
         }, false),
-        new Chart("Chromosome", "chromosome", ChartType.Row, null, false),
-        new Chart("Clinvar", "clinvar", ChartType.Row),
-        new Chart("Consequences", "consequences", ChartType.Row),
         new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
         new Chart("Sift", "sift", ChartType.Pie, null, false),
         new Chart("Top 100 Genes", "gene", ChartType.Row, null, false, 100),

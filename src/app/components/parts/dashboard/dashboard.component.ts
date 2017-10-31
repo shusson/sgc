@@ -15,12 +15,13 @@ import { Region } from '../../../model/region';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
+import { MapdFilterService } from '../../../services/mapd-filter.service';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
-    providers: [SearchBarService, MapdService, CrossfilterService, ChartsService],
+    providers: [SearchBarService, MapdService, CrossfilterService, ChartsService, MapdFilterService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {

@@ -4,7 +4,7 @@
         <div class="main-content">
             <ng-content></ng-content>
         </div>
-        <app-privacy-footer></app-privacy-footer>
+        <app-privacy-footer *ngIf="showPrivacy"></app-privacy-footer>
     </main>
 </mat-sidenav-container>
 
