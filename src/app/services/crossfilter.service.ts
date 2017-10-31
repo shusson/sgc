@@ -12,9 +12,6 @@ export class CrossfilterService implements OnDestroy {
     all: any;
 
     constructor() {
-        this.subscriptions.push(this.updates.debounceTime(500).subscribe(() => {
-            this.currentFilters = this.x.getFilter().filter((x) => x).length;
-        }));
     }
 
     getFilterString() {

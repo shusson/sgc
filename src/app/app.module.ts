@@ -85,6 +85,7 @@ import { MaterialModule } from './app.material';
 import { MapdRowChartComponent } from './components/parts/mapd-row-chart/mapd-row-chart.component';
 import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pie-chart.component';
 import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
+import { FilterDialogueComponent } from './components/parts/filter-dialogue/filter-dialogue.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -178,11 +179,13 @@ export class RavenErrorHandler implements ErrorHandler {
         SnackbarDemoComponent,
         MapdRowChartComponent,
         MapdPieChartComponent,
-        MapdAvgAfChartComponent
+        MapdAvgAfChartComponent,
+        FilterDialogueComponent
     ],
     entryComponents: [
         FeedbackComponent,
         ErrorDialogComponent,
+        FilterDialogueComponent,
         SnackbarDemoComponent
     ],
     providers: [

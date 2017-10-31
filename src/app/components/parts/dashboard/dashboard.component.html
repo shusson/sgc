@@ -7,7 +7,8 @@
                  mode="side"
                  fixedInViewport="true"
                  fixedTopGap="71"
-                 opened="true">
+                 opened="true"
+                 disableClose="true">
         <div class="side-toolbar">
             <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
                       matTooltipPosition="right">refresh
@@ -37,22 +38,21 @@
                     {{cs.enabledCharts().length}} Charts
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="chart-list">
+            <div class="side-list">
                 <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
                     <mat-slide-toggle [checked]="c.enabled">{{ c.name }}
                     </mat-slide-toggle>
                 </div>
             </div>
-
         </mat-expansion-panel>
+        <button mat-menu-item (click)="openDialog()">Add a Global Filter</button>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Filters
+                    Global Filters
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="filter-list">
-                <div>Add a Filter</div>
             </div>
 
         </mat-expansion-panel>
@@ -61,8 +61,7 @@
         </button>
     </mat-sidenav>
 
-
-    <div (click)="sidenav.open()" class="main">
+    <div class="main">
         <div class="message message-error search" *ngIf="searchError"><mat-icon>error_outline</mat-icon> {{ searchError }}. Please Try again</div>
         <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
 

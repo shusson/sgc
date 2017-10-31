@@ -16,6 +16,7 @@ import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
 import { MapdFilterService } from '../../../services/mapd-filter.service';
+import { FilterDialogueComponent } from '../filter-dialogue/filter-dialogue.component';
 
 @Component({
     selector: 'app-dashboard',
@@ -46,7 +47,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 private mapd: MapdService,
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
-                public cs: ChartsService) {
+                public cs: ChartsService,
+                private mfs: MapdFilterService) {
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
                 Raven.captureMessage(e);
@@ -70,6 +72,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.loading = false;
             });
             this.sql = this.cf.getFilterString();
+            this.cf.currentFilters = this.cf.x.getFilter().filter((x) => x);
             Promise.all([p1, p2]).then(() => this.cd.detectChanges());
         }));
     }
@@ -136,13 +139,20 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showSql = !this.showSql;
     }
 
-    sqlTooltip() {
-        const v = this.showSql ? 'Hide' : 'Show';
-        return `${v} generated SQL`;
-    }
-
     toggleChart($event, chart) {
         $event.stopPropagation();
         chart.enabled = !chart.enabled;
+    }
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(FilterDialogueComponent, {
+            width: '440px',
+            data: {mfs: this.mfs}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            console.log(result);
+        });
     }
 }

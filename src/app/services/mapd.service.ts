@@ -28,7 +28,6 @@ export class MapdService {
                                 reject(error);
                             } else {
                                 this.mfs.columns = res;
-                                console.log(res);
                                 resolve(session);
                             }
                         });
