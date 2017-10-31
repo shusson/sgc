@@ -16,3 +16,13 @@ h4 {
     color: rgba(0, 60, 105, 0.5);
     font-weight: bold;
 }
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toolbar .material-icons {
+    cursor: pointer;
+}

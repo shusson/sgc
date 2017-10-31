@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { CfMock } from '../../../mocks/cf.mock';
 import { MapdMock } from '../../../mocks/mapd.mock';
+import { MatIconModule } from '@angular/material';
 
 describe('VariantsTablePaginatedComponent', () => {
     let component: VariantsTablePaginatedComponent;
@@ -16,7 +17,10 @@ describe('VariantsTablePaginatedComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [NgxDatatableModule],
+            imports: [
+                NgxDatatableModule,
+                MatIconModule
+            ],
             declarations: [VariantsTablePaginatedComponent],
             providers: [
                 {
