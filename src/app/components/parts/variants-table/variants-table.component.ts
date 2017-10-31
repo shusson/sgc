@@ -1,8 +1,7 @@
 import {
     Component, OnInit, Input, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit,
-    ElementRef
 } from '@angular/core';
-import { Variant, HOMOZYGOTES_KEY, HETEROZYGOTES_KEY, MISSED_GENOTYPES_KEY } from '../../../model/variant';
+import { Variant } from '../../../model/variant';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';

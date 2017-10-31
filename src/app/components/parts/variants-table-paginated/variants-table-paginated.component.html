@@ -1,5 +1,10 @@
 <div *ngIf="!error">
-    <h4 matTooltip="The first 100 filtered variants" matTooltipPosition="above">Variant samples</h4>
+    <div class="toolbar">
+        <h4 matTooltip="The first 100 filtered variants" matTooltipPosition="above">Variant samples</h4>
+        <mat-icon (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
+           class="material-icons">file_download</mat-icon>
+    </div>
+
     <ngx-datatable
         class="material"
         [rows]="variants"
@@ -37,7 +42,4 @@
         <ngx-datatable-column name="consequences" prop="consequences"></ngx-datatable-column>
     </ngx-datatable>
 </div>
-<!--<div class="loading-message" *ngIf="loading">-->
-    <!--<mat-spinner color="primary"></mat-spinner>-->
-<!--</div>-->
 <div class="message message-error" *ngIf="error">{{ error }}</div>

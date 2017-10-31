@@ -36,8 +36,8 @@ class SerializedChart {
 export class ChartsService {
     charts = [
         new Chart("Avg AF", "AF", ChartType.Custom),
-        new Chart("Alternate", "ALT", ChartType.Pie),
         new Chart("Reference", "c4_REF", ChartType.Pie),
+        new Chart("Alternate", "ALT", ChartType.Pie),
         new Chart("Category", "TYPE", ChartType.Row),
         new Chart("Binned AF", "AF", ChartType.Row, (dim) => {
             return dim.group().binParams([{
