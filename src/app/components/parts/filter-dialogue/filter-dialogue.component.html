@@ -1,7 +1,7 @@
 <div class="form">
     <div class="fields">
         <mat-form-field>
-            <mat-select placeholder="Dimension" [(ngModel)]="filter.column">
+            <mat-select placeholder="Dimension" [(ngModel)]="filter.dimension">
                 <mat-option *ngFor="let c of data.mfs.columns" [value]="c">
                     {{ c.name }}
                 </mat-option>

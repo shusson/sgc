@@ -15,7 +15,7 @@ import { Region } from '../../../model/region';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
-import { MapdFilterService } from '../../../services/mapd-filter.service';
+import { Dimension, BasicFilter, DimensionFilter, MapdFilterService } from '../../../services/mapd-filter.service';
 import { FilterDialogueComponent } from '../filter-dialogue/filter-dialogue.component';
 
 @Component({
@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     query: string = null;
-    globalFilter: any;
     error = '';
     searchError = '';
     loading = true;
@@ -47,8 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 private mapd: MapdService,
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
-                public cs: ChartsService,
-                private mfs: MapdFilterService) {
+                public cs: ChartsService) {
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
                 Raven.captureMessage(e);
@@ -80,10 +78,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.loading = true;
         this.mapd.connect().then((session) => {
-            return this.cf.create(session, 'mgrb').then((x: any) => {
-                // session.getFields('mgrb', (err, res) => console.log(res));
-                this.globalFilter = x.filter(true);
-            });
+            return this.cf.create(session, 'mgrb');
         }).then(() => {
             this.cf.updates.next();
             this.cd.detectChanges();
@@ -92,7 +87,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     clearFilters() {
         this.searchBarService.query = '';
-        this.globalFilter.filterAll();
+        this.cf.mfs.clearFilters();
         dc.filterAll();
         dc.redrawAllAsync().then(() => {
             this.cf.updates.next();
@@ -108,19 +103,31 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         const obj = {query: q};
         this.searchError = '';
 
+        this.cf.mfs.clearFilters();
+
         this.searchBarService.searchWithParams(obj).then((v: AutocompleteResult<Gene | Region | Position>) => {
             if (!v) {
                 return;
             }
             if (v.result instanceof Gene) {
-                this.globalFilter.filter(`gene='${(<Gene>v.result).id}'`);
+                const f = new DimensionFilter();
+                f.dimension = new Dimension();
+                f.dimension.name = 'gene';
+                f.operator = '=';
+                f.value = v.result.id;
+                this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Region) {
                 const r = (<Region>v.result);
-                this.globalFilter.filter(`chromosome='${r.chromosome}' AND c3_START >= ${r.start} AND c3_START <= ${r.end}`);
+                const f = new BasicFilter();
+                f.filter = `chromosome='${r.chromosome}' AND c3_START >= ${r.start} AND c3_START <= ${r.end}`;
+                this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Position) {
                 const p = (<Position>v.result);
-                this.globalFilter.filter(`chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`);
+                const f = new BasicFilter();
+                f.filter = `chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`;
+                this.cf.mfs.addFilter(f);
             }
+
             dc.redrawAllAsync().then(() => {
                 this.cf.updates.next();
             }).catch((e) => this.errors.next(e));
@@ -147,7 +154,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     openDialog(): void {
         const dialogRef = this.dialog.open(FilterDialogueComponent, {
             width: '440px',
-            data: {mfs: this.mfs}
+            data: {mfs: this.cf.mfs}
         });
 
         dialogRef.afterClosed().subscribe(result => {

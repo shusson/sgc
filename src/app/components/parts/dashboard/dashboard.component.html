@@ -60,12 +60,18 @@
             Give feedback
         </button>
     </mat-sidenav>
-
     <div class="main">
         <div class="message message-error search" *ngIf="searchError"><mat-icon>error_outline</mat-icon> {{ searchError }}. Please Try again</div>
         <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
 
         <div *ngIf="!error">
+            <div class="search-jumbo" *ngIf="!error">
+                <app-search-bar-with-options
+                    [expandable]="false"
+                    [action]="addGeneOrRegion"
+                    example1="BRCA1"
+                    example2="TTN"></app-search-bar-with-options>
+            </div>
             <div class="message message-warning">
                 <mat-icon>help_outline</mat-icon>
                 <div>While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is

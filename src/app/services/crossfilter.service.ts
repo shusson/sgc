@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import * as crossfilter from '@mapd/crossfilter/dist/mapd-crossfilter.js';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import { MapdFilterService } from './mapd-filter.service';
 
 @Injectable()
 export class CrossfilterService implements OnDestroy {
@@ -11,14 +12,14 @@ export class CrossfilterService implements OnDestroy {
     currentFilters = [];
     all: any;
 
-    constructor() {
+    constructor(public mfs: MapdFilterService) {
     }
 
     getFilterString() {
         let fs = this.x.getFilterString();
         const gfs = this.x.getGlobalFilterString();
         if (gfs && fs) {
-            fs += ' AND ' + gfs;
+            fs += ' OR ' + gfs;
         } else if (gfs) {
             fs = gfs;
         }
@@ -31,6 +32,7 @@ export class CrossfilterService implements OnDestroy {
     create(session: any, name): Promise<any> {
         return crossfilter.crossfilter(session, name).then((cf) => {
             this.x = cf;
+            this.mfs.init(this);
             this.all = this.x.groupAll();
             return this.x;
         });

@@ -1,33 +1,56 @@
 import { Injectable } from '@angular/core';
+import { CrossfilterService } from './crossfilter.service';
 
-class Column {
+export class Dimension {
     name = '';
     type = '';
-    is_array: boolean;
-    is_dict: boolean;
 }
 
+export class BasicFilter {
+    filter = '';
 
-export class Filter {
-    column: Column;
+    filterString() {
+        return this.filter;
+    }
+}
+
+export class DimensionFilter extends BasicFilter {
+    dimension: Dimension;
     operator = '';
     value: any;
+
+    filterString() {
+        const v =  typeof this.value === 'string' ? `'${this.value}'` : this.value;
+        return `${this.dimension.name}${this.operator}${v}`;
+    }
 }
 
-export class StringFilter extends Filter {
+export class StringFilter extends DimensionFilter {
     value = '';
 }
 
-export class NumericFilter extends Filter {
+export class NumericFilter extends DimensionFilter {
     value: number;
 }
 
 @Injectable()
 export class MapdFilterService {
-    columns: Column[] = [];
-    activeFilters = [];
+    columns: Dimension[] = [];
+    globalFilter: any;
+    activeFilters: BasicFilter[] = [];
 
-    constructor() {
+    init(cfs: CrossfilterService) {
+        this.globalFilter = cfs.x.filter(true);
+    }
+
+    addFilter(filter: BasicFilter) {
+        this.activeFilters.push(filter);
+        this.globalFilter.filter(this.filterString());
+    }
+
+    clearFilters() {
+        this.activeFilters = [];
+        this.globalFilter.filterAll();
     }
 
     stringOperators() {
@@ -36,6 +59,10 @@ export class MapdFilterService {
 
     numericOperators() {
         return ["=", "<=", "<", ">", ">=", "!=", "IS NULL", "NOT NULL"];
+    }
+
+    private filterString() {
+        return this.activeFilters.map(f => f.filterString()).join(' OR ');
     }
 
 }
