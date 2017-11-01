@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import '@mapd/mapdc/dist/mapdc.js';
 import { Subscription } from 'rxjs/Subscription';
@@ -17,15 +17,30 @@ import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
 import { Dimension, BasicFilter, DimensionFilter, MapdFilterService } from '../../../services/mapd-filter.service';
 import { FilterDialogueComponent } from '../filter-dialogue/filter-dialogue.component';
+import { VariantsTablePaginatedComponent } from '../variants-table-paginated/variants-table-paginated.component';
+import { GeneListOptionService } from '../../../services/gene-list-option.service';
+import { GeneList, GeneListsService } from '../../../services/autocomplete/gene-lists-service';
+import { AddGeneListDialogComponent } from '../add-gene-list-dialog/add-gene-list-dialog.component';
+
+const SMALL_WIDTH = 720;
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
-    providers: [SearchBarService, MapdService, CrossfilterService, ChartsService, MapdFilterService],
+    providers: [SearchBarService,
+        MapdService,
+        CrossfilterService,
+        ChartsService,
+        MapdFilterService,
+        GeneListsService,
+        GeneListOptionService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+    @ViewChild(VariantsTablePaginatedComponent)
+    private variantTable: VariantsTablePaginatedComponent;
+    private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH}px)`);
     subscriptions: Subscription[] = [];
 
     query: string = null;
@@ -46,7 +61,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 private mapd: MapdService,
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
-                public cs: ChartsService) {
+                public cs: ChartsService,
+                public glos: GeneListOptionService) {
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
                 Raven.captureMessage(e);
@@ -118,13 +134,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Region) {
                 const r = (<Region>v.result);
-                const f = new BasicFilter();
-                f.filter = `chromosome='${r.chromosome}' AND c3_START >= ${r.start} AND c3_START <= ${r.end}`;
+                const f = new BasicFilter(`chromosome='${r.chromosome}' AND c3_START >= ${r.start} AND c3_START <= ${r.end}`);
                 this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Position) {
                 const p = (<Position>v.result);
-                const f = new BasicFilter();
-                f.filter = `chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`;
+                const f = new BasicFilter(`chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`);
                 this.cf.mfs.addFilter(f);
             }
 
@@ -157,9 +171,41 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             data: {mfs: this.cf.mfs}
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            console.log(result);
+        dialogRef.afterClosed().subscribe((result: DimensionFilter) => {
+            if (!result) {
+                return;
+            }
+            this.cf.mfs.addFilter(result);
+            dc.redrawAllAsync().then(() => {
+                this.cf.updates.next();
+            }).catch((e) => this.errors.next(e));
         });
+    }
+
+    addGeneList() {
+        const dialogRef = this.dialog.open(AddGeneListDialogComponent, {
+            width: '550px',
+            data: {glos: this.glos}
+        });
+
+        dialogRef.afterClosed().subscribe((gl: GeneList) => {
+            if (!gl) {
+                return
+            }
+            const fs = gl.ids.map(id => `gene='${id}'`).join(' OR ');
+            this.cf.mfs.addFilter(new BasicFilter(fs));
+            dc.redrawAllAsync().then(() => {
+                this.cf.updates.next();
+            }).catch((e) => this.errors.next(e));
+        });
+
+    }
+
+    downloadVariants() {
+        this.variantTable.downloadFile();
+    }
+
+    isSmallScreen(): boolean {
+        return this.mediaMatcher.matches;
     }
 }

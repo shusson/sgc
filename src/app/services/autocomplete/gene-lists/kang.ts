@@ -1,6 +1,7 @@
 export const REPAIR_KANG_LIST = {
     name: 'DNA Repair Genes, KangJ',
     references: ['https://github.com/macarthur-lab/gene_lists', 'http://www.ncbi.nlm.nih.gov/pubmed/22505474'],
+    description: 'Supplementary Table 1 from the Kang et al.',
     ids: [
         'ENSG00000189046',
         'ENSG00000166199',

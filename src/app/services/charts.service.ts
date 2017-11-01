@@ -59,7 +59,7 @@ export class ChartsService {
                 timeBin: false
             }]);
         }, false),
-        new Chart("Binned Gnomad AF", "gnomadAF", ChartType.Row, (dim) => {
+        new Chart("Gnomad AF", "gnomadAF", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 10,
                 binBounds: [0, 1],

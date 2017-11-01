@@ -19,7 +19,7 @@ export class CrossfilterService implements OnDestroy {
         let fs = this.x.getFilterString();
         const gfs = this.x.getGlobalFilterString();
         if (gfs && fs) {
-            fs += ' OR ' + gfs;
+            fs += ' AND ' + gfs;
         } else if (gfs) {
             fs = gfs;
         }

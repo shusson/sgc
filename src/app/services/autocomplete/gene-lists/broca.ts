@@ -1,5 +1,6 @@
 export const BROCA_LIST = {
     name: 'BROCA - Cancer Risk Panel',
+    description: 'A targeted gene panel developed by University of Washington',
     references: ['https://github.com/macarthur-lab/gene_lists', 'http://depts.washington.edu/labweb/Divisions/MolDiag/MolDiagGen/index.htm'],
     ids: [
         'ENSG00000142208',

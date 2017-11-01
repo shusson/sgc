@@ -30,6 +30,9 @@ export class FilterDialogueComponent {
     }
 
     addFilter() {
+        if (this.filter.dimension.type !== "STR") {
+            this.filter.value = Number(this.filter.value)
+        }
         this.dialogRef.close(this.filter);
     }
 }

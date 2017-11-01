@@ -20,7 +20,7 @@ h4 {
 .toolbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .toolbar .material-icons {

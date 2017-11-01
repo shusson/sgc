@@ -5,7 +5,7 @@
     justify-content: space-between;
     flex-direction: column;
     flex-wrap: wrap;
-    min-height: 65px;
+    /*min-height: 65px;*/
     margin-bottom: 19px;
 }
 
@@ -26,7 +26,7 @@ h4 {
     justify-content: space-between;
     align-content: center;
     align-items: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .toolbar .row h4 {
@@ -35,12 +35,19 @@ h4 {
 }
 
 .toolbar .row .option {
-    text-align: end;
     flex-basis: 0;
     flex-grow: 1;
-    font-size: small;
+    font-size: medium;
     color: rgba(0, 60, 105, 0.5);
     cursor: pointer;
+}
+
+.toolbar .row .option.left {
+    text-align: start;
+}
+
+.toolbar .row .option.right {
+    text-align: end;
 }
 
 .message.message-error {

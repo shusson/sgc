@@ -1,5 +1,6 @@
 export const AD_LIST = {
     name: 'All dominant genes',
+    description: 'The union of the Berg and Blekhman dominant lists',
     references: ['https://github.com/macarthur-lab/gene_lists', 'https://www.ncbi.nlm.nih.gov/pubmed/18571414', 'https://www.ncbi.nlm.nih.gov/pubmed/22995991'],
     ids: [
         'ENSG00000090861',

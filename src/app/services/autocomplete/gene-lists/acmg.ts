@@ -1,5 +1,6 @@
 export const ACMG_LIST = {
-    name: 'ACMG',
+    name: 'ACMG V2.0',
+    description: 'The minimum list of genes to be reported as incidental or secondary findings as published by the American College of Medical Genetics and Genomics (ACMG)',
     references: ['https://github.com/macarthur-lab/gene_lists', 'https://www.ncbi.nlm.nih.gov/pubmed/27854360'],
     ids: [
         'ENSG00000012048',

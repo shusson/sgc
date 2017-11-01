@@ -6,8 +6,10 @@
     flex-direction: column;
     flex-wrap: wrap;
     min-height: 35px;
-    margin-bottom: 5px;
+    margin-top: 1rem;
 }
+
+
 
 :host /deep/ .dc-chart rect.bar {
     cursor: default;

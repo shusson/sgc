@@ -1,5 +1,6 @@
 export const FDA_LIST = {
     name: 'FDA approved drug targets',
+    description: 'Genes whose protein products are known to be the mechanistic targets of FDA-approved drugs',
     references: ['https://github.com/macarthur-lab/gene_lists', 'https://www.ncbi.nlm.nih.gov/pubmed/24203711', 'https://www.ncbi.nlm.nih.gov/pubmed/21059682', 'https://www.ncbi.nlm.nih.gov/pubmed/18048412'],
     ids: [
         'ENSG00000165029',

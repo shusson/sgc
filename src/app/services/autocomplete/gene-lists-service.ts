@@ -22,8 +22,6 @@ export class GeneListsService {
      */
     lists = [
         ACMG_LIST,
-        AD_LIST,
-        AR_LIST,
         BROCA_LIST,
         FDA_LIST,
         REPAIR_KANG_LIST

@@ -7,8 +7,9 @@ export class Dimension {
 }
 
 export class BasicFilter {
-    filter = '';
+    constructor(public filter = '') {
 
+    }
     filterString() {
         return this.filter;
     }
@@ -23,14 +24,6 @@ export class DimensionFilter extends BasicFilter {
         const v =  typeof this.value === 'string' ? `'${this.value}'` : this.value;
         return `${this.dimension.name}${this.operator}${v}`;
     }
-}
-
-export class StringFilter extends DimensionFilter {
-    value = '';
-}
-
-export class NumericFilter extends DimensionFilter {
-    value: number;
 }
 
 @Injectable()
@@ -54,11 +47,11 @@ export class MapdFilterService {
     }
 
     stringOperators() {
-        return ["CONTAINS", "EQUALS", "NOT CONTAINS", "NOT EQUALS", "IS NULL", "NOT NULL"];
+        return ["=", "!="];
     }
 
     numericOperators() {
-        return ["=", "<=", "<", ">", ">=", "!=", "IS NULL", "NOT NULL"];
+        return ["=", "<=", "<", ">", ">=", "!="];
     }
 
     private filterString() {
