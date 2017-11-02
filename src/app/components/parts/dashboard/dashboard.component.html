@@ -69,9 +69,10 @@
             </div>
             <div class="message message-warning">
                 <mat-icon>help_outline</mat-icon>
-                <div>While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
+                <div *ngIf="!isSmallScreen()">While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
                     appreciated
                 </div>
+                <div *ngIf="isSmallScreen()">While in Beta please treat data with caution</div>
             </div>
             <div class="results">
 
