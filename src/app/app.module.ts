@@ -1,5 +1,23 @@
-import 'rxjs/Rx';
 import 'hammerjs';
+
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/reduce';
+import 'rxjs/add/operator/delay';
+
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +57,6 @@ import { SideNavComponent } from './components/parts/side-nav/side-nav.component
 import { EnsemblService } from './services/ensembl-service';
 import { GeneInformationComponent } from './components/parts/gene-information/gene-information.component';
 import { BeaconNetworkService } from './services/beacon/beacon-network-service';
-import { ChartModule } from 'angular2-highcharts';
 import { HomeFooterComponent } from './components/parts/home-footer/home-footer.component';
 import { HomeAboutComponent } from './components/parts/home-about/home-about.component';
 import { PrivacyFooterComponent } from './components/parts/privacy-footer/privacy-footer.component';
@@ -116,7 +133,6 @@ export class RavenErrorHandler implements ErrorHandler {
         HttpClientModule,
         NgxPaginationModule,
         NgxDatatableModule,
-        ChartModule,
         MaterialModule
     ],
     declarations: [

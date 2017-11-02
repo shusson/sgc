@@ -6,7 +6,7 @@ import { DebugElement } from '@angular/core';
 import { SideNavComponent } from './side-nav.component';
 import { ScrollService } from '../../../services/scroll-service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Auth } from '../../../services/auth-service';
 
 describe('SideNavComponent', () => {

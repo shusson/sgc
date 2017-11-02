@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Beacon } from '../../model/beacon';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 

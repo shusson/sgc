@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Auth } from '../../../services/auth-service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/subscription';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';

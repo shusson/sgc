@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RegionService } from './autocomplete/region-service';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { SearchOption } from '../model/search-option';
 import { Router, Params } from '@angular/router';
 import { AutocompleteService } from './autocomplete/autocomplete-service';

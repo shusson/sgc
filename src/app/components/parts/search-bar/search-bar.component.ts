@@ -2,7 +2,9 @@ import {
     Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitter, OnDestroy,
     ChangeDetectorRef
 } from '@angular/core';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/subscription';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 

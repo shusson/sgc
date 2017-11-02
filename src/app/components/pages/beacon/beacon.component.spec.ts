@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BeaconComponent } from './beacon.component';
 import { BeaconSearchService } from '../../../services/beacon/beacon-search-service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MaterialModule } from '../../../app.material';

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/subscription';
 import { ActivatedRoute, Params } from '@angular/router';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { SearchQuery } from '../../../model/search-query';

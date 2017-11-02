@@ -6,7 +6,7 @@ import { Gene } from '../../../model/gene';
 import { Region } from '../../../model/region';
 import { VariantRequest } from '../../../model/variant-request';
 import { RegionService } from '../../../services/autocomplete/region-service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/subscription';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
 
 @Component({

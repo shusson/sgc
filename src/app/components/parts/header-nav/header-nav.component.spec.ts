@@ -7,7 +7,7 @@ import { HeaderNavComponent } from './header-nav.component';
 import { ScrollService } from '../../../services/scroll-service';
 import { Router } from '@angular/router';
 import { Auth } from '../../../services/auth-service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 describe('HeaderNavComponent', () => {
     let component: HeaderNavComponent;

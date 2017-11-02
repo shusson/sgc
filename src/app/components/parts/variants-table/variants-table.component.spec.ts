@@ -14,7 +14,7 @@ import { GenomeBrowserResizeComponent } from '../genome-browser-resizable/genome
 import { GeneInformationComponent } from '../gene-information/gene-information.component';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Router, RouterModule } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { VsalService } from '../../../services/vsal-service';

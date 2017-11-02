@@ -2,7 +2,7 @@ import {
     Component, OnInit, Input, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit,
 } from '@angular/core';
 import { Variant } from '../../../model/variant';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription } from 'rxjs/subscription';
 import { Router } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 

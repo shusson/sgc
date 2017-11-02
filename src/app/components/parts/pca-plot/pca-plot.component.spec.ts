@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PcaPlotComponent } from './pca-plot.component';
 import { ChartModule } from 'angular2-highcharts';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 describe('PcaPlotComponent', () => {

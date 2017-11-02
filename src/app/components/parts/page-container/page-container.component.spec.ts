@@ -7,7 +7,7 @@ import { SideNavComponent } from '../side-nav/side-nav.component';
 import { HeaderNavComponent } from '../header-nav/header-nav.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Auth } from '../../../services/auth-service';
 import { LocationStrategy } from '@angular/common';
 import { SearchBarService } from '../../../services/search-bar-service';
