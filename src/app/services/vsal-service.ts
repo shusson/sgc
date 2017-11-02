@@ -6,7 +6,7 @@ import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
-export const VSAL_VARIANT_LIMIT = 500;
+export const VSAL_VARIANT_LIMIT = 10000;
 export const VSAL_TIMEOUT = 20000;
 
 @Injectable()

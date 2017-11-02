@@ -6,8 +6,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { Region } from '../../../model/region';
 
-const LARGE_WIDTH = window.innerWidth / 1.3 > 1090 ? 1090 : window.innerWidth / 1.3;
-const LARGE_HEIGHT = 200;
+const SMALL_WIDTH = 740;
+const LARGE_WIDTH = window.innerWidth / 1.3;
+const LARGE_HEIGHT = 150;
 const RANGE_HEIGHT = 70;
 const MAX_BOUNDS = 249240280;
 const MIN_BOUNDS = 0;
@@ -28,6 +29,7 @@ export class MapdAvgAfChartComponent implements AfterViewInit, OnDestroy {
     largeChartStyle = {'width': `${LARGE_WIDTH}px`, 'height': `${LARGE_HEIGHT}px`};
     rangeChartStyle = {'width': `${LARGE_WIDTH}px`, 'height': `${RANGE_HEIGHT}px`};
 
+    private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH}px)`);
 
     constructor(private cf: CrossfilterService, private cd: ChangeDetectorRef) {}
 
@@ -46,8 +48,9 @@ export class MapdAvgAfChartComponent implements AfterViewInit, OnDestroy {
             name: 'afavg'
         }];
 
+        const width = this.isSmallScreen() ? window.innerWidth / 2 : LARGE_WIDTH;
         this.rangeChart.dc = dc.barChart('#variantCount')
-            .width(LARGE_WIDTH)
+            .width(width)
             .height(RANGE_HEIGHT)
             .x(d3.scale.linear().domain(this.rangeBounds))
             .brushOn(true)
@@ -71,10 +74,10 @@ export class MapdAvgAfChartComponent implements AfterViewInit, OnDestroy {
         this.rangeChart.dc.render();
 
         this.afAvgChart.dc = dc.barChart('#afAvg')
-            .width(LARGE_WIDTH)
+            .width(width)
             .height(LARGE_HEIGHT)
             .x(d3.scale.linear().domain(this.rangeBounds))
-            .brushOn(false)
+            .brushOn(true)
             .elasticY(true)
             .elasticX(true)
             .yAxisLabel(`AVG AF`)
@@ -117,5 +120,9 @@ export class MapdAvgAfChartComponent implements AfterViewInit, OnDestroy {
     afAvgHasFilter() {
         const c = this.afAvgChart.dc;
         return c && c.filters().length > 0 || (this.rangeChart.dc && this.rangeChart.dc.filters().length > 0);
+    }
+
+    isSmallScreen(): boolean {
+        return this.mediaMatcher.matches;
     }
 }

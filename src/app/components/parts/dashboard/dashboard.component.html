@@ -1,91 +1,103 @@
 <div class="loading-message" *ngIf="loading && !error">
     <mat-spinner color="primary"></mat-spinner>
 </div>
-<div class="search-jumbo" *ngIf="!error">
-    <app-search-bar-with-options
-        [expandable]="true"
-        [action]="addGeneOrRegion"
-        example1="BRCA1"
-        example2="TTN"></app-search-bar-with-options>
-</div>
 
-<section>
-    <div class="message message-error search" *ngIf="searchError"><mat-icon>error_outline</mat-icon> {{ searchError }}. Please Try again</div>
-    <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
-
-    <div *ngIf="!error">
-        <div class="message message-warning">
-            <mat-icon>help_outline</mat-icon>
-            <div>While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
-                appreciated
+<mat-sidenav-container>
+    <mat-sidenav #sidenav
+                 mode="side"
+                 fixedInViewport="true"
+                 fixedTopGap="71"
+                 [opened]="!isSmallScreen()"
+                 disableClose="true">
+        <div class="side-toolbar">
+            <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
+                      matTooltipPosition="right">refresh
+            </mat-icon>
+            <div class="count">
+                <mat-chip selected="true" color="accent" matTooltip="Filtered Variants"
+                          matTooltipPosition="above">
+                    {{ subtotal }}
+                </mat-chip>
+                /
+                <mat-chip selected="true" color="accent" matTooltip="Total Variants"
+                          matTooltipPosition="above">
+                    {{ total }}
+                </mat-chip>
             </div>
         </div>
-        <div class="results">
-            <div class="charts-toolbar" *ngIf="cf.x">
-                <div class="icons">
-                    <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
-                             matTooltipPosition="above">refresh
-                    </mat-icon>
-                    <mat-icon [matMenuTriggerFor]="dashBoardSettings" matTooltip="Dashboard Settings" class="material-icons">
-                        settings
-                    </mat-icon>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{cs.enabledCharts().length}} Charts
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="side-list">
+                <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
+                    <mat-slide-toggle [checked]="c.enabled">{{ c.name }}
+                    </mat-slide-toggle>
                 </div>
+            </div>
+        </mat-expansion-panel>
+        <div mat-menu-item (click)="toggleSql($event)">
+            <mat-slide-toggle
+                [checked]="showSql">
+                Show SQL
+            </mat-slide-toggle>
+        </div>
+        <button mat-menu-item (click)="downloadVariants()">Download Variants</button>
+        <button mat-menu-item (click)="openFeedback()">
+            Give feedback
+        </button>
+    </mat-sidenav>
+    <div class="main">
+        <div class="message message-error search" *ngIf="searchError">
+            <mat-icon>error_outline</mat-icon>
+            {{ searchError }}. Please Try again
+        </div>
+        <div class="message message-error" *ngIf="error">
+            <mat-icon>error_outline</mat-icon>
+            {{ error }}
+        </div>
 
-                <div class="count">
-                    <mat-chip selected="true" color="accent" matTooltip="Filtered number of Variants"
-                             matTooltipPosition="above">
-                        {{ subtotal }}
-                    </mat-chip>
-                    /
-                    <mat-chip selected="true" color="accent" matTooltip="Total number of Variants"
-                             matTooltipPosition="above">
-                        {{ total }}
-                    </mat-chip>
+        <div *ngIf="!error">
+            <div class="search-jumbo" *ngIf="!error">
+                <app-search-bar-with-options
+                    [expandable]="false"
+                    [action]="addGeneOrRegion"
+                    example1="BRCA1"
+                    example2="TTN"></app-search-bar-with-options>
+            </div>
+            <div class="message message-warning">
+                <mat-icon>help_outline</mat-icon>
+                <div *ngIf="!isSmallScreen()">While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
+                    appreciated
                 </div>
+                <div *ngIf="isSmallScreen()">While in Beta please treat data with caution</div>
             </div>
-            <div *ngIf="showSql" class="generated-sql">
-                <div>{{ sql }}</div>
-                <div *ngIf="!sql">No Active filters</div>
-            </div>
-            <div class="message message-info" *ngIf="subtotal <=0 && !loading"><mat-icon>info_outline</mat-icon> No variants found for your query. Please widen your search.</div>
-            <div class="charts" *ngIf="subtotal > 0">
-                <div class="main">
-                    <div class="right">
-                        <div class="row" >
-                            <div class="chart" *ngFor="let c of cs.enabledCharts()">
-                                <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
-                                <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>
-                                <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
-                            </div>
-                        </div>
+            <div class="results">
+
+                <div *ngIf="showSql" class="generated-sql">
+                    <div>{{ sql }}</div>
+                    <div *ngIf="!sql">No Active filters</div>
+                </div>
+                <div class="message message-info" *ngIf="subtotal <=0 && !loading">
+                    <mat-icon>info_outline</mat-icon>
+                    No variants found for your query. Please widen your search.
+                </div>
+                <div class="charts" *ngIf="subtotal > 0">
+                    <div class="chart" *ngFor="let c of cs.enabledCharts()">
+                        <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
+                        <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>
+                        <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
                     </div>
                 </div>
-            </div>
-            <div class="table" *ngIf="cf.x">
-                <app-variants-table-paginated></app-variants-table-paginated>
+                <div class="table" *ngIf="cf.x">
+                    <app-variants-table-paginated #table></app-variants-table-paginated>
+                </div>
             </div>
         </div>
+
     </div>
+</mat-sidenav-container>
 
-</section>
-
-<mat-menu #dashBoardSettings="matMenu">
-    <div mat-menu-item (click)="toggleSql($event)" [matTooltip]="sqlTooltip()" matTooltipPosition="above">
-        <mat-slide-toggle
-            [checked]="showSql">
-            Show Generated SQL Filter
-        </mat-slide-toggle>
-    </div>
-    <button mat-menu-item class="material-icons" (click)="openFeedback()" matTooltipPosition="above">
-        Give feedback
-    </button>
-    <button mat-menu-item [matMenuTriggerFor]="dimensions">Show/Hide Charts</button>
-</mat-menu>
-
-<mat-menu class="custom-mat-short-column" #dimensions="matMenu">
-    <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
-        <mat-slide-toggle [checked]="c.enabled">{{ c.name }}
-        </mat-slide-toggle>
-    </div>
-</mat-menu>
-
+<mat-menu></mat-menu>

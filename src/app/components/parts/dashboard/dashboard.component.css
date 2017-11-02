@@ -1,59 +1,9 @@
-.charts {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-wrap: wrap;
-}
-
-.small-chart {
-    margin: 1rem;
-}
-
-h4 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
-    color: rgba(0, 60, 105, 0.5);
-    font-weight: bold;
-}
-
-.charts-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1rem 0 2rem 0;
-    border-bottom: 1px solid lightgrey;
-    padding: 5px;
-}
-
-.icons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.charts-toolbar mat-icon {
-    cursor: pointer;
-    margin: 0 1rem 0 0;
-}
-
 .count mat-chip {
     cursor: default;
 }
 
-.main {
-    display: flex;
-    /*flex-wrap: wrap;*/
-    justify-content: center;
-}
-
 .search-jumbo {
     border-bottom: 1px solid lightgray;
-}
-
-.combined-chart {
-    padding: 1rem 1rem 0 1rem;
 }
 
 .generated-sql {
@@ -63,24 +13,6 @@ h4 {
     background-color: white;
     border: 1px solid lightgrey;
     font-weight: bold;
-}
-
-.row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
-
-.chart {
-    margin-bottom: 10px;
-    margin-right: 1rem;
-    margin-left: 1rem;
-}
-
-.results {
-    position: relative;
 }
 
 .loading-message {
@@ -106,4 +38,43 @@ h4 {
 
 .message-error.search {
     margin-top: 1rem;
+}
+
+mat-sidenav {
+    width: 220px;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
+}
+
+.side-list {
+    max-height: 300px;
+}
+
+.side-toolbar mat-icon {
+    cursor: pointer;
+    margin: 0 1rem 0 0;
+}
+
+.side-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 71px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-bottom: 1px solid lightgrey;
+}
+
+mat-sidenav-container mat-expansion-panel {
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,.14);
+}
+
+.charts {
+    padding: 0 2rem 0 2rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.chart {
+    margin: 0 1.5rem 0 1.5rem;
 }
