@@ -15,7 +15,6 @@ import { TitleLogoBannerComponent } from '../../parts/title-logo-banner/title-lo
 import { ScrollService } from '../../../services/scroll-service';
 import { HomeFooterComponent } from '../../parts/home-footer/home-footer.component';
 import { HomeAboutComponent } from '../../parts/home-about/home-about.component';
-import { ChartModule } from 'angular2-highcharts';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
@@ -42,7 +41,6 @@ describe('Component: Initiatives', () => {
             imports: [
                 NoopAnimationsModule,
                 FormsModule,
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

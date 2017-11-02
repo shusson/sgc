@@ -24,7 +24,6 @@ export class PcaPlotComponent implements AfterViewInit {
     constructor(private http: HttpClient) {
     }
 
-
     ngAfterViewInit(): void {
 
         this.options = {

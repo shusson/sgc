@@ -14,7 +14,6 @@ import { MockInitiativeService } from '../../../../mocks/initiative.mock';
 import { CohortService } from '../../../../services/project-data/cohort-service';
 import { ScrollService } from '../../../../services/scroll-service';
 import { MatProgressBarModule, MatCheckboxModule } from '@angular/material';
-import { ChartModule } from 'angular2-highcharts';
 import { PageContainerComponent } from '../../../parts/page-container/page-container.component';
 import { HeaderNavComponent } from '../../../parts/header-nav/header-nav.component';
 import { SideNavComponent } from '../../../parts/side-nav/side-nav.component';
@@ -38,7 +37,6 @@ describe('GcmpComponent', () => {
                 MatCheckboxModule,
                 MatProgressBarModule,
                 RouterModule,
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

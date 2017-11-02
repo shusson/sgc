@@ -9,7 +9,6 @@ import { ColumnChartComponent } from '../charts/column-chart.component';
 import { PieChartComponent } from '../charts/pie-chart.component';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../../app.material';
-import { ChartModule } from 'angular2-highcharts';
 import { Initiative } from '../../../model/initiative';
 import { QueryList } from '@angular/core';
 
@@ -20,7 +19,6 @@ describe('Component: GraphsWidget', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

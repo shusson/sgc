@@ -3,7 +3,7 @@ import {
     HostListener, OnDestroy
 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { ScrollService } from '../../../services/scroll-service';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 

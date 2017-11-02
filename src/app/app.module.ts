@@ -17,6 +17,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/observable/throw';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';

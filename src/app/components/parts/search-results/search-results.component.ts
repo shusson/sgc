@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, O
 import { Variant } from '../../../model/variant';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { Subscription } from 'rxjs/subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { AutocompleteResult } from '../../../model/autocomplete-result';
