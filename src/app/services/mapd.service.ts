@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { MapdFilterService } from './mapd-filter.service';
 
 @Injectable()
 export class MapdService {
     session = null;
 
-    constructor() {
+    constructor(private mfs: MapdFilterService) {
     }
 
     connect(): Promise<any> {
@@ -22,7 +23,14 @@ export class MapdService {
                         reject(error);
                     } else {
                         this.session = session;
-                        resolve(session);
+                        session.getFields('mgrb', (err, res) => {
+                            if (err) {
+                                reject(error);
+                            } else {
+                                this.mfs.columns = res;
+                                resolve(session);
+                            }
+                        });
                     }
                 });
         });
