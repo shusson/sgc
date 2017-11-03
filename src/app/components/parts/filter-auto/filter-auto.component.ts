@@ -1,7 +1,8 @@
 import {
     Component, OnInit, Input, EventEmitter, Output, OnDestroy, AfterViewInit,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 import { TableService } from '../../../services/table-service';
 import { Variant } from '../../../model/variant';
 import { FilterService } from '../../../services/filter.service';

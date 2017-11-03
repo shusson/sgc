@@ -1,7 +1,7 @@
 import { AutocompleteService } from './autocomplete-service';
 import { Region } from '../../model/region';
 import { AutocompleteResult } from '../../model/autocomplete-result';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { RegionAutocomplete } from '../../model/region-autocomplete';
 import { Injectable } from '@angular/core';
 import { EnsemblService } from '../ensembl-service';

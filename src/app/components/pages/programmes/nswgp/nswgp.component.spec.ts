@@ -12,7 +12,6 @@ import { MockInitiativeService } from '../../../../mocks/initiative.mock';
 import { NswgpComponent } from './nswgp.component';
 import { CohortService } from '../../../../services/project-data/cohort-service';
 import { ScrollService } from '../../../../services/scroll-service';
-import { ChartModule } from 'angular2-highcharts';
 import { PageContainerComponent } from '../../../parts/page-container/page-container.component';
 import { MockAuth } from '../../../../mocks/auth.mock';
 import { Auth } from '../../../../services/auth-service';
@@ -34,7 +33,6 @@ describe('NswgpComponent', () => {
             imports: [
                 NoopAnimationsModule,
                 RouterModule,
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Variant } from '../model/variant';
 import { SearchQuery } from '../model/search-query';
 import { Region } from '../model/region';
