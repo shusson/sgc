@@ -6,7 +6,7 @@ import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-foote
 import { SideNavComponent } from '../../parts/side-nav/side-nav.component';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
 import { DurlService } from '../../../services/durl.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { MockRouter } from '../../../mocks/router.mock';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';

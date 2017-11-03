@@ -47,13 +47,13 @@ export class BeaconCache {
                             br.beacon = new NetworkBeacon();
                             br.beacon.id = id;
                             br.error = 'error: ' + JSON.stringify(e);
-                            return Observable.of(br);
+                            return Observable.of<BeaconResponse>(br);
                         })
                         .map(b => {
                             return b;
                         }));
                 }
-                return Observable.merge(...obs);
+                return Observable.merge<BeaconResponse>(...obs);
             }).share();
 
         this.subs.push(this.queue.subscribe((id) => {

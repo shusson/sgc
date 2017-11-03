@@ -9,7 +9,7 @@ import { EnsemblService } from '../../../services/ensembl-service';
 import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Chromosome } from '../../../model/chromosome';
 
 describe('Component: Genome Browser', () => {

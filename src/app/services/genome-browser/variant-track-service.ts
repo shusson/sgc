@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Variant, HOMOZYGOTES_KEY, HETEROZYGOTES_KEY } from '../../model/variant';
 import * as d3 from 'd3';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { CttvService } from '../cttv-service';
 import { VariantSearchService } from '../variant-search-service';
 import { Region } from '../../model/region';

@@ -4,7 +4,7 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { GenomeBrowserComponent } from '../genome-browser/genome-browser.component';
 import { AlleleFreqComponent } from '../allele-freq/allele-freq.component';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { GenomeBrowserResizeComponent } from '../genome-browser-resizable/genome-browser-resizable.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';

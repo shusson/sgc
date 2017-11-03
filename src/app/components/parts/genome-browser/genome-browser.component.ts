@@ -7,7 +7,7 @@ import { VariantTrackService } from '../../../services/genome-browser/variant-tr
 import { TranscriptTrackService } from '../../../services/genome-browser/transcript-track-service';
 import { environment } from '../../../../environments/environment';
 import { Variant } from '../../../model/variant';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { EnsemblService } from '../../../services/ensembl-service';
 import * as tnt from 'tnt.genome';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Gene } from '../../model/gene';
 import { AutocompleteResult } from '../../model/autocomplete-result';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { GeneAutocomplete } from '../../model/gene-autocomplete';
 import { AutocompleteService } from './autocomplete-service';
 import { Chromosome } from '../../model/chromosome';

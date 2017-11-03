@@ -8,7 +8,7 @@ import { MockVariantSearchService } from '../../../mocks/variant-search-service.
 import { SearchBarService } from '../../../services/search-bar-service';
 import { RegionInformationComponent } from './region-information.component';
 import { RegionService } from '../../../services/autocomplete/region-service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 describe('RegionInformationComponent', () => {
     let component: RegionInformationComponent;

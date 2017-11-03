@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Variant } from '../model/variant';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export const VSAL_VARIANT_LIMIT = 10000;
 export const VSAL_TIMEOUT = 20000;

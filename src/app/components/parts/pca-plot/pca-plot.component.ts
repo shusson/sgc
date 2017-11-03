@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import * as Papa from 'papaparse';
+import { AfterViewInit, Component, Input } from '@angular/core';
+import * as Highcharts from 'highcharts';
 import { HttpClient } from '@angular/common/http';
-
+import { Observable } from 'rxjs/Observable';
+import * as Papa from 'papaparse'
 
 const PLOT_WIDTH = window.innerWidth <= 500 ? 320 : 500;
 const PLOT_HEIGHT = window.innerWidth <= 500 ? 300 : 400;
@@ -12,16 +12,19 @@ const PLOT_HEIGHT = window.innerWidth <= 500 ? 300 : 400;
     templateUrl: './pca-plot.component.html',
     styleUrls: ['./pca-plot.component.css']
 })
-export class PcaPlotComponent {
-
+export class PcaPlotComponent implements AfterViewInit {
+    @Input() name = '';
     @Input() title: string;
     @Input() axis: [string, string];
 
     options: any;
-    chart: Highcharts.ChartObject;
+    chart: any;
     loaded = false;
 
     constructor(private http: HttpClient) {
+    }
+
+    ngAfterViewInit(): void {
 
         this.options = {
             chart: {
@@ -80,17 +83,9 @@ export class PcaPlotComponent {
             }
 
         };
-    }
 
-    saveInstance(chartInstance: any) {
-        this.chart = chartInstance;
+        this.chart = Highcharts.chart(this.name, this.options);
         this.update();
-    }
-
-    clearSeries() {
-        while (this.chart.series.length > 0) {
-            this.chart.series[0].remove(false);
-        }
     }
 
     getData(): Observable<any> {
@@ -103,7 +98,7 @@ export class PcaPlotComponent {
         const points: PCAData[] = tsv.data;
         const series: any = {};
 
-        for (let d of points) {
+        for (const d of points) {
             if (!d.SuperPopulation) {
                 continue;
             }
@@ -157,7 +152,7 @@ export class PcaPlotComponent {
     }
 
     loadPcaData(series: any) {
-        for (let k of Object.keys(series)) {
+        for (const k of Object.keys(series)) {
             if (k === 'MGRB') {
                 continue;
             }
