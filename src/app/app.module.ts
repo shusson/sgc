@@ -131,8 +131,9 @@ export class RavenErrorHandler implements ErrorHandler {
     }
 }
 
-LogRocket.init(environment.logrocket);
-
+if (environment.production) {
+    LogRocket.init(environment.logrocket);
+}
 
 @NgModule({
     imports: [

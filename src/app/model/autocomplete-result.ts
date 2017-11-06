@@ -4,17 +4,18 @@ import { AutocompleteService } from '../services/autocomplete/autocomplete-servi
 import { SearchOption } from './search-option';
 import { Region } from './region';
 
-export abstract class AutocompleteResult<T> {
+export abstract class GenericAutocompleteResult<T> {
     constructor(public result: T,
                 public symbol: string,
                 public description: string,
-                public autocompleteService: AutocompleteService<T>) {
+                public autocompleteService: AutocompleteService<T>) {};
 
-    };
-
-    abstract search(vsal: VariantSearchService, options: SearchOption[]): Promise<Variant[]>;
-    abstract region(): Promise<Region>;
     abstract displayName(): string;
     abstract categoryName(): string;
     abstract match(query: string): boolean;
+}
+
+export abstract class VariantAutocompleteResult<T> extends GenericAutocompleteResult<T> {
+    abstract search(vsal: VariantSearchService, options: SearchOption[]): Promise<Variant[]>;
+    abstract region(): Promise<Region>;
 }

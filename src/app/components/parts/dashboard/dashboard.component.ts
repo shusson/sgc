@@ -12,7 +12,7 @@ import * as Raven from 'raven-js';
 import { environment } from '../../../../environments/environment';
 import { ChartsService, ChartType } from '../../../services/charts.service';
 import { Region } from '../../../model/region';
-import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
 import { Dimension, BasicFilter, DimensionFilter, MapdFilterService } from '../../../services/mapd-filter.service';
@@ -21,6 +21,9 @@ import { VariantsTablePaginatedComponent } from '../variants-table-paginated/var
 import { GeneListOptionService } from '../../../services/gene-list-option.service';
 import { GeneList, GeneListsService } from '../../../services/autocomplete/gene-lists-service';
 import { AddGeneListDialogComponent } from '../add-gene-list-dialog/add-gene-list-dialog.component';
+import { RsidAutocomplete } from '../../../model/rsid-autocomplete';
+import { RsidService } from '../../../services/autocomplete/rsid-service';
+import { Rsid } from '../../../model/rsid';
 
 const SMALL_WIDTH = 720;
 
@@ -34,7 +37,8 @@ const SMALL_WIDTH = 720;
         ChartsService,
         MapdFilterService,
         GeneListsService,
-        GeneListOptionService],
+        GeneListOptionService,
+        RsidService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -62,7 +66,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
                 public cs: ChartsService,
-                public glos: GeneListOptionService) {
+                public glos: GeneListOptionService,
+                public rsids: RsidService) {
+        this.searchBarService.autocompleteServices.push(rsids);
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
                 Raven.captureMessage(e);
@@ -121,7 +127,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.cf.mfs.clearFilters();
 
-        this.searchBarService.searchWithParams(obj).then((v: AutocompleteResult<Gene | Region | Position>) => {
+        this.searchBarService.searchWithParams(obj).then((v: GenericAutocompleteResult<Gene | Region | Position | Rsid>) => {
             if (!v) {
                 return;
             }
@@ -139,6 +145,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             } else if (v.result instanceof Position) {
                 const p = (<Position>v.result);
                 const f = new BasicFilter(`chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`);
+                this.cf.mfs.addFilter(f);
+            } else if (v.result instanceof Rsid) {
+                const f = new BasicFilter(`rsid='${v.result.name()}'`);
                 this.cf.mfs.addFilter(f);
             }
 

@@ -1,13 +1,13 @@
 
 import { Variant } from './variant';
-import { AutocompleteResult } from './autocomplete-result';
+import { GenericAutocompleteResult } from './autocomplete-result';
 import { Gene } from './gene';
 import { VariantSearchService } from '../services/variant-search-service';
 import { SearchOption } from './search-option';
 import { SearchQuery } from './search-query';
 import { Region } from './region';
 
-export class GeneAutocomplete extends AutocompleteResult<Gene> {
+export class GeneAutocomplete extends GenericAutocompleteResult<Gene> {
 
     search(vsal: VariantSearchService, options: SearchOption[]): Promise<Variant[]> {
         return this.autocompleteService.getDetails(this).toPromise().then((gene: Gene) => {
