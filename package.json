@@ -39,6 +39,7 @@
     "highcharts": "^6.0.2",
     "js-worker-search": "^1.1.2",
     "jwt-decode": "^2.2.0",
+    "logrocket": "^0.5.6",
     "mapbox-gl": "https://github.com/mapd/mapbox-gl-js/tarball/9c04de6949fe498c8c79f5c0627dfd6d6321f307",
     "ngx-pagination": "3.0.1",
     "papaparse": "^4.1.2",

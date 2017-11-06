@@ -105,12 +105,18 @@ import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pi
 import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
 import { FilterDialogueComponent } from './components/parts/filter-dialogue/filter-dialogue.component';
 import { AddGeneListDialogComponent } from './components/parts/add-gene-list-dialog/add-gene-list-dialog.component';
+import * as LogRocket from 'logrocket';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
 Raven
     .config(environment.sentryUrl)
     .install();
+
+Raven.setDataCallback(function (data) {
+    data.extra.sessionURL = LogRocket.sessionURL;
+    return data;
+});
 
 export class RavenErrorHandler implements ErrorHandler {
     handleError(err: any): void {
@@ -124,6 +130,9 @@ export class RavenErrorHandler implements ErrorHandler {
         }
     }
 }
+
+LogRocket.init(environment.logrocket);
+
 
 @NgModule({
     imports: [
