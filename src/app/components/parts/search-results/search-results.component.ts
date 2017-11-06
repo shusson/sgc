@@ -5,7 +5,7 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { Subscription } from 'rxjs/Subscription';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { SearchBarService } from '../../../services/search-bar-service';
-import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { VariantAutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Region } from '../../../model/region';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
     providers: [VariantSearchService, VariantTrackService]
 })
 export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit {
-    @Input() autocomplete: AutocompleteResult<any>;
+    @Input() autocomplete: VariantAutocompleteResult<any>;
     @Output() errorEvent = new EventEmitter();
     showClin = false;
     public variants: Variant[] = [];

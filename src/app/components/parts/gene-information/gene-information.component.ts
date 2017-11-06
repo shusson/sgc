@@ -7,7 +7,7 @@ import { Region } from '../../../model/region';
 import { VariantRequest } from '../../../model/variant-request';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Subscription } from 'rxjs/Subscription';
-import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 
 @Component({
     selector: 'app-gene-information',
@@ -16,7 +16,7 @@ import { AutocompleteResult } from '../../../model/autocomplete-result';
 })
 export class GeneInformationComponent implements OnInit {
     @Input() variants: Variant[];
-    @Input() autocomplete: AutocompleteResult<Gene>;
+    @Input() autocomplete: GenericAutocompleteResult<Gene>;
 
     constructor(public searchService: VariantSearchService,
                 public searchBarService: SearchBarService) {

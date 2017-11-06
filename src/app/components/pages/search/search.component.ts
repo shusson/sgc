@@ -3,7 +3,7 @@ import { Auth } from '../../../services/auth-service';
 import { Subscription } from 'rxjs/Subscription';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
-import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.component';
@@ -17,7 +17,7 @@ import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.c
 export class SearchComponent implements OnDestroy {
     subscriptions: Subscription[] = [];
     sbSub: Subscription = null;
-    autocomplete: AutocompleteResult<any>;
+    autocomplete: GenericAutocompleteResult<any>;
     error = '';
     searching = false;
     sb: MatSnackBarRef<SnackbarDemoComponent> = null;
