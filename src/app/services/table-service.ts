@@ -21,9 +21,8 @@ export class TableService {
         'tgpAF': (v: Variant) => v.tgpAF,
         'hrcAF': (v: Variant) => v.hrcAF,
         'GnomadAF': (v: Variant) => v.gnomadAF,
-        'feature': (v: Variant) => v.feature,
         'consequences': (v: Variant) => v.consequences,
-        'gene': (v: Variant) => v.gene,
+        'gene': (v: Variant) => v.geneSymbol,
         'clinvar': (v: Variant) => v.clinvar
     };
 
@@ -42,7 +41,6 @@ export class TableService {
         ['polyPhen', false],
         ['tgpAF', false],
         ['hrcAF', false],
-        ['feature', false],
         ['consequences', true],
         ['gene', false],
         ['clinvar', false],
@@ -73,9 +71,8 @@ export class TableService {
         'tgpAF': (v: Variant) => v.tgpAF,
         'hrcAF': (v: Variant) => v.hrcAF,
         'GnomadAF': (v: Variant) => v.gnomadAF,
-        'feature': (v: Variant) => v.feature ? v.feature : '',
         'consequences': (v: Variant) => v.consequences ? v.consequences : '',
-        'gene': (v: Variant) => v.gene ? v.gene : '',
+        'gene': (v: Variant) => v.geneSymbol ? v.geneSymbol : '',
         'clinvar': (v: Variant) => v.clinvar ? v.clinvar : ''
     };
 
@@ -160,7 +157,6 @@ export class TableService {
             ['tgpAF', false],
             ['hrcAF', false],
             ['gnomadAF', false],
-            ['feature', false],
             ['consequences', false],
             ['gene', false],
             ['clinvar', false]

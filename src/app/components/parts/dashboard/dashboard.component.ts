@@ -134,9 +134,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             if (v.result instanceof Gene) {
                 const f = new DimensionFilter();
                 f.dimension = new Dimension();
-                f.dimension.name = 'gene';
+                f.dimension.name = 'geneSymbol';
                 f.operator = '=';
-                f.value = v.result.id;
+                f.value = v.result.symbol;
                 this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Region) {
                 const r = (<Region>v.result);

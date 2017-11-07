@@ -107,9 +107,8 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
                 'tgpAF': v.tgpAF,
                 'hrcAF': v.hrcAF,
                 'gnomadAF': v.gnomadAF,
-                'feature': v.feature,
                 'consequences': v.consequences,
-                'gene': v.gene,
+                'gene': v.geneSymbol,
                 'clinvar': v.clinvar
             };
         });
