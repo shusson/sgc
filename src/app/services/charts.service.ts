@@ -51,7 +51,7 @@ export class ChartsService {
         }, false),
         new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
         new Chart("Sift", "sift", ChartType.Pie, null, false),
-        new Chart("Top 100 Genes", "gene", ChartType.Row, null, false, 100),
+        new Chart("Top 100 Genes", "geneSymbol", ChartType.Row, null, false, 100),
         new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 12,
