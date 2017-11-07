@@ -23,6 +23,6 @@ export class PositionService extends RegionService {
     }
 
     protected parseQuery(query: string) {
-        return /^([\dxXyY]+)[:\-\.,\\/](\d+)$/.exec(query);
+        return /^([\dxXyY]+)[:\-\.,\\/](\d+).*$/.exec(query);
     }
 }
