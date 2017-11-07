@@ -29,15 +29,12 @@ export class Variant {
     cato: number;
     eigen: number;
     sift: string;
-    hgbsc: string;
-    hgvsp: string;
     polyPhen: string;
     tgpAF: string;
     hrcAF: string;
     gnomadAF: string;
-    feature: string;
     consequences: string;
-    gene: string;
+    geneSymbol: string;
     clinvar: string;
 
     static dbSnpUrl(variant: Variant) {
