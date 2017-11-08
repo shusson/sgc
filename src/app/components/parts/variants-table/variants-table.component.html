@@ -57,8 +57,9 @@
 <mat-menu #tableSettings="matMenu">
     <div mat-menu-item (click)="toggleScales($event)">
         <mat-slide-toggle
-            [(ngModel)]="ts.showScales"
-            [checked]="ts.showScales">
+            [checked]="ts.showScales"
+            (change)="ts.showScales = $event.checked"
+            (click)="$event.stopPropagation()">
             Show AF on a discrete scale
         </mat-slide-toggle>
     </div>
@@ -67,7 +68,7 @@
 
 <mat-menu class="custom-mat-short-column" #activeColumns="matMenu">
     <div mat-menu-item *ngFor="let key of ts.keys()" (click)="activateColumn($event, key)">
-        <mat-slide-toggle [checked]="ts.get(key)">{{ key }}
+        <mat-slide-toggle [checked]="ts.get(key)" (change)="ts.set(key, $event.checked)" (click)="$event.stopPropagation()">{{ key }}
         </mat-slide-toggle>
     </div>
 </mat-menu>
