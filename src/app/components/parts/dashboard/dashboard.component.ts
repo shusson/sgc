@@ -147,7 +147,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 const f = new BasicFilter(`chromosome='${p.chromosome}' AND c3_START >= ${p.start} AND c3_START <= ${p.end}`);
                 this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Rsid) {
-                const f = new BasicFilter(`rsid='${v.result.name()}'`);
+                const f = new BasicFilter(`rsid='${v.result.name().toLowerCase()}'`);
                 this.cf.mfs.addFilter(f);
             }
 

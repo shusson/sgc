@@ -91,7 +91,7 @@
                         <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
                     </div>
                 </div>
-                <div class="table" *ngIf="cf.x">
+                <div class="table" *ngIf="subtotal > 0">
                     <app-variants-table-paginated #table></app-variants-table-paginated>
                 </div>
             </div>
