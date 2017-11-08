@@ -2,6 +2,7 @@
 <mat-sidenav-container>
     <main id="main-scroll" (scroll)="updateScroll($event)">
         <div class="main-content">
+            <div *ngIf="showBanner" class="banner-notification">The beta release of the MGRB data containing 2845 samples is now available. Please treat data with caution.</div>
             <ng-content></ng-content>
         </div>
         <app-privacy-footer *ngIf="showPrivacy"></app-privacy-footer>

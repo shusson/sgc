@@ -1,4 +1,4 @@
-<app-page-container>
+<app-page-container [showBanner]="true">
     <section>
         <div class="message message-error" *ngIf="error">{{ error }}</div>
         <div class="loading-message" *ngIf="loading && !error">
