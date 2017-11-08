@@ -33,21 +33,25 @@
             </mat-expansion-panel-header>
             <div class="side-list">
                 <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
-                    <mat-slide-toggle [checked]="c.enabled">{{ c.name }}
+                    <mat-slide-toggle [checked]="c.enabled" (change)="c.enabled = $event.checked" (click)="$event.stopPropagation()">
+                        {{ c.name }}
                     </mat-slide-toggle>
                 </div>
             </div>
         </mat-expansion-panel>
         <div mat-menu-item (click)="toggleSql($event)">
-            <mat-slide-toggle
-                [checked]="showSql">
+            <mat-slide-toggle [checked]="showSql" (change)="showSql=$event.checked" (click)="$event.stopPropagation()">
                 Show SQL
             </mat-slide-toggle>
         </div>
+        <div mat-menu-item (click)="toggleNullValues($event)">
+            <mat-slide-toggle [checked]="cs.showNullValues" (change)="updateNullValues($event)" (click)="$event.stopPropagation()">
+                Show NULL values
+            </mat-slide-toggle>
+        </div>
         <button mat-menu-item (click)="downloadVariants()">Download Variants</button>
-        <button mat-menu-item (click)="openFeedback()">
-            Give feedback
-        </button>
+        <button mat-menu-item (click)="openFeedback()">Give feedback</button>
+
     </mat-sidenav>
     <div class="main">
         <div class="message message-error search" *ngIf="searchError">
@@ -69,7 +73,8 @@
             </div>
             <div class="message message-warning">
                 <mat-icon>help_outline</mat-icon>
-                <div *ngIf="!isSmallScreen()">While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
+                <div *ngIf="!isSmallScreen()">While in Beta please treat data with caution and any <a
+                    (click)="openFeedback()">feedback</a> is
                     appreciated
                 </div>
                 <div *ngIf="isSmallScreen()">While in Beta please treat data with caution</div>
@@ -84,7 +89,7 @@
                     <mat-icon>info_outline</mat-icon>
                     No variants found for your query. Please widen your search.
                 </div>
-                <div class="charts" *ngIf="subtotal > 0">
+                <div class="charts" *ngIf="subtotal > 0 && !loading">
                     <div class="chart" *ngFor="let c of cs.enabledCharts()">
                         <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
                         <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>

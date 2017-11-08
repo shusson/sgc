@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { Region } from '../../../model/region';
 
 const SMALL_WIDTH = 740;
-const LARGE_WIDTH = window.innerWidth / 1.3;
+const LARGE_WIDTH = window.innerWidth > 2000 ? 1200 : window.innerWidth / 1.3;
 const LARGE_HEIGHT = 150;
 const RANGE_HEIGHT = 70;
 const MAX_BOUNDS = 249240280;

@@ -78,3 +78,22 @@ mat-sidenav-container mat-expansion-panel {
 .chart {
     margin: 0 1.5rem 0 1.5rem;
 }
+
+.side-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.side-item {
+    width: 100%;
+    padding: 1rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.side-item:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+}

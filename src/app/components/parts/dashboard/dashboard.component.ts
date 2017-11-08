@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MapdService } from '../../../services/mapd.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
-import { MatDialog } from '@angular/material';
+import { MatCheckboxChange, MatDialog } from '@angular/material';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { Subject } from 'rxjs/Subject';
 import * as Raven from 'raven-js';
@@ -167,6 +167,23 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     toggleSql($event) {
         $event.stopPropagation();
         this.showSql = !this.showSql;
+    }
+
+    toggleNullValues($event) {
+        $event.stopPropagation();
+        this.cs.showNullValues = !this.cs.showNullValues
+        this.loading = true;
+        this.cd.detectChanges();
+        this.loading = false;
+        this.cd.detectChanges();
+    }
+
+    updateNullValues(v: MatCheckboxChange) {
+        this.cs.showNullValues = v.checked;
+        this.loading = true;
+        this.cd.detectChanges();
+        this.loading = false;
+        this.cd.detectChanges();
     }
 
     toggleChart($event, chart) {

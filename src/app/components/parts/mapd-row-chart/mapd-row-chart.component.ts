@@ -26,7 +26,7 @@ export class MapdRowChartComponent implements AfterViewInit {
             this.error = 'This chart could not be displayed';
             return;
         }
-        const dim = this.cfs.x.dimension(this.chart.dimension);
+        const dim = this.cfs.x.dimension(this.chart.dimension).setEliminateNull(!this.cs.showNullValues);
         const group = this.chart.group(dim).reduceCount();
         const chart = this.cs.setChart(this.chart.dimension, dc.rowChart(`#${this.chart.dimension}`)
             .width(SMALL_WIDTH)

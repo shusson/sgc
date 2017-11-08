@@ -34,6 +34,7 @@ class SerializedChart {
 
 @Injectable()
 export class ChartsService {
+    showNullValues = false;
     charts = [
         new Chart("Avg AF", "AF", ChartType.Custom),
         new Chart("Reference", "c4_REF", ChartType.Pie),
