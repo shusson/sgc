@@ -16,8 +16,7 @@
         [loadingIndicator]="loading">
         <ngx-datatable-column name="Variant" prop="VARIANT">
             <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                <a *ngIf="row.TYPE === 'SNP'" target="_blank" [href]="variantUrl(value)">{{value}}</a>
-                <span *ngIf="row.TYPE !== 'SNP'">{{value}}</span>
+                <a target="_blank" [href]="variantUrl(value)">{{value}}</a>
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Type" prop="TYPE"></ngx-datatable-column>
