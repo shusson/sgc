@@ -1,16 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
+import * as Highcharts from 'highcharts';
 
 @Component({
     selector: 'app-pie-chart',
     template: `
-        <chart *ngIf="this.options" [options]="options" (load)="saveInstance($event.context)">
-            <series>
-                <point (click)="onPointSelect($event)"></point>
-            </series>
-        </chart>
+        <div></div>
     `
 })
-export class PieChartComponent implements OnInit {
+export class PieChartComponent implements AfterViewInit {
     @Input() title: string;
     @Input() data: number[];
     @Input() width: string;
@@ -20,9 +17,9 @@ export class PieChartComponent implements OnInit {
     options: any;
     chart: any;
 
-    constructor() {}
+    constructor(private elf: ElementRef) {}
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.options = {
             chart: {
                 width: 100,
@@ -62,13 +59,8 @@ export class PieChartComponent implements OnInit {
                 }
             }
         };
-    }
 
-    onPointSelect(e: any) {
-    }
-
-    saveInstance(chartInstance: any) {
-        this.chart = chartInstance;
+        this.chart = Highcharts.chart(this.elf.nativeElement, this.options);
         this.update();
     }
 

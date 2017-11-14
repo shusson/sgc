@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { constants } from '../app.constants';
 import Auth0Lock from 'auth0-lock';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from '../components/parts/error-dialog/error-dialog.component';
 import * as jwtDecode from 'jwt-decode';
+import * as LogRocket from 'logrocket';
 
 export const expiredAtKey = 'expired_at';
+export const uidKey = 'uid';
 export const cannyKey = 'canny_token';
 
 @Injectable()
@@ -32,7 +34,7 @@ export class Auth {
     });
 
     constructor(private router: Router,
-                public dialog: MdDialog) {
+                public dialog: MatDialog) {
 
         this.lock.on('authenticated', (authResult: any) => {
             try {
@@ -40,6 +42,9 @@ export class Auth {
                     this.setSession(authResult);
                 }
             } catch (e) {
+                if (!environment.production) {
+                    console.log(e)
+                }
                 window.setTimeout(() => {
                     this.dialog.open(
                         ErrorDialogComponent,
@@ -50,8 +55,7 @@ export class Auth {
         });
 
         this.lock.on('unrecoverable_error', (authResult: any) => {
-            localStorage.removeItem(expiredAtKey);
-            localStorage.removeItem(cannyKey);
+            this.clearLocalStorage();
             window.setTimeout(() => {
                 this.dialog.open(
                     ErrorDialogComponent,
@@ -59,6 +63,8 @@ export class Auth {
                 );
             }, 100);
         });
+
+        LogRocket.identify(localStorage.getItem(uidKey));
 
     }
 
@@ -96,19 +102,26 @@ export class Auth {
     };
 
     public logout() {
-        localStorage.removeItem(expiredAtKey);
-        localStorage.removeItem(cannyKey);
+        this.clearLocalStorage();
         window.location.href = `https://${ environment.auth0Domain }/v2/logout?returnTo=${ constants.ORIGIN_URL }`;
     };
 
     private setSession(authResult): void {
         const idToken = jwtDecode(authResult.idToken);
         localStorage.setItem(cannyKey, idToken['http://sgc/cannyToken']);
+        localStorage.setItem(uidKey, authResult.idTokenPayload.email);
         const expiresAt = JSON.stringify(idToken.exp * 1000);
+        LogRocket.identify(localStorage.getItem(uidKey));
         localStorage.setItem(expiredAtKey, expiresAt);
         window.setTimeout(() => {
             this.router.navigateByUrl(decodeURIComponent(authResult.state));
         }, 100);
+    }
+
+    clearLocalStorage() {
+        localStorage.removeItem(expiredAtKey);
+        localStorage.removeItem(cannyKey);
+        localStorage.removeItem(uidKey);
     }
 
     cannyToken(): string {

@@ -153,3 +153,7 @@ rect.tnt_pane {
     min-height: 600px;
     width: 100%;
 }
+
+.custom-mat-short-column {
+    max-height: 300px !important;
+}

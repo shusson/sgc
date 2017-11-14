@@ -4,10 +4,12 @@
         <app-filter-auto [variants]="variants" (output)="onFilter($event)"></app-filter-auto>
 
         <div class="options">
-            <span *ngIf="!columnService.activeColumns().length">Select columns to view</span>
-            <app-columns-menu></app-columns-menu>
-            <i (click)="downloadFile()" md-tooltip="Download Variants (CSV)" mdTooltipPosition="above"
+            <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
+            <i (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
                class="material-icons">file_download</i>
+            <i *ngIf="showSettings" [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
+                settings
+            </i>
         </div>
     </div>
 
@@ -15,8 +17,8 @@
         <table>
             <tbody>
             <tr>
-                <th *ngFor="let key of columnService.activeColumns()" (click)="sortVariants(key)">
-                    <span md-tooltip="{{ columnService.tooltip(key) }}" mdTooltipPosition="above">{{ key }}</span>
+                <th *ngFor="let key of ts.activeColumns()" (click)="sortVariants(key)">
+                    <span matTooltip="{{ ts.tooltip(key) }}" matTooltipPosition="above">{{ key }}</span>
                     <i class="material-icons">code</i>
 
                 </th>
@@ -26,13 +28,16 @@
                 (mouseover)="highlightVariant(variant)"
                 (mouseout)="unHighlightVariant(variant)">
 
-                <td *ngFor="let label of columnService.activeColumns()">
+                <td *ngFor="let label of ts.activeColumns()">
 
-                    <span *ngIf="label !== 'Allele Scale' && label !== 'Location'"
-                          class="value">{{ columnService.display(label, variant) }}</span>
-                    <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ columnService.display(label, variant) }}</a>
-                    <app-allele-freq *ngIf="label === 'Allele Scale' && variant.variantStats[0]"
-                                     [freq]="variant.variantStats[0].altAlleleFreq"></app-allele-freq>
+                    <span *ngIf="label !== 'Allele Freq' && label !== 'GnomadAF' && label !== 'Location'"
+                          class="value">{{ ts.display(label, variant) }}</span>
+                    <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ ts.display(label, variant) }}</a>
+                    <app-allele-freq *ngIf="label === 'Allele Freq'"
+                                     [freq]="variant.AF"></app-allele-freq>
+                    <app-allele-freq *ngIf="label === 'GnomadAF'"
+                                     [freq]="variant.gnomadAF" color="seagreen"></app-allele-freq>
+
                 </td>
             </tr>
             </tbody>
@@ -48,3 +53,22 @@
         <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>
 </div>
+
+<mat-menu #tableSettings="matMenu">
+    <div mat-menu-item (click)="toggleScales($event)">
+        <mat-slide-toggle
+            [checked]="ts.showScales"
+            (change)="ts.showScales = $event.checked"
+            (click)="$event.stopPropagation()">
+            Show AF on a discrete scale
+        </mat-slide-toggle>
+    </div>
+    <button mat-menu-item [matMenuTriggerFor]="activeColumns">Show/Hide Columns</button>
+</mat-menu>
+
+<mat-menu class="custom-mat-short-column" #activeColumns="matMenu">
+    <div mat-menu-item *ngFor="let key of ts.keys()" (click)="activateColumn($event, key)">
+        <mat-slide-toggle [checked]="ts.get(key)" (change)="ts.set(key, $event.checked)" (click)="$event.stopPropagation()">{{ key }}
+        </mat-slide-toggle>
+    </div>
+</mat-menu>

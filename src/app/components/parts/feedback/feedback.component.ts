@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth } from '../../../services/auth-service';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'app-feedback',
@@ -8,7 +8,7 @@ import { MdDialogRef } from '@angular/material';
     styleUrls: ['./feedback.component.css'],
 })
 export class FeedbackComponent implements OnInit {
-    constructor(public dialogRef: MdDialogRef<FeedbackComponent>,
+    constructor(public dialogRef: MatDialogRef<FeedbackComponent>,
                 private auth: Auth) {
     }
 

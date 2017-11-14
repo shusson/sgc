@@ -4,7 +4,7 @@ import { RegionService } from './autocomplete/region-service';
 import { Router } from '@angular/router';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { ElasticGeneSearch } from './autocomplete/elastic-gene-search-service';
 import { PositionService } from './autocomplete/position-service';
 

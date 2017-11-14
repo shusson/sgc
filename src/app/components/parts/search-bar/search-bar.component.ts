@@ -2,10 +2,11 @@ import {
     Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitter, OnDestroy,
     ChangeDetectorRef
 } from '@angular/core';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { SearchBarService } from '../../../services/search-bar-service';
-import { AutocompleteResult } from '../../../model/autocomplete-result';
-import { Router } from '@angular/router';
+import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 
 export class SearchBarOptions {
     autofocus = false;
@@ -24,8 +25,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     @Output() focused = new EventEmitter();
     loading = false;
     selectedIndex = 0;
-    autocompleteResults: AutocompleteResult<any>[] = [];
-    private searchResults: Observable<AutocompleteResult<any>[]>;
+    autocompleteResults: GenericAutocompleteResult<any>[] = [];
+    private searchResults: Observable<GenericAutocompleteResult<any>[]>;
     private searchTerms: Subject<string> = new Subject<string>();
     private subscriptions: Subscription[] = [];
 
@@ -59,7 +60,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             })
             .share();
 
-        this.subscriptions.push(this.searchResults.subscribe((results: AutocompleteResult<any>[]) => {
+        this.subscriptions.push(this.searchResults.subscribe((results: GenericAutocompleteResult<any>[]) => {
             this.selectedIndex = 0;
             this.autocompleteResults = results;
             this.loading = false;
@@ -92,7 +93,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         this.searchTerms.next(query);
     }
 
-    search(event: Event, searchBox: HTMLInputElement, result: AutocompleteResult<any>) {
+    search(event: Event, searchBox: HTMLInputElement, result: GenericAutocompleteResult<any>) {
         event.stopPropagation();
         event.preventDefault();
         searchBox.blur();

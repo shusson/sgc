@@ -1,8 +1,8 @@
-<app-page-container>
+<app-page-container [showBanner]="true">
     <section>
         <div class="message message-error" *ngIf="error">{{ error }}</div>
         <div class="loading-message" *ngIf="loading && !error">
-            <md-spinner color="primary"></md-spinner>
+            <mat-spinner color="primary"></mat-spinner>
         </div>
         <div *ngIf="variant" class="details">
             <div class="title">
@@ -64,7 +64,7 @@
                                     <span>Type:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.type }}</span>
+                                    <span>{{ variant.altType }}</span>
                                 </div>
                             </div>
 
@@ -73,7 +73,7 @@
                                     <span>Frequency:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span *ngIf="variant.variantStats[0]">{{ variant.variantStats[0].altAlleleFreq.toExponential(4) }}</span>
+                                    <span *ngIf="variant.AF">{{ variant.AF.toExponential(4) }}</span>
                                 </div>
                             </div>
 
@@ -115,7 +115,7 @@
                     <div class="beacon">
                         <div *ngIf="!beaconSupported">Not supported (SNP only)</div>
                         <div class="loading-message" *ngIf="beaconSupported && !beacons.totalCount() && !beaconError">
-                            <md-spinner color="primary"></md-spinner>
+                            <mat-spinner color="primary"></mat-spinner>
                         </div>
                         <div class="message message-error" *ngIf="beaconError">{{ beaconError }}</div>
                         <div class="card" *ngIf="beaconSupported && beacons.totalCount() && !beaconError">
@@ -127,11 +127,11 @@
                                     <span>beacons</span>
 
                                 </div>
-                                <md-icon *ngIf="!showBeacon">keyboard_arrow_down</md-icon>
-                                <md-icon *ngIf="showBeacon">keyboard_arrow_up</md-icon>
+                                <mat-icon *ngIf="!showBeacon">keyboard_arrow_down</mat-icon>
+                                <mat-icon *ngIf="showBeacon">keyboard_arrow_up</mat-icon>
                             </div>
-                            <md-progress-bar [mode]="'determinate'"
-                                             [value]="beacons.percentComplete()"></md-progress-bar>
+                            <mat-progress-bar [mode]="'determinate'"
+                                             [value]="beacons.percentComplete()"></mat-progress-bar>
 
                             <app-beacon-table *ngIf="showBeacon && beacons" [beacons]="beacons" [minimal]="true"
                                               [limit]="10"></app-beacon-table>
@@ -151,8 +151,8 @@
                                     <span class="highlight-number">{{ consequences.types.length }}</span>
                                     <span>Consequences</span>
                                 </div>
-                                <md-icon *ngIf="!showConsequence">keyboard_arrow_down</md-icon>
-                                <md-icon *ngIf="showConsequence">keyboard_arrow_up</md-icon>
+                                <mat-icon *ngIf="!showConsequence">keyboard_arrow_down</mat-icon>
+                                <mat-icon *ngIf="showConsequence">keyboard_arrow_up</mat-icon>
                             </div>
                             <app-consequences [hidden]="!showConsequence" [variant]="variant"></app-consequences>
                         </div>
@@ -168,8 +168,8 @@
                                     <span class="highlight-number">{{ scores.scores.length }}</span>
                                     <span>Scores</span>
                                 </div>
-                                <md-icon *ngIf="!showScores">keyboard_arrow_down</md-icon>
-                                <md-icon *ngIf="showScores">keyboard_arrow_up</md-icon>
+                                <mat-icon *ngIf="!showScores">keyboard_arrow_down</mat-icon>
+                                <mat-icon *ngIf="showScores">keyboard_arrow_up</mat-icon>
                             </div>
                             <app-scores [hidden]="!showScores" [variant]="variant"></app-scores>
                         </div>
@@ -185,8 +185,8 @@
                                     <span class="highlight-number">{{ popFreq.studies.size }}</span>
                                     <span>Population studies</span>
                                 </div>
-                                <md-icon *ngIf="!showPopFreq">keyboard_arrow_down</md-icon>
-                                <md-icon *ngIf="showPopFreq">keyboard_arrow_up</md-icon>
+                                <mat-icon *ngIf="!showPopFreq">keyboard_arrow_down</mat-icon>
+                                <mat-icon *ngIf="showPopFreq">keyboard_arrow_up</mat-icon>
                             </div>
                             <app-pop-freqs [hidden]="!showPopFreq" [variant]="variant"></app-pop-freqs>
                         </div>

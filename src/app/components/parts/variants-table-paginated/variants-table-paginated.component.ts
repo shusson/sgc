@@ -4,6 +4,7 @@ import { CrossfilterService } from '../../../services/crossfilter.service';
 import { Variant } from '../../../model/variant';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import * as Papa from 'papaparse';
 
 @Component({
     selector: 'app-variants-table-paginated',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
-    variants: Variant[] = [];
+    variants = [];
     error = '';
     loading = true;
     subscriptions: Subscription[] = [];
@@ -31,6 +32,7 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getServerResult();
         this.subscriptions.push(this.cf.updates.debounceTime(500).subscribe(() => {
             this.offset = 0;
             this.getServerResult();
@@ -40,23 +42,22 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
     getServerResult() {
         this.loading = true;
         this.cd.detectChanges();
-        let fs = this.cf.x.getFilterString();
-        if (fs) {
-            fs = 'WHERE ' + fs;
-        }
-        this.mapd.session.query(`SELECT VARIANT, TYPE, AF, RSID FROM MGRB ${fs} LIMIT ${this.limit}`, {}, (error, data) => {
-            if (error) {
-                this.error = error;
-                return;
-            }
-            data.map((v) => {
-                v.RSID = v.RSID === '.' ?  '' : v.RSID;
-                return v;
+        const fs = this.cf.getFilterString();
+        this.mapd.session.query(`SELECT VARIANT, TYPE, AF, RSID, gnomadAF, clinvar, consequences FROM MGRB ${fs} LIMIT ${this.limit}`,
+            {},
+            (error, data) => {
+                if (error) {
+                    this.error = error;
+                    return;
+                }
+                data.map((v) => {
+                    v.RSID = v.RSID === '.' ?  '' : v.RSID;
+                    return v;
+                });
+                this.variants = data;
+                this.loading = false;
+                this.cd.detectChanges();
             });
-            this.variants = data;
-            this.loading = false;
-            this.cd.detectChanges();
-        });
     }
 
     ngOnDestroy() {
@@ -73,6 +74,24 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
 
     rsidUrl(v: string) {
         return `https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=${v}`;
+    }
+
+    downloadFile() {
+        const data = this.variants.map((v: any) => {
+            return {
+                'Variant': v.VARIANT,
+                'RSID': v.RSID,
+                'Type': v.TYPE,
+                'AF': v.AF,
+                'Gnomad_AF': v.gnomadAF,
+                'gnomadAF': v.gnomadAF,
+                'clinvar': v.clinvar,
+                'consequences': v.consequences
+            };
+        });
+        const csv = Papa.unparse(data);
+        const blob = new Blob([csv], {type: 'text/plain'});
+        saveAs(blob, 'mgrb_' + this.cf.getFilterString().replace(' ', '_') + '_' + new Date().getTime() + '.csv');
     }
 
 }

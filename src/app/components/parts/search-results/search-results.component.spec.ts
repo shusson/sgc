@@ -4,7 +4,7 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { GenomeBrowserComponent } from '../genome-browser/genome-browser.component';
 import { AlleleFreqComponent } from '../allele-freq/allele-freq.component';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { GenomeBrowserResizeComponent } from '../genome-browser-resizable/genome-browser-resizable.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
@@ -20,8 +20,7 @@ import { MaterialModule } from '../../../app.material';
 import { SearchResultsComponent } from './search-results.component';
 import { VariantsTableComponent } from '../variants-table/variants-table.component';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from '../columns-menu/columns-menu.component';
-import { ColumnService } from '../../../services/column-service';
+import { TableService } from '../../../services/table-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
 import { ClincalFilteringComponent } from '../clincal-filtering/clincal-filtering.component';
@@ -49,7 +48,6 @@ describe('Component: SearchResults', () => {
                 GeneInformationComponent,
                 RegionInformationComponent,
                 OverlayMenuComponent,
-                ColumnsMenuComponent,
                 FilterAutoComponent,
                 ClincalFilteringComponent,
                 ClinicalChartComponent
@@ -84,7 +82,7 @@ describe('Component: SearchResults', () => {
                     useValue: {}
                 },
                 {
-                    provide: ColumnService,
+                    provide: TableService,
                     useValue: {
                         activeColumns: (): any[] => []
                     }

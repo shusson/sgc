@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { VsalService } from './vsal-service';
 import { Variant } from '../model/variant';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { Region } from '../model/region';
@@ -50,7 +51,7 @@ export class VariantSearchService {
 
     getVariants(query: SearchQuery): Promise<Variant[]> {
         this.lastQuery = query;
-        let promise = new Promise((resolve, reject) => {
+        const promise = new Promise<Variant[]>((resolve, reject) => {
             this.results.take(1).subscribe(
                 (vr: VariantRequest) => {
                     if (vr.error) {

@@ -13,8 +13,7 @@ import { InitiativeService } from '../../../../services/project-data/initiative-
 import { MockInitiativeService } from '../../../../mocks/initiative.mock';
 import { CohortService } from '../../../../services/project-data/cohort-service';
 import { ScrollService } from '../../../../services/scroll-service';
-import { MdProgressBarModule, MdCheckboxModule } from '@angular/material';
-import { ChartModule } from 'angular2-highcharts';
+import { MatProgressBarModule, MatCheckboxModule } from '@angular/material';
 import { PageContainerComponent } from '../../../parts/page-container/page-container.component';
 import { HeaderNavComponent } from '../../../parts/header-nav/header-nav.component';
 import { SideNavComponent } from '../../../parts/side-nav/side-nav.component';
@@ -35,10 +34,9 @@ describe('GcmpComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
-                MdCheckboxModule,
-                MdProgressBarModule,
+                MatCheckboxModule,
+                MatProgressBarModule,
                 RouterModule,
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

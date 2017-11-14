@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { VariantRequest } from '../model/variant-request';
 
 export class MockVsalService {

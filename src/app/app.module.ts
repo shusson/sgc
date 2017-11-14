@@ -1,5 +1,24 @@
-import 'rxjs/Rx';
 import 'hammerjs';
+
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/reduce';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/observable/throw';
+
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +58,6 @@ import { SideNavComponent } from './components/parts/side-nav/side-nav.component
 import { EnsemblService } from './services/ensembl-service';
 import { GeneInformationComponent } from './components/parts/gene-information/gene-information.component';
 import { BeaconNetworkService } from './services/beacon/beacon-network-service';
-import { ChartModule } from 'angular2-highcharts';
 import { HomeFooterComponent } from './components/parts/home-footer/home-footer.component';
 import { HomeAboutComponent } from './components/parts/home-about/home-about.component';
 import { PrivacyFooterComponent } from './components/parts/privacy-footer/privacy-footer.component';
@@ -47,8 +65,7 @@ import { ElasticGeneSearch } from './services/autocomplete/elastic-gene-search-s
 import { VariantsTableComponent } from './components/parts/variants-table/variants-table.component';
 import { PositionService } from './services/autocomplete/position-service';
 import { OverlayMenuComponent } from './components/parts/overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from './components/parts/columns-menu/columns-menu.component';
-import { ColumnService } from './services/column-service';
+import { TableService } from './services/table-service';
 import { PcaPlotComponent } from './components/parts/pca-plot/pca-plot.component';
 import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -77,20 +94,29 @@ import { DashboardComponent } from './components/parts/dashboard/dashboard.compo
 import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
 import { FeedbackComponent } from './components/parts/feedback/feedback.component';
 import { ErrorDialogComponent } from './components/parts/error-dialog/error-dialog.component';
-import { SaveDialogComponent } from './components/parts/save-dialog/save-dialog.component';
-import { CompareDialogComponent } from './components/parts/compare-dialog/compare-dialog.component';
 import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
 import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
 import { SnackbarDemoComponent } from './components/parts/snackbar-demo/snackbar-demo.component';
 import { MaterialModule } from './app.material';
+import { MapdRowChartComponent } from './components/parts/mapd-row-chart/mapd-row-chart.component';
+import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pie-chart.component';
+import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
+import { FilterDialogueComponent } from './components/parts/filter-dialogue/filter-dialogue.component';
+import { AddGeneListDialogComponent } from './components/parts/add-gene-list-dialog/add-gene-list-dialog.component';
+import * as LogRocket from 'logrocket';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
 Raven
     .config(environment.sentryUrl)
     .install();
+
+Raven.setDataCallback(function (data) {
+    data.extra.sessionURL = LogRocket.sessionURL;
+    return data;
+});
 
 export class RavenErrorHandler implements ErrorHandler {
     handleError(err: any): void {
@@ -105,6 +131,10 @@ export class RavenErrorHandler implements ErrorHandler {
     }
 }
 
+if (environment.production) {
+    LogRocket.init(environment.logrocket);
+}
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -114,7 +144,6 @@ export class RavenErrorHandler implements ErrorHandler {
         HttpClientModule,
         NgxPaginationModule,
         NgxDatatableModule,
-        ChartModule,
         MaterialModule
     ],
     declarations: [
@@ -150,7 +179,6 @@ export class RavenErrorHandler implements ErrorHandler {
         PrivacyFooterComponent,
         VariantsTableComponent,
         OverlayMenuComponent,
-        ColumnsMenuComponent,
         PcaPlotComponent,
         FilterAutoComponent,
         PageContainerComponent,
@@ -173,18 +201,21 @@ export class RavenErrorHandler implements ErrorHandler {
         VariantsTablePaginatedComponent,
         FeedbackComponent,
         ErrorDialogComponent,
-        SaveDialogComponent,
-        CompareDialogComponent,
         StatsDetailsComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
-        SnackbarDemoComponent
+        SnackbarDemoComponent,
+        MapdRowChartComponent,
+        MapdPieChartComponent,
+        MapdAvgAfChartComponent,
+        FilterDialogueComponent,
+        AddGeneListDialogComponent
     ],
     entryComponents: [
         FeedbackComponent,
         ErrorDialogComponent,
-        SaveDialogComponent,
-        CompareDialogComponent,
+        FilterDialogueComponent,
+        AddGeneListDialogComponent,
         SnackbarDemoComponent
     ],
     providers: [
@@ -198,7 +229,7 @@ export class RavenErrorHandler implements ErrorHandler {
         ScrollService,
         EnsemblService,
         PositionService,
-        ColumnService,
+        TableService,
         DurlService,
         LocalStorageService,
         { provide: ErrorHandler, useClass: RavenErrorHandler },

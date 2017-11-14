@@ -1,11 +1,11 @@
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Auth } from '../../../services/auth-service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { SearchBarService } from '../../../services/search-bar-service';
-import { AutocompleteResult } from '../../../model/autocomplete-result';
+import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { MdSnackBar, MdSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.component';
 
 @Component({
@@ -17,16 +17,16 @@ import { SnackbarDemoComponent } from '../../parts/snackbar-demo/snackbar-demo.c
 export class SearchComponent implements OnDestroy {
     subscriptions: Subscription[] = [];
     sbSub: Subscription = null;
-    autocomplete: AutocompleteResult<any>;
+    autocomplete: GenericAutocompleteResult<any>;
     error = '';
     searching = false;
-    sb: MdSnackBarRef<SnackbarDemoComponent> = null;
+    sb: MatSnackBarRef<SnackbarDemoComponent> = null;
 
     constructor(public searchBarService: SearchBarService,
                 private auth: Auth,
                 private route: ActivatedRoute,
                 private cd: ChangeDetectorRef,
-                public snackBar: MdSnackBar,
+                public snackBar: MatSnackBar,
                 private router: Router) {
         if (!auth.authenticated()) {
             auth.lock.on('hide', () => {

@@ -1,139 +1,108 @@
 <div class="loading-message" *ngIf="loading && !error">
-    <md-spinner color="primary"></md-spinner>
-</div>
-<div class="search-jumbo" *ngIf="!error">
-    <app-search-bar-with-options [expandable]="true" [action]="addGeneOrRegion" [example1]="'BRCA1'" example2="22:16000000-17000000"></app-search-bar-with-options>
+    <mat-spinner color="primary"></mat-spinner>
 </div>
 
-<section>
-    <div class="message message-error search" *ngIf="searchError"><md-icon>error_outline</md-icon> {{ searchError }}. Please Try again</div>
-    <div class="message message-error" *ngIf="error"><md-icon>error_outline</md-icon> {{ error }}</div>
-    <div *ngIf="!error">
-        <div class="message message-warning">
-            <md-icon>help_outline</md-icon>
-            <div>While in Beta please treat data with caution and any <a (click)="openFeedback()">feedback</a> is
-                appreciated
+<mat-sidenav-container>
+    <mat-sidenav #sidenav
+                 mode="side"
+                 fixedInViewport="true"
+                 fixedTopGap="71"
+                 [opened]="!isSmallScreen()"
+                 disableClose="true">
+        <div class="side-toolbar">
+            <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
+                      matTooltipPosition="right">refresh
+            </mat-icon>
+            <div class="count">
+                <mat-chip selected="true" color="accent" matTooltip="Filtered Variants"
+                          matTooltipPosition="above">
+                    {{ subtotal }}
+                </mat-chip>
+                /
+                <mat-chip selected="true" color="accent" matTooltip="Total Variants"
+                          matTooltipPosition="above">
+                    {{ total }}
+                </mat-chip>
             </div>
         </div>
-        <div class="results">
-            <div class="charts-toolbar" *ngIf="cf.x">
-                <div class="icons">
-                    <md-icon class="material-icons" (click)="clearFilters()" mdTooltip="Clear All Filters"
-                             mdTooltipPosition="above">refresh
-                    </md-icon>
-                    <md-icon class="material-icons" (click)="toggleSql()" [mdTooltip]="sqlTooltip()"
-                             mdTooltipPosition="above">list
-                    </md-icon>
-                    <md-icon class="material-icons" (click)="openFeedback()" mdTooltip="Give feedback on the beta"
-                             mdTooltipPosition="above">feedback
-                    </md-icon>
-                    <!--<md-icon class="material-icons" (click)="saveFilters()" mdTooltip="Save the current filter"-->
-                             <!--mdTooltipPosition="above">save-->
-                    <!--</md-icon>-->
-                    <!--<md-icon class="material-icons" md-icon-button [mdMenuTriggerFor]="menu" mdTooltip="load filters"-->
-                             <!--mdTooltipPosition="above">folder_open-->
-                    <!--</md-icon>-->
-                    <!--<md-menu #menu="mdMenu">-->
-                        <!--<button *ngFor="let t of getTags()" (click)="loadFilters(t)" md-menu-item>-->
-                            <!--<span >{{t}}</span>-->
-                        <!--</button>-->
-                    <!--</md-menu>-->
-                    <!--<md-icon class="material-icons" (click)="compare()" mdTooltip="Compare saved filters"-->
-                             <!--mdTooltipPosition="above">compare_arrows-->
-                    <!--</md-icon>-->
-                </div>
-
-                <div class="count">
-                    <md-chip selected="true" color="accent" mdTooltip="Filtered number of Variants"
-                             mdTooltipPosition="above">
-                        {{ subtotal }}
-                    </md-chip>
-                    /
-                    <md-chip selected="true" color="accent" mdTooltip="Total number of Variants"
-                             mdTooltipPosition="above">
-                        {{ total }}
-                    </md-chip>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{cs.enabledCharts().length}} Charts
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="side-list">
+                <div mat-menu-item *ngFor="let c of cs.charts" (click)="toggleChart($event, c)">
+                    <mat-slide-toggle [checked]="c.enabled" (change)="c.enabled = $event.checked" (click)="$event.stopPropagation()">
+                        {{ c.name }}
+                    </mat-slide-toggle>
                 </div>
             </div>
-            <div *ngIf="showSql" class="generated-sql">
-                <div>{{ cf.sql }}</div>
-                <div *ngIf="!cf.sql">No Active filters</div>
+        </mat-expansion-panel>
+        <div mat-menu-item (click)="toggleSql($event)">
+            <mat-slide-toggle [checked]="showSql" (change)="showSql=$event.checked" (click)="$event.stopPropagation()">
+                Show SQL
+            </mat-slide-toggle>
+        </div>
+        <div mat-menu-item (click)="toggleNullValues($event)">
+            <mat-slide-toggle [checked]="cs.showNullValues" (change)="updateNullValues($event)" (click)="$event.stopPropagation()">
+                Show NULL values
+            </mat-slide-toggle>
+        </div>
+        <button mat-menu-item (click)="downloadVariants()">Download Variants</button>
+        <button mat-menu-item (click)="openFeedback()">Give feedback</button>
+
+    </mat-sidenav>
+    <div class="main">
+        <div class="message message-error search" *ngIf="searchError">
+            <mat-icon>error_outline</mat-icon>
+            {{ searchError }}. Please Try again
+        </div>
+        <div class="message message-error" *ngIf="error">
+            <mat-icon>error_outline</mat-icon>
+            {{ error }}
+        </div>
+
+        <div *ngIf="!error">
+            <div class="search-jumbo" *ngIf="!error">
+                <app-search-bar-with-options
+                    [expandable]="false"
+                    [action]="addGeneOrRegion"
+                    example1="BRCA1"
+                    example2="TTN"></app-search-bar-with-options>
             </div>
+            <div class="message message-warning">
+                <mat-icon>help_outline</mat-icon>
+                <div *ngIf="!isSmallScreen()">While in Beta please treat data with caution and any <a
+                    (click)="openFeedback()">feedback</a> is
+                    appreciated
+                </div>
+                <div *ngIf="isSmallScreen()">While in Beta please treat data with caution</div>
+            </div>
+            <div class="results">
 
-            <div class="charts">
-                <div class="main">
-                    <div class="right">
-                        <div class="combined-chart">
-                            <div class="chart main-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Avg Allele Frequency by start position" mdTooltipPosition="above">Avg
-                                        Allele Frequency</h4>
-                                    <a (click)="resetAfAvgChart()" *ngIf="afAvgHasFilter()">reset</a>
-                                </div>
-                                <div id="afAvg" [ngStyle]="largeChartStyle"></div>
-                            </div>
-                            <div class="range-chart">
-                                <div id="variantCount" [ngStyle]="rangeChartStyle"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by chromosome" mdTooltipPosition="above">
-                                        Chromosome</h4>
-                                    <a (click)="cs.reset('chrom')" *ngIf="cs.hasFilter('chrom')">reset</a>
-                                </div>
-                                <div id="chromCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by type" mdTooltipPosition="above">Type</h4>
-                                    <a (click)="cs.reset('type')" *ngIf="cs.hasFilter('type')">reset</a>
-                                </div>
-                                <div id="typeCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by grouped Allele frequency"
-                                        mdTooltipPosition="above">Avg Allele Frequency</h4>
-                                    <a (click)="cs.reset('afCount')" *ngIf="cs.hasFilter('afCount')">reset</a>
-                                </div>
-                                <div id="afCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by reference" mdTooltipPosition="above">
-                                        Reference</h4>
-                                    <a (click)="cs.reset('ref')" *ngIf="cs.hasFilter('ref')">reset</a>
-                                </div>
-                                <div id="refCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by alternate" mdTooltipPosition="above">
-                                        Alternate</h4>
-                                    <a (click)="cs.reset('alt')" *ngIf="cs.hasFilter('alt')">reset</a>
-                                </div>
-                                <div id="altCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                            <div class="chart small-chart">
-                                <div class="toolbar">
-                                    <h4 mdTooltip="Number of variants by dbSNP" mdTooltipPosition="above">
-                                        dbSNP</h4>
-                                    <a (click)="cs.reset('rsid')" *ngIf="cs.hasFilter('rsid')">reset</a>
-                                </div>
-                                <div id="rsidCount" [ngStyle]="smallChartStyle"></div>
-                            </div>
-                        </div>
+                <div *ngIf="showSql" class="generated-sql">
+                    <div>{{ sql }}</div>
+                    <div *ngIf="!sql">No Active filters</div>
+                </div>
+                <div class="message message-info" *ngIf="subtotal <=0 && !loading">
+                    <mat-icon>info_outline</mat-icon>
+                    No variants found for your query. Please widen your search.
+                </div>
+                <div class="charts" *ngIf="subtotal > 0 && !loading">
+                    <div class="chart" *ngFor="let c of cs.enabledCharts()">
+                        <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
+                        <app-mapd-row-chart *ngIf="c.type === chartType.Row" [chart]="c"></app-mapd-row-chart>
+                        <app-mapd-pie-chart *ngIf="c.type === chartType.Pie" [chart]="c"></app-mapd-pie-chart>
                     </div>
                 </div>
-            </div>
-            <div class="table" *ngIf="cf.x">
-                <app-variants-table-paginated></app-variants-table-paginated>
+                <div class="table" *ngIf="subtotal > 0">
+                    <app-variants-table-paginated #table></app-variants-table-paginated>
+                </div>
             </div>
         </div>
+
     </div>
+</mat-sidenav-container>
 
-</section>
-
+<mat-menu></mat-menu>

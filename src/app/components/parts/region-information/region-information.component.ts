@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Variant } from '../../../model/variant';
 import { Gene } from '../../../model/gene';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { VariantSearchService } from '../../../services/variant-search-service';

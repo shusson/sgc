@@ -1,7 +1,7 @@
 import { AutocompleteService } from './autocomplete-service';
 import { Region } from '../../model/region';
-import { AutocompleteResult } from '../../model/autocomplete-result';
-import { Observable } from 'rxjs';
+import { GenericAutocompleteResult } from '../../model/autocomplete-result';
+import { Observable } from 'rxjs/Observable';
 import { RegionAutocomplete } from '../../model/region-autocomplete';
 import { Injectable } from '@angular/core';
 import { EnsemblService } from '../ensembl-service';
@@ -13,7 +13,7 @@ export class RegionService implements AutocompleteService<Region> {
     constructor(protected ensemblService: EnsemblService) {
     }
 
-    search(query: string): Observable<AutocompleteResult<Region>[]> {
+    search(query: string): Observable<GenericAutocompleteResult<Region>[]> {
         const results = this.parseQuery(query.trim());
         if (results) {
             const chromosome = results[1];
@@ -24,13 +24,13 @@ export class RegionService implements AutocompleteService<Region> {
             }
             const r = new Region(chromosome, start, end);
             const regions = [new RegionAutocomplete(r, r.name(), '', this)];
-            return Observable.of<AutocompleteResult<Region>[]>(regions);
+            return Observable.of<GenericAutocompleteResult<Region>[]>(regions);
         } else {
-            return Observable.of<AutocompleteResult<Region>[]>([]);
+            return Observable.of<GenericAutocompleteResult<Region>[]>([]);
         }
     }
 
-    getDetails(autocomplete: AutocompleteResult<Region>): Observable<Region> {
+    getDetails(autocomplete: GenericAutocompleteResult<Region>): Observable<Region> {
         return Observable.of(autocomplete.result);
     }
 

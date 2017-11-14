@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PopFreqsComponent } from './pop-freqs.component';
-import { MdTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Variant } from '../../../model/variant';
 
@@ -12,7 +12,7 @@ describe('PopFreqsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdTabsModule,
+                MatTabsModule,
                 NgxDatatableModule
             ],
             declarations: [PopFreqsComponent]

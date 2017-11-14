@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { RegionService } from './autocomplete/region-service';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { SearchOption } from '../model/search-option';
 import { Router, Params } from '@angular/router';
 import { AutocompleteService } from './autocomplete/autocomplete-service';
-import { AutocompleteResult } from '../model/autocomplete-result';
+import { GenericAutocompleteResult, VariantAutocompleteResult } from '../model/autocomplete-result';
 import { ElasticGeneSearch } from './autocomplete/elastic-gene-search-service';
 import { PositionService } from './autocomplete/position-service';
 
@@ -34,7 +35,7 @@ export class SearchBarService {
         ];
     }
 
-    searchWithParams(params: Params): Promise<AutocompleteResult<any>> {
+    searchWithParams(params: Params): Promise<VariantAutocompleteResult<any>> {
         const query = params['query'];
         if (!query) {
             return <any>Promise.resolve();
@@ -79,15 +80,15 @@ export class SearchBarService {
         this.navigateToSearch(query);
     }
 
-    searchAutocompleteServices(term: string): Observable<AutocompleteResult<any>[]> {
+    searchAutocompleteServices(term: string): Observable<VariantAutocompleteResult<any>[]> {
         return combineLatest(...this.autocompleteServices.map((autocompleteService) => {
-            return autocompleteService.search(term).catch(e => Observable.of<AutocompleteResult<any>[]>([]));
+            return autocompleteService.search(term).catch(e => Observable.of<GenericAutocompleteResult<any>[]>([]));
         }), this.combineStreams);
     }
 
-    searchAutocompleteServicesStartsWith(term: string, startsWith: any[] = []): Observable<AutocompleteResult<any>[]> {
-        return combineLatest(...this.autocompleteServices.map((autocompleteService) => {
-            return autocompleteService.search(term).startWith(startsWith).catch(e => Observable.of<AutocompleteResult<any>[]>([]));
+    searchAutocompleteServicesStartsWith(term: string, startsWith: any[] = []): Observable<GenericAutocompleteResult<any>[]> {
+        return combineLatest(this.autocompleteServices.map((autocompleteService) => {
+            return autocompleteService.search(term).startWith(startsWith).catch(e => Observable.of([]));
         }), this.combineStreams);
     }
 
@@ -109,8 +110,8 @@ export class SearchBarService {
         this.router.navigate(['/search/results', obj]);
     }
 
-    private combineStreams(s1: any[], s2: any[], s3: any[]) {
-        return s1.concat(s2).concat(s3);
+    private combineStreams(...streams) {
+        return [].concat.apply([], streams);
     }
 }
 

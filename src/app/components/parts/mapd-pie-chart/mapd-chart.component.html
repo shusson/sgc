@@ -1,0 +1,14 @@
+<div class="chart small-chart" *ngIf="chart" (mouseenter)="hover=true" (mouseleave)="hover=false">
+    <div class="toolbar">
+        <div class="row">
+            <div *ngIf="!cs.hasFilter(chart.dimension)" class="option"></div>
+            <i *ngIf="cs.hasFilter(chart.dimension)" class="option material-icons left" (click)="cs.reset(chart.dimension)">refresh</i>
+            <h4 [matTooltip]="chart.tooltip()" matTooltipPosition="above">
+                {{ chart.name }}</h4>
+            <div *ngIf="!hover" class="option"></div>
+            <i *ngIf="hover" class="option material-icons right" (click)="chart.enabled = false">clear</i>
+        </div>
+    </div>
+    <div class="message message-error" *ngIf="error"><mat-icon>error_outline</mat-icon> <span>{{error}}</span></div>
+    <div [id]="chart.dimension" [ngStyle]="smallChartStyle"></div>
+</div>

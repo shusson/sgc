@@ -2,7 +2,6 @@
 
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import {AboutComponent} from './about.component';
-import { ChartModule } from 'angular2-highcharts';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MaterialModule } from '../../../app.material';
 import { HeaderNavComponent } from '../../parts/header-nav/header-nav.component';
@@ -26,7 +25,6 @@ describe('Component: About', () => {
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

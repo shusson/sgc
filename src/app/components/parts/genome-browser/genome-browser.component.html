@@ -14,11 +14,11 @@
 
             <div class="right">
                 <app-overlay-menu></app-overlay-menu>
-                <i (click)="unlock()" *ngIf="locked" class="material-icons" mdTooltip="Unlock the current view" mdTooltipPosition="above">lock</i>
-                <i (click)="lock()" *ngIf="!locked" class="material-icons" mdTooltip="Lock the current view" mdTooltipPosition="above">lock_open</i>
-                <md-slide-toggle *ngIf="ensemblSupported" [ngModel]="transcriptsShown" (ngModelChange)="toggleTranscripts()" mdTooltip="Show/hide Transcripts from Ensembl" mdTooltipPosition="above">
+                <i (click)="unlock()" *ngIf="locked" class="material-icons" matTooltip="Unlock the current view" matTooltipPosition="above">lock</i>
+                <i (click)="lock()" *ngIf="!locked" class="material-icons" matTooltip="Lock the current view" matTooltipPosition="above">lock_open</i>
+                <mat-slide-toggle *ngIf="ensemblSupported" [ngModel]="transcriptsShown" (ngModelChange)="toggleTranscripts()" matTooltip="Show/hide Transcripts from Ensembl" matTooltipPosition="above">
                     Transcripts
-                </md-slide-toggle>
+                </mat-slide-toggle>
             </div>
     </div>
     <div #genomeBrowser id="genome-browser"></div>

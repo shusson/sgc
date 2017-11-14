@@ -2,28 +2,37 @@ import { Injectable, OnDestroy } from '@angular/core';
 import * as crossfilter from '@mapd/crossfilter/dist/mapd-crossfilter.js';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import { MapdFilterService } from './mapd-filter.service';
 
 @Injectable()
 export class CrossfilterService implements OnDestroy {
     x: any;
     updates = new Subject<any>();
     subscriptions: Subscription[] = [];
-    sql = '';
     currentFilters = [];
     all: any;
 
-    constructor() {
-        this.subscriptions.push(this.updates.debounceTime(500).subscribe(() => {
-            this.sql = this.x.getFilterString();
-            // this.currentFilters = dc.chartRegistry.list().map(c => c.filters().length).reduce((a, b) => a + b, 0);
-            this.currentFilters = this.x.getFilter().filter((x) => x).length;
-            // update table
-        }));
+    constructor(public mfs: MapdFilterService) {
+    }
+
+    getFilterString() {
+        let fs = this.x.getFilterString();
+        const gfs = this.x.getGlobalFilterString();
+        if (gfs && fs) {
+            fs += ' AND ' + gfs;
+        } else if (gfs) {
+            fs = gfs;
+        }
+        if (fs) {
+            fs = 'WHERE ' + fs;
+        }
+        return fs;
     }
 
     create(session: any, name): Promise<any> {
         return crossfilter.crossfilter(session, name).then((cf) => {
             this.x = cf;
+            this.mfs.init(this);
             this.all = this.x.groupAll();
             return this.x;
         });

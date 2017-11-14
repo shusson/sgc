@@ -14,7 +14,7 @@ import { SearchBarComponent } from '../../parts/search-bar/search-bar.component'
 import { SearchOptionComponent } from '../../parts/search-option/search-option.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { GeneInformationComponent } from '../../parts/gene-information/gene-information.component';
@@ -22,7 +22,6 @@ import { MaterialModule } from '../../../app.material';
 import { SearchResultsComponent } from '../../parts/search-results/search-results.component';
 import { VariantsTableComponent } from '../../parts/variants-table/variants-table.component';
 import { OverlayMenuComponent } from '../../parts/overlay-menu/overlay-menu.component';
-import { ColumnsMenuComponent } from '../../parts/columns-menu/columns-menu.component';
 import { FilterAutoComponent } from '../../parts/filter-auto/filter-auto.component';
 import { SearchBarWithOptionsComponent } from '../../parts/search-bar-with-options/search-bar-with-options.component';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
@@ -67,7 +66,6 @@ describe('Component: Search', () => {
                 GeneInformationComponent,
                 RegionInformationComponent,
                 OverlayMenuComponent,
-                ColumnsMenuComponent,
                 FilterAutoComponent,
                 SearchBarWithOptionsComponent,
                 PageContainerComponent,

@@ -12,7 +12,6 @@ import { MockInitiativeService } from '../../../../mocks/initiative.mock';
 import { MgrbComponent } from './mgrb.component';
 import { CohortService } from '../../../../services/project-data/cohort-service';
 import { ScrollService } from '../../../../services/scroll-service';
-import { ChartModule } from 'angular2-highcharts';
 import { PcaPlotComponent } from '../../../parts/pca-plot/pca-plot.component';
 import { PageContainerComponent } from '../../../parts/page-container/page-container.component';
 import { HeaderNavComponent } from '../../../parts/header-nav/header-nav.component';
@@ -35,7 +34,6 @@ describe('MgrbComponent', () => {
             imports: [
                 NoopAnimationsModule,
                 RouterModule,
-                ChartModule,
                 MaterialModule
             ],
             declarations: [

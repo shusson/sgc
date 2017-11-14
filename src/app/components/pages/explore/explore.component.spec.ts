@@ -27,6 +27,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../../app.material';
+import { MapdPieChartComponent } from '../../parts/mapd-pie-chart/mapd-pie-chart.component';
+import { MapdAvgAfChartComponent } from '../../parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
+import { MapdRowChartComponent } from '../../parts/mapd-row-chart/mapd-row-chart.component';
 
 describe('ExploreComponent', () => {
     let component: ExploreComponent;
@@ -51,6 +54,9 @@ describe('ExploreComponent', () => {
                 VariantsTablePaginatedComponent,
                 SearchBarComponent,
                 SearchOptionComponent,
+                MapdRowChartComponent,
+                MapdPieChartComponent,
+                MapdAvgAfChartComponent
             ],
             providers: [
                 ScrollService,

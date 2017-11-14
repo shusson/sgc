@@ -1,0 +1,58 @@
+.toolbar {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /*min-height: 65px;*/
+    margin-bottom: 19px;
+}
+
+h4 {
+    text-align: center;
+    margin: 0;
+    color: rgba(0, 60, 105, 0.5);
+    font-weight: bold;
+}
+
+.chart {
+    height: 270px;
+}
+
+.toolbar .row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.toolbar .row h4 {
+    flex-basis: 0;
+    flex-grow: 3;
+}
+
+.toolbar .row .option {
+    flex-basis: 0;
+    flex-grow: 1;
+    font-size: medium;
+    color: rgba(0, 60, 105, 0.5);
+    cursor: pointer;
+}
+
+.toolbar .row .option.left {
+    text-align: start;
+}
+
+.toolbar .row .option.right {
+    text-align: end;
+}
+
+.message.message-error {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

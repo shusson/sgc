@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
+import * as Highcharts from 'highcharts';
 
 @Component({
     selector: 'app-column-chart',
     template: `
-        <chart [options]="options" (load)="saveInstance($event.context)"></chart>
+        <div></div>
     `
 })
-export class ColumnChartComponent {
+export class ColumnChartComponent implements AfterViewInit {
     @Input() title: string;
     @Input() data: number[];
     @Input() width: string;
@@ -15,7 +16,9 @@ export class ColumnChartComponent {
     options: any;
     chart: any;
 
-    constructor() {
+    constructor(private elf: ElementRef) {}
+
+    ngAfterViewInit() {
         this.options = {
             chart: {
                 width: 95,
@@ -47,10 +50,8 @@ export class ColumnChartComponent {
                 }
             }
         };
-    }
 
-    saveInstance(chartInstance: any) {
-        this.chart = chartInstance;
+        this.chart = Highcharts.chart(this.elf.nativeElement, this.options);
         this.update();
     }
 

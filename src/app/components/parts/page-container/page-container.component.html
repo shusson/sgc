@@ -1,19 +1,20 @@
 <div class="backdrop-cover" *ngIf="sidenav.opened" (click)="sidenav.close()"></div>
-<md-sidenav-container>
+<mat-sidenav-container>
     <main id="main-scroll" (scroll)="updateScroll($event)">
         <div class="main-content">
+            <div *ngIf="showBanner" class="banner-notification">The beta release of the MGRB data containing 2845 samples is now available. Please treat data with caution.</div>
             <ng-content></ng-content>
         </div>
-        <app-privacy-footer></app-privacy-footer>
+        <app-privacy-footer *ngIf="showPrivacy"></app-privacy-footer>
     </main>
-</md-sidenav-container>
+</mat-sidenav-container>
 
-<md-sidenav #sidenav (click)="sidenav.close()">
+<mat-sidenav #sidenav (click)="sidenav.close()">
     <div class="title">
         {{ smallTitle }}
     </div>
     <app-side-nav></app-side-nav>
-</md-sidenav>
+</mat-sidenav>
 
 <header class="header">
     <div class="header-content">

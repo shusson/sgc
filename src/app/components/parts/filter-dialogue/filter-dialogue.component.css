@@ -1,0 +1,17 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fields {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fields * {
+    flex-basis: 100px;
+    margin: 10px;
+}

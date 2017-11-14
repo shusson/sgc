@@ -1,0 +1,27 @@
+<div>
+
+    <div class="list" cdk-focus-initial>
+        <div class="list-item" *ngFor="let l of data.glos.lists" (click)="selectGeneList(l.geneList)">
+
+            <div class="row">
+                <div class="title">{{ l.geneList.name }}</div>
+                <div> {{ l.geneList.ids.length }} genes</div>
+            </div>
+
+            <div class="row">
+                <p>{{l.geneList.description}}</p>
+
+                <div (click)="$event.stopPropagation()">
+                    <a *ngFor="let r of l.geneList.references; let i = index" [href]="r" target="_blank" [matTooltip]="r">
+                        <span *ngIf="i < (l.geneList.references.length - 1)">[{{i+1}}], </span>
+                        <span *ngIf="i >= (l.geneList.references.length - 1)">[{{i+1}}]</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

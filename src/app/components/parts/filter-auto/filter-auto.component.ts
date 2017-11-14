@@ -1,8 +1,9 @@
 import {
     Component, OnInit, Input, EventEmitter, Output, OnDestroy, AfterViewInit,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { ColumnService } from '../../../services/column-service';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import { TableService } from '../../../services/table-service';
 import { Variant } from '../../../model/variant';
 import { FilterService } from '../../../services/filter.service';
 
@@ -20,12 +21,12 @@ export class FilterAutoComponent implements OnInit, OnDestroy, AfterViewInit {
     show = false;
     selectedIndex = 0;
     currentFilter = '';
+    autoComplete: string[] = [];
     private filter: Subject<FilterStream> = new Subject<FilterStream>();
-    private autoComplete: string[] = [];
     private subscriptions: Subscription[] = [];
     private unfiltered: Variant[];
 
-    constructor(private cs: ColumnService, private fs: FilterService) {
+    constructor(private ts: TableService, private fs: FilterService) {
 
     }
 
@@ -37,8 +38,8 @@ export class FilterAutoComponent implements OnInit, OnDestroy, AfterViewInit {
         this.unfiltered = this.variants;
 
         this.subscriptions.push(this.filter.debounceTime(120).subscribe(filterStream => {
-            let filter = filterStream[0];
-            let autocomplete = filterStream[1];
+            const filter = filterStream[0];
+            const autocomplete = filterStream[1];
 
             if (autocomplete) {
                 this.currentFilter = this.fs.clean(this.currentFilter + filter);
@@ -50,7 +51,7 @@ export class FilterAutoComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if (this.fs.isCommand(this.currentFilter)) {
                 if (this.fs.isValidCommand(this.currentFilter)) {
-                    let variants = this.fs.filterVariants(this.currentFilter, this.unfiltered);
+                    const variants = this.fs.filterVariants(this.currentFilter, this.unfiltered);
                     this.output.emit(variants);
                 }
             } else {
@@ -60,10 +61,10 @@ export class FilterAutoComponent implements OnInit, OnDestroy, AfterViewInit {
                 } else {
                     variants = this.unfiltered.filter((v: Variant) => {
                         let found = false;
-                        for (let k of this.cs.activeColumns()) {
-                            let s = this.cs.display(k, v);
+                        for (const k of this.ts.activeColumns()) {
+                            let s = this.ts.display(k, v);
                             s = s.replace(/\s/g, '');
-                            let r = new RegExp(filter.replace(/\s/g, '').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+                            const r = new RegExp(filter.replace(/\s/g, '').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
                             found = s.match(r) !== null;
 
                             if (found) {
@@ -96,7 +97,7 @@ export class FilterAutoComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedIndex = 0;
         this.autoComplete.splice(0, this.autoComplete.length);
 
-        let p: Promise<string[]> = Promise.resolve(this.fs.nextTokens(s));
+        const p: Promise<string[]> = Promise.resolve(this.fs.nextTokens(s));
         p.then(v => v.forEach(x => this.autoComplete.push(x)));
     }
 

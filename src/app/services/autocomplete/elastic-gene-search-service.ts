@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Gene } from '../../model/gene';
-import { AutocompleteResult } from '../../model/autocomplete-result';
-import { Observable } from 'rxjs';
+import { GenericAutocompleteResult } from '../../model/autocomplete-result';
+import { Observable } from 'rxjs/Observable';
 import { GeneAutocomplete } from '../../model/gene-autocomplete';
 import { AutocompleteService } from './autocomplete-service';
 import { Chromosome } from '../../model/chromosome';
@@ -33,7 +33,7 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
             });
     }
 
-    search(query: string): Observable<AutocompleteResult<Gene>[]> {
+    search(query: string): Observable<GenericAutocompleteResult<Gene>[]> {
         const headers = new HttpHeaders()
             .append('Accept', 'application/json');
         const body = {
