@@ -19,7 +19,7 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
     getChromosome(chromosome: string): Observable<Chromosome> {
         const headers = new HttpHeaders()
             .append('Accept', 'application/json');
-        return this.http.get(`${ environment.elasticUrl }/chromosomes/chromosome/${chromosome}`, {headers: headers})
+        return this.http.get(`${ environment.elasticUrl }/chromosomes/chromosome/${chromosome.toUpperCase()}`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
                 return Observable.throw('An error occurred while trying to connect to elasticsearch');
