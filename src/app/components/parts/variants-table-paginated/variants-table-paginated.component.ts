@@ -83,8 +83,7 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
                 'RSID': v.RSID,
                 'Type': v.TYPE,
                 'AF': v.AF,
-                'Gnomad_AF': v.gnomadAF,
-                'gnomadAF': v.gnomadAF,
+                'GnomadAF': v.gnomadAF,
                 'clinvar': v.clinvar,
                 'consequences': v.consequences
             };
