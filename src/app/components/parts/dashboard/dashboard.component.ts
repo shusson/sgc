@@ -125,9 +125,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         const obj = {query: q};
         this.searchError = '';
 
-        this.cf.mfs.clearFilters();
-
         this.searchBarService.searchWithParams(obj).then((v: GenericAutocompleteResult<Gene | Region | Position | Rsid>) => {
+            this.cf.mfs.clearFilters();
             if (!v) {
                 return;
             }
