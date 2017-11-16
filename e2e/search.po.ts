@@ -1,5 +1,7 @@
 import { browser, element, by, protractor } from 'protractor';
 
+const TIMEOUT = 10000;
+
 export class SearchPage {
 
     navigateTo() {
@@ -18,20 +20,20 @@ export class SearchPage {
 
     getAutocompleteResult(v: string) {
         const EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.cssContainingText('.search-results .symbol', v))), 5000);
+        browser.wait(EC.visibilityOf(element(by.cssContainingText('.search-results .symbol', v))), TIMEOUT);
         return element(by.cssContainingText('.search-results .symbol', v));
     }
 
     navigateToClinicalFiltering() {
         const EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.css('#mat-tab-label-0-1'))), 5000);
+        browser.wait(EC.visibilityOf(element(by.css('#mat-tab-label-0-1'))), TIMEOUT);
         const g = element(by.css('#mat-tab-label-0-1'));
         return g.click();
     }
 
     getClinicalFilteringBannerText() {
         const EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.css('.message.message-error'))), 5000);
+        browser.wait(EC.visibilityOf(element(by.css('.message.message-error'))), TIMEOUT);
         const g = element(by.css('.message.message-error'));
         return g.getText();
     }
@@ -43,7 +45,7 @@ export class SearchPage {
 
     getClinicalFilteringCount() {
         const EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.css('.filter-count'))), 5000);
+        browser.wait(EC.visibilityOf(element(by.css('.filter-count'))), TIMEOUT);
         const g = element(by.css('.filter-count'));
         return g.getText();
     }
@@ -51,7 +53,7 @@ export class SearchPage {
     getGeneId(v: string) {
         const EC = protractor.ExpectedConditions;
         const g = element(by.css('#gene_en_id'));
-        browser.wait(EC.visibilityOf(g), 5000);
+        browser.wait(EC.visibilityOf(g), TIMEOUT);
         g.getText().then(t => {
             expect(t).toEqual(v);
         });
@@ -61,7 +63,7 @@ export class SearchPage {
     getRegionId(v: string) {
         const EC = protractor.ExpectedConditions;
         const r = element(by.css('#region_location_id'));
-        browser.wait(EC.visibilityOf(r), 5000);
+        browser.wait(EC.visibilityOf(r), TIMEOUT);
         r.getText().then(t => {
             expect(t).toEqual(v);
         });

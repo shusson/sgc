@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '../../../app.material';
 
 import { MapdAvgAfChartComponent } from './mapd-avg-af-chart.component';
 import { MatTooltipModule } from '@angular/material';
@@ -13,7 +14,7 @@ describe('MapdAvgAfChartComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatTooltipModule
+                MaterialModule
             ],
             declarations: [MapdAvgAfChartComponent],
             providers: [
