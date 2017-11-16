@@ -14,6 +14,9 @@ import { CohortService } from '../../../services/project-data/cohort-service';
 export class GraphsWidgetComponent implements AfterViewInit {
     @ViewChild(CohortListComponent) cohortList: CohortListComponent;
     @Input() initiative: Initiative;
+    @Input() heightPx = 200;
+    @Input() widthPx = 190;
+    @Input() showList = true;
 
     @ViewChildren(ColumnChartComponent) simpleCharts: QueryList<ColumnChartComponent>;
     @ViewChildren(PieChartComponent) pieCharts: QueryList<PieChartComponent>;
@@ -27,12 +30,19 @@ export class GraphsWidgetComponent implements AfterViewInit {
                 private cohortService: CohortService) {}
 
     ngAfterViewInit() {
-        this.update();
+        if (!this.showList) {
+            this.initiativeService.getInitiative(this.initiative.id).then((initiative) => {
+                this.updateData(initiative);
+            });
+        } else {
+            this.update();
+        }
+
     }
 
     update() {
         this.clearCharts();
-        let allSelected: any = Array.from(<Iterable<boolean>>this.cohortList.selected.values()).every((v) => v);
+        const allSelected: any = Array.from(<Iterable<boolean>>this.cohortList.selected.values()).every((v) => v);
         if (allSelected) {
             this.initiativeService.getInitiative(this.initiative.id).then((initiative) => {
                 this.updateData(initiative);
@@ -51,7 +61,7 @@ export class GraphsWidgetComponent implements AfterViewInit {
     private clearCharts = () => {
         this.simpleCharts.toArray().forEach((child) => child.clearSeries());
         this.pieCharts.toArray().forEach((child) => child.clearSeries());
-    }
+    };
 
     private updateData = (graphData: DistributionData) => {
         this.age = graphData.ages;

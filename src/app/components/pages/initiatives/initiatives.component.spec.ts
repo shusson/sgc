@@ -27,7 +27,6 @@ import { LocationStrategy } from '@angular/common';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { PositionService } from '../../../services/autocomplete/position-service';
-import { MgrbDownloadBannerComponent } from '../../parts/mgrb-download-banner/mgrb-download-banner.component';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { MockLocalStorageService } from '../../../mocks/local-storage.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,8 +55,7 @@ describe('Component: Initiatives', () => {
                 PageContainerComponent,
                 PrivacyFooterComponent,
                 SideNavComponent,
-                HeaderNavComponent,
-                MgrbDownloadBannerComponent
+                HeaderNavComponent
             ],
             providers: [
                 ScrollService,

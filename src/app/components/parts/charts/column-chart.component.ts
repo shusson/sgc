@@ -65,7 +65,10 @@ export class ColumnChartComponent implements AfterViewInit {
         this.clearSeries();
         this.chart.setTitle({
             text: this.title,
-            margin: 0
+            margin: 0,
+            style: {
+                fontSize: '12px'
+            }
         });
 
         this.chart.addSeries({

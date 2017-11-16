@@ -1,8 +1,0 @@
-<div class="list-container" (scroll)="onScroll($event)">
-    <div class="hidden-height" [style.height.px]="hiddenHeight"></div>
-    <div class="list">
-        <app-virtual-list-item *ngFor="let v of visibleItems">
-            <app-anno-tree [object]="v"></app-anno-tree>
-        </app-virtual-list-item>
-    </div>
-</div>

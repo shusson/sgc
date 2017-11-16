@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '../../../app.material';
 
 import { MapdRowChartComponent } from './mapd-row-chart.component';
 import { MatTooltipModule } from '@angular/material';
@@ -14,7 +15,7 @@ describe('MapdRowChartComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatTooltipModule
+                MaterialModule
             ],
             declarations: [MapdRowChartComponent],
             providers: [

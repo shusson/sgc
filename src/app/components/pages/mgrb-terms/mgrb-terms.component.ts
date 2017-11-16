@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DurlService } from '../../../services/durl.service';
 
 @Component({
     selector: 'app-mgrb-terms',

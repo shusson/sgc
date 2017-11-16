@@ -1,0 +1,21 @@
+.main {
+    max-height: 100vh;
+    overflow-y: scroll;
+    padding: 5px;
+}
+
+.cohorts {
+    display: flex;
+}
+
+.sub-title {
+    font-size: smaller;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: rgba(0, 60, 105, 0.5)
+}
+
+.title {
+    margin-bottom: 1rem;
+    font-size: x-large;
+}

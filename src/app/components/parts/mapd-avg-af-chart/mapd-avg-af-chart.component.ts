@@ -1,10 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { Chart, ChartsService, ChartType } from '../../../services/charts.service';
+import { Chart, ChartType } from '../../../services/charts.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import { Region } from '../../../model/region';
 
 const SMALL_WIDTH = 740;
 const LARGE_WIDTH = window.innerWidth > 2000 ? 1200 : window.innerWidth / 1.3;

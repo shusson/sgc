@@ -1,0 +1,42 @@
+<div class="main">
+    <div class="title">Data Summary</div>
+    <p>The current dashboard contains data from the following cohorts:</p>
+    <mat-expansion-panel *ngIf="initiative">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                MGRB
+            </mat-panel-title>
+            <mat-panel-description>
+                2845 Samples
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="sub-title">About</div>
+        <p>
+            The Medical Genome Reference Bank (MGRB) contains genomes from healthy older individuals.
+        </p>
+
+        <div class="sub-title">Methods</div>
+        <p>All of the raw data was processed through the <a href="https://www.genome.one/discovery-genomics" target="_blank">Genome One Discovery</a> pipeline.</p>
+        <p>Data was then analysed using the <a href="https://github.com/hail-is/hail" target="_blank">Hail</a> open-source framework for scalable genetic analysis.</p>
+
+        <div class="sub-title">Cohorts</div>
+        <div class="cohorts">
+            <a *ngFor="let cohort of cohorts" target="_blank" href="{{ cohort.link }}">
+                <app-cohort-card [cohortId]="cohort.id"></app-cohort-card>
+            </a>
+        </div>
+
+        <div *ngIf="initiative.ages.length > 0" class="graphs">
+            <div class="sub-title">Cohort Demographics</div>
+            <app-graphs-widget [showList]="false" [initiative]="initiative" [heightPx]="100" [widthPx]="100"></app-graphs-widget>
+        </div>
+
+        <div class="sub-title">Genetic Distance</div>
+        <div class="pca">
+            <div class="plots">
+                <app-pca-plot name='pca12' [title]="'PCA1 vs PCA2'" [axis]="['PC1', 'PC2']" [height]="350" [width]="600"></app-pca-plot>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</div>

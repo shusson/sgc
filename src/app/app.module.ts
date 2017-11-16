@@ -71,30 +71,19 @@ import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageContainerComponent } from './components/parts/page-container/page-container.component';
 import { RegionInformationComponent } from './components/parts/region-information/region-information.component';
-import { DurlService } from './services/durl.service';
-import { MgrbDownloadComponent } from './components/pages/mgrb-download/mgrb-download.component';
-import { MgrbDownloadBannerComponent } from './components/parts/mgrb-download-banner/mgrb-download-banner.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { environment } from '../environments/environment';
 import { VariantComponent } from './components/pages/variant/variant.component';
 import { BeaconTableComponent } from './components/parts/beacon-table/beacon-table.component';
-import { VariantAnnotationsComponent } from './components/parts/variant-annotations/variant-annotations.component';
-import { AnnoTreeComponent, JsonLabelPipe } from './components/parts/anno-tree/anno-tree.component';
-import { VirtualListComponent } from './components/parts/virtual-list/virtual-list.component';
-import { VirtualListItemComponent } from './components/parts/virtual-list-item/virtual-list-item.component';
 import * as Raven from 'raven-js';
-import { PopFreqsComponent } from './components/parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ErrorComponent } from './components/pages/error/error.component';
-import { ScoresComponent } from './components/parts/scores/scores.component';
-import { ConsequencesComponent } from './components/parts/consequences/consequences.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ExploreComponent } from './components/pages/explore/explore.component';
 import { DashboardComponent } from './components/parts/dashboard/dashboard.component';
 import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
 import { FeedbackComponent } from './components/parts/feedback/feedback.component';
 import { ErrorDialogComponent } from './components/parts/error-dialog/error-dialog.component';
-import { StatsDetailsComponent } from './components/parts/stats-details/stats-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
 import { ClincalFilteringComponent } from './components/parts/clincal-filtering/clincal-filtering.component';
@@ -103,9 +92,8 @@ import { MaterialModule } from './app.material';
 import { MapdRowChartComponent } from './components/parts/mapd-row-chart/mapd-row-chart.component';
 import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pie-chart.component';
 import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
-import { FilterDialogueComponent } from './components/parts/filter-dialogue/filter-dialogue.component';
-import { AddGeneListDialogComponent } from './components/parts/add-gene-list-dialog/add-gene-list-dialog.component';
 import * as LogRocket from 'logrocket';
+import { SummaryDialogComponent } from './components/parts/summary-dialog/summary-dialog.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -183,39 +171,26 @@ if (environment.production) {
         FilterAutoComponent,
         PageContainerComponent,
         RegionInformationComponent,
-        MgrbDownloadComponent,
-        MgrbDownloadBannerComponent,
         VariantComponent,
         BeaconTableComponent,
-        VariantAnnotationsComponent,
-        AnnoTreeComponent,
-        JsonLabelPipe,
-        VirtualListComponent,
-        VirtualListItemComponent,
-        PopFreqsComponent,
         ErrorComponent,
-        ScoresComponent,
-        ConsequencesComponent,
         ExploreComponent,
         DashboardComponent,
         VariantsTablePaginatedComponent,
         FeedbackComponent,
         ErrorDialogComponent,
-        StatsDetailsComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
         SnackbarDemoComponent,
         MapdRowChartComponent,
         MapdPieChartComponent,
         MapdAvgAfChartComponent,
-        FilterDialogueComponent,
-        AddGeneListDialogComponent
+        SummaryDialogComponent,
     ],
     entryComponents: [
         FeedbackComponent,
         ErrorDialogComponent,
-        FilterDialogueComponent,
-        AddGeneListDialogComponent,
+        SummaryDialogComponent,
         SnackbarDemoComponent
     ],
     providers: [
@@ -230,7 +205,6 @@ if (environment.production) {
         EnsemblService,
         PositionService,
         TableService,
-        DurlService,
         LocalStorageService,
         { provide: ErrorHandler, useClass: RavenErrorHandler },
         { provide: 'NULL_VALUE', useValue: null }

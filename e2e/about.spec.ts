@@ -10,7 +10,7 @@ describe('About Page', () => {
 
     it('should display a navigation bar with 7 links', function () {
         page.getNavBar().count().then( v => {
-                expect(v).toEqual(7)
+            expect(v).toEqual(7)
         });
     });
 

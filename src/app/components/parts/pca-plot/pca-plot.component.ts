@@ -16,6 +16,8 @@ export class PcaPlotComponent implements AfterViewInit {
     @Input() name = '';
     @Input() title: string;
     @Input() axis: [string, string];
+    @Input() height = PLOT_HEIGHT;
+    @Input() width = PLOT_WIDTH;
 
     options: any;
     chart: any;
@@ -31,8 +33,8 @@ export class PcaPlotComponent implements AfterViewInit {
                 type: 'scatter',
                 zoomType: 'xy',
                 backgroundColor: 'rgba(0,0,0,0)',
-                width: PLOT_WIDTH,
-                height: PLOT_HEIGHT
+                width: this.width,
+                height: this.height
             },
             title: {
                 text: this.title

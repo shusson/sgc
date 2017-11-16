@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '../../../app.material';
 
 import { MapdPieChartComponent } from './mapd-pie-chart.component';
 import { MatTooltipModule } from '@angular/material';
@@ -16,7 +17,7 @@ describe('MapdPieChartComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MatTooltipModule
+                MaterialModule
             ],
             declarations: [MapdPieChartComponent],
             providers: [

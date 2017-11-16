@@ -4,6 +4,7 @@
 .idea
 
 dist
+dist.tar.gz
 node_modules
 coverage
 .sass-cache
