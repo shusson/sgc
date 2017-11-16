@@ -106,6 +106,7 @@ import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/ma
 import { FilterDialogueComponent } from './components/parts/filter-dialogue/filter-dialogue.component';
 import { AddGeneListDialogComponent } from './components/parts/add-gene-list-dialog/add-gene-list-dialog.component';
 import * as LogRocket from 'logrocket';
+import { SummaryDialogComponent } from './components/parts/summary-dialog/summary-dialog.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -209,13 +210,15 @@ if (environment.production) {
         MapdPieChartComponent,
         MapdAvgAfChartComponent,
         FilterDialogueComponent,
-        AddGeneListDialogComponent
+        AddGeneListDialogComponent,
+        SummaryDialogComponent,
     ],
     entryComponents: [
         FeedbackComponent,
         ErrorDialogComponent,
         FilterDialogueComponent,
         AddGeneListDialogComponent,
+        SummaryDialogComponent,
         SnackbarDemoComponent
     ],
     providers: [

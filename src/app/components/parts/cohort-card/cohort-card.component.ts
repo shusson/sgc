@@ -21,6 +21,7 @@ import { CohortService } from '../../../services/project-data/cohort-service';
 })
 export class CohortCardComponent implements OnInit {
     @Input() cohortId: string;
+    @Input() showLogo = true;
     cohort: Cohort;
     currentLogo: string = null;
     private currentPersonId: string = null;
