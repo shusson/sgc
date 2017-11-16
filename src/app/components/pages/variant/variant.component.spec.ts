@@ -14,21 +14,14 @@ import { PrivacyFooterComponent } from '../../parts/privacy-footer/privacy-foote
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MgrbTermsComponent } from '../mgrb-terms/mgrb-terms.component';
 import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.component';
-import { VariantAnnotationsComponent } from '../../parts/variant-annotations/variant-annotations.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
-import { AnnoTreeComponent, JsonLabelPipe } from '../../parts/anno-tree/anno-tree.component';
 import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Observable } from 'rxjs/Observable';
-import { VirtualListComponent } from '../../parts/virtual-list/virtual-list.component';
-import { VirtualListItemComponent } from '../../parts/virtual-list-item/virtual-list-item.component';
-import { PopFreqsComponent } from '../../parts/pop-freqs/pop-freqs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ScoresComponent } from '../../parts/scores/scores.component';
-import { ConsequencesComponent } from '../../parts/consequences/consequences.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../../app.material';
 
@@ -52,15 +45,7 @@ describe('VariantComponent', () => {
                 PrivacyFooterComponent,
                 SideNavComponent,
                 HeaderNavComponent,
-                BeaconTableComponent,
-                VariantAnnotationsComponent,
-                AnnoTreeComponent,
-                JsonLabelPipe,
-                VirtualListComponent,
-                VirtualListItemComponent,
-                PopFreqsComponent,
-                ScoresComponent,
-                ConsequencesComponent
+                BeaconTableComponent
             ],
             providers: [
                 ScrollService,

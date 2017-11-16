@@ -16,12 +16,8 @@ import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
 import { Dimension, BasicFilter, DimensionFilter, MapdFilterService } from '../../../services/mapd-filter.service';
-import { FilterDialogueComponent } from '../filter-dialogue/filter-dialogue.component';
 import { SummaryDialogComponent } from '../summary-dialog/summary-dialog.component';
 import { VariantsTablePaginatedComponent } from '../variants-table-paginated/variants-table-paginated.component';
-import { GeneListOptionService } from '../../../services/gene-list-option.service';
-import { GeneList, GeneListsService } from '../../../services/autocomplete/gene-lists-service';
-import { AddGeneListDialogComponent } from '../add-gene-list-dialog/add-gene-list-dialog.component';
 import { RsidService } from '../../../services/autocomplete/rsid-service';
 import { Rsid } from '../../../model/rsid';
 
@@ -36,8 +32,6 @@ const SMALL_WIDTH = 720;
         CrossfilterService,
         ChartsService,
         MapdFilterService,
-        GeneListsService,
-        GeneListOptionService,
         RsidService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -66,7 +60,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
                 public cs: ChartsService,
-                public glos: GeneListOptionService,
                 public rsids: RsidService) {
         this.searchBarService.autocompleteServices.push(rsids);
         this.subscriptions.push(this.errors.subscribe((e) => {
@@ -83,6 +76,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
+
+    }
+
+    ngAfterViewInit(): void {
+        this.loading = true;
+
         this.subscriptions.push(this.cf.updates.debounceTime(100).subscribe(() => {
             const p1 = this.cf.x.sizeAsync().then((v) => {
                 this.total = v;
@@ -95,10 +94,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.cf.currentFilters = this.cf.x.getFilter().filter((x) => x);
             Promise.all([p1, p2]).then(() => this.cd.detectChanges());
         }));
-    }
 
-    ngAfterViewInit(): void {
-        this.loading = true;
         this.mapd.connect().then((session) => {
             return this.cf.create(session, 'mgrb');
         }).then(() => {
@@ -190,47 +186,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         chart.enabled = !chart.enabled;
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(FilterDialogueComponent, {
-            width: '440px',
-            data: {mfs: this.cf.mfs}
-        });
-
-        dialogRef.afterClosed().subscribe((result: DimensionFilter) => {
-            if (!result) {
-                return;
-            }
-            this.cf.mfs.addFilter(result);
-            dc.redrawAllAsync().then(() => {
-                this.cf.updates.next();
-            }).catch((e) => this.errors.next(e));
-        });
-    }
-
     openSummary(): void {
         this.dialog.open(SummaryDialogComponent, {
             width: `700px`,
             data: {mfs: this.cf.mfs}
         });
-    }
-
-    addGeneList() {
-        const dialogRef = this.dialog.open(AddGeneListDialogComponent, {
-            width: '550px',
-            data: {glos: this.glos}
-        });
-
-        dialogRef.afterClosed().subscribe((gl: GeneList) => {
-            if (!gl) {
-                return
-            }
-            const fs = gl.ids.map(id => `gene='${id}'`).join(' OR ');
-            this.cf.mfs.addFilter(new BasicFilter(fs));
-            dc.redrawAllAsync().then(() => {
-                this.cf.updates.next();
-            }).catch((e) => this.errors.next(e));
-        });
-
     }
 
     downloadVariants() {

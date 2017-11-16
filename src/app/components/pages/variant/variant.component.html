@@ -140,65 +140,6 @@
                 </div>
             </div>
 
-            <div *ngIf="variant.annotation">
-                <div class="detail-type">Annotations</div>
-
-                <div class="group">
-                    <div class="subgroup">
-                        <div class="card">
-                            <div class="card-row" (click)="toggleConsequence()" *ngIf="consequences">
-                                <div>
-                                    <span class="highlight-number">{{ consequences.types.length }}</span>
-                                    <span>Consequences</span>
-                                </div>
-                                <mat-icon *ngIf="!showConsequence">keyboard_arrow_down</mat-icon>
-                                <mat-icon *ngIf="showConsequence">keyboard_arrow_up</mat-icon>
-                            </div>
-                            <app-consequences [hidden]="!showConsequence" [variant]="variant"></app-consequences>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="group">
-                    <div class="subgroup">
-                        <div class="card">
-                            <div class="card-row" (click)="toggleScores()" *ngIf="scores">
-                                <div>
-                                    <span class="highlight-number">{{ scores.scores.length }}</span>
-                                    <span>Scores</span>
-                                </div>
-                                <mat-icon *ngIf="!showScores">keyboard_arrow_down</mat-icon>
-                                <mat-icon *ngIf="showScores">keyboard_arrow_up</mat-icon>
-                            </div>
-                            <app-scores [hidden]="!showScores" [variant]="variant"></app-scores>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="group">
-                    <div class="subgroup">
-                        <div class="card">
-                            <div class="card-row" (click)="togglePopFreq()" *ngIf="popFreq">
-                                <div>
-                                    <span class="highlight-number">{{ popFreq.studies.size }}</span>
-                                    <span>Population studies</span>
-                                </div>
-                                <mat-icon *ngIf="!showPopFreq">keyboard_arrow_down</mat-icon>
-                                <mat-icon *ngIf="showPopFreq">keyboard_arrow_up</mat-icon>
-                            </div>
-                            <app-pop-freqs [hidden]="!showPopFreq" [variant]="variant"></app-pop-freqs>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="group" *ngIf="showAnnotations">
-                    <app-variant-annotations [annotations]="variant.annotation"></app-variant-annotations>
-                </div>
-            </div>
-
         </div>
     </section>
 </app-page-container>
