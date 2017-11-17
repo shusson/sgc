@@ -14,7 +14,7 @@ export class Chart {
                 public dimension: string,
                 public type: ChartType,
                 public groupFn: any = null,
-                public enabled = true,
+                public enabled = false,
                 public cap = 100) {
     }
 
@@ -42,21 +42,12 @@ export class ChartsService {
         new Chart("Category", "TYPE", ChartType.Row),
         new Chart("Clinvar", "clinvar", ChartType.Row),
         new Chart("Consequences", "consequences", ChartType.Row),
+        new Chart("Top 100 Genes", "geneSymbol", ChartType.Row, null, false, 100),
         new Chart("Chromosome", "chromosome", ChartType.Row, null, false),
         new Chart("Binned AF", "AF", ChartType.Row, (dim) => {
             return dim.group().binParams([{
                 numBins: 10,
                 binBounds: [0, 1],
-                timeBin: false
-            }]);
-        }, false),
-        new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
-        new Chart("Sift", "sift", ChartType.Pie, null, false),
-        new Chart("Top 100 Genes", "geneSymbol", ChartType.Row, null, false, 100),
-        new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
-            return dim.group().binParams([{
-                numBins: 12,
-                binBounds: [-4.2, 1.4],
                 timeBin: false
             }]);
         }, false),
@@ -66,9 +57,25 @@ export class ChartsService {
                 binBounds: [0, 1],
                 timeBin: false
             }]);
-        }, false)];
+        }, false),
+        new Chart("Eigen", "eigen", ChartType.Row, (dim) => {
+            return dim.group().binParams([{
+                numBins: 12,
+                binBounds: [-4.2, 1.4],
+                timeBin: false
+            }]);
+        }, false),
+        new Chart("PolyPhen", "polyPhen", ChartType.Pie, null, false),
+        new Chart("Sift", "sift", ChartType.Pie, null, false)];
 
     constructor() {
+        let nCharts = 6;
+        if (window.innerWidth > 1440) {
+            nCharts = 13
+        }
+        for (let i = 0; i < nCharts; i++) {
+            this.charts[i].enabled = true;
+        }
     }
 
     enabledCharts() {

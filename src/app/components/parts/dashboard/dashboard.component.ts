@@ -83,6 +83,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit(): void {
+
         this.loading = true;
 
         this.subscriptions.push(this.cf.updates.debounceTime(100).subscribe(() => {
