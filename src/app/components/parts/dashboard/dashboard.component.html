@@ -9,22 +9,22 @@
                  fixedTopGap="71"
                  [opened]="!isSmallScreen()"
                  disableClose="true">
+        <app-help-icon *ngIf="helpEnabled">Reset all filters or view the total counts.</app-help-icon>
         <div class="side-toolbar">
             <mat-icon class="material-icons" (click)="clearFilters()" matTooltip="Clear All Filters"
                       matTooltipPosition="right">refresh
             </mat-icon>
             <div class="count">
-                <mat-chip selected="true" color="accent" matTooltip="Filtered Variants"
-                          matTooltipPosition="above">
+                <div class="number">
                     {{ subtotal }}
-                </mat-chip>
-                /
-                <mat-chip selected="true" color="accent" matTooltip="Total Variants"
-                          matTooltipPosition="above">
+                </div>
+                <div>/</div>
+                <div class="number total-count">
                     {{ total }}
-                </mat-chip>
+                </div>
             </div>
         </div>
+        <app-help-icon *ngIf="helpEnabled">Enable more charts or toggle other settings.</app-help-icon>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -51,7 +51,8 @@
         </div>
         <button mat-menu-item (click)="openSummary()">Data Summary</button>
         <button mat-menu-item (click)="downloadVariants()">Download Variants</button>
-        <button mat-menu-item (click)="openFeedback()">Give feedback</button>
+        <button mat-menu-item (click)="toggleHelp()"><span *ngIf="!helpEnabled">Show</span><span *ngIf="helpEnabled">Hide</span> Help</button>
+        <button mat-menu-item (click)="openFeedback()">Give Feedback</button>
 
     </mat-sidenav>
     <div class="main">
@@ -66,6 +67,8 @@
 
         <div *ngIf="!error">
             <div class="search-jumbo" *ngIf="!error">
+                <app-help-icon *ngIf="helpEnabled">Search by gene, region, RSID or position.</app-help-icon>
+
                 <app-search-bar-with-options
                     [expandable]="false"
                     [action]="addGeneOrRegion"
@@ -90,6 +93,8 @@
                     <mat-icon>info_outline</mat-icon>
                     No variants found for your query. Please widen your search.
                 </div>
+                <app-help-icon *ngIf="helpEnabled">The charts are interactive and allow you to slice and dice the data in whatever way you want. You can enable more charts from the side bar on the left.</app-help-icon>
+
                 <div class="charts" *ngIf="subtotal > 0 && !loading">
                     <div class="chart" *ngFor="let c of cs.enabledCharts()">
                         <app-mapd-avg-af-chart *ngIf="c.type === chartType.Custom"></app-mapd-avg-af-chart>
@@ -98,6 +103,7 @@
                     </div>
                 </div>
                 <div class="table" *ngIf="subtotal > 0">
+                    <app-help-icon *ngIf="helpEnabled">This table contains the filtered variants from the current query. Due to performance limitations, we are currently limited to 100 variants, but we hope to increase this in the future.</app-help-icon>
                     <app-variants-table-paginated #table></app-variants-table-paginated>
                 </div>
             </div>

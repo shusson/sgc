@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelpIconComponent } from '../help-icon/help-icon.component';
 
 import { DashboardComponent } from './dashboard.component';
 import { SearchBarWithOptionsComponent } from '../search-bar-with-options/search-bar-with-options.component';
@@ -44,7 +45,8 @@ describe('DashboardComponent', () => {
                 SearchOptionComponent,
                 MapdRowChartComponent,
                 MapdPieChartComponent,
-                MapdAvgAfChartComponent
+                MapdAvgAfChartComponent,
+                HelpIconComponent
             ],
             providers: [
                 {

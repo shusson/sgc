@@ -1,5 +1,17 @@
-.count mat-chip {
-    cursor: default;
+.count {
+    display: flex;
+    user-select: text;
+}
+
+.count .number {
+    background-color: deepskyblue;
+    color: white;
+    user-select: text;
+    cursor: text;
+}
+
+.count .number::selection {
+    background-color: grey;
 }
 
 .search-jumbo {

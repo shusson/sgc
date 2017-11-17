@@ -1,0 +1,38 @@
+.help-icon-container {
+    position: absolute;
+    left: 50%;
+    z-index: 10000;
+}
+
+.help-icon-container:hover {
+    z-index: 20000;
+}
+
+.help-icon {
+    position: relative;
+    left: -50%;
+    top: -50%;
+    z-index: 10000;
+}
+
+.help-icon:hover {
+    background-color: black;
+    color: white;
+}
+
+.help-icon:hover .help-message{
+    display: block;
+}
+
+.help-message {
+    display: none;
+    max-width: 200px;
+}
+
+.help-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}

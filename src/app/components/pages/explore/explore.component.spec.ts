@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelpIconComponent } from '../../parts/help-icon/help-icon.component';
 
 import { ExploreComponent } from './explore.component';
 import { DashboardComponent } from '../../parts/dashboard/dashboard.component';
@@ -56,7 +57,8 @@ describe('ExploreComponent', () => {
                 SearchOptionComponent,
                 MapdRowChartComponent,
                 MapdPieChartComponent,
-                MapdAvgAfChartComponent
+                MapdAvgAfChartComponent,
+                HelpIconComponent
             ],
             providers: [
                 ScrollService,
