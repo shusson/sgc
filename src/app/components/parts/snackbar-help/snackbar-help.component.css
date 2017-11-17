@@ -1,0 +1,22 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.row button {
+    margin-right: 1rem;
+}
+
+button {
+    color: #003263;
+}
+
+.help-message p {
+    font-size: larger;
+}

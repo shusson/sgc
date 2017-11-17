@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MapdService } from '../../../services/mapd.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
-import { MatCheckboxChange, MatDialog } from '@angular/material';
+import { MatCheckboxChange, MatDialog, MatSnackBar } from '@angular/material';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { Subject } from 'rxjs/Subject';
 import * as Raven from 'raven-js';
@@ -16,6 +16,7 @@ import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Position } from '../../../model/position';
 import { Dimension, BasicFilter, DimensionFilter, MapdFilterService } from '../../../services/mapd-filter.service';
+import { SnackbarHelpComponent } from '../snackbar-help/snackbar-help.component';
 import { SummaryDialogComponent } from '../summary-dialog/summary-dialog.component';
 import { VariantsTablePaginatedComponent } from '../variants-table-paginated/variants-table-paginated.component';
 import { RsidService } from '../../../services/autocomplete/rsid-service';
@@ -49,6 +50,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     total = 0;
     subtotal = 0;
     sql = '';
+    helpEnabled = false;
 
     errors = new Subject<any>();
 
@@ -60,7 +62,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 public cf: CrossfilterService,
                 public dialog: MatDialog,
                 public cs: ChartsService,
-                public rsids: RsidService) {
+                public rsids: RsidService,
+                public snackBar: MatSnackBar) {
         this.searchBarService.autocompleteServices.push(rsids);
         this.subscriptions.push(this.errors.subscribe((e) => {
             if (environment.production) {
@@ -80,6 +83,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit(): void {
+
         this.loading = true;
 
         this.subscriptions.push(this.cf.updates.debounceTime(100).subscribe(() => {
@@ -199,5 +203,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     isSmallScreen(): boolean {
         return this.mediaMatcher.matches;
+    }
+
+    toggleHelp() {
+        if (!this.helpEnabled) {
+            const snackBarRef = this.snackBar.openFromComponent(SnackbarHelpComponent);
+            snackBarRef.afterDismissed().subscribe(() => {
+                this.helpEnabled = false;
+                this.cd.detectChanges();
+            });
+        } else {
+            this.snackBar.dismiss();
+        }
+
+        this.helpEnabled = !this.helpEnabled;
     }
 }

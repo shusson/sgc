@@ -3,7 +3,7 @@ import { browser } from 'protractor';
 
 describe('user', function () {
 
-    let user = new User();
+    const user = new User();
 
     beforeAll(() => {
         user.logout();
