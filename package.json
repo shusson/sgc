@@ -43,7 +43,7 @@
     "mapbox-gl": "https://github.com/mapd/mapbox-gl-js/tarball/9c04de6949fe498c8c79f5c0627dfd6d6321f307",
     "ngx-pagination": "3.0.1",
     "papaparse": "^4.1.2",
-    "raven-js": "^3.17.0",
+    "raven-js": "^3.20.1",
     "rxjs": "^5.5.2",
     "seedrandom": "^2.4.3",
     "tnt.genome": "0.1.6",
