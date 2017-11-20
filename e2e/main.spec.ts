@@ -1,5 +1,7 @@
 import { browser, by, element, protractor } from 'protractor';
 
+export const TEST_BROWSER_WIDTH = 1400;
+
 describe('SGC', function () {
 
     it('should automatically redirect to /initiatives when location url is the root', function () {
@@ -42,7 +44,7 @@ describe('SGC', function () {
 
         describe('navbar', function () {
             it('should be able to navigate to the initiatives page from the about page', function () {
-                browser.driver.manage().window().setSize(1301, 1000);
+                browser.driver.manage().window().setSize(TEST_BROWSER_WIDTH, 1000);
                 browser.get('/about');
                 const link = element(by.linkText('INITIATIVES'));
                 link.click().then(function () {
@@ -53,7 +55,7 @@ describe('SGC', function () {
             });
 
             it('should be able to navigate to the about page from the initiative page', function () {
-                browser.driver.manage().window().setSize(1301, 1000);
+                browser.driver.manage().window().setSize(TEST_BROWSER_WIDTH, 1000);
                 browser.get('/initiatives');
                 element(by.linkText('ABOUT')).click().then(function () {
                     element(by.css('.about')).isDisplayed().then(function () {
