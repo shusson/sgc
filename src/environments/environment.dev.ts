@@ -7,7 +7,7 @@ export const environment = {
     auth0Domain: 'sgc.au.auth0.com',
     beaconNetworkUrl: 'https://beacon-network.org/api',
     // vsalUrl: 'http://localhost:3000',
-    vsalUrl: 'https://services.vectis-api.com:444/variants',
+    vsalUrl: 'https://services.vectis-api.com:80/variants',
     // elasticUrl: 'http://localhost:328v40',
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',
     durlUrl: 'https://wt-ec1ac815dce38c76c2e7662693b82189-0.run.webtask.io/durl-dev',
@@ -16,7 +16,7 @@ export const environment = {
     mapd: {
         protocol: 'https',
         host: 'mapd.vectis-api.com',
-        port: '445',
+        port: '443',
         dbName: 'mapd',
         user: 'mapd',
         pwd: 'HyperInteractive',
