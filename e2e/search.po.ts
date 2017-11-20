@@ -1,16 +1,17 @@
 import { browser, element, by, protractor } from 'protractor';
+import { TEST_BROWSER_WIDTH } from './main.spec';
 
 const TIMEOUT = 10000;
 
 export class SearchPage {
 
     navigateTo() {
-        browser.driver.manage().window().setSize(1201, 1000);
+        browser.driver.manage().window().setSize(TEST_BROWSER_WIDTH, 1000);
         browser.get('/search');
     }
 
     navigateToDemo() {
-        browser.driver.manage().window().setSize(1201, 1000);
+        browser.driver.manage().window().setSize(TEST_BROWSER_WIDTH, 1000);
         return browser.get('/search/results;timestamp=1507169944564;demo=true;query=FAM110C');
     }
 

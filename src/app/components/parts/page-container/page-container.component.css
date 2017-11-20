@@ -104,7 +104,7 @@ mat-sidenav .title {
     width: 60px;
 }
 
-@media (min-width: 0px) and (max-width: 1200px) {
+@media (min-width: 0px) and (max-width: 1285px) {
 
     .header-message {
         font-size: 11px;

@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
 
-const MIN_NAV_WIDTH = 1200;
+const MIN_NAV_WIDTH = 1285;
 
 @Component({
     selector: 'app-page-container',

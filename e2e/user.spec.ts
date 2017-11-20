@@ -1,3 +1,4 @@
+import { TEST_BROWSER_WIDTH } from './main.spec';
 import { User } from './user.po';
 import { browser } from 'protractor';
 
@@ -7,7 +8,7 @@ describe('user', function () {
 
     beforeAll(() => {
         user.logout();
-        browser.driver.manage().window().setSize(1201, 1000);
+        browser.driver.manage().window().setSize(TEST_BROWSER_WIDTH, 1000);
     });
 
     beforeEach(function () {
