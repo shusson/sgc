@@ -8,7 +8,7 @@ import { SearchBarService } from '../../../services/search-bar-service';
 import { VariantAutocompleteResult } from '../../../model/autocomplete-result';
 import { Gene } from '../../../model/gene';
 import { Region } from '../../../model/region';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-search-results',
@@ -29,6 +29,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
     constructor(public searchService: VariantSearchService,
                 private cd: ChangeDetectorRef,
                 private searchBarService: SearchBarService,
+                private router: Router,
                 private route: ActivatedRoute) {
     }
 
@@ -92,6 +93,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
                 this.showClinicalFilters();
             }, 200)
         }
+    }
+
+    goToSmallerRegion() {
+        const obj = {query: this.searchService.getSmallerRegionString(), timestamp: Date.now()};
+        this.router.navigate(['/search/results', obj]);
     }
 
     tabSelected(v) {

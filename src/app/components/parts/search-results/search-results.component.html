@@ -20,6 +20,10 @@
         </mat-tab>
     </mat-tab-group>
 
-    <app-genome-browser-resizable></app-genome-browser-resizable>
+    <div *ngIf="variants.length > 10000" class="message message-error">
+        This region contains too many variants to visualize with our genome browser, please choose a smaller region like:
+        <a (click)="goToSmallerRegion()">{{searchService.getSmallerRegionString()}}</a>
+    </div>
+    <app-genome-browser-resizable *ngIf="variants.length < 10000"></app-genome-browser-resizable>
     <app-variants-table [variants]="variants"></app-variants-table>
 </div>
