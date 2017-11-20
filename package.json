@@ -46,7 +46,7 @@
     "raven-js": "^3.17.0",
     "rxjs": "^5.5.2",
     "seedrandom": "^2.4.3",
-    "tnt.genome": "0.1.6",
+    "tnt.genome": "0.1.10",
     "tnt.tooltip": "0.1.0",
     "uuid": "^3.0.1",
     "web-animations-js": "^2.2.2",
