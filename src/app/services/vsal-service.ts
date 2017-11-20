@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import * as Raven from 'raven-js';
+import { constants } from '../app.constants';
 import { Variant } from '../model/variant';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
@@ -75,7 +77,8 @@ export class VsalService {
             .timeout(VSAL_TIMEOUT)
             .map((data) => {
                 if (data['error']) {
-                    return new VariantRequest([], `${data['error'].name}: ${data['error'].description}`);
+                    Raven.captureMessage("VSAL ERROR: " + data['error']);
+                    return new VariantRequest([], constants.GENERIC_ERROR_MESSAGE);
                 }
                 const vs = new VariantRequest(data['variants']);
                 if (data['total'] && data['total'].length > 0) {
@@ -83,8 +86,9 @@ export class VsalService {
                 }
                 return vs;
             })
-            .catch(() => {
-                return Observable.of(new VariantRequest([], 'An error occurred while trying to connect to VSAL'));
+            .catch((e) => {
+                Raven.captureMessage("VSAL ERROR: " + JSON.stringify(e));
+                return Observable.of(new VariantRequest([], constants.GENERIC_ERROR_MESSAGE));
             });
     }
 }

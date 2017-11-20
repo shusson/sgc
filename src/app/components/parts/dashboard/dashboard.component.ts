@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import * as d3 from 'd3';
 import '@mapd/mapdc/dist/mapdc.js';
 import { Subscription } from 'rxjs/Subscription';
+import { constants } from '../../../app.constants';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MapdService } from '../../../services/mapd.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
@@ -66,14 +67,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 public snackBar: MatSnackBar) {
         this.searchBarService.autocompleteServices.push(rsids);
         this.subscriptions.push(this.errors.subscribe((e) => {
-            if (environment.production) {
-                Raven.captureMessage(e);
-            } else {
-                console.error(e);
-            }
-
-            this.error = 'There was an internal error and our team has been notified. ' +
-                'In the meantime please try again or contact us at sgc@garvan.org.au';
+            Raven.captureMessage(e);
+            this.error = constants.GENERIC_ERROR_MESSAGE;
             this.cd.detectChanges();
         }));
     }
