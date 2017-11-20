@@ -78,6 +78,10 @@ export class VariantSearchService {
         return new Region(this.lastQuery.chromosome, this.lastQuery.start, this.lastQuery.end);
     }
 
+    getSmallerRegionString() {
+        return `${this.lastQuery.chromosome}:${this.lastQuery.start}-${this.lastQuery.start + 100000}`;
+    }
+
     hasMoved() {
         return this.startingRegion.start !== this.lastQuery.start || this.startingRegion.end !== this.lastQuery.end;
     }
