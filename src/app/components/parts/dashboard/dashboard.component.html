@@ -2,7 +2,11 @@
     <mat-spinner color="primary"></mat-spinner>
 </div>
 
-<mat-sidenav-container>
+<section *ngIf="error" class="message message-error">
+    {{ error }}
+</section>
+
+<mat-sidenav-container *ngIf="!error">
     <mat-sidenav #sidenav
                  mode="side"
                  fixedInViewport="true"
