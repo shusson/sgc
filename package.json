@@ -27,7 +27,7 @@
     "@mapd/crossfilter": "git://github.com/mapd/mapd-crossfilter.git#v1.2.1",
     "@mapd/mapdc": "git://github.com/mapd/mapd-charting.git#v1.2.3",
     "@swimlane/ngx-datatable": "^10.4.0",
-    "auth0-lock": "10.22.0",
+    "auth0-lock": "10.24.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.4.1",
     "d3": "^3.5.17",
