@@ -35,7 +35,8 @@
                 "prod": "environments/environment.prod.ts",
                 "staging": "environments/environment.staging.ts",
                 "demo": "environments/environment.demo.ts",
-                "dev": "environments/environment.dev.ts"
+                "dev": "environments/environment.dev.ts",
+                "ci": "environments/environment.ci.ts"
             }
         }
     ],

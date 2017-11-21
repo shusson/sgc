@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    ci: false,
     ensemblDomain: 'grch37.rest.ensembl.org',
     ensemblProtocol: 'https',
     baseHref: '',

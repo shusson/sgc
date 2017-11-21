@@ -121,7 +121,7 @@ export class RavenErrorHandler implements ErrorHandler {
     }
 }
 
-if (environment.production) {
+if (environment.production && !environment.ci) {
     LogRocket.init(environment.logrocket);
 }
 

@@ -14,6 +14,7 @@ export class MapDSettings {
 
 export const environment = {
     production: false,
+    ci: false,
     ensemblDomain: '',
     ensemblProtocol: 'https',
     baseHref: '',
