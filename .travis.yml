@@ -32,6 +32,6 @@ before_script:
 
 script:
   - if [ "$TEST_SUITE" == "unit" ]; then ng test; fi
-  - if [ "$TEST_SUITE" == "e2e" ]; then ng e2e --environment=staging --target=production; fi
+  - if [ "$TEST_SUITE" == "e2e" ]; then ng e2e --environment=ci --target=production; fi
   - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" != "false" ]; then sh deploy/staging.sh; fi
   - if [ "$TEST_SUITE" == "e2e" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then sh deploy/prod.sh; fi
