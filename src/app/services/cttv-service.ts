@@ -208,11 +208,12 @@ export class CttvService {
     }
 
     static filterValuesAndLabelGroups(values: any[], xScale: any) {
-        let lim = 20;
-        let deltaXLimit = 1;
-        let deltaValLimit = 0.01;
-        let filterLimit = 1000;
-        let indexesToDelete: number[] = [];
+        const lim = 20;
+        const deltaXLimit = (values.length / 1000) + 5;
+        const deltaValLimit = 0.01;
+        const filterLimit = 1000;
+        const indexesToDelete: number[] = [];
+        let indexToKeep = 0;
         values.map((d: any) => {
             d.label = '';
             d._px = xScale(d.pos);
@@ -220,7 +221,7 @@ export class CttvService {
         values.sort((a: any, b: any) => {
             return a.pos - b.pos;
         });
-        let groups: any[] = [];
+        const groups: any[] = [];
         let currGroup: any[] = [values[0]];
         let curr: any = values[0];
         for (let i = 1; i < values.length; i++) {
@@ -234,10 +235,13 @@ export class CttvService {
             }
 
             if (values.length >= filterLimit) {
-                let deltaX = (values[i]._px - values[i - 1]._px);
-                let deltaY = Math.abs((values[i].val - values[i - 1].val));
+                // we filter out variants based on if they visually overlap.
+                const deltaX = (values[i]._px - values[indexToKeep]._px);
+                const deltaY = Math.abs((values[i].val - values[indexToKeep].val));
                 if (deltaX < deltaXLimit && (deltaY < deltaValLimit)) {
                     indexesToDelete.push(i);
+                } else {
+                    indexToKeep = i;
                 }
             }
         }
@@ -251,7 +255,7 @@ export class CttvService {
         groups.push(currGroup);
         for (let g = 0; g < groups.length; g++) {
             if (groups[g].length > 1) {
-                let med = groups[g][Math.floor(groups[g].length / 2)];
+                const med = groups[g][Math.floor(groups[g].length / 2)];
                 med.label = '(' + groups[g].length + ')';
             }
         }
