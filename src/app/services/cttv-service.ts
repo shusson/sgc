@@ -30,6 +30,8 @@ import * as tooltip from 'tnt.tooltip';
  limitations under the License.
  */
 
+export const MAXIMUM_NUMBER_OF_VARIANTS = 10000;
+
 @Injectable()
 export class CttvService {
 
@@ -208,6 +210,11 @@ export class CttvService {
     }
 
     static filterValuesAndLabelGroups(values: any[], xScale: any) {
+        if (values.length > MAXIMUM_NUMBER_OF_VARIANTS) {
+            values.length = 0;
+            return;
+        }
+
         const lim = 20;
         const deltaXLimit = (values.length / 1000) + 5;
         const deltaValLimit = 0.01;
