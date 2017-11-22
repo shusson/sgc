@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { Variant } from '../../../model/variant';
+import { MAXIMUM_NUMBER_OF_VARIANTS } from '../../../services/cttv-service';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { Subscription } from 'rxjs/Subscription';
@@ -23,6 +24,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
     public variants: Variant[] = [];
     public loadingVariants = false;
     private subscriptions: Subscription[] = [];
+    maximumNumberOfVariants = MAXIMUM_NUMBER_OF_VARIANTS;
     selectedTabIndex = 0;
     timeout = null;
 
