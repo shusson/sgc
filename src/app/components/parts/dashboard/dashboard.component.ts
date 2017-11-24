@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.searchBarService.autocompleteServices.push(rsids);
         this.subscriptions.push(this.errors.subscribe((e) => {
             Raven.captureMessage(e);
-            this.error = constants.GENERIC_ERROR_MESSAGE;
+            this.error = constants.GENERIC_SERVICE_ERROR_MESSAGE;
             this.cd.detectChanges();
         }));
     }

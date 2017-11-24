@@ -9,7 +9,7 @@ import { VariantRequest } from '../model/variant-request';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export const VSAL_VARIANT_LIMIT = 10000;
-export const VSAL_TIMEOUT = 20000;
+export const VSAL_TIMEOUT = 60000;
 
 @Injectable()
 export class VsalService {
@@ -78,7 +78,7 @@ export class VsalService {
             .map((data) => {
                 if (data['error']) {
                     Raven.captureMessage("VSAL ERROR: " + data['error']);
-                    return new VariantRequest([], constants.GENERIC_ERROR_MESSAGE);
+                    return new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE);
                 }
                 const vs = new VariantRequest(data['variants']);
                 if (data['total'] && data['total'].length > 0) {
@@ -88,7 +88,7 @@ export class VsalService {
             })
             .catch((e) => {
                 Raven.captureMessage("VSAL ERROR: " + JSON.stringify(e));
-                return Observable.of(new VariantRequest([], constants.GENERIC_ERROR_MESSAGE));
+                return Observable.of(new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE));
             });
     }
 }
