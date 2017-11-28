@@ -51,7 +51,7 @@ The app src code structure:
 
 To run tests
 ```bash
-karma start
+ng test
 ```
   
 #### e2e tests
@@ -69,8 +69,7 @@ The application connects to a number of external services,
 all of which are defined in [src/environments](src/environments). 
    
 #### VSAL
-Garvan's variant store abstraction layer. Source code is not currently 
-available.
+A minimum [variantstore](https://github.com/shusson/variantstore) backed by MySQL
 
 #### [DURL](https://github.com/shusson/durl)
 A simple webtask for generating an s3 presigned url. 
@@ -91,8 +90,8 @@ Our identity service. Provides identity and authentication.
 #### [Sentry](https://sentry.io/)
 Tracks any unhandled errors
 
-#### [MapD](https://github.com/mapd/mapd-core)
-In memory GPU Database that supports cross dimensional charts.
+#### [MapD-API](https://github.com/shusson/mapd-api)
+A variant store backed by an in-memory GPU Database [MapD](https://github.com/mapd/mapd-core) that supports cross dimensional charts.
 
 ### Deployment
 
@@ -102,7 +101,7 @@ We have a CI pipeline set up that hosts on firebase.
 See [.travis.yml](.travis.yml) and [deploy](deploy) for more info.
 
 The final production build which is hosted at https://sgc.garvan.org.au 
-is still manually deployed through an internal process involving bamboo.
+is still manually deployed.
 
 ### Acknowledgements
 Special thanks to [Miguel Pignatelli](https://github.com/emepyc) 
