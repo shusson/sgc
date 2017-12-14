@@ -20,11 +20,6 @@ describe('Explore Page', () => {
 
     beforeEach(() => {
         explore.navigateTo();
-        browser.waitForAngularEnabled(false);
-    });
-
-    afterEach(() => {
-        browser.waitForAngularEnabled(true);
     });
 
     it('should display a total count of 83722121', function () {
