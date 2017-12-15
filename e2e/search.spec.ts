@@ -1,4 +1,4 @@
-import { browser, by, element, protractor } from 'protractor';
+import { browser } from 'protractor';
 import { TEST_BROWSER_WIDTH } from './main.spec';
 import { User } from './user.po';
 import { SearchPage } from './search.po';
@@ -33,11 +33,6 @@ describe('search', () => {
 
     beforeEach(() => {
         sp.navigateTo();
-        browser.waitForAngularEnabled(false);
-    });
-
-    afterEach(() => {
-        browser.waitForAngularEnabled(true);
     });
 
     it('should be able to find BRCA1', () => {
