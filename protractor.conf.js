@@ -1,7 +1,7 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
-    allScriptsTimeout: 20000,
+    allScriptsTimeout: 30000,
     specs: [
         './e2e/**/*spec.ts'
     ],
