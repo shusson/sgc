@@ -13,13 +13,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.0.0",
-    "@angular/cdk": "^5.0.0",
+    "@angular/cdk": "^5.0.3",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
     "@angular/core": "^5.0.0",
     "@angular/forms": "^5.0.0",
     "@angular/http": "^5.0.0",
-    "@angular/material": "^5.0.0",
+    "@angular/material": "^5.0.3",
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
@@ -27,7 +27,7 @@
     "@mapd/crossfilter": "git://github.com/mapd/mapd-crossfilter.git#v1.2.1",
     "@mapd/mapdc": "git://github.com/mapd/mapd-charting.git#v1.2.3",
     "@swimlane/ngx-datatable": "^11.1.5",
-    "auth0-lock": "10.24.1",
+    "auth0-lock": "10.24.2",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.4.1",
     "d3": "^3.5.17",
@@ -53,7 +53,7 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.0",
+    "@angular/cli": "^1.6.3",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
     "@types/d3": "^3.5.36",

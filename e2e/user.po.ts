@@ -15,10 +15,10 @@ export class User {
         element(by.linkText('LOG IN')).click().then(() => {
             element(by.css('.auth0-lock-input-email input')).sendKeys('test@test.com');
             element(by.css('.auth0-lock-input-password input')).sendKeys('test');
-            browser.driver.sleep(2000);
+            browser.driver.sleep(5000);
             browser.waitForAngularEnabled(false);
             element(by.css('button.auth0-lock-submit')).click();
-            browser.driver.sleep(2000);
+            browser.driver.sleep(5000);
             browser.waitForAngularEnabled(true);
             element(by.linkText('LOG OUT')).isDisplayed().then(v => {
                 expect(v).toBe(true);
