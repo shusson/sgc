@@ -101,32 +101,6 @@ import { AuthGuardComponent } from './components/parts/auth-guard/auth-guard.com
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
-Raven
-    .config(environment.sentryUrl)
-    .install();
-
-Raven.setDataCallback(function (data) {
-    data.extra.sessionURL = LogRocket.sessionURL;
-    return data;
-});
-
-export class RavenErrorHandler implements ErrorHandler {
-    handleError(err: any): void {
-        if (!environment.production) {
-            console.error(err);
-        } else {
-            Raven.captureException(err);
-            window.setTimeout(() => {
-                window.location.href = 'error';
-            }, CRITICAL_ERROR_WAIT_DURATION);
-        }
-    }
-}
-
-if (environment.production && !environment.ci) {
-    LogRocket.init(environment.logrocket);
-}
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -216,7 +190,6 @@ if (environment.production && !environment.ci) {
         PositionService,
         TableService,
         LocalStorageService,
-        { provide: ErrorHandler, useClass: RavenErrorHandler },
         { provide: 'NULL_VALUE', useValue: null }
     ],
     bootstrap: [AppComponent]

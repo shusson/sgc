@@ -6,14 +6,14 @@ export class TableService {
 
     private displayMap: any = {
         'Location': (v: Variant) => this.locationString(v),
-        'Reference': (v: Variant) => v.reference,
-        'Alternate': (v: Variant) => v.alternate,
-        'Type': (v: Variant) => v.altType,
-        'dbSNP': (v: Variant) => v.dbSNP,
+        'Reference': (v: Variant) => v.ref,
+        'Alternate': (v: Variant) => v.alt,
+        'Type': (v: Variant) => v.type,
+        'dbSNP': (v: Variant) => v.rsid,
         'Homozygotes Count': (v: Variant) => v.nHomVar,
         'Heterozygotes Count': (v: Variant) => v.nHet,
-        'Allele Count': (v: Variant) => v.AC,
-        'Allele Freq': (v: Variant) => v.AF.toExponential(4),
+        'Allele Count': (v: Variant) => v.ac,
+        'Allele Freq': (v: Variant) => v.af.toExponential(4),
         'cato': (v: Variant) => v.cato,
         'eigen': (v: Variant) => v.eigen,
         'sift': (v: Variant) => v.sift,
@@ -52,18 +52,18 @@ export class TableService {
 
     readonly sortMap: any = {
         'Location': (v: Variant) => v.start,
-        'Reference': (v: Variant) => v.reference,
-        'Alternate': (v: Variant) => v.alternate,
-        'Type': (v: Variant) => v.altType,
-        'dbSNP': (v: Variant) => v.dbSNP ? v.dbSNP.match(/rs(\d+)/)[1] : 0,
+        'Reference': (v: Variant) => v.ref,
+        'Alternate': (v: Variant) => v.alt,
+        'Type': (v: Variant) => v.type,
+        'dbSNP': (v: Variant) => v.rsid ? v.rsid.match(/rs(\d+)/)[1] : 0,
         'Homozygotes Count': (v: Variant) => {
             return v.nHomVar;
         },
         'Heterozygotes Count': (v: Variant) => {
             return v.nHet;
         },
-        'Allele Count': (v: Variant) => v.AC,
-        'Allele Freq': (v: Variant) => v.AF,
+        'Allele Count': (v: Variant) => v.ac,
+        'Allele Freq': (v: Variant) => v.af,
         'cato': (v: Variant) => v.cato,
         'eigen': (v: Variant) => v.eigen,
         'sift': (v: Variant) => v.sift ? v.sift : '',
@@ -175,6 +175,6 @@ export class TableService {
     }
 
     private locationString(variant: Variant) {
-        return `${variant.chromosome} : ${variant.start}`;
+        return `${variant.chr} : ${variant.start}`;
     }
 }

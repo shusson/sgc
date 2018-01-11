@@ -12,6 +12,7 @@ const DEBOUNCE_TIME = 100;
 @Injectable()
 export class VariantSearchService {
     variants: Variant[] = [];
+    total = 0;
     results: Observable<VariantRequest>;
     errors = new Subject<any>();
     commenced = false;
@@ -25,7 +26,7 @@ export class VariantSearchService {
         this.variantsObserver = this.searchQuery
             .debounceTime(DEBOUNCE_TIME)
             .switchMap((query: SearchQuery) => {
-                return this.vsal.getVariants(query).map((vr: VariantRequest) => {
+                return this.vsal.getVariantsWithCount(query).map((vr: VariantRequest) => {
                     if (this.filter) {
                         vr.variants = this.filter(vr.variants);
                     }
@@ -45,6 +46,7 @@ export class VariantSearchService {
                 this.startingRegion = new Region(this.lastQuery.chromosome, this.lastQuery.start, this.lastQuery.end);
             }
             this.variants = cs.variants;
+            this.total = cs.total;
             this.commenced = true;
         });
     }

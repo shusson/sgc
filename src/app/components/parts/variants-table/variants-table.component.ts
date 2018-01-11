@@ -4,14 +4,13 @@ import {
 import { Variant } from '../../../model/variant';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
-import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
+import { VariantPin, VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 
 import * as Papa from 'papaparse';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { TableService } from '../../../services/table-service';
-import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
+import { VsalService } from '../../../services/vsal-service';
 
-const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
 const MINIMAL_VIEW = 500;
 
 @Component({
@@ -20,17 +19,18 @@ const MINIMAL_VIEW = 500;
     styleUrls: ['./variants-table.component.css', '../../../shared/table-results.css']
 })
 export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit {
-    @Input() variants: Variant[];
-    @ViewChild(FilterAutoComponent) filterComponent: FilterAutoComponent;
+    variants: Variant[] = [];
     pageSize = 10;
     currentPage = 1;
+    skip = 0;
     dbSnpUrl = Variant.dbSnpUrl;
     showSettings = true;
-    private highlightedVariant: Variant;
+    private highlightedVariantIndex: number;
     private subscriptions: Subscription[] = [];
 
     constructor(public  ts: TableService,
-                private searchService: VariantSearchService,
+                public  searchService: VariantSearchService,
+                private vsal: VsalService,
                 private variantTrack: VariantTrackService,
                 private cd: ChangeDetectorRef,
                 private router: Router) {
@@ -42,24 +42,20 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
             this.showSettings = false;
         }
 
-        this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: Variant) => {
-            if (v.highlight) {
-                this.highlightedVariant = v;
+        this.updatePage(this.currentPage);
+
+        this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: VariantPin) => {
+            if (v.variant.highlight) {
+                this.highlightedVariantIndex = v.index - this.skip;
             } else {
-                this.highlightedVariant = null;
+                this.highlightedVariantIndex = null;
             }
             this.cd.detectChanges();
         }));
 
-        this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((variant: Variant) => {
-            const index = this.variants.findIndex((v => this.compare(v, variant)));
-            this.currentPage = Math.ceil((index + 1) / this.pageSize);
-            this.cd.detectChanges();
-        }));
-
-        this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((variant: Variant) => {
-            const index = this.variants.findIndex((v => this.compare(v, variant)));
-            this.currentPage = Math.ceil((index + 1) / this.pageSize);
+        this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((vp: VariantPin) => {
+            const p = Math.ceil(vp.index / this.pageSize);
+            this.updatePage(p);
             this.cd.detectChanges();
         }));
 
@@ -67,20 +63,21 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
     ngAfterViewInit() {
         this.subscriptions.push(this.searchService.results.subscribe(() => {
-            this.currentPage = 0;
-            this.filterComponent.reset(this.variants);
+            this.updatePage(1);
             this.cd.detectChanges();
         }));
     }
 
-    highlightVariant(variant: Variant) {
+    highlightVariant(variant: Variant, localIndex) {
+        const index = this.skip + localIndex;
         variant.highlight = true;
-        this.variantTrack.highlightedVariant.next(variant);
+        this.variantTrack.highlightedVariant.next(new VariantPin(variant.start, variant.af, '', variant, index));
     }
 
-    unHighlightVariant(variant: Variant) {
+    unHighlightVariant(variant: Variant, localIndex) {
+        const index = this.skip + localIndex;
         variant.highlight = false;
-        this.variantTrack.highlightedVariant.next(variant);
+        this.variantTrack.highlightedVariant.next(new VariantPin(variant.start, variant.af, '', variant, index));
     }
 
     sortVariants(label: string) {
@@ -88,18 +85,19 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     downloadFile() {
+        // get annotated data for up to 10000
         const data = this.variants.map((v: Variant) => {
             return {
-                'Chrom': v.chromosome,
+                'Chrom': v.chr,
                 'Position': v.start,
-                'RSID': v.dbSNP,
-                'Reference': v.reference,
-                'Alternate': v.alternate,
-                'Type': v.altType,
+                'RSID': v.rsid,
+                'Reference': v.ref,
+                'Alternate': v.alt,
+                'Type': v.type,
                 'Homozygotes Count': v.nHomVar,
                 'Heterozygotes Count': v.nHet,
-                'Allele Count': v.AC,
-                'Allele Frequency': v.AF,
+                'Allele Count': v.ac,
+                'Allele Frequency': v.af,
                 'cato': v.cato,
                 'eigen': v.eigen,
                 'sift': v.sift,
@@ -125,10 +123,6 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
 
-    onFilter(filtered: Variant[]) {
-        this.variants = filtered;
-    }
-
     variantUrl(v: Variant) {
         return this.router.createUrlTree(['/search/variant', {query: Variant.displayName(v)}]).toString();
     }
@@ -141,6 +135,16 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     activateColumn($event, key) {
         $event.stopPropagation();
         this.ts.set(key, !this.ts.get(key))
+    }
+
+    updatePage(pageNumber) {
+        this.currentPage = pageNumber;
+        this.skip = this.pageSize * (this.currentPage - 1);
+
+        this.vsal.getVariantsWithAnnotations(this.searchService.lastQuery, this.pageSize, this.skip).toPromise().then((vr) => {
+            this.variants = vr.variants;
+            this.cd.detectChanges();
+        });
     }
 
 }

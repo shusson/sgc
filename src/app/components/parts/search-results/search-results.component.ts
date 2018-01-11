@@ -21,12 +21,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
     @Input() autocomplete: VariantAutocompleteResult<any>;
     @Output() errorEvent = new EventEmitter();
     showClin = false;
-    public variants: Variant[] = [];
-    public loadingVariants = false;
-    private subscriptions: Subscription[] = [];
+    variants: Variant[] = [];
+    total = 0;
+    loadingVariants = false;
     maximumNumberOfVariants = MAXIMUM_NUMBER_OF_VARIANTS;
     selectedTabIndex = 0;
     timeout = null;
+    private subscriptions: Subscription[] = [];
 
     constructor(public searchService: VariantSearchService,
                 private cd: ChangeDetectorRef,
@@ -36,10 +37,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     ngOnInit(): void {
-
         this.variants = this.searchService.variants;
         this.subscriptions.push(this.searchService.results.subscribe(v => {
             this.variants = v.variants;
+            this.total = v.total;
             this.cd.detectChanges();
         }));
 

@@ -6,16 +6,9 @@
             <div class="left">
             </div>
             <div class="gb-nav">
-                <!--<i (click)="backward()" class="material-icons">arrow_back</i>
-                <i (click)="forward()" class="material-icons">arrow_forward</i>
-                <i (click)="zoomIn()" class="material-icons">zoom_in</i>
-                <i (click)="zoomOut()" class="material-icons">zoom_out</i><-->
             </div>
 
             <div class="right">
-                <app-overlay-menu></app-overlay-menu>
-                <i (click)="unlock()" *ngIf="locked" class="material-icons" matTooltip="Unlock the current view" matTooltipPosition="above">lock</i>
-                <i (click)="lock()" *ngIf="!locked" class="material-icons" matTooltip="Lock the current view" matTooltipPosition="above">lock_open</i>
                 <mat-slide-toggle *ngIf="ensemblSupported" [ngModel]="transcriptsShown" (ngModelChange)="toggleTranscripts()" matTooltip="Show/hide Transcripts from Ensembl" matTooltipPosition="above">
                     Transcripts
                 </mat-slide-toggle>

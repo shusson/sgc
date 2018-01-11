@@ -9,7 +9,7 @@ export const environment = {
     auth0Connection: 'Username-Password-Authentication',
     beaconNetworkUrl: 'https://beacon-network.org/api',
     // vsalUrl: 'http://localhost:3000',
-    vsalUrl: 'https://vsql.vectis-api.com:443/variants',
+    vsalUrl: 'http://129.94.14.221:8080/ssvs/query',
     // elasticUrl: 'http://localhost:328v40',
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',
     durlUrl: 'https://wt-ec1ac815dce38c76c2e7662693b82189-0.run.webtask.io/durl-dev',

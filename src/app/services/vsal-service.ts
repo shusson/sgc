@@ -13,63 +13,41 @@ export const VSAL_TIMEOUT = 60000;
 
 @Injectable()
 export class VsalService {
+
     constructor(private http: HttpClient) {
+
+    }
+    getVariantsWithAnnotations(query: SearchQuery, limit: number, skip: number): Observable<VariantRequest> {
+        const params = this.getParams(query)
+            .append('sortBy', 'start')
+            .append('descend', 'false')
+            .append('limit', limit.toString())
+            .append('skip', skip.toString())
+            .append('annot', 'true');
+
+        return this.getVariants(params);
     }
 
-    getVariants(query: SearchQuery): Observable<VariantRequest> {
-        let urlParams = new HttpParams()
-            .append('chromosome', query.chromosome)
-            .append('positionStart', String(query.start))
-            .append('positionEnd', String(query.end))
-            .append('limit', VSAL_VARIANT_LIMIT.toString());
+    getVariantsWithCount(query: SearchQuery): Observable<VariantRequest> {
+        const params = this.getParams(query)
+            .append('limit', VSAL_VARIANT_LIMIT.toString())
+            .append('count', 'true');
+        return this.getVariants(params);
 
-        query.options.forEach(o => {
-            if (o.key) {
-                urlParams = urlParams.append(o.key, o.getValue());
-            }
-        });
+    }
 
+    private getParams(query: SearchQuery): HttpParams {
+        return new HttpParams()
+            .append('chr', query.chromosome)
+            .append('start', String(query.start))
+            .append('end', String(query.end));
+    }
+
+    private getVariants(params: HttpParams): Observable<VariantRequest> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json')
             .append('Accept', '*/*');
-        return this.requests(urlParams, headers).reduce((acc: VariantRequest, x: VariantRequest, i: number) => {
-            acc.variants = acc.variants.concat(x.variants);
-            acc.error += x.error;
-            return acc;
-        }, new VariantRequest([])).map((v: VariantRequest) => {
-            v.variants.sort((a: Variant, b: Variant) => a.start - b.start);
-            return v;
-        });
-    }
-
-    private requests(params: HttpParams, headers: HttpHeaders): Observable<VariantRequest> {
-        params = params.append('count', 'true');
-        return Observable.create((observer) => {
-            this.request(params, headers).subscribe((vs: VariantRequest) => {
-                observer.next(vs);
-                if (vs.error) {
-                    observer.complete();
-                } else {
-                    if (vs.total > VSAL_VARIANT_LIMIT) {
-                        let i: number;
-                        let completed = 0;
-                        const queued = Math.floor(vs.total / VSAL_VARIANT_LIMIT);
-                        for (i = VSAL_VARIANT_LIMIT; i < vs.total; i += VSAL_VARIANT_LIMIT) {
-                            params = params.set('skip', String(i));
-                            this.request(params, headers).subscribe((svs: VariantRequest) => {
-                                observer.next(svs);
-                                completed++;
-                                if (completed === queued || svs.error) {
-                                    observer.complete();
-                                }
-                            });
-                        }
-                    } else {
-                        observer.complete();
-                    }
-                }
-            });
-        });
+        return this.request(params, headers);
     }
 
     private request(params: HttpParams, headers: HttpHeaders): Observable<VariantRequest> {
@@ -81,8 +59,8 @@ export class VsalService {
                     return new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE);
                 }
                 const vs = new VariantRequest(data['variants']);
-                if (data['total'] && data['total'].length > 0) {
-                    vs.total = data['total'][0];
+                if (data['total'] && data['total'] !== -1) {
+                    vs.total = data['total'];
                 }
                 return vs;
             })

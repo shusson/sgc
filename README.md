@@ -70,10 +70,6 @@ all of which are defined in [src/environments](src/environments).
    
 #### VSAL
 A minimum [variantstore](https://github.com/shusson/variantstore) backed by MySQL
-
-#### [DURL](https://github.com/shusson/durl)
-A simple webtask for generating an s3 presigned url. 
-Used for downloading VCFs that require minimal authentication.
  
 #### [Elastic Gene Search](https://github.com/shusson/genesearch)
 A service for searching for gene information.

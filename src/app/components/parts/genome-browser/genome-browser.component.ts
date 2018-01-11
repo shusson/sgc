@@ -64,6 +64,7 @@ export class GenomeBrowserComponent implements AfterViewInit, OnDestroy {
         this.searchService.lastQuery.start + MIN_REGION_SIZE : this.searchService.lastQuery.end;
 
         this.genomeBrowser = tnt.genome()
+            .allow_drag(false)
             .species('human')
             .chr(this.searchService.lastQuery.chromosome)
             .from(this.searchService.lastQuery.start).to(end)
