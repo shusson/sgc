@@ -10,7 +10,6 @@ import * as LogRocket from 'logrocket';
 
 export const expiredAtKey = 'expired_at';
 export const uidKey = 'uid';
-export const cannyKey = 'canny_token';
 
 @Injectable()
 export class Auth {
@@ -108,7 +107,6 @@ export class Auth {
 
     private setSession(authResult): void {
         const idToken = jwtDecode(authResult.idToken);
-        localStorage.setItem(cannyKey, idToken['http://sgc/cannyToken']);
         localStorage.setItem(uidKey, authResult.idTokenPayload.email);
         const expiresAt = JSON.stringify(idToken.exp * 1000);
         LogRocket.identify(localStorage.getItem(uidKey));
@@ -120,11 +118,6 @@ export class Auth {
 
     clearLocalStorage() {
         localStorage.removeItem(expiredAtKey);
-        localStorage.removeItem(cannyKey);
         localStorage.removeItem(uidKey);
-    }
-
-    cannyToken(): string {
-        return localStorage.getItem(cannyKey);
     }
 }

@@ -7,7 +7,6 @@ import { SearchBarService } from '../../../services/search-bar-service';
 import { MapdService } from '../../../services/mapd.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
 import { MatCheckboxChange, MatDialog, MatSnackBar } from '@angular/material';
-import { FeedbackComponent } from '../feedback/feedback.component';
 import { Subject } from 'rxjs/Subject';
 import * as Raven from 'raven-js';
 import { environment } from '../../../../environments/environment';
@@ -153,10 +152,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.cd.detectChanges();
         });
     };
-
-    openFeedback() {
-        this.dialog.open(FeedbackComponent);
-    }
 
     toggleSql($event) {
         $event.stopPropagation();

@@ -82,7 +82,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ExploreComponent } from './components/pages/explore/explore.component';
 import { DashboardComponent } from './components/parts/dashboard/dashboard.component';
 import { VariantsTablePaginatedComponent } from './components/parts/variants-table-paginated/variants-table-paginated.component';
-import { FeedbackComponent } from './components/parts/feedback/feedback.component';
 import { ErrorDialogComponent } from './components/parts/error-dialog/error-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ClinicalChartComponent } from './components/parts/clinical-chart/clinical-chart.component';
@@ -179,7 +178,6 @@ if (environment.production && !environment.ci) {
         ExploreComponent,
         DashboardComponent,
         VariantsTablePaginatedComponent,
-        FeedbackComponent,
         ErrorDialogComponent,
         ClinicalChartComponent,
         ClincalFilteringComponent,
@@ -192,7 +190,6 @@ if (environment.production && !environment.ci) {
         SnackbarHelpComponent,
     ],
     entryComponents: [
-        FeedbackComponent,
         ErrorDialogComponent,
         SummaryDialogComponent,
         SnackbarDemoComponent,

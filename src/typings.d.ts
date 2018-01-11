@@ -10,12 +10,8 @@ declare var mapdc: any;
 
 declare var d3: any;
 
-declare var reductio: any;
-
 declare var MapdCon: any;
 
 declare var dc: any;
-
-declare var Canny: any;
 
 declare module 'js-worker-search';
