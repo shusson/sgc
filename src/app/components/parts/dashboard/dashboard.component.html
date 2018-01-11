@@ -56,7 +56,6 @@
         <button mat-menu-item (click)="openSummary()">Data Summary</button>
         <button mat-menu-item (click)="downloadVariants()">Download Variants</button>
         <button mat-menu-item (click)="toggleHelp()"><span *ngIf="!helpEnabled">Show</span><span *ngIf="helpEnabled">Hide</span> Help</button>
-        <button mat-menu-item (click)="openFeedback()">Give Feedback</button>
 
     </mat-sidenav>
     <div class="main">
@@ -81,11 +80,7 @@
             </div>
             <div class="message message-warning">
                 <mat-icon>help_outline</mat-icon>
-                <div *ngIf="!isSmallScreen()">Please treat beta release data with caution and any <a
-                    (click)="openFeedback()">feedback</a> is
-                    appreciated
-                </div>
-                <div *ngIf="isSmallScreen()">Please treat beta release data with caution</div>
+                <div>Please treat beta release data with caution</div>
             </div>
             <div class="results">
 

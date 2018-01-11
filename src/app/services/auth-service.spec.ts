@@ -1,4 +1,4 @@
-import { Auth, cannyKey, expiredAtKey } from './auth-service';
+import { Auth, expiredAtKey } from './auth-service';
 import { MockRouter } from '../mocks/router.mock';
 
 describe('Auth Service', () => {
