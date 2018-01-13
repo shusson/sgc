@@ -29,9 +29,6 @@ export class SearchComponent implements OnDestroy {
                 public snackBar: MatSnackBar,
                 private router: Router) {
         if (!auth.authenticated()) {
-            auth.lock.on('hide', () => {
-                router.navigate(['/initiatives']);
-            });
             auth.login();
         } else {
             this.subscriptions.push(route.params.subscribe(p => this.parseParams(p)));

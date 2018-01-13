@@ -29,9 +29,6 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.auth.authenticated()) {
-            this.auth.lock.on('hide', () => {
-                this.router.navigate(['/initiatives']);
-            });
             this.auth.login();
         } else {
             this.show = true;

@@ -95,6 +95,7 @@ import * as LogRocket from 'logrocket';
 import { SummaryDialogComponent } from './components/parts/summary-dialog/summary-dialog.component';
 import { HelpIconComponent } from './components/parts/help-icon/help-icon.component';
 import { SnackbarHelpComponent } from './components/parts/snackbar-help/snackbar-help.component';
+import { LoadingComponent } from './components/pages/loading/loading.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -188,6 +189,7 @@ if (environment.production && !environment.ci) {
         SummaryDialogComponent,
         HelpIconComponent,
         SnackbarHelpComponent,
+        LoadingComponent,
     ],
     entryComponents: [
         ErrorDialogComponent,

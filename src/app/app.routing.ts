@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './components/pages/about/about.component';
 import { InitiativesComponent } from './components/pages/initiatives/initiatives.component';
+import { LoadingComponent } from './components/pages/loading/loading.component';
 import { SearchComponent } from './components/pages/search/search.component';
 import { BeaconComponent } from './components/pages/beacon/beacon.component';
 import { GcmpComponent } from './components/pages/programmes/gcmp/gcmp.component';
@@ -14,6 +15,7 @@ import { ExploreComponent } from './components/pages/explore/explore.component';
 const appRoutes: Routes = [
     { path: 'initiatives', component: InitiativesComponent },
     { path: 'about',  component: AboutComponent },
+    { path: 'auth',  component: LoadingComponent },
     { path: 'search/results', component: SearchComponent },
     { path: 'search/variant', component: VariantComponent },
     { path: 'search', component: SearchComponent },
