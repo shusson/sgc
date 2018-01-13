@@ -1,0 +1,33 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+mat-form-field {
+    margin: 1rem 1rem 0 1rem;
+}
+
+.message {
+    margin-top: 0;
+}
+
+
+.logo {
+    width: 250px;
+    height: auto;
+}
+
+button {
+    margin-top: 5px;
+}
+
+.ack {
+    margin: 2rem 2rem 1rem 2rem;
+    font-size: x-large;
+}
+
+.ack span {
+    display: flex;
+    align-items: center;
+}

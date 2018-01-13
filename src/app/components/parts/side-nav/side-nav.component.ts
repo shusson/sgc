@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Auth } from '../../../services/auth-service';
 import { Router, NavigationEnd } from '@angular/router';
+import { SignUpComponent } from '../sign-up/sign-up.component';
 
 @Component({
     selector: 'app-side-nav',
@@ -12,7 +14,8 @@ export class SideNavComponent implements OnInit {
     termsLinkActive = false;
 
     constructor(public auth: Auth,
-                private router: Router) {
+                private router: Router,
+                public dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -31,6 +34,13 @@ export class SideNavComponent implements OnInit {
     goToMgrbTerms(event: Event) {
         this.termsDropdown = false;
         this.router.navigate(['/terms/mgrb']);
+    }
+
+    openSignUpDialog() {
+        this.dialog.open(
+            SignUpComponent,
+            {}
+        );
     }
 
 }

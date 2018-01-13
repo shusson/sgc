@@ -38,15 +38,12 @@ export class Auth {
         this.auth0.authorize();
     };
 
-    public signUp() {
-        // TODO: add custom sign up form
-
-        // this.auth0.signupAndAuthorize({
-        //     email: "bean2@bean.com",
-        //     password: "bean",
-        //     connection: "Username-Password-Authentication"
-        // }, this.handleAuthResult);
-        this.auth0.authorize();
+    public signUp(email, password, cb) {
+        this.auth0.signupAndAuthorize({
+            email: email,
+            password: password,
+            connection: environment.auth0Connection
+        }, cb);
     }
 
     public authenticated() {
@@ -63,7 +60,7 @@ export class Auth {
         window.location.href = `https://${ environment.auth0Domain }/v2/logout?returnTo=${ constants.ORIGIN_URL }`;
     };
 
-    private setSession(authResult): void {
+    public setSession(authResult): void {
         const idToken = jwtDecode(authResult.idToken);
         localStorage.setItem(uidKey, idToken.email);
         const expiresAt = JSON.stringify(idToken.exp * 1000);
@@ -74,18 +71,15 @@ export class Auth {
     private handleAuthResult = (err, authResult) => {
         if (err) {
             if (!environment.production) {
-                console.log(err)
+                console.log(err);
             }
-            window.setTimeout(() => {
-                this.dialog.open(
-                    ErrorDialogComponent,
-                    { data: "An error occurred while trying to authenticate. Please ensure private browsing is disabled and try again."}
-                );
-            }, 100);
+            this.dialog.open(
+                ErrorDialogComponent,
+                { data: "An error occurred while trying to authenticate. Please ensure private browsing is disabled and try again."}
+            );
         } else if (authResult && authResult.idToken && authResult.idToken !== 'undefined') {
             this.setSession(authResult);
             const path = localStorage.getItem(urlStateKey);
-            console.log(path);
             if (path) {
                 this.router.navigate([path]);
             }

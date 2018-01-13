@@ -1,7 +1,9 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Auth } from '../../../services/auth-service';
 import { Router, NavigationEnd } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
+import { SignUpComponent } from '../sign-up/sign-up.component';
 
 @Component({
     selector: 'app-header-nav',
@@ -24,7 +26,8 @@ export class HeaderNavComponent implements OnInit {
     constructor(public auth: Auth,
                 private router: Router,
                 private elf: ElementRef,
-                private scrollService: ScrollService) {
+                private scrollService: ScrollService,
+                public dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -47,17 +50,24 @@ export class HeaderNavComponent implements OnInit {
         if (this.termsDropdown) {
             this.termsDropdown = false;
         }
-    }
+    };
 
     showTerms = () => {
         if (!this.termsDropdown) {
             this.termsDropdown = true;
         }
-    }
+    };
 
     goToMgrbTerms(event: Event) {
         event.stopPropagation();
         this.router.navigate(['/terms/mgrb']);
+    }
+
+    openSignUpDialog() {
+        this.dialog.open(
+            SignUpComponent,
+            {}
+        );
     }
 
 }

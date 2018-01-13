@@ -22,8 +22,15 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatSliderModule,
-    MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule,
-    MatTooltipModule
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatFormFieldModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -41,6 +48,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatDatepickerModule,
         MatDialogModule,
         MatExpansionModule,
+        MatFormFieldModule,
         MatGridListModule,
         MatIconModule,
         MatInputModule,
