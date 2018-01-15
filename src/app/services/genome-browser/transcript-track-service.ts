@@ -24,7 +24,7 @@ export class TranscriptTrackService implements TrackService {
                 });
         });
 
-        let geneTrackHeight = 0;
+        const geneTrackHeight = 0;
         this.track = tnt.track()
             .height(geneTrackHeight)
             .color('white')

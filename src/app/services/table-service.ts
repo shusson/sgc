@@ -5,6 +5,7 @@ export class TableService {
     showScales = true;
 
     private displayMap: any = {
+        'Variant': (v: Variant) => v.v,
         'Location': (v: Variant) => this.locationString(v),
         'Reference': (v: Variant) => v.ref,
         'Alternate': (v: Variant) => v.alt,
@@ -26,31 +27,10 @@ export class TableService {
         'clinvar': (v: Variant) => v.clinvar
     };
 
-    private searchResultKeys: any[] = [
-        ['Location', true],
-        ['Reference', true],
-        ['Alternate', true],
-        ['Type', true],
-        ['dbSNP', false],
-        ['Homozygotes Count', false],
-        ['Heterozygotes Count', false],
-        ['Allele Count', false],
-        ['cato', false],
-        ['eigen', false],
-        ['sift', false],
-        ['polyPhen', false],
-        ['tgpAF', false],
-        ['hrcAF', false],
-        ['consequences', true],
-        ['gene', false],
-        ['clinvar', false],
-        ['GnomadAF', true],
-        ['Allele Freq', true]
-    ];
-
-    private columns: Map<string, boolean> = new Map<string, boolean>(this.searchResultKeys);
+    private columns: Map<string, boolean>;
 
     readonly sortMap: any = {
+        'Variant': (v: Variant) => v.v,
         'Location': (v: Variant) => v.start,
         'Reference': (v: Variant) => v.ref,
         'Alternate': (v: Variant) => v.alt,
@@ -84,7 +64,7 @@ export class TableService {
     private lastSortedOrder = true;
 
     constructor() {
-
+        this.normalView();
     }
 
     tooltip(key) {
@@ -138,11 +118,38 @@ export class TableService {
         this.columns.set(k, v);
     }
 
-    minimalView() {
+    normalView() {
         const keys: any[] = [
+            ['Variant', false],
             ['Location', true],
             ['Reference', true],
             ['Alternate', true],
+            ['Type', true],
+            ['dbSNP', false],
+            ['Homozygotes Count', false],
+            ['Heterozygotes Count', false],
+            ['Allele Count', false],
+            ['cato', false],
+            ['eigen', false],
+            ['sift', false],
+            ['polyPhen', false],
+            ['tgpAF', false],
+            ['hrcAF', false],
+            ['consequences', true],
+            ['gene', false],
+            ['clinvar', false],
+            ['GnomadAF', true],
+            ['Allele Freq', true]
+        ];
+        this.columns = new Map<string, boolean>(keys);
+    }
+
+    minimalView() {
+        const keys: any[] = [
+            ['Variant', true],
+            ['Location', false],
+            ['Reference', false],
+            ['Alternate', false],
             ['Type', false],
             ['dbSNP', false],
             ['Homozygotes Count', false],

@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { Variant } from '../../../model/variant';
 import { MAXIMUM_NUMBER_OF_VARIANTS } from '../../../services/cttv-service';
+import { TableService } from '../../../services/table-service';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,7 +34,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
                 private cd: ChangeDetectorRef,
                 private searchBarService: SearchBarService,
                 private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private ts: TableService) {
     }
 
     ngOnInit(): void {
@@ -65,6 +67,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
             if (p['demo']) {
                 this.selectedTabIndex = 1;
                 this.showClinicalFilters();
+                this.ts.minimalView();
+            } else {
+                this.ts.normalView();
             }
         });
     }

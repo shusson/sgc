@@ -4,7 +4,7 @@ export const MISSED_GENOTYPES_KEY = './.';
 const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
 
 export class Variant {
-    variant: string;
+    v: string;
     rsid: string;
     chr: string;
     start: number;
@@ -33,6 +33,19 @@ export class Variant {
     }
 
     static displayName(variant: Variant) {
-        return `${ variant.rsid }-${ variant.start }-${ variant.rsid }-${ variant.rsid }`;
+        return variant.v.split(':').join('-');
+    }
+
+    static hash(variant: Variant) {
+        const d = [
+            variant.chr,
+            variant.start,
+            variant.alt,
+            variant.ref,
+            variant.af,
+            variant.ac,
+            variant.rsid,
+        ];
+        return window.btoa(JSON.stringify(d));
     }
 }

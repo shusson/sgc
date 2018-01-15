@@ -28,16 +28,17 @@
             <tr>
             <tr *ngFor="let variant of variants | paginate: {itemsPerPage: pageSize,
                                                              currentPage: currentPage,
-                                                             totalItems: searchService.total }; index as i"
-                [ngClass]="{'highlighted': i === highlightedVariantIndex }"
+                                                             totalItems: total }; index as i"
+                [ngClass]="{'highlighted': i === highlightIndex }"
                 (mouseover)="highlightVariant(variant, i)"
                 (mouseout)="unHighlightVariant(variant, i)">
 
                 <td *ngFor="let label of ts.activeColumns()">
 
-                    <span *ngIf="label !== 'Allele Freq' && label !== 'GnomadAF' && label !== 'Location'"
+                    <span *ngIf="label !== 'Allele Freq' && label !== 'GnomadAF' && label !== 'Location' && label !== 'Variant'"
                           class="value">{{ ts.display(label, variant) }}</span>
                     <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ ts.display(label, variant) }}</a>
+                    <a *ngIf="label === 'Variant'" target="_blank" [href]="variantUrl(variant)">{{ ts.display(label, variant) }}</a>
                     <app-allele-freq *ngIf="label === 'Allele Freq'"
                                      [freq]="variant.af"></app-allele-freq>
                     <app-allele-freq *ngIf="label === 'GnomadAF'"

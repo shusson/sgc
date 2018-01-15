@@ -4,6 +4,7 @@ import {
 import { Variant } from '../../../model/variant';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { VariantRequest } from '../../../model/variant-request';
 import { VariantPin, VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 
 import * as Papa from 'papaparse';
@@ -20,6 +21,7 @@ const MINIMAL_VIEW = 500;
 })
 export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit {
     variants: Variant[] = [];
+    total = 0;
     pageSize = 10;
     currentPage = 1;
     skip = 0;
@@ -27,12 +29,11 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     showSettings = true;
     loadingTable = false;
     loadingDownload = false;
-    private highlightedVariantIndex: number;
+    private highlightIndex: number;
     private subscriptions: Subscription[] = [];
 
     constructor(public  ts: TableService,
                 public  searchService: VariantSearchService,
-                private vsal: VsalService,
                 private variantTrack: VariantTrackService,
                 private cd: ChangeDetectorRef,
                 private router: Router) {
@@ -44,27 +45,31 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
             this.showSettings = false;
         }
 
+        this.total = this.searchService.total;
         this.updatePage(this.currentPage);
 
         this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: VariantPin) => {
             if (v.variant.highlight) {
-                this.highlightedVariantIndex = v.index - this.skip;
+                this.highlightIndex = v.index - this.skip;
             } else {
-                this.highlightedVariantIndex = null;
+                this.highlightIndex = null;
             }
             this.cd.detectChanges();
         }));
 
         this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((vp: VariantPin) => {
-            const p = Math.ceil(vp.index / this.pageSize);
-            this.updatePage(p);
-            this.cd.detectChanges();
+            const p = Math.ceil((vp.index + 1) / this.pageSize);
+            this.updatePage(p).then(() => {
+                this.highlightIndex = vp.index - this.skip;
+                this.cd.detectChanges();
+            });
         }));
 
     }
 
     ngAfterViewInit() {
-        this.subscriptions.push(this.searchService.results.subscribe(() => {
+        this.subscriptions.push(this.searchService.results.subscribe((vr: VariantRequest) => {
+            this.total = vr.total;
             this.updatePage(1);
             this.cd.detectChanges();
         }));
@@ -86,9 +91,42 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         this.ts.sort(label, this.variants);
     }
 
+    variantUrl(v: Variant) {
+        return this.router.createUrlTree(['/search/variant', {query: Variant.displayName(v)}]).toString();
+    }
+
+    toggleScales($event) {
+        $event.stopPropagation();
+        this.ts.showScales = !this.ts.showScales;
+    }
+
+    activateColumn($event, key) {
+        $event.stopPropagation();
+        this.ts.set(key, !this.ts.get(key))
+    }
+
+    updatePage(pageNumber): Promise<Variant[]> {
+        this.loadingTable = true;
+        this.currentPage = pageNumber;
+        this.skip = this.pageSize * (this.currentPage - 1);
+
+        return this.searchService.getVariantsWithAnnotations(this.searchService.lastQuery, this.pageSize, this.skip).then((vr) => {
+            this.variants = vr.variants;
+            this.loadingTable = false;
+            this.cd.detectChanges();
+            return this.variants;
+        });
+    }
+
+    updatePageSize(size) {
+        this.pageSize = size;
+        this.updatePage(this.currentPage);
+        this.cd.detectChanges();
+    }
+
     downloadFile() {
         this.loadingDownload = true;
-        this.vsal.getVariantsWithAnnotations(this.searchService.lastQuery, VSAL_VARIANT_LIMIT, 0).toPromise().then((vr) => {
+        this.searchService.getVariantsWithAnnotations(this.searchService.lastQuery, VSAL_VARIANT_LIMIT, 0).then((vr) => {
             this.loadingDownload = false;
             const data = vr.variants.map((v: Variant) => {
                 return {
@@ -123,37 +161,4 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     ngOnDestroy() {
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
-
-    variantUrl(v: Variant) {
-        return this.router.createUrlTree(['/search/variant', {query: Variant.displayName(v)}]).toString();
-    }
-
-    toggleScales($event) {
-        $event.stopPropagation();
-        this.ts.showScales = !this.ts.showScales;
-    }
-
-    activateColumn($event, key) {
-        $event.stopPropagation();
-        this.ts.set(key, !this.ts.get(key))
-    }
-
-    updatePage(pageNumber) {
-        this.loadingTable = true;
-        this.currentPage = pageNumber;
-        this.skip = this.pageSize * (this.currentPage - 1);
-
-        this.vsal.getVariantsWithAnnotations(this.searchService.lastQuery, this.pageSize, this.skip).toPromise().then((vr) => {
-            this.variants = vr.variants;
-            this.loadingTable = false;
-            this.cd.detectChanges();
-        });
-    }
-
-    updatePageSize(size) {
-        this.pageSize = size;
-        this.updatePage(this.currentPage);
-        this.cd.detectChanges();
-    }
-
 }

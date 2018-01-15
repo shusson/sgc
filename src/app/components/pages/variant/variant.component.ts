@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Params } from '@angular/router';
+import { VariantRequest } from '../../../model/variant-request';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { SearchQuery } from '../../../model/search-query';
 import { Variant } from '../../../model/variant';
@@ -9,6 +10,7 @@ import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
 import { Auth } from '../../../services/auth-service';
+import { VSAL_VARIANT_LIMIT } from '../../../services/vsal-service';
 
 @Component({
     selector: 'app-variant',
@@ -78,9 +80,9 @@ export class VariantComponent implements OnInit, OnDestroy {
     }
 
     private getVariant(sq: SearchQuery, reference: string, alternate: string) {
-        this.vss.getVariants(sq).then(variants => {
+        this.vss.getVariantsWithAnnotations(sq, VSAL_VARIANT_LIMIT, 0).then((vr: VariantRequest) => {
             this.loading = false;
-            const vf = variants.filter((v) => v.alt === alternate && v.ref === reference);
+            const vf = vr.variants.filter((v) => v.alt === alternate && v.ref === reference);
             if (vf.length > 1) {
                 this.error = 'Found more than one variant for query';
             } else if (vf.length > 0) {

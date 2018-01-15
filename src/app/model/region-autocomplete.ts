@@ -6,8 +6,8 @@ import { SearchQuery } from './search-query';
 import { Position } from './position';
 
 export class RegionAutocomplete extends GenericAutocompleteResult<Region> {
-    search(vsal: VariantSearchService): Promise<Variant[]> {
-        return vsal.getVariants(new SearchQuery(this.result.chromosome, this.result.start, this.result.end));
+    search(vss: VariantSearchService): Promise<Variant[]> {
+        return vss.getVariants(new SearchQuery(this.result.chromosome, this.result.start, this.result.end));
     }
 
     region(): Promise<Region> {

@@ -18,17 +18,16 @@ export class VariantSearchService {
     commenced = false;
     lastQuery: SearchQuery;
     startingRegion: Region;
-    filter: any = null;
+    filter: (vp: VariantRequest) => VariantRequest = null;
     private searchQuery = new Subject<SearchQuery>();
-    private variantsObserver: Observable<VariantRequest>;
 
     constructor(private vsal: VsalService) {
-        this.variantsObserver = this.searchQuery
+        this.results = this.searchQuery
             .debounceTime(DEBOUNCE_TIME)
             .switchMap((query: SearchQuery) => {
                 return this.vsal.getVariantsWithCount(query).map((vr: VariantRequest) => {
                     if (this.filter) {
-                        vr.variants = this.filter(vr.variants);
+                        vr = this.filter(vr);
                     }
                     return vr;
                 });
@@ -39,14 +38,12 @@ export class VariantSearchService {
             })
             .share();
 
-        this.results = this.variantsObserver;
-
-        this.results.subscribe((cs) => {
+        this.results.subscribe((vr: VariantRequest) => {
             if (!this.startingRegion) {
                 this.startingRegion = new Region(this.lastQuery.chromosome, this.lastQuery.start, this.lastQuery.end);
             }
-            this.variants = cs.variants;
-            this.total = cs.total;
+            this.variants = vr.variants;
+            this.total = vr.total;
             this.commenced = true;
         });
     }
@@ -71,6 +68,16 @@ export class VariantSearchService {
         });
         this.searchQuery.next(query);
         return promise;
+    }
+
+    getVariantsWithAnnotations(query: SearchQuery, limit: number, skip: number): Promise<VariantRequest> {
+        return this.vsal.getVariantsWithAnnotations(query, limit, skip).map((vr: VariantRequest) => {
+            if (this.filter) {
+                vr.variants = this.variants;
+            }
+            vr.total = this.total;
+            return vr;
+        }).toPromise();
     }
 
     getCurrentRegion(): Region {

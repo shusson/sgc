@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { VariantRequest } from '../model/variant-request';
 import { MAXIMUM_NUMBER_OF_VARIANTS } from './cttv-service';
 import { VariantTrackService } from './genome-browser/variant-track-service';
 import { FAKE_CLINICAL_DATA } from '../mocks/clindata';
@@ -46,21 +47,17 @@ export class ClinapiService implements OnDestroy {
         }
     }
 
-    filterVariants = (v: any[]) => {
-        if (this.samples.length >= 1139) {
-            return v;
-        } else if (this.samples.length === 0) {
-            return [];
-        }
+    filterVariants = (vp: VariantRequest): VariantRequest => {
         const rng = seedrandom(this.samples.join(""));
-        const p = (this.samples.length / 1139.0) + 0.025;
-        const vf = [];
-        for (let i = 0; i < v.length; i++) {
+        const p = (this.samples.length / FAKE_CLINICAL_DATA.length) + 0.025;
+        const vpf = new VariantRequest([]);
+        for (let i = 0; i < vp.variants.length; i++) {
             if (rng() < p ) {
-                vf.push(v[i])
+                vpf.variants.push(vp.variants[i])
             }
         }
-        return vf;
+        vpf.total = vpf.variants.length;
+        return vpf;
     };
 
     ngOnDestroy() {

@@ -117,7 +117,7 @@ export class VariantTrackService implements TrackService {
             .domain([0, 1])
             .color(PIN_COLOR)
             .index((pin: VariantPin) => {
-                return pin.index;
+                return Variant.hash(pin.variant);
             })
             .on('click', function (this: any, pin: VariantPin) {
                 that.clickedVariant.next(pin);
@@ -167,8 +167,8 @@ export class VariantTrackService implements TrackService {
                 );
 
                 if (this.searchService.filter !== null) {
-                    return regionAutocomplete.search(this.searchService).then(() => {
-                        return Promise.resolve(this.searchService.variants.map(createPin));
+                    return regionAutocomplete.search(this.searchService).then((v) => {
+                        return v.map(createPin);
                     });
                 } else {
                     return Promise.resolve(this.searchService.variants.map(createPin));
@@ -222,21 +222,6 @@ export class VariantTrackService implements TrackService {
         const line = dPin.select('line');
         line.attr('stroke', this.highlightCache[vp.index])
             .attr('stroke-width', '1px');
-    }
-
-    private variantHash(variant: Variant) {
-        const d = [
-            variant.chr,
-            variant.rsid,
-            variant.af,
-            variant.ac,
-            variant.alt,
-            variant.ref,
-            variant.start,
-            variant.nHet,
-            variant.nHomVar,
-        ];
-        return window.btoa(JSON.stringify(d));
     }
 
     private variantName(variant: Variant) {
