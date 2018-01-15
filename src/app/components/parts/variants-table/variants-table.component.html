@@ -29,7 +29,7 @@
             <tr *ngFor="let variant of variants | paginate: {itemsPerPage: pageSize,
                                                              currentPage: currentPage,
                                                              totalItems: total }; index as i"
-                [ngClass]="{'highlighted': i === highlightIndex }"
+                [ngClass]="{'highlighted': variant.v === highlightedVariant }"
                 (mouseover)="highlightVariant(variant, i)"
                 (mouseout)="unHighlightVariant(variant, i)">
 

@@ -1,6 +1,7 @@
 import {
     Component, OnInit, Input, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit,
 } from '@angular/core';
+import { SearchQuery } from '../../../model/search-query';
 import { Variant } from '../../../model/variant';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { VariantPin, VariantTrackService } from '../../../services/genome-browse
 
 import * as Papa from 'papaparse';
 import { VariantSearchService } from '../../../services/variant-search-service';
-import { TableService } from '../../../services/table-service';
+import { Sorter, TableService } from '../../../services/table-service';
 import { VSAL_VARIANT_LIMIT, VsalService } from '../../../services/vsal-service';
 
 const MINIMAL_VIEW = 500;
@@ -29,7 +30,8 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     showSettings = true;
     loadingTable = false;
     loadingDownload = false;
-    private highlightIndex: number;
+    sorter = new Sorter();
+    private highlightedVariant: string;
     private subscriptions: Subscription[] = [];
 
     constructor(public  ts: TableService,
@@ -48,19 +50,21 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         this.total = this.searchService.total;
         this.updatePage(this.currentPage);
 
-        this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((v: VariantPin) => {
-            if (v.variant.highlight) {
-                this.highlightIndex = v.index - this.skip;
+        this.subscriptions.push(this.variantTrack.highlightedVariant.subscribe((vp: VariantPin) => {
+            if (vp.variant.highlight) {
+                this.highlightedVariant = vp.variant.v;
             } else {
-                this.highlightIndex = null;
+                this.highlightedVariant = null;
             }
             this.cd.detectChanges();
         }));
 
         this.subscriptions.push(this.variantTrack.clickedVariant.subscribe((vp: VariantPin) => {
+            this.sorter.label = 'start';
+            this.sorter.descending = false;
             const p = Math.ceil((vp.index + 1) / this.pageSize);
             this.updatePage(p).then(() => {
-                this.highlightIndex = vp.index - this.skip;
+                this.highlightedVariant = vp.variant.v;
                 this.cd.detectChanges();
             });
         }));
@@ -88,7 +92,8 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     sortVariants(label: string) {
-        this.ts.sort(label, this.variants);
+        this.sorter = this.ts.sort(label);
+        this.updatePage(this.currentPage);
     }
 
     variantUrl(v: Variant) {
@@ -110,12 +115,34 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         this.currentPage = pageNumber;
         this.skip = this.pageSize * (this.currentPage - 1);
 
-        return this.searchService.getVariantsWithAnnotations(this.searchService.lastQuery, this.pageSize, this.skip).then((vr) => {
-            this.variants = vr.variants;
-            this.loadingTable = false;
-            this.cd.detectChanges();
-            return this.variants;
+        return this.searchService.getVariantsWithAnnotations(this.searchService.lastQuery,
+                                                             this.pageSize,
+                                                             this.skip,
+                                                             this.sorter.label,
+                                                             this.sorter.descending)
+            .then((vr) => {
+                this.variants = vr.variants;
+                this.loadingTable = false;
+                this.cd.detectChanges();
+                return this.variants;
         });
+    }
+
+    findVariant(variant: Variant): Promise<Variant[]> {
+        this.loadingTable = true;
+        this.currentPage = Math.ceil((this.total / this.pageSize) / 2);
+        const sq = new SearchQuery(variant.chr, variant.start, this.searchService.lastQuery.end);
+        return this.searchService.getVariantsWithAnnotations(sq,
+                                                             this.pageSize,
+                                                            0,
+                                                             this.sorter.label,
+                                                             this.sorter.descending)
+            .then((vr) => {
+                this.variants = vr.variants;
+                this.loadingTable = false;
+                this.cd.detectChanges();
+                return this.variants;
+            });
     }
 
     updatePageSize(size) {

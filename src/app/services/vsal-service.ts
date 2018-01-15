@@ -17,10 +17,10 @@ export class VsalService {
     constructor(private http: HttpClient) {
 
     }
-    getVariantsWithAnnotations(query: SearchQuery, limit: number, skip: number): Observable<VariantRequest> {
+    getVariantsWithAnnotations(query: SearchQuery, limit: number, skip: number, sortBy = 'start', descending = false): Observable<VariantRequest> {
         const params = this.getParams(query)
-            .append('sortBy', 'start')
-            .append('descend', 'false')
+            .append('sortBy', sortBy)
+            .append('descend', descending.toString())
             .append('limit', limit.toString())
             .append('skip', skip.toString())
             .append('annot', 'true');

@@ -1,5 +1,9 @@
 import { Variant } from '../model/variant';
 
+export class Sorter {
+    constructor(public label = 'start', public descending = false) {}
+}
+
 export class TableService {
 
     showScales = true;
@@ -27,34 +31,30 @@ export class TableService {
         'clinvar': (v: Variant) => v.clinvar
     };
 
-    private columns: Map<string, boolean>;
-
-    readonly sortMap: any = {
-        'Variant': (v: Variant) => v.v,
-        'Location': (v: Variant) => v.start,
-        'Reference': (v: Variant) => v.ref,
-        'Alternate': (v: Variant) => v.alt,
-        'Type': (v: Variant) => v.type,
-        'dbSNP': (v: Variant) => v.rsid ? v.rsid.match(/rs(\d+)/)[1] : 0,
-        'Homozygotes Count': (v: Variant) => {
-            return v.nHomVar;
-        },
-        'Heterozygotes Count': (v: Variant) => {
-            return v.nHet;
-        },
-        'Allele Count': (v: Variant) => v.ac,
-        'Allele Freq': (v: Variant) => v.af,
-        'cato': (v: Variant) => v.cato,
-        'eigen': (v: Variant) => v.eigen,
-        'sift': (v: Variant) => v.sift ? v.sift : '',
-        'polyPhen': (v: Variant) => v.polyPhen ? v.polyPhen : '',
-        'tgpAF': (v: Variant) => v.tgpAF,
-        'hrcAF': (v: Variant) => v.hrcAF,
-        'GnomadAF': (v: Variant) => v.gnomadAF,
-        'consequences': (v: Variant) => v.consequences ? v.consequences : '',
-        'gene': (v: Variant) => v.geneSymbol ? v.geneSymbol : '',
-        'clinvar': (v: Variant) => v.clinvar ? v.clinvar : ''
+    private labelMap: any = {
+        'Variant': 'v',
+        'Location': 'start',
+        'Reference': 'ref',
+        'Alternate': 'alt',
+        'Type': 'type',
+        'dbSNP': 'rsid',
+        'Homozygotes Count': 'nHomVar',
+        'Heterozygotes Count': 'nHet',
+        'Allele Count': 'ac',
+        'Allele Freq': 'af',
+        'cato': 'cato',
+        'eigen': 'eigen',
+        'sift': 'sift',
+        'polyPhen': 'polyPhen',
+        'tgpAF': 'tgpAF',
+        'hrcAF': 'hrcAF',
+        'GnomadAF': 'gnomadAF',
+        'consequences': 'consequences',
+        'gene': 'geneSymbol',
+        'clinvar': 'clinvar'
     };
+
+    private columns: Map<string, boolean>;
 
     private tooltips: any = {
         'Allele Freq': () => this.showScales ? 'Allele frequency on a discrete scale: <1/10000, <1/1000, <1%, <5%, <50% and >50%' : ''
@@ -75,35 +75,14 @@ export class TableService {
         return this.displayMap[label](variant) ? String(this.displayMap[label](variant)) : '';
     }
 
-    sort(label: string, variants: Variant[]) {
+    sort(label: string): Sorter {
         if (this.lastSortedLabel === label) {
             this.lastSortedOrder = !this.lastSortedOrder;
         } else {
             this.lastSortedLabel = label;
             this.lastSortedOrder = true;
         }
-        const fn = this.sortMap[label];
-        if (this.lastSortedOrder) {
-            variants.sort((a: any, b: any) => {
-                if (fn(a) < fn(b)) {
-                    return -1;
-                } else if (fn(a) > fn(b)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-        } else {
-            variants.sort((a: any, b: any) => {
-                if (fn(a) > fn(b)) {
-                    return -1;
-                } else if (fn(a) < fn(b)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-        }
+        return new Sorter(this.labelMap[label], this.lastSortedOrder);
     }
 
     keys() {

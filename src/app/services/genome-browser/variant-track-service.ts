@@ -12,6 +12,7 @@ import * as tnt from 'tnt.genome';
 
 const PIN_COLOR = '#4682b4';
 const PIN_SELECTED_COLOR = '#FFD658';
+const PIN_KEY = 'data-variant-id';
 
 export class VariantPin {
     constructor(public pos: number,
@@ -181,8 +182,8 @@ export class VariantTrackService implements TrackService {
         const create = this.pinFeature.create();
         this.createMethod = function (pins: any) {
             create.call(this, pins);
-            pins.attr('data-variant-index', function (pin: VariantPin) {
-                return pin.index;
+            pins.attr('data-variant-id', function (pin: VariantPin) {
+                return pin.variant.v;
             });
         };
 
@@ -192,7 +193,7 @@ export class VariantTrackService implements TrackService {
     }
 
     private highlightPin(vp: VariantPin) {
-        const e = <HTMLElement>d3.select(`[data-variant-index='${ vp.index }']`)[0][0];
+        const e = <HTMLElement>d3.select(`[${PIN_KEY}='${ vp.variant.v }']`)[0][0];
         const dPin = d3.select(e);
         const circle = dPin.select('circle');
 
@@ -200,7 +201,7 @@ export class VariantTrackService implements TrackService {
             return;
         }
 
-        this.highlightCache[vp.index] = circle.attr('fill');
+        this.highlightCache[vp.variant.v] = circle.attr('fill');
         circle.attr('fill', PIN_SELECTED_COLOR)
             .attr('r', '10');
         const line = dPin.select('line');
@@ -209,7 +210,7 @@ export class VariantTrackService implements TrackService {
     }
 
     private unHighlightPin(vp: VariantPin) {
-        const e = <HTMLElement>d3.select(`[data-variant-index='${ vp.index }']`)[0][0];
+        const e = <HTMLElement>d3.select(`[${PIN_KEY}='${ vp.variant.v }']`)[0][0];
         const dPin = d3.select(e);
         const circle = dPin.select('circle');
 
@@ -217,10 +218,10 @@ export class VariantTrackService implements TrackService {
             return;
         }
 
-        circle.attr('fill', this.highlightCache[vp.index])
+        circle.attr('fill', this.highlightCache[vp.variant.v])
             .attr('r', '5');
         const line = dPin.select('line');
-        line.attr('stroke', this.highlightCache[vp.index])
+        line.attr('stroke', this.highlightCache[vp.variant.v])
             .attr('stroke-width', '1px');
     }
 

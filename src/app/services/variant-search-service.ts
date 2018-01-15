@@ -70,8 +70,8 @@ export class VariantSearchService {
         return promise;
     }
 
-    getVariantsWithAnnotations(query: SearchQuery, limit: number, skip: number): Promise<VariantRequest> {
-        return this.vsal.getVariantsWithAnnotations(query, limit, skip).map((vr: VariantRequest) => {
+    getVariantsWithAnnotations(query: SearchQuery, limit: number, skip: number, sortBy = 'start', descending = false): Promise<VariantRequest> {
+        return this.vsal.getVariantsWithAnnotations(query, limit, skip, sortBy, descending).map((vr: VariantRequest) => {
             if (this.filter) {
                 vr.variants = this.variants;
             }
