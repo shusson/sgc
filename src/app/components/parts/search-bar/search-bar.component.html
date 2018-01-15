@@ -9,7 +9,7 @@
                (keydown)="onKeyDown($event, searchBox)"
                (blur)="onBlur()"
                (focus)="onFocused(searchBox.value)">
-        <button mat-mini-fab (click)="action(searchBox.value)"><mat-icon>search</mat-icon></button>
+        <button color="accent" mat-mini-fab (click)="action(searchBox.value)"><mat-icon>search</mat-icon></button>
     </form>
     <div *ngIf="autocompleteResults.length > 0 && !loading" class="search-results">
         <div *ngFor="let result of autocompleteResults; let i = index;"

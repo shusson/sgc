@@ -35,20 +35,13 @@ describe('Search Service', () => {
     });
 
     describe('getVariants', () => {
-        it('should get the variants', fakeAsync(inject([VariantSearchService], (search: VariantSearchService) => {
-            search.getVariants(new SearchQuery('1', 2, 3, [])).then((variants: any) => {
-                expect(variants).toEqual(expectedVariants);
-            });
-            tick(TEST_TICKS);
-        })));
-
         it('should return an empty array if there is an error', fakeAsync(
             inject([VariantSearchService,
                     VsalService],
                 (search: VariantSearchService, vsal: VsalService) => {
                     const expectedError = 'BOOP';
                     (<any>vsal).setError(expectedError);
-                    search.getVariants(new SearchQuery('1', 2, 3, [])).then((v: Variant[]) => {
+                    search.getVariants(new SearchQuery('1', 2, 3)).then((v: Variant[]) => {
                         expect(v).toEqual([]);
                     });
                     tick(TEST_TICKS);

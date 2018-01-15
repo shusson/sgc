@@ -128,23 +128,6 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         });
     }
 
-    findVariant(variant: Variant): Promise<Variant[]> {
-        this.loadingTable = true;
-        this.currentPage = Math.ceil((this.total / this.pageSize) / 2);
-        const sq = new SearchQuery(variant.chr, variant.start, this.searchService.lastQuery.end);
-        return this.searchService.getVariantsWithAnnotations(sq,
-                                                             this.pageSize,
-                                                            0,
-                                                             this.sorter.label,
-                                                             this.sorter.descending)
-            .then((vr) => {
-                this.variants = vr.variants;
-                this.loadingTable = false;
-                this.cd.detectChanges();
-                return this.variants;
-            });
-    }
-
     updatePageSize(size) {
         this.pageSize = size;
         this.updatePage(this.currentPage);

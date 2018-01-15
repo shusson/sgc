@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Variant } from '../model/variant';
 import { SearchQuery } from '../model/search-query';
 import { Region } from '../model/region';
+import { VariantRequest } from '../model/variant-request';
 
 export class MockVariantSearchService {
     variants: Observable<any> = Observable.empty();
@@ -12,6 +13,10 @@ export class MockVariantSearchService {
 
     getVariants() {
         return Promise.resolve([]);
+    }
+
+    getVariantsWithAnnotations() {
+        return Promise.resolve(new VariantRequest([]));
     }
 
     currentResult(): Variant[] {

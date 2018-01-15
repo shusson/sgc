@@ -59,6 +59,7 @@ mat-sidenav {
 
 .side-list {
     max-height: 300px;
+    overflow-y: scroll;
 }
 
 .side-toolbar mat-icon {

@@ -1,6 +1,5 @@
 import { Component, Input, HostListener, ElementRef, AfterViewInit } from '@angular/core';
 import { SearchBarService } from '../../../services/search-bar-service';
-import { ScrollService } from '../../../services/scroll-service';
 import { Router } from '@angular/router';
 
 @Component({
