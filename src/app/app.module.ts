@@ -64,10 +64,8 @@ import { PrivacyFooterComponent } from './components/parts/privacy-footer/privac
 import { ElasticGeneSearch } from './services/autocomplete/elastic-gene-search-service';
 import { VariantsTableComponent } from './components/parts/variants-table/variants-table.component';
 import { PositionService } from './services/autocomplete/position-service';
-import { OverlayMenuComponent } from './components/parts/overlay-menu/overlay-menu.component';
 import { TableService } from './services/table-service';
 import { PcaPlotComponent } from './components/parts/pca-plot/pca-plot.component';
-import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageContainerComponent } from './components/parts/page-container/page-container.component';
 import { RegionInformationComponent } from './components/parts/region-information/region-information.component';
@@ -100,6 +98,32 @@ import { SignUpComponent } from './components/parts/sign-up/sign-up.component';
 import { AuthGuardComponent } from './components/parts/auth-guard/auth-guard.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
+
+Raven
+    .config(environment.sentryUrl)
+    .install();
+
+Raven.setDataCallback(function (data) {
+    data.extra.sessionURL = LogRocket.sessionURL;
+    return data;
+});
+
+export class RavenErrorHandler implements ErrorHandler {
+    handleError(err: any): void {
+        if (!environment.production) {
+            console.error(err);
+        } else {
+            Raven.captureException(err);
+            window.setTimeout(() => {
+                window.location.href = 'error';
+            }, CRITICAL_ERROR_WAIT_DURATION);
+        }
+    }
+}
+
+if (environment.production && !environment.ci) {
+    LogRocket.init(environment.logrocket);
+}
 
 @NgModule({
     imports: [
@@ -145,9 +169,7 @@ const CRITICAL_ERROR_WAIT_DURATION = 1000;
         HomeAboutComponent,
         PrivacyFooterComponent,
         VariantsTableComponent,
-        OverlayMenuComponent,
         PcaPlotComponent,
-        FilterAutoComponent,
         PageContainerComponent,
         RegionInformationComponent,
         VariantComponent,
@@ -190,6 +212,7 @@ const CRITICAL_ERROR_WAIT_DURATION = 1000;
         PositionService,
         TableService,
         LocalStorageService,
+        { provide: ErrorHandler, useClass: RavenErrorHandler },
         { provide: 'NULL_VALUE', useValue: null }
     ],
     bootstrap: [AppComponent]
