@@ -9,7 +9,7 @@ import { VariantPin, VariantTrackService } from '../../../services/genome-browse
 import * as Papa from 'papaparse';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { TableService } from '../../../services/table-service';
-import { VsalService } from '../../../services/vsal-service';
+import { VSAL_VARIANT_LIMIT, VsalService } from '../../../services/vsal-service';
 
 const MINIMAL_VIEW = 500;
 
@@ -25,6 +25,8 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     skip = 0;
     dbSnpUrl = Variant.dbSnpUrl;
     showSettings = true;
+    loadingTable = false;
+    loadingDownload = false;
     private highlightedVariantIndex: number;
     private subscriptions: Subscription[] = [];
 
@@ -85,38 +87,37 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     downloadFile() {
-        // get annotated data for up to 10000
-        const data = this.variants.map((v: Variant) => {
-            return {
-                'Chrom': v.chr,
-                'Position': v.start,
-                'RSID': v.rsid,
-                'Reference': v.ref,
-                'Alternate': v.alt,
-                'Type': v.type,
-                'Homozygotes Count': v.nHomVar,
-                'Heterozygotes Count': v.nHet,
-                'Allele Count': v.ac,
-                'Allele Frequency': v.af,
-                'cato': v.cato,
-                'eigen': v.eigen,
-                'sift': v.sift,
-                'polyPhen': v.polyPhen,
-                'tgpAF': v.tgpAF,
-                'hrcAF': v.hrcAF,
-                'gnomadAF': v.gnomadAF,
-                'consequences': v.consequences,
-                'gene': v.geneSymbol,
-                'clinvar': v.clinvar
-            };
+        this.loadingDownload = true;
+        this.vsal.getVariantsWithAnnotations(this.searchService.lastQuery, VSAL_VARIANT_LIMIT, 0).toPromise().then((vr) => {
+            this.loadingDownload = false;
+            const data = vr.variants.map((v: Variant) => {
+                return {
+                    'Chrom': v.chr,
+                    'Position': v.start,
+                    'RSID': v.rsid,
+                    'Reference': v.ref,
+                    'Alternate': v.alt,
+                    'Type': v.type,
+                    'Homozygotes Count': v.nHomVar,
+                    'Heterozygotes Count': v.nHet,
+                    'Allele Count': v.ac,
+                    'Allele Frequency': v.af,
+                    'cato': v.cato,
+                    'eigen': v.eigen,
+                    'sift': v.sift,
+                    'polyPhen': v.polyPhen,
+                    'tgpAF': v.tgpAF,
+                    'hrcAF': v.hrcAF,
+                    'gnomadAF': v.gnomadAF,
+                    'consequences': v.consequences,
+                    'gene': v.geneSymbol,
+                    'clinvar': v.clinvar
+                };
+            });
+            const csv = Papa.unparse(data);
+            const blob = new Blob([csv], {type: 'text/plain'});
+            saveAs(blob, 'mgrb_' + this.searchService.getCurrentRegion().name() + '_' + new Date().getTime() + '.csv');
         });
-        const csv = Papa.unparse(data);
-        const blob = new Blob([csv], {type: 'text/plain'});
-        saveAs(blob, 'mgrb_' + this.searchService.getCurrentRegion().name() + '_' + new Date().getTime() + '.csv');
-    }
-
-    compare(a: Variant, b: Variant) {
-        return JSON.stringify(a) === JSON.stringify(b);
     }
 
     ngOnDestroy() {
@@ -138,13 +139,21 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     updatePage(pageNumber) {
+        this.loadingTable = true;
         this.currentPage = pageNumber;
         this.skip = this.pageSize * (this.currentPage - 1);
 
         this.vsal.getVariantsWithAnnotations(this.searchService.lastQuery, this.pageSize, this.skip).toPromise().then((vr) => {
             this.variants = vr.variants;
+            this.loadingTable = false;
             this.cd.detectChanges();
         });
+    }
+
+    updatePageSize(size) {
+        this.pageSize = size;
+        this.updatePage(this.currentPage);
+        this.cd.detectChanges();
     }
 
 }

@@ -1,10 +1,11 @@
-<div class="results">
+<div class="results" *ngIf="variants.length">
 
     <div class="task-bar">
         <div class="options">
             <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
-            <i (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
+            <i *ngIf="!loadingDownload" (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
                class="material-icons">file_download</i>
+            <mat-spinner *ngIf="loadingDownload" diameter="20"></mat-spinner>
             <i *ngIf="showSettings" [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
                 settings
             </i>
@@ -12,6 +13,10 @@
     </div>
 
     <div class="table-container">
+        <mat-progress-bar *ngIf="loadingTable"
+            color="primary"
+            mode="indeterminate">
+        </mat-progress-bar>
         <table>
             <tbody>
             <tr>
@@ -46,7 +51,7 @@
     <div class="pagination">
         <div>
             <span>Results per page:</span>
-            <select [(ngModel)]="pageSize" name="'pageSize">
+            <select (change)="updatePageSize($event.target.value)" name="'pageSize">
                 <option *ngFor="let item of [10, 20, 50, 100]" value="{{ item }}">{{ item }}</option>
             </select>
         </div>
