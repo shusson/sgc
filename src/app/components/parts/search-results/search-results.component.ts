@@ -49,7 +49,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
         }));
 
         this.loadingVariants = true;
-        this.autocomplete.search(this.searchService, this.searchBarService.options)
+        this.autocomplete.search(this.searchService)
             .then(() => {
                 this.loadingVariants = false;
                 this.cd.detectChanges();

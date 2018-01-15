@@ -4,11 +4,6 @@
             <app-search-bar [options]="{autofocus: false}" (focused)="onFocus()" [action]="action"></app-search-bar>
         </div>
         <div class="search-bar-results" *ngIf="expanded">
-            <div class="search-options">
-                <app-search-option *ngFor="let option of searchBarService.options"
-                                   [option]="option"></app-search-option>
-            </div>
-
             <div class="message message-error" *ngIf="searchBarService.autocompleteError">{{ searchBarService.autocompleteError }}</div>
             <div class="search-examples">
                 Examples: <a (click)="action(example1)">{{ example1 }}</a> or

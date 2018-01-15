@@ -43,7 +43,6 @@ import { GenomeBrowserComponent } from './components/parts/genome-browser/genome
 import { Auth } from './services/auth-service';
 import { RegionService } from './services/autocomplete/region-service';
 import { SearchBarComponent } from './components/parts/search-bar/search-bar.component';
-import { SearchOptionComponent } from './components/parts/search-option/search-option.component';
 import { GenomeBrowserResizeComponent } from './components/parts/genome-browser-resizable/genome-browser-resizable.component';
 import { BeaconComponent } from './components/pages/beacon/beacon.component';
 import { SearchBarWithOptionsComponent } from './components/parts/search-bar-with-options/search-bar-with-options.component';
@@ -153,7 +152,6 @@ if (environment.production && !environment.ci) {
         CohortListComponent,
         GraphsWidgetComponent,
         GenomeBrowserComponent,
-        SearchOptionComponent,
         GenomeBrowserResizeComponent,
         BeaconComponent,
         SearchBarWithOptionsComponent,

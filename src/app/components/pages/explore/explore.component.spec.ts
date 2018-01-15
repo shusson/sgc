@@ -18,7 +18,6 @@ import { MockAuth } from '../../../mocks/auth.mock';
 import { SearchBarWithOptionsComponent } from '../../parts/search-bar-with-options/search-bar-with-options.component';
 import { VariantsTablePaginatedComponent } from '../../parts/variants-table-paginated/variants-table-paginated.component';
 import { SearchBarComponent } from '../../parts/search-bar/search-bar.component';
-import { SearchOptionComponent } from '../../parts/search-option/search-option.component';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { MapdService } from '../../../services/mapd.service';
@@ -55,7 +54,6 @@ describe('ExploreComponent', () => {
                 SearchBarWithOptionsComponent,
                 VariantsTablePaginatedComponent,
                 SearchBarComponent,
-                SearchOptionComponent,
                 MapdRowChartComponent,
                 MapdPieChartComponent,
                 MapdAvgAfChartComponent,

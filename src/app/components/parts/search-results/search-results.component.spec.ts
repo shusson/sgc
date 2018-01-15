@@ -19,9 +19,7 @@ import { EnsemblService } from '../../../services/ensembl-service';
 import { MaterialModule } from '../../../app.material';
 import { SearchResultsComponent } from './search-results.component';
 import { VariantsTableComponent } from '../variants-table/variants-table.component';
-import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { TableService } from '../../../services/table-service';
-import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
 import { ClincalFilteringComponent } from '../clincal-filtering/clincal-filtering.component';
 import { ClinicalChartComponent } from '../clinical-chart/clinical-chart.component';
@@ -47,8 +45,6 @@ describe('Component: SearchResults', () => {
                 GenomeBrowserResizeComponent,
                 GeneInformationComponent,
                 RegionInformationComponent,
-                OverlayMenuComponent,
-                FilterAutoComponent,
                 ClincalFilteringComponent,
                 ClinicalChartComponent
 

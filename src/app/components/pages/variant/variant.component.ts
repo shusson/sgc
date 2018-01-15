@@ -8,7 +8,6 @@ import { BeaconCache, BeaconSearchService } from '../../../services/beacon/beaco
 import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
-import { SearchOption } from '../../../model/search-option';
 import { Auth } from '../../../services/auth-service';
 
 @Component({
@@ -58,7 +57,7 @@ export class VariantComponent implements OnInit, OnDestroy {
             const reference = m[3];
             const alternate = m[4];
 
-            const sq = new SearchQuery(chromo, start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
+            const sq = new SearchQuery(chromo, start, start);
             this.getVariant(sq, reference, alternate);
         } catch (e) {
             this.error = 'Could not find specified variant';

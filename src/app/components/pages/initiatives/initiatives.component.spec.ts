@@ -7,7 +7,6 @@ import { TotalsWidgetComponent } from '../../parts/totals-widget/totals-widget.c
 import { SearchBarComponent } from '../../parts/search-bar/search-bar.component';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
-import { SearchOptionComponent } from '../../parts/search-option/search-option.component';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchBarWithOptionsComponent } from '../../parts/search-bar-with-options/search-bar-with-options.component';
@@ -49,7 +48,6 @@ describe('Component: Initiatives', () => {
                 SearchBarWithOptionsComponent,
                 TitleLogoBannerComponent,
                 SearchBarComponent,
-                SearchOptionComponent,
                 HomeFooterComponent,
                 HomeAboutComponent,
                 PageContainerComponent,

@@ -7,7 +7,7 @@ export class MockVariantSearchService {
     variants: Observable<any> = Observable.empty();
     results: Observable<any> = Observable.empty();
     updates: Observable<any> = Observable.empty();
-    lastQuery: SearchQuery = new SearchQuery('1', 1, 2, []);
+    lastQuery: SearchQuery = new SearchQuery('1', 1, 2);
     options: any[] = [];
 
     getVariants() {

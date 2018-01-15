@@ -3,11 +3,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
-import { SearchOptionComponent } from '../search-option/search-option.component';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { MaterialModule } from '../../../app.material';
 
 describe('Component: SearchBar', () => {
@@ -22,7 +19,6 @@ describe('Component: SearchBar', () => {
             ],
             declarations: [
                 SearchBarComponent,
-                SearchOptionComponent
             ],
             providers: [
                 {

@@ -167,7 +167,7 @@ export class VariantTrackService implements TrackService {
                 );
 
                 if (this.searchService.filter !== null) {
-                    return regionAutocomplete.search(this.searchService, this.searchService.lastQuery.options).then(() => {
+                    return regionAutocomplete.search(this.searchService).then(() => {
                         return Promise.resolve(this.searchService.variants.map(createPin));
                     });
                 } else {
