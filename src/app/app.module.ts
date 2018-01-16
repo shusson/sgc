@@ -97,6 +97,7 @@ import { HelpIconComponent } from './components/parts/help-icon/help-icon.compon
 import { SnackbarHelpComponent } from './components/parts/snackbar-help/snackbar-help.component';
 import { LoadingComponent } from './components/pages/loading/loading.component';
 import { SignUpComponent } from './components/parts/sign-up/sign-up.component';
+import { AuthGuardComponent } from './components/parts/auth-guard/auth-guard.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -193,6 +194,7 @@ if (environment.production && !environment.ci) {
         SnackbarHelpComponent,
         LoadingComponent,
         SignUpComponent,
+        AuthGuardComponent,
     ],
     entryComponents: [
         SignUpComponent,

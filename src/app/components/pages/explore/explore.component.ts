@@ -23,22 +23,19 @@ export class ExploreComponent implements OnInit, OnDestroy {
     //     this.resize.next();
     // };
 
-    constructor(private cd: ChangeDetectorRef, private auth: Auth, private router: Router) {
-
+    constructor(public auth: Auth,
+                private cd: ChangeDetectorRef,
+                private router: Router) {
     }
 
     ngOnInit() {
-        if (!this.auth.authenticated()) {
-            this.auth.login();
-        } else {
+        this.show = true;
+        this.subscriptions.push(this.resize.debounceTime(500).subscribe(() => {
+            this.show = false;
+            this.cd.detectChanges();
             this.show = true;
-            this.subscriptions.push(this.resize.debounceTime(500).subscribe(() => {
-                this.show = false;
-                this.cd.detectChanges();
-                this.show = true;
-                this.cd.detectChanges();
-            }));
-        }
+            this.cd.detectChanges();
+        }));
     }
 
     ngOnDestroy() {

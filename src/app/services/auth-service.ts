@@ -80,9 +80,7 @@ export class Auth {
         } else if (authResult && authResult.idToken && authResult.idToken !== 'undefined') {
             this.setSession(authResult);
             const path = localStorage.getItem(urlStateKey);
-            if (path) {
-                this.router.navigate([path]);
-            }
+            this.router.navigateByUrl(path);
         }
     };
 
