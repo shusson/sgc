@@ -7,9 +7,9 @@ describe('initiatives', function () {
         browser.get('/initiatives');
     });
 
-    it('should display a navigation bar with 7 links', function () {
+    it('should display a navigation bar with 8 links', function () {
         element(by.css('nav')).all(by.tagName('a')).count().then(v => {
-            expect(v).toEqual(7);
+            expect(v).toEqual(8);
         })
 
     });
