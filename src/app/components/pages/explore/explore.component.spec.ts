@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthGuardComponent } from '../../parts/auth-guard/auth-guard.component';
 import { HelpIconComponent } from '../../parts/help-icon/help-icon.component';
 
 import { ExploreComponent } from './explore.component';
@@ -58,7 +59,8 @@ describe('ExploreComponent', () => {
                 MapdRowChartComponent,
                 MapdPieChartComponent,
                 MapdAvgAfChartComponent,
-                HelpIconComponent
+                HelpIconComponent,
+                AuthGuardComponent
             ],
             providers: [
                 ScrollService,

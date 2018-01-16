@@ -1,4 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { AuthGuardComponent } from '../../parts/auth-guard/auth-guard.component';
 import { SearchComponent } from './search.component';
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
 import { VariantSearchService } from '../../../services/variant-search-service';
@@ -73,7 +74,8 @@ describe('Component: Search', () => {
                 SideNavComponent,
                 HeaderNavComponent,
                 ClincalFilteringComponent,
-                ClinicalChartComponent
+                ClinicalChartComponent,
+                AuthGuardComponent
             ],
             providers: [
                 ScrollService,

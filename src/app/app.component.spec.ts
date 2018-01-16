@@ -1,6 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ChildrenOutletContexts, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { Auth } from './services/auth-service';
 
 describe('App Component', () => {
 
@@ -16,7 +17,13 @@ describe('App Component', () => {
                 AppComponent
             ],
             providers: [
-                ChildrenOutletContexts
+                ChildrenOutletContexts,
+                {
+                    provide: Auth,
+                    useValue: {
+                        handleAuthentication: () => {}
+                    }
+                }
             ]
         }).compileComponents();
     });
