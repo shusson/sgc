@@ -20,6 +20,7 @@ export const environment = {
     baseHref: '',
     auth0ClientId: '',
     auth0Domain: '',
+    auth0Connection: '',
     beaconNetworkUrl: '',
     vsalUrl: '',
     elasticUrl: '',

@@ -6,6 +6,7 @@ export const environment = {
     baseHref: '',
     auth0ClientId: 'KLhFZDgUFeUyO6CnslMoGAoQ1lV0uWzM',
     auth0Domain: 'sgc.au.auth0.com',
+    auth0Connection: 'Production',
     beaconNetworkUrl: 'https://beacon-network.org/api',
     vsalUrl: 'https://vsql.vectis-api.com:443/variants',
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',

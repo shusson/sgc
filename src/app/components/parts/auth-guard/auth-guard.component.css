@@ -1,0 +1,13 @@
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+p {
+    padding: 1rem;
+    font-size: large;
+    text-align: center;
+}

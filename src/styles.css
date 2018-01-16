@@ -145,6 +145,10 @@ rect.tnt_pane {
     color: #a94442 !important;
 }
 
+.mat-dialog-container{
+    background-color: whitesmoke;
+}
+
 .loading-message {
     display: flex;
     justify-content: center;

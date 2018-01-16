@@ -21,7 +21,7 @@ import 'rxjs/add/observable/throw';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { ProgramCardComponent } from './components/parts/program-card/program-card.component';
@@ -95,6 +95,9 @@ import * as LogRocket from 'logrocket';
 import { SummaryDialogComponent } from './components/parts/summary-dialog/summary-dialog.component';
 import { HelpIconComponent } from './components/parts/help-icon/help-icon.component';
 import { SnackbarHelpComponent } from './components/parts/snackbar-help/snackbar-help.component';
+import { LoadingComponent } from './components/pages/loading/loading.component';
+import { SignUpComponent } from './components/parts/sign-up/sign-up.component';
+import { AuthGuardComponent } from './components/parts/auth-guard/auth-guard.component';
 
 const CRITICAL_ERROR_WAIT_DURATION = 1000;
 
@@ -129,6 +132,7 @@ if (environment.production && !environment.ci) {
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
+        ReactiveFormsModule,
         routing,
         HttpClientModule,
         NgxPaginationModule,
@@ -188,8 +192,12 @@ if (environment.production && !environment.ci) {
         SummaryDialogComponent,
         HelpIconComponent,
         SnackbarHelpComponent,
+        LoadingComponent,
+        SignUpComponent,
+        AuthGuardComponent,
     ],
     entryComponents: [
+        SignUpComponent,
         ErrorDialogComponent,
         SummaryDialogComponent,
         SnackbarDemoComponent,

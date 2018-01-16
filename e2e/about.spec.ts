@@ -8,9 +8,9 @@ describe('About Page', () => {
         page.navigateTo();
     });
 
-    it('should display a navigation bar with 7 links', function () {
+    it('should display a navigation bar with 8 links', function () {
         page.getNavBar().count().then( v => {
-            expect(v).toEqual(7)
+            expect(v).toEqual(8)
         });
     });
 

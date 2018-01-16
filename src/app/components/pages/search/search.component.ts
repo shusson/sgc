@@ -23,17 +23,12 @@ export class SearchComponent implements OnDestroy {
     sb: MatSnackBarRef<SnackbarDemoComponent> = null;
 
     constructor(public searchBarService: SearchBarService,
-                private auth: Auth,
+                public auth: Auth,
                 private route: ActivatedRoute,
                 private cd: ChangeDetectorRef,
                 public snackBar: MatSnackBar,
                 private router: Router) {
-        if (!auth.authenticated()) {
-            auth.lock.on('hide', () => {
-                router.navigate(['/initiatives']);
-            });
-            auth.login();
-        } else {
+        if (auth.authenticated()) {
             this.subscriptions.push(route.params.subscribe(p => this.parseParams(p)));
         }
     }
@@ -59,7 +54,8 @@ export class SearchComponent implements OnDestroy {
         this.searchBarService.searchWithParams(params).then((v) => {
             this.autocomplete = v;
             this.cd.detectChanges();
-        }).catch(() => {});
+        }).catch(() => {
+        });
     }
 
     ngOnDestroy() {

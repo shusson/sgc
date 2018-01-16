@@ -13,10 +13,11 @@ export class User {
 
     login() {
         element(by.linkText('LOG IN')).click().then(() => {
+            browser.waitForAngularEnabled(false);
+            browser.driver.sleep(5000);
             element(by.css('.auth0-lock-input-email input')).sendKeys('test@test.com');
             element(by.css('.auth0-lock-input-password input')).sendKeys('test');
             browser.driver.sleep(5000);
-            browser.waitForAngularEnabled(false);
             element(by.css('button.auth0-lock-submit')).click();
             browser.driver.sleep(5000);
             browser.waitForAngularEnabled(true);

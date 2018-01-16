@@ -40,9 +40,6 @@ export class VariantComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.auth.authenticated()) {
-            this.auth.lock.on('hide', () => {
-                this.error = 'Please login or sign up to see variant information';
-            });
             this.auth.login();
         } else {
             this.subscriptions.push(this.bss.errors.subscribe((e: any) => {

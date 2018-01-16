@@ -1,3 +1,4 @@
 <app-page-container>
-    <app-dashboard *ngIf="show"></app-dashboard>
+    <app-auth-guard *ngIf="!auth.authenticated()"></app-auth-guard>
+    <app-dashboard *ngIf="auth.authenticated() && show"></app-dashboard>
 </app-page-container>

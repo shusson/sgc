@@ -1,0 +1,39 @@
+<div class="container">
+    <img class="logo" [src]="logo">
+
+    <form *ngIf="!loading && !success" #form="ngForm" (ngSubmit)="signUp()">
+        <div class="content">
+            <div class="row">
+                <mat-form-field>
+                    <input matInput type="email" #email="ngModel" placeholder="Email" name="email" [(ngModel)]="formData.email"
+                           required>
+                    <mat-error *ngIf="email.invalid">required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <input matInput type="password" #password="ngModel" placeholder="Password" name="password"
+                           [(ngModel)]="formData.password" required>
+                    <mat-error *ngIf="password.invalid">required</mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="error" class="message message-error row">
+                <span>{{ error }}</span>
+                <a *ngIf="loginMessage" (click)="auth.login()">Login instead?</a>
+            </div>
+            <div class="row">
+                <button color="accent" mat-raised-button [disabled]="form.invalid" type="submit">Sign-Up</button>
+            </div>
+        </div>
+    </form>
+    <div *ngIf="loading">
+        <div class="content ack">
+            <mat-spinner diameter="50"></mat-spinner>
+        </div>
+    </div>
+    <div *ngIf="success">
+        <div class="content ack">
+            <span>Success <mat-icon>check_circle</mat-icon></span>
+        </div>
+    </div>
+</div>
