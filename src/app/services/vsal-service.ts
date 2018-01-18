@@ -21,7 +21,11 @@ export class VsalService {
             .append('chromosome', query.chromosome)
             .append('positionStart', String(query.start))
             .append('positionEnd', String(query.end))
-            .append('limit', VSAL_VARIANT_LIMIT.toString());
+            .append('limit', VSAL_VARIANT_LIMIT.toString())
+            .append('sortBy', 'start')
+            .append('descend', 'false')
+            .append('skip', '0')
+            .append('annot', 'true');
 
         query.options.forEach(o => {
             if (o.key) {
@@ -81,8 +85,8 @@ export class VsalService {
                     return new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE);
                 }
                 const vs = new VariantRequest(data['variants']);
-                if (data['total'] && data['total'].length > 0) {
-                    vs.total = data['total'][0];
+                if (data['total'] && data['total'] !== -1) {
+                    vs.total = data['total'];
                 }
                 return vs;
             })

@@ -19,10 +19,9 @@ export class VariantSearchService {
     startingRegion: Region;
     filter: any = null;
     private searchQuery = new Subject<SearchQuery>();
-    private variantsObserver: Observable<VariantRequest>;
 
     constructor(private vsal: VsalService) {
-        this.variantsObserver = this.searchQuery
+        this.results = this.searchQuery
             .debounceTime(DEBOUNCE_TIME)
             .switchMap((query: SearchQuery) => {
                 return this.vsal.getVariants(query).map((vr: VariantRequest) => {
@@ -37,8 +36,6 @@ export class VariantSearchService {
                 return Observable.of<VariantRequest>(new VariantRequest([], e));
             })
             .share();
-
-        this.results = this.variantsObserver;
 
         this.results.subscribe((cs) => {
             if (!this.startingRegion) {
