@@ -18,13 +18,14 @@ export class VsalService {
 
     getVariants(query: SearchQuery): Observable<VariantRequest> {
         let urlParams = new HttpParams()
-            .append('chromosome', query.chromosome)
-            .append('positionStart', String(query.start))
-            .append('positionEnd', String(query.end))
+            .append('chr', query.chromosome)
+            .append('start', String(query.start))
+            .append('end', String(query.end))
             .append('limit', VSAL_VARIANT_LIMIT.toString())
             .append('sortBy', 'start')
             .append('descend', 'false')
             .append('skip', '0')
+            .append('count', 'true')
             .append('annot', 'true');
 
         query.options.forEach(o => {

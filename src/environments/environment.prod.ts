@@ -8,7 +8,7 @@ export const environment = {
     auth0Domain: 'sgc.au.auth0.com',
     auth0Connection: 'Production',
     beaconNetworkUrl: 'https://beacon-network.org/api',
-    vsalUrl: 'http://129.94.14.221:8080/ssvs/query',
+    vsalUrl: 'https://sgc.garvan.org.au/ssvs/query',
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',
     durlUrl: 'https://wt-ec1ac815dce38c76c2e7662693b82189-0.run.webtask.io/durl',
     sentryUrl: 'https://4126e3ee842b4f079400ccf84980e84e@sentry.io/158608',

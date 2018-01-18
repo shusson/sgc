@@ -27,7 +27,7 @@
                                     <span>Chromosome:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.chromosome }}</span>
+                                    <span>{{ variant.chr }}</span>
                                 </div>
                             </div>
 
@@ -45,7 +45,7 @@
                                     <span>Reference:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.reference }}</span>
+                                    <span>{{ variant.ref }}</span>
                                 </div>
                             </div>
 
@@ -54,7 +54,7 @@
                                     <span>Alternate:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.alternate }}</span>
+                                    <span>{{ variant.alt }}</span>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                     <span>Type:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span>{{ variant.altType }}</span>
+                                    <span>{{ variant.type }}</span>
                                 </div>
                             </div>
 
@@ -73,7 +73,7 @@
                                     <span>Frequency:</span>
                                 </div>
                                 <div class="detail-value">
-                                    <span *ngIf="variant.AF">{{ variant.AF.toExponential(4) }}</span>
+                                    <span *ngIf="variant.af">{{ variant.af.toExponential(4) }}</span>
                                 </div>
                             </div>
 
@@ -93,13 +93,13 @@
                                 <div class="detail-label">
                                     <span>dbSNP:</span>
                                 </div>
-                                <div class="detail-value" *ngIf="variant.dbSNP">
+                                <div class="detail-value" *ngIf="variant.rsid">
                         <span><a target="_blank" href="{{ dbSnpUrl(variant) }}">
-                            {{ variant.dbSNP }}
+                            {{ variant.rsid }}
                             <i class="fa fa-external-link" aria-hidden="true"></i>
                         </a></span>
                                 </div>
-                                <div class="detail-value" *ngIf="!variant.dbSNP">
+                                <div class="detail-value" *ngIf="!variant.rsid">
                                     <span>Not found</span>
                                 </div>
                             </div>
