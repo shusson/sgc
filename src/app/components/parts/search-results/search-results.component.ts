@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { Variant } from '../../../model/variant';
 import { MAXIMUM_NUMBER_OF_VARIANTS } from '../../../services/cttv-service';
+import { TableService } from '../../../services/table-service';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { Subscription } from 'rxjs/Subscription';
@@ -21,25 +22,27 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
     @Input() autocomplete: VariantAutocompleteResult<any>;
     @Output() errorEvent = new EventEmitter();
     showClin = false;
-    public variants: Variant[] = [];
-    public loadingVariants = false;
-    private subscriptions: Subscription[] = [];
+    variants: Variant[] = [];
+    total = 0;
+    loadingVariants = false;
     maximumNumberOfVariants = MAXIMUM_NUMBER_OF_VARIANTS;
     selectedTabIndex = 0;
     timeout = null;
+    private subscriptions: Subscription[] = [];
 
     constructor(public searchService: VariantSearchService,
                 private cd: ChangeDetectorRef,
                 private searchBarService: SearchBarService,
                 private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private ts: TableService) {
     }
 
     ngOnInit(): void {
-
         this.variants = this.searchService.variants;
         this.subscriptions.push(this.searchService.results.subscribe(v => {
             this.variants = v.variants;
+            this.total = v.total;
             this.cd.detectChanges();
         }));
 
@@ -48,7 +51,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
         }));
 
         this.loadingVariants = true;
-        this.autocomplete.search(this.searchService, this.searchBarService.options)
+        this.autocomplete.search(this.searchService)
             .then(() => {
                 this.loadingVariants = false;
                 this.cd.detectChanges();
@@ -64,6 +67,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy, AfterViewInit 
             if (p['demo']) {
                 this.selectedTabIndex = 1;
                 this.showClinicalFilters();
+                this.ts.minimalView();
+            } else {
+                this.ts.normalView();
             }
         });
     }

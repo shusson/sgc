@@ -1,12 +1,11 @@
-<div class="results">
+<div class="results" *ngIf="variants.length">
 
     <div class="task-bar">
-        <app-filter-auto [variants]="variants" (output)="onFilter($event)"></app-filter-auto>
-
         <div class="options">
             <span *ngIf="!ts.activeColumns().length">Select columns to view</span>
-            <i (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
+            <i *ngIf="!loadingDownload" (click)="downloadFile()" matTooltip="Download Variants (CSV)" matTooltipPosition="above"
                class="material-icons">file_download</i>
+            <mat-spinner *ngIf="loadingDownload" diameter="20"></mat-spinner>
             <i *ngIf="showSettings" [matMenuTriggerFor]="tableSettings" matTooltip="Table Settings" class="material-icons">
                 settings
             </i>
@@ -14,6 +13,10 @@
     </div>
 
     <div class="table-container">
+        <mat-progress-bar *ngIf="loadingTable"
+            color="primary"
+            mode="indeterminate">
+        </mat-progress-bar>
         <table>
             <tbody>
             <tr>
@@ -23,18 +26,21 @@
 
                 </th>
             <tr>
-            <tr *ngFor="let variant of variants | paginate: { itemsPerPage: pageSize, currentPage: currentPage }"
-                [ngClass]="{'highlighted': compare(variant, highlightedVariant) }"
-                (mouseover)="highlightVariant(variant)"
-                (mouseout)="unHighlightVariant(variant)">
+            <tr *ngFor="let variant of variants | paginate: {itemsPerPage: pageSize,
+                                                             currentPage: currentPage,
+                                                             totalItems: total }; index as i"
+                [ngClass]="{'highlighted': variant.v === highlightedVariant }"
+                (mouseover)="highlightVariant(variant, i)"
+                (mouseout)="unHighlightVariant(variant, i)">
 
                 <td *ngFor="let label of ts.activeColumns()">
 
-                    <span *ngIf="label !== 'Allele Freq' && label !== 'GnomadAF' && label !== 'Location'"
+                    <span *ngIf="label !== 'Allele Freq' && label !== 'GnomadAF' && label !== 'Location' && label !== 'Variant'"
                           class="value">{{ ts.display(label, variant) }}</span>
                     <a *ngIf="label === 'Location'" target="_blank" [href]="variantUrl(variant)">{{ ts.display(label, variant) }}</a>
+                    <a *ngIf="label === 'Variant'" target="_blank" [href]="variantUrl(variant)">{{ ts.display(label, variant) }}</a>
                     <app-allele-freq *ngIf="label === 'Allele Freq'"
-                                     [freq]="variant.AF"></app-allele-freq>
+                                     [freq]="variant.af"></app-allele-freq>
                     <app-allele-freq *ngIf="label === 'GnomadAF'"
                                      [freq]="variant.gnomadAF" color="seagreen"></app-allele-freq>
 
@@ -46,11 +52,11 @@
     <div class="pagination">
         <div>
             <span>Results per page:</span>
-            <select [(ngModel)]="pageSize" name="'pageSize">
+            <select (change)="updatePageSize($event.target.value)" name="'pageSize">
                 <option *ngFor="let item of [10, 20, 50, 100]" value="{{ item }}">{{ item }}</option>
             </select>
         </div>
-        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+        <pagination-controls (pageChange)="updatePage($event)"></pagination-controls>
     </div>
 </div>
 

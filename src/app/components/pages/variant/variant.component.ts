@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Params } from '@angular/router';
+import { VariantRequest } from '../../../model/variant-request';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { SearchQuery } from '../../../model/search-query';
 import { Variant } from '../../../model/variant';
@@ -8,8 +9,8 @@ import { BeaconCache, BeaconSearchService } from '../../../services/beacon/beaco
 import { Gene } from '../../../model/gene';
 import { RegionService } from '../../../services/autocomplete/region-service';
 import { Region } from '../../../model/region';
-import { SearchOption } from '../../../model/search-option';
 import { Auth } from '../../../services/auth-service';
+import { VSAL_VARIANT_LIMIT } from '../../../services/vsal-service';
 
 @Component({
     selector: 'app-variant',
@@ -58,7 +59,7 @@ export class VariantComponent implements OnInit, OnDestroy {
             const reference = m[3];
             const alternate = m[4];
 
-            const sq = new SearchQuery(chromo, start, start, [new SearchOption('', 'returnAnnotations', [], 'true')]);
+            const sq = new SearchQuery(chromo, start, start);
             this.getVariant(sq, reference, alternate);
         } catch (e) {
             this.error = 'Could not find specified variant';
@@ -71,7 +72,7 @@ export class VariantComponent implements OnInit, OnDestroy {
     }
 
     beaconQuery(v: Variant) {
-        return `${ v.chromosome }:${ v.start }>${v.alternate}`;
+        return `${ v.chr }:${ v.start }>${v.alt}`;
     }
 
     toggleBeacon() {
@@ -79,14 +80,14 @@ export class VariantComponent implements OnInit, OnDestroy {
     }
 
     private getVariant(sq: SearchQuery, reference: string, alternate: string) {
-        this.vss.getVariants(sq).then(variants => {
+        this.vss.getVariantsWithAnnotations(sq, VSAL_VARIANT_LIMIT, 0).then((vr: VariantRequest) => {
             this.loading = false;
-            const vf = variants.filter((v) => v.alternate === alternate && v.reference === reference);
+            const vf = vr.variants.filter((v) => v.alt === alternate && v.ref === reference);
             if (vf.length > 1) {
                 this.error = 'Found more than one variant for query';
             } else if (vf.length > 0) {
                 this.variant = vf[0];
-                if (this.variant.altType !== 'SNP') {
+                if (this.variant.type !== 'SNP') {
                     this.beaconSupported = false;
                 } else {
                     this.beacons = this.bss.searchBeacon(this.beaconQuery(this.variant));
@@ -95,7 +96,7 @@ export class VariantComponent implements OnInit, OnDestroy {
                     }));
                 }
 
-                const r = new Region(this.variant.chromosome, this.variant.start, this.variant.start);
+                const r = new Region(this.variant.chr, this.variant.start, this.variant.start);
                 this.rs.getGenesInRegion(r).subscribe((g) => {
                     if (g.length > 0) {
                         this.gene = g[0];

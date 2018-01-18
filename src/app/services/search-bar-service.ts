@@ -3,7 +3,6 @@ import { RegionService } from './autocomplete/region-service';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { SearchOption } from '../model/search-option';
 import { Router, Params } from '@angular/router';
 import { AutocompleteService } from './autocomplete/autocomplete-service';
 import { GenericAutocompleteResult, VariantAutocompleteResult } from '../model/autocomplete-result';
@@ -14,7 +13,6 @@ import { PositionService } from './autocomplete/position-service';
 export class SearchBarService {
     query = '';
     autocompleteServices: AutocompleteService<any>[] = [];
-    options: SearchOption[];
     autocompleteError = '';
     searchedEvent = new Subject();
 
@@ -30,9 +28,6 @@ export class SearchBarService {
 
         this.autocompleteError = '';
         this.query = '';
-        this.options = [
-            new SearchOption('Cohorts', '', ['MGRB'], 'MGRB'),
-        ];
     }
 
     searchWithParams(params: Params): Promise<VariantAutocompleteResult<any>> {
@@ -40,7 +35,6 @@ export class SearchBarService {
         if (!query) {
             return <any>Promise.resolve();
         }
-        this.parseOptions(params);
 
         if (!this.query) {
             this.query = query;
@@ -65,14 +59,6 @@ export class SearchBarService {
             }
         });
 
-    }
-
-    parseOptions(params: Params) {
-        this.options.forEach(o => {
-            if (params[o.key]) {
-                o.setValue(params[o.key]);
-            }
-        });
     }
 
     search(query: string): void {

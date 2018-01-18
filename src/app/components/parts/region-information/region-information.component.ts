@@ -13,7 +13,7 @@ import { Region } from '../../../model/region';
   styleUrls: ['./region-information.component.css', '../../../shared/meta-information.css']
 })
 export class RegionInformationComponent implements OnInit, OnDestroy {
-    variants: Variant[] = [];
+    @Input() total = 0;
     region: Region;
     genes: Gene[];
     private subscriptions: Subscription[] = [];
@@ -25,13 +25,13 @@ export class RegionInformationComponent implements OnInit, OnDestroy {
                 public cd: ChangeDetectorRef) {
 
         this.subscriptions.push(this.searchService.results.subscribe(() => {
-            this.variants = this.searchService.variants;
+            this.total = this.searchService.total;
             this.region = this.searchService.getCurrentRegion();
             this.getGenes();
             this.cd.detectChanges();
         }));
         this.region = this.searchService.getCurrentRegion();
-        this.variants = this.searchService.variants;
+        this.total = this.searchService.total;
         this.getGenes();
     }
 

@@ -24,7 +24,7 @@ export class AlleleFreqComponent implements OnInit {
 
     ngOnInit() {
         this.style = {'background-color': this.color};
-        if (this.freq !== null) {
+        if (this.freq !== null && this.freq !== undefined) {
             this.formattedFreq = this.freq.toFixed(6);
         }
     }

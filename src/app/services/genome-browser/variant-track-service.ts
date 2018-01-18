@@ -12,15 +12,14 @@ import * as tnt from 'tnt.genome';
 
 const PIN_COLOR = '#4682b4';
 const PIN_SELECTED_COLOR = '#FFD658';
-const OVERLAY_COLOR = '#D54A0F';
+const PIN_KEY = 'data-variant-id';
 
-export type GenomeBrowserOverlay = 'None' | 'Homozygotes' | 'Heterozygotes' | 'DbSNP';
-
-class VariantPin {
+export class VariantPin {
     constructor(public pos: number,
                 public val: number,
                 public name: string,
-                public variant: Variant) {
+                public variant: Variant,
+                public index: number) {
     }
 }
 
@@ -28,13 +27,9 @@ class VariantPin {
 export class VariantTrackService implements TrackService {
     track: any;
     trackLabel: any;
-    highlightedVariant = new Subject<Variant>();
-    clickedVariant = new Subject<Variant>();
+    highlightedVariant = new Subject<VariantPin>();
+    clickedVariant = new Subject<VariantPin>();
     data: any;
-
-    readonly overlays: GenomeBrowserOverlay[] = ['None', 'Homozygotes', 'Heterozygotes', 'DbSNP'];
-    private activeOverlay: GenomeBrowserOverlay = 'None';
-    private overlayMap: Map<GenomeBrowserOverlay, any> = new Map<GenomeBrowserOverlay, any>();
     private highlightCache: any = {};
     private createMethod: any;
     private pinFeature: any;
@@ -44,10 +39,9 @@ export class VariantTrackService implements TrackService {
         this.pinFeature = tnt.track.feature.pin().fixed(this.drawYAxis);
 
         this.initCreateMethod();
-        this.initOverlayMap();
 
-        this.highlightedVariant.subscribe((v: Variant) => {
-            v.highlight ? this.highlightPin(v) : this.unHighlightPin(v);
+        this.highlightedVariant.subscribe((vp: VariantPin) => {
+            vp.variant.highlight ? this.highlightPin(vp) : this.unHighlightPin(vp);
         });
 
         this.data = this.createDataMethod();
@@ -69,19 +63,6 @@ export class VariantTrackService implements TrackService {
                     return [];
                 })
             );
-    }
-
-    public setOverlay(overlay: GenomeBrowserOverlay) {
-        if (this.overlayMap.has(overlay)) {
-            this.overlayMap.get(overlay)(this.pinFeature);
-            this.pinFeature.reset.apply(this.track);
-            this.pinFeature.update.apply(this.track);
-            this.activeOverlay = overlay;
-        }
-    }
-
-    public getOverlay() {
-        return this.activeOverlay;
     }
 
     private drawYAxis(this: any, width: number) {
@@ -137,21 +118,21 @@ export class VariantTrackService implements TrackService {
             .domain([0, 1])
             .color(PIN_COLOR)
             .index((pin: VariantPin) => {
-                return that.variantHash(pin.variant);
+                return Variant.hash(pin.variant);
             })
             .on('click', function (this: any, pin: VariantPin) {
-                that.clickedVariant.next(pin.variant);
+                that.clickedVariant.next(pin);
             })
             .on('mouseover', function (this: any, pin: VariantPin) {
                 if (!pin.variant.highlight) {
                     pin.variant.highlight = true;
-                    that.highlightedVariant.next(pin.variant);
+                    that.highlightedVariant.next(pin);
                 }
             })
             .on('mouseout', function (this: any, pin: VariantPin) {
                 if (pin.variant.highlight) {
                     pin.variant.highlight = false;
-                    that.highlightedVariant.next(pin.variant);
+                    that.highlightedVariant.next(pin);
                 }
             })
             .layout(tnt.track.layout()
@@ -162,12 +143,13 @@ export class VariantTrackService implements TrackService {
     }
 
     private createDataMethod(): () => any {
-        const createPin = (variant: Variant) => {
+        const createPin = (variant: Variant, index) => {
             return new VariantPin(
                 variant.start,
-                variant.AF,
+                variant.af,
                 this.variantName(variant),
-                variant
+                variant,
+                index
             );
         };
         return tnt.track.data.async()
@@ -185,11 +167,9 @@ export class VariantTrackService implements TrackService {
                     this.regionService
                 );
 
-                if (this.searchService.startingRegion.start !== loc.from ||
-                    this.searchService.startingRegion.end !== loc.to ||
-                    this.searchService.filter !== null) {
-                    return regionAutocomplete.search(this.searchService, this.searchService.lastQuery.options).then(() => {
-                        return Promise.resolve(this.searchService.variants.map(createPin));
+                if (this.searchService.filter !== null) {
+                    return regionAutocomplete.search(this.searchService).then((v) => {
+                        return v.map(createPin);
                     });
                 } else {
                     return Promise.resolve(this.searchService.variants.map(createPin));
@@ -203,7 +183,7 @@ export class VariantTrackService implements TrackService {
         this.createMethod = function (pins: any) {
             create.call(this, pins);
             pins.attr('data-variant-id', function (pin: VariantPin) {
-                return that.variantHash(pin.variant);
+                return pin.variant.v;
             });
         };
 
@@ -212,53 +192,8 @@ export class VariantTrackService implements TrackService {
         });
     }
 
-    private initOverlayMap() {
-        const that = this;
-        this.overlayMap.set('None', (overlay: any) => {
-            this.pinFeature.create(function (pins: any) {
-                that.createMethod.call(this, pins);
-            });
-        });
-
-        this.overlayMap.set('Homozygotes', (overlay: any) => {
-            this.pinFeature.create(function (pins: any) {
-                that.createMethod.call(this, pins);
-
-                const homoz = pins.filter((d: VariantPin) => {
-                    return d.variant.nHomVar;
-                });
-                homoz.select('line').attr('stroke', OVERLAY_COLOR);
-                homoz.select('circle').attr('fill', OVERLAY_COLOR);
-            });
-        });
-
-        this.overlayMap.set('Heterozygotes', (overlay: any) => {
-            this.pinFeature.create(function (pins: any) {
-                that.createMethod.call(this, pins);
-
-                const hetz = pins.filter((d: VariantPin) => {
-                    return d.variant.nHet;
-                });
-                hetz.select('line').attr('stroke', OVERLAY_COLOR);
-                hetz.select('circle').attr('fill', OVERLAY_COLOR);
-            });
-        });
-
-        this.overlayMap.set('DbSNP', (overlay: any) => {
-            this.pinFeature.create(function (pins: any) {
-                that.createMethod.call(this, pins);
-                const dbSNPs = pins.filter((d: VariantPin) => {
-                    return d.variant.dbSNP;
-                });
-                dbSNPs.select('line').attr('stroke', OVERLAY_COLOR);
-                dbSNPs.select('circle').attr('fill', OVERLAY_COLOR);
-            });
-        });
-    }
-
-    private highlightPin(v: Variant) {
-        const hash = this.variantHash(v);
-        const e = <HTMLElement>d3.select(`[data-variant-id='${ hash }']`)[0][0];
+    private highlightPin(vp: VariantPin) {
+        const e = <HTMLElement>d3.select(`[${PIN_KEY}='${ vp.variant.v }']`)[0][0];
         const dPin = d3.select(e);
         const circle = dPin.select('circle');
 
@@ -266,7 +201,7 @@ export class VariantTrackService implements TrackService {
             return;
         }
 
-        this.highlightCache[hash] = circle.attr('fill');
+        this.highlightCache[vp.variant.v] = circle.attr('fill');
         circle.attr('fill', PIN_SELECTED_COLOR)
             .attr('r', '10');
         const line = dPin.select('line');
@@ -274,9 +209,8 @@ export class VariantTrackService implements TrackService {
             .attr('stroke-width', '3px');
     }
 
-    private unHighlightPin(v: Variant) {
-        const hash = this.variantHash(v);
-        const e = <HTMLElement>d3.select(`[data-variant-id='${ hash }']`)[0][0];
+    private unHighlightPin(vp: VariantPin) {
+        const e = <HTMLElement>d3.select(`[${PIN_KEY}='${ vp.variant.v }']`)[0][0];
         const dPin = d3.select(e);
         const circle = dPin.select('circle');
 
@@ -284,32 +218,18 @@ export class VariantTrackService implements TrackService {
             return;
         }
 
-        circle.attr('fill', this.highlightCache[hash])
+        circle.attr('fill', this.highlightCache[vp.variant.v])
             .attr('r', '5');
         const line = dPin.select('line');
-        line.attr('stroke', this.highlightCache[hash])
+        line.attr('stroke', this.highlightCache[vp.variant.v])
             .attr('stroke-width', '1px');
     }
 
-    private variantHash(variant: Variant) {
-        const d = [
-            variant.chromosome,
-            variant.dbSNP,
-            variant.AF,
-            variant.AC,
-            variant.alternate,
-            variant.reference,
-            variant.start,
-            variant.altType
-        ];
-        return window.btoa(JSON.stringify(d));
-    }
-
     private variantName(variant: Variant) {
-        return variant.chromosome +
+        return variant.chr +
             variant.start +
-            variant.reference +
-            variant.alternate +
-            variant.altType;
+            variant.ref +
+            variant.alt +
+            variant.type;
     }
 }

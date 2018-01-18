@@ -43,7 +43,6 @@ import { GenomeBrowserComponent } from './components/parts/genome-browser/genome
 import { Auth } from './services/auth-service';
 import { RegionService } from './services/autocomplete/region-service';
 import { SearchBarComponent } from './components/parts/search-bar/search-bar.component';
-import { SearchOptionComponent } from './components/parts/search-option/search-option.component';
 import { GenomeBrowserResizeComponent } from './components/parts/genome-browser-resizable/genome-browser-resizable.component';
 import { BeaconComponent } from './components/pages/beacon/beacon.component';
 import { SearchBarWithOptionsComponent } from './components/parts/search-bar-with-options/search-bar-with-options.component';
@@ -64,10 +63,8 @@ import { PrivacyFooterComponent } from './components/parts/privacy-footer/privac
 import { ElasticGeneSearch } from './services/autocomplete/elastic-gene-search-service';
 import { VariantsTableComponent } from './components/parts/variants-table/variants-table.component';
 import { PositionService } from './services/autocomplete/position-service';
-import { OverlayMenuComponent } from './components/parts/overlay-menu/overlay-menu.component';
 import { TableService } from './services/table-service';
 import { PcaPlotComponent } from './components/parts/pca-plot/pca-plot.component';
-import { FilterAutoComponent } from './components/parts/filter-auto/filter-auto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageContainerComponent } from './components/parts/page-container/page-container.component';
 import { RegionInformationComponent } from './components/parts/region-information/region-information.component';
@@ -155,7 +152,6 @@ if (environment.production && !environment.ci) {
         CohortListComponent,
         GraphsWidgetComponent,
         GenomeBrowserComponent,
-        SearchOptionComponent,
         GenomeBrowserResizeComponent,
         BeaconComponent,
         SearchBarWithOptionsComponent,
@@ -171,9 +167,7 @@ if (environment.production && !environment.ci) {
         HomeAboutComponent,
         PrivacyFooterComponent,
         VariantsTableComponent,
-        OverlayMenuComponent,
         PcaPlotComponent,
-        FilterAutoComponent,
         PageContainerComponent,
         RegionInformationComponent,
         VariantComponent,

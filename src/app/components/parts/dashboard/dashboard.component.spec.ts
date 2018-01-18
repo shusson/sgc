@@ -11,7 +11,6 @@ import { MapdMock } from '../../../mocks/mapd.mock';
 import { CrossfilterService } from '../../../services/crossfilter.service';
 import { CfMock } from '../../../mocks/cf.mock';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
-import { SearchOptionComponent } from '../search-option/search-option.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
@@ -42,7 +41,6 @@ describe('DashboardComponent', () => {
                 SearchBarWithOptionsComponent,
                 VariantsTablePaginatedComponent,
                 SearchBarComponent,
-                SearchOptionComponent,
                 MapdRowChartComponent,
                 MapdPieChartComponent,
                 MapdAvgAfChartComponent,

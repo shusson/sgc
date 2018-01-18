@@ -11,7 +11,6 @@ import { EnsemblService } from '../../../services/ensembl-service';
 import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-search-service';
 import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
-import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { Observable } from 'rxjs/Observable';
 
 describe('Component: Genome Browser', () => {
@@ -28,7 +27,6 @@ describe('Component: Genome Browser', () => {
             declarations: [
                 GenomeBrowserResizeComponent,
                 GenomeBrowserComponent,
-                OverlayMenuComponent
             ],
             providers: [
                 {

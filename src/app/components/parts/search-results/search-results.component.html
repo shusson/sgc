@@ -8,8 +8,8 @@
     <mat-tab-group (selectChange)="tabSelected($event)" [selectedIndex]="selectedTabIndex">
         <mat-tab label="Summary">
             <div class="meta-information tab-content">
-                <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [variants]="variants"></app-gene-information>
-                <app-region-information *ngIf="showRegionInformation()"></app-region-information>
+                <app-gene-information *ngIf="showGeneInformation()" [autocomplete]="autocomplete" [total]="total"></app-gene-information>
+                <app-region-information *ngIf="showRegionInformation()" [total]="total"></app-region-information>
             </div>
 
         </mat-tab>
@@ -20,10 +20,10 @@
         </mat-tab>
     </mat-tab-group>
 
-    <div *ngIf="variants.length > 10000" class="message message-error">
+    <div *ngIf="total > 10000" class="message message-error">
         This region contains too many variants to visualize with our genome browser, please choose a smaller region like:
         <a (click)="goToSmallerRegion()">{{searchService.getSmallerRegionString()}}</a>
     </div>
-    <app-genome-browser-resizable *ngIf="variants.length <= maximumNumberOfVariants"></app-genome-browser-resizable>
-    <app-variants-table [variants]="variants"></app-variants-table>
+    <app-genome-browser-resizable *ngIf="total <= maximumNumberOfVariants"></app-genome-browser-resizable>
+    <app-variants-table></app-variants-table>
 </div>

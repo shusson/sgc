@@ -2,6 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { MaterialModule } from '../../../app.material';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
@@ -17,6 +18,7 @@ describe('RegionInformationComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MaterialModule
             ],
             declarations: [
                 RegionInformationComponent

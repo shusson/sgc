@@ -27,8 +27,7 @@
                 </div>
                 <div *ngIf="genes.length <= 0">None</div>
             </div>
-
-            <div class="loading" *ngIf="!genes"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></div>
+            <mat-spinner *ngIf="!genes" diameter="20"></mat-spinner>
         </div>
     </div>
     <div class="detail">
@@ -36,7 +35,7 @@
             <span>Variants:</span>
         </div>
         <div class="detail-value">
-            <span>{{ variants.length }}</span>
+            <span>{{ total }}</span>
         </div>
     </div>
 </div>
