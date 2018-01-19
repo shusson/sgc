@@ -1,9 +1,9 @@
 nav a.is-active {
-    border-left: 5px solid rgb(64, 196, 255);
+    border-left: 5px solid #23b2c0;
 }
 
 nav a {
-    color: white;
+    color: #484848;
     text-decoration: none;
     font-size: medium;
     padding: 1rem 1rem 1rem 2rem;
@@ -30,5 +30,9 @@ nav {
 
 .terms-dropdown {
     left: 0;
-    background-color: #336F9C;
+    background-color: #23b2c0;
+}
+
+nav a.terms-dropdown  {
+    color: white;
 }

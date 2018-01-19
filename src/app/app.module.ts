@@ -75,6 +75,7 @@ import { LocalStorageService } from './services/local-storage.service';
 import { environment } from '../environments/environment';
 import { VariantComponent } from './components/pages/variant/variant.component';
 import { BeaconTableComponent } from './components/parts/beacon-table/beacon-table.component';
+import { AnalyticsComponent } from './components/pages/analytics/analytics.component';
 import * as Raven from 'raven-js';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ErrorComponent } from './components/pages/error/error.component';
@@ -195,6 +196,7 @@ if (environment.production && !environment.ci) {
         LoadingComponent,
         SignUpComponent,
         AuthGuardComponent,
+        AnalyticsComponent
     ],
     entryComponents: [
         SignUpComponent,

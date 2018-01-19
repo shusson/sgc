@@ -8,7 +8,6 @@ export const environment = {
     auth0Domain: 'sgc.au.auth0.com',
     auth0Connection: 'Username-Password-Authentication',
     beaconNetworkUrl: 'https://beacon-network.org/api',
-    // vsalUrl: 'http://localhost:3000',
     vsalUrl: 'https://sgc.garvan.org.au/ssvs/query',
     // elasticUrl: 'http://localhost:328v40',
     elasticUrl: 'https://dr-sgc.kccg.garvan.org.au/_elasticsearch',

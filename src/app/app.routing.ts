@@ -11,9 +11,11 @@ import { MgrbTermsComponent } from './components/pages/mgrb-terms/mgrb-terms.com
 import { VariantComponent } from './components/pages/variant/variant.component';
 import { ErrorComponent } from './components/pages/error/error.component';
 import { ExploreComponent } from './components/pages/explore/explore.component';
+import { AnalyticsComponent } from './components/pages/analytics/analytics.component';
 
 const appRoutes: Routes = [
     { path: 'initiatives', component: InitiativesComponent },
+    { path: 'analytics', component: AnalyticsComponent },
     { path: 'about',  component: AboutComponent },
     { path: 'auth',  component: LoadingComponent },
     { path: 'search/results', component: SearchComponent },

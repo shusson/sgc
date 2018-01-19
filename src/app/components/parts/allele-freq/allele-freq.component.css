@@ -1,8 +1,13 @@
 
 
+
 div {
     min-height: 17px;
     cursor: pointer;
+}
+
+div.active {
+    background-color: #23b2c0;
 }
 
 .chart {

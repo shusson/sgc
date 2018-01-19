@@ -34,7 +34,7 @@ table tr:nth-child(even), table th {
 }
 
 table tr.highlighted {
-    background-color: #FFD658;
+    background-color: rgba(53, 93, 202, 0.8);
 }
 
 table td, table th {

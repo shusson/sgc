@@ -1,6 +1,7 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
+import { Subscription } from 'rxjs/Subscription';
 
 const MIN_NAV_WIDTH = 1285;
 
@@ -9,13 +10,14 @@ const MIN_NAV_WIDTH = 1285;
     templateUrl: './page-container.component.html',
     styleUrls: ['./page-container.component.css']
 })
-export class PageContainerComponent implements OnInit {
+export class PageContainerComponent implements OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() showPrivacy = true;
     @Input() showBanner = false;
-    title = 'SYDNEY GENOMICS COLLABORATIVE';
-    smallTitle = 'SGC';
+    title = 'DISCOVERY';
+    smallTitle = 'DISCOVERY';
     showHamburger = false;
+    private subs: Subscription[] = [];
 
     @HostListener('window:resize') windowResized() {
         this.showHamburger = window.innerWidth <= MIN_NAV_WIDTH;
@@ -24,15 +26,19 @@ export class PageContainerComponent implements OnInit {
     constructor(private router: Router,
                 private scrollService: ScrollService) {
         this.windowResized();
-        this.router.events
+        this.subs.push(this.router.events
             .filter((x, idx) => x instanceof NavigationEnd)
             .subscribe(() => {
                 window.scrollTo(0, 0);
-            });
+            }));
     }
 
     ngOnInit() {
 
+    }
+
+    ngOnDestroy() {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
     updateScroll($event: any) {

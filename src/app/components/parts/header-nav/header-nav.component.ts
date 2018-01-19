@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Subscription } from 'rxjs/Subscription';
 import { Auth } from '../../../services/auth-service';
 import { Router, NavigationEnd } from '@angular/router';
 import { ScrollService } from '../../../services/scroll-service';
@@ -10,9 +11,10 @@ import { SignUpComponent } from '../sign-up/sign-up.component';
     templateUrl: './header-nav.component.html',
     styleUrls: ['./header-nav.component.css']
 })
-export class HeaderNavComponent implements OnInit {
+export class HeaderNavComponent implements OnInit, OnDestroy {
     termsDropdown = false;
     termsLinkActive = false;
+    private subs: Subscription[] = [];
 
     @HostListener('document:click', ['$event']) outsideClick($event: Event) {
         if (!$event) {
@@ -31,13 +33,13 @@ export class HeaderNavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.router.events
+        this.subs.push(this.router.events
             .filter((x, idx) => x instanceof NavigationEnd)
             .subscribe((event: any) => {
                 this.termsLinkActive = event.url.match(new RegExp(/^\/terms/, 'i'));
-            });
+            }));
 
-        this.scrollService.scrolled.subscribe(this.hideTerms);
+        this.subs.push(this.scrollService.scrolled.subscribe(this.hideTerms));
 
     }
 
@@ -68,6 +70,10 @@ export class HeaderNavComponent implements OnInit {
             SignUpComponent,
             {}
         );
+    }
+
+    ngOnDestroy() {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
 }
