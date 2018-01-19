@@ -18,10 +18,15 @@ export class VsalService {
 
     getVariants(query: SearchQuery): Observable<VariantRequest> {
         let urlParams = new HttpParams()
-            .append('chromosome', query.chromosome)
-            .append('positionStart', String(query.start))
-            .append('positionEnd', String(query.end))
-            .append('limit', VSAL_VARIANT_LIMIT.toString());
+            .append('chr', query.chromosome)
+            .append('start', String(query.start))
+            .append('end', String(query.end))
+            .append('limit', VSAL_VARIANT_LIMIT.toString())
+            .append('sortBy', 'start')
+            .append('descend', 'false')
+            .append('skip', '0')
+            .append('count', 'true')
+            .append('annot', 'true');
 
         query.options.forEach(o => {
             if (o.key) {
@@ -81,8 +86,8 @@ export class VsalService {
                     return new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE);
                 }
                 const vs = new VariantRequest(data['variants']);
-                if (data['total'] && data['total'].length > 0) {
-                    vs.total = data['total'][0];
+                if (data['total'] && data['total'] !== -1) {
+                    vs.total = data['total'];
                 }
                 return vs;
             })

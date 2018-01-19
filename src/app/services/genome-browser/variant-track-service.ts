@@ -165,7 +165,7 @@ export class VariantTrackService implements TrackService {
         const createPin = (variant: Variant) => {
             return new VariantPin(
                 variant.start,
-                variant.AF,
+                variant.af,
                 this.variantName(variant),
                 variant
             );
@@ -248,7 +248,7 @@ export class VariantTrackService implements TrackService {
             this.pinFeature.create(function (pins: any) {
                 that.createMethod.call(this, pins);
                 const dbSNPs = pins.filter((d: VariantPin) => {
-                    return d.variant.dbSNP;
+                    return d.variant.rsid;
                 });
                 dbSNPs.select('line').attr('stroke', OVERLAY_COLOR);
                 dbSNPs.select('circle').attr('fill', OVERLAY_COLOR);
@@ -293,23 +293,23 @@ export class VariantTrackService implements TrackService {
 
     private variantHash(variant: Variant) {
         const d = [
-            variant.chromosome,
-            variant.dbSNP,
-            variant.AF,
-            variant.AC,
-            variant.alternate,
-            variant.reference,
+            variant.chr,
+            variant.rsid,
+            variant.af,
+            variant.ac,
+            variant.alt,
+            variant.ref,
             variant.start,
-            variant.altType
+            variant.type
         ];
         return window.btoa(JSON.stringify(d));
     }
 
     private variantName(variant: Variant) {
-        return variant.chromosome +
+        return variant.chr +
             variant.start +
-            variant.reference +
-            variant.alternate +
-            variant.altType;
+            variant.ref +
+            variant.alt +
+            variant.type;
     }
 }

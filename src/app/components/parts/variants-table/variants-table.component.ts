@@ -90,16 +90,16 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
     downloadFile() {
         const data = this.variants.map((v: Variant) => {
             return {
-                'Chrom': v.chromosome,
+                'Chrom': v.chr,
                 'Position': v.start,
-                'RSID': v.dbSNP,
-                'Reference': v.reference,
-                'Alternate': v.alternate,
-                'Type': v.altType,
+                'RSID': v.rsid,
+                'Reference': v.ref,
+                'Alternate': v.alt,
+                'Type': v.type,
                 'Homozygotes Count': v.nHomVar,
                 'Heterozygotes Count': v.nHet,
-                'Allele Count': v.AC,
-                'Allele Frequency': v.AF,
+                'Allele Count': v.ac,
+                'Allele Frequency': v.af,
                 'cato': v.cato,
                 'eigen': v.eigen,
                 'sift': v.sift,
