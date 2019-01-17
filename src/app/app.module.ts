@@ -123,10 +123,6 @@ export class RavenErrorHandler implements ErrorHandler {
     }
 }
 
-if (environment.production && !environment.ci) {
-    LogRocket.init(environment.logrocket);
-}
-
 @NgModule({
     imports: [
         BrowserModule,
