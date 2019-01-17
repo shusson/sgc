@@ -1,5 +1,4 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e696a4f2fc9c47f98c7f4e19baddde7c)](https://www.codacy.com/app/shane.a.husson/sgc?utm_source=github.com&utm_medium=referral&utm_content=shusson/sgc&utm_campaign=badger)
-[![Build Status](https://travis-ci.org/shusson/sgc.svg?branch=master)](https://travis-ci.org/shusson/sgc)
 
 ## SYDNEY GENOMICS COLLABORATIVE
 
