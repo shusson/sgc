@@ -56,7 +56,7 @@ export class BeaconNetworkService {
         return this.http.get(`${ environment.beaconNetworkUrl }/beacons`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError)
-            .map((data) => {
+            .map((data: any) => {
                 return data.filter((v: NetworkBeacon) => {
                     const intersection = v.supportedReferences.filter(x => SUPPORTED_REFERENCES.has(x));
                     return intersection.length > 0 && !v.aggregator && v.id !== MGRB_ID;
@@ -68,7 +68,7 @@ export class BeaconNetworkService {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json')
             .append('Accept', '*/*');
-        return this.http.get(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
+        return this.http.get<any>(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError);
     }

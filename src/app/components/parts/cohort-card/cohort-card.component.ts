@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, style, state, animate, transition, trigger } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Cohort } from '../../../model/cohort';
 import { CohortService } from '../../../services/project-data/cohort-service';
+import { trigger, state, style, transition, animate } from "@angular/animations";
 
 @Component({
     selector: 'app-cohort-card',

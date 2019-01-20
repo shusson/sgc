@@ -14,7 +14,7 @@ export class EnsemblService {
     healthCheck(): Promise<boolean> {
         const headers = new HttpHeaders()
             .append('Accept', 'application/json');
-        return this.http.get(HEALTH_CHECK_URL, {headers: headers})
+        return this.http.get<any>(HEALTH_CHECK_URL, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
                 return Observable.throw('Ensembl health check failed');

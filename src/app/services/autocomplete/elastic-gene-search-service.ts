@@ -87,9 +87,9 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
             .catch(() => {
                 return Observable.throw('An error occurred while trying to connect to elasticsearch');
             })
-            .map(data => {
+            .map((data: any) => {
                 return data.hits.hits.map((j: any) => {
-                    let g = new Gene();
+                    const g = new Gene();
                     const source = j._source;
                     g.id = source.id;
                     g.name = source.description;
