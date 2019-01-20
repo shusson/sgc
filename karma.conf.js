@@ -6,21 +6,19 @@ process.env.CHROME_BIN = require('puppeteer').executablePath();
 module.exports = function (config) {
     config.set({
         basePath: '',
-        frameworks: ['jasmine', '@angular/cli'],
+        frameworks: ['jasmine', '@angular-devkit/build-angular'],
         plugins: [
             require('karma-jasmine'),
             require('karma-chrome-launcher'),
-            require('@angular/cli/plugins/karma')
+            require('@angular-devkit/build-angular/plugins/karma')
         ],
         singleRun: true,
         files: [
             "node_modules/hammerjs/hammer.min.js",
             { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css' },
-            { pattern: './src/test.ts', watched: false }
+            
         ],
-        angularCli: {
-            environment: 'dev'
-        },
+        
         captureTimeout: 60000,
         browserDisconnectTolerance: 3,
         browserDisconnectTimeout : 60000,
