@@ -1,12 +1,13 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Variant } from '../model/variant';
 import { SearchQuery } from '../model/search-query';
 import { Region } from '../model/region';
+import { empty } from "rxjs";
 
 export class MockVariantSearchService {
-    variants: Observable<any> = Observable.empty();
-    results: Observable<any> = Observable.empty();
-    updates: Observable<any> = Observable.empty();
+    variants: Observable<any> = empty();
+    results: Observable<any> = empty();
+    updates: Observable<any> = empty();
     lastQuery: SearchQuery = new SearchQuery('1', 1, 2, []);
     options: any[] = [];
 

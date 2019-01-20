@@ -1,14 +1,11 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { MaterialModule } from '../../../app.material';
 
 import { SideNavComponent } from './side-nav.component';
-import { ScrollService } from '../../../services/scroll-service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { Auth } from '../../../services/auth-service';
+import { empty } from "rxjs";
 
 describe('SideNavComponent', () => {
     let component: SideNavComponent;
@@ -26,7 +23,7 @@ describe('SideNavComponent', () => {
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 },
                 {

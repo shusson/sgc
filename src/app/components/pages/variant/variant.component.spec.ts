@@ -20,10 +20,10 @@ import { VsalService } from '../../../services/vsal-service';
 import { MockVsalService } from '../../../mocks/vsal-service.mock';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { RegionService } from '../../../services/autocomplete/region-service';
-import { Observable } from 'rxjs/Observable';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../../app.material';
+import { empty } from "rxjs";
 
 describe('VariantComponent', () => {
     let component: VariantComponent;
@@ -56,7 +56,7 @@ describe('VariantComponent', () => {
                 {
                     provide: ActivatedRoute,
                     useValue: {
-                        params: Observable.empty()
+                        params: empty()
                     }
                 },
                 {

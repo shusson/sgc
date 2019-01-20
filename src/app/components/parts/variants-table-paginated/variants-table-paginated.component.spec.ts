@@ -5,11 +5,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MapdService } from '../../../services/mapd.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { CfMock } from '../../../mocks/cf.mock';
 import { MapdMock } from '../../../mocks/mapd.mock';
 import { MatIconModule } from '@angular/material';
+import { empty } from "rxjs";
 
 describe('VariantsTablePaginatedComponent', () => {
     let component: VariantsTablePaginatedComponent;
@@ -34,7 +33,7 @@ describe('VariantsTablePaginatedComponent', () => {
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 }
             ]

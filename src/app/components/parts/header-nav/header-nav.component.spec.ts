@@ -1,14 +1,12 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { MaterialModule } from '../../../app.material';
 
 import { HeaderNavComponent } from './header-nav.component';
 import { ScrollService } from '../../../services/scroll-service';
 import { Router } from '@angular/router';
 import { Auth } from '../../../services/auth-service';
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 describe('HeaderNavComponent', () => {
     let component: HeaderNavComponent;
@@ -27,7 +25,7 @@ describe('HeaderNavComponent', () => {
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 },
                 {

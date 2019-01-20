@@ -4,9 +4,9 @@ import { RegionService } from './autocomplete/region-service';
 import { Router } from '@angular/router';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { Observable } from 'rxjs/Observable';
 import { ElasticGeneSearch } from './autocomplete/elastic-gene-search-service';
 import { PositionService } from './autocomplete/position-service';
+import { of } from "rxjs";
 
 describe('SearchBar Service', () => {
     let crumbs: any[];
@@ -45,7 +45,7 @@ describe('SearchBar Service', () => {
                     provide: PositionService,
                     useValue: {
                         search: (s: string) => {
-                            return Observable.of<any>([]);
+                            return of<any>([]);
                         }
                     }
                 },
@@ -73,7 +73,7 @@ describe('SearchBar Service', () => {
     describe('search', () => {
         it('should route to the correct url', fakeAsync(
             inject([SearchBarService], (searchBarService: SearchBarService) => {
-                let q = 'fred';
+                const q = 'fred';
                 expect(crumbs.length).toEqual(0);
                 searchBarService.search(q);
                 expect(crumbs.length).toEqual(1);
@@ -87,12 +87,12 @@ describe('SearchBar Service', () => {
     describe('searchAutocompleteServices', () => {
         it('should search all the annnotation services and return autocomplete types', fakeAsync(
             inject([SearchBarService], (searchBarService: SearchBarService) => {
-                let q = 'cactus';
+                const q = 'cactus';
                 let result: any[] = null;
-                let a = ['light'];
-                let b = ['saber'];
-                icgcResult = Observable.of(a);
-                regionResult = Observable.of(b);
+                const a = ['light'];
+                const b = ['saber'];
+                icgcResult = of(a);
+                regionResult = of(b);
                 expect(icgcSearches).toEqual([]);
                 expect(regionSearches).toEqual([]);
                 searchBarService.searchAutocompleteServices(q).subscribe((v) => result = v);
@@ -107,12 +107,12 @@ describe('SearchBar Service', () => {
     describe('searchAutocompleteServicesStartsWith', () => {
         it('should search all the annnotation services and return autocomplete types', fakeAsync(
             inject([SearchBarService], (searchBarService: SearchBarService) => {
-                let q = 'cactus';
-                let startsWith = ['bees'];
-                let a = ['broad'];
-                let b = ['sword'];
-                icgcResult = Observable.of(a);
-                regionResult = Observable.of(b);
+                const q = 'cactus';
+                const startsWith = ['bees'];
+                const a = ['broad'];
+                const b = ['sword'];
+                icgcResult = of(a);
+                regionResult = of(b);
                 let result: any[] = null;
                 expect(icgcSearches).toEqual([]);
                 expect(regionSearches).toEqual([]);
@@ -125,10 +125,10 @@ describe('SearchBar Service', () => {
         ));
         it('should return startsWith if the observable does not emit immediately', fakeAsync(
             inject([SearchBarService], (searchBarService: SearchBarService) => {
-                let q = 'cactus';
-                let startsWith = ['bees'];
-                icgcResult = Observable.of(['broad']).delay(new Date(Date.now() + 100));
-                regionResult = Observable.of(['sword']).delay(new Date(Date.now() + 100));
+                const q = 'cactus';
+                const startsWith = ['bees'];
+                icgcResult = of(['broad']).delay(new Date(Date.now() + 100));
+                regionResult = of(['sword']).delay(new Date(Date.now() + 100));
                 let result: any[] = null;
                 expect(icgcSearches).toEqual([]);
                 expect(regionSearches).toEqual([]);

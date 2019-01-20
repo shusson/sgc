@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 export class MockSearchBarService {
-    searchedEvent = Observable.empty();
+    searchedEvent = empty();
     reset() {}
 }

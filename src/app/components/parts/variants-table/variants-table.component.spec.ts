@@ -1,7 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { VariantsTableComponent } from './variants-table.component';
 import { MaterialModule } from '../../../app.material';
@@ -14,7 +12,6 @@ import { GenomeBrowserResizeComponent } from '../genome-browser-resizable/genome
 import { GeneInformationComponent } from '../gene-information/gene-information.component';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
-import { Observable } from 'rxjs/Observable';
 import { Router, RouterModule } from '@angular/router';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
 import { VsalService } from '../../../services/vsal-service';
@@ -23,8 +20,9 @@ import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
 import { TableService } from '../../../services/table-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
-import { ClincalFilteringComponent, ClinicalChart } from '../clincal-filtering/clincal-filtering.component';
+import { ClincalFilteringComponent } from '../clincal-filtering/clincal-filtering.component';
 import { ClinicalChartComponent } from '../clinical-chart/clinical-chart.component';
+import { empty } from "rxjs";
 
 describe('VariantsTableComponent', () => {
     let component: VariantsTableComponent;
@@ -67,14 +65,14 @@ describe('VariantsTableComponent', () => {
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 },
                 {
                     provide: VariantTrackService,
                     useValue: {
-                        highlightedVariant: Observable.empty(),
-                        clickedVariant: Observable.empty()
+                        highlightedVariant: empty(),
+                        clickedVariant: empty()
                     }
                 },
 

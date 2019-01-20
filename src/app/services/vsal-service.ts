@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import * as Raven from 'raven-js';
 import { constants } from '../app.constants';
 import { Variant } from '../model/variant';
-import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { of, Observable } from "rxjs";
 
 export const VSAL_VARIANT_LIMIT = 10000;
 export const VSAL_TIMEOUT = 60000;
@@ -93,7 +93,7 @@ export class VsalService {
             })
             .catch((e) => {
                 Raven.captureMessage("VSAL ERROR: " + JSON.stringify(e));
-                return Observable.of(new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE));
+                return of(new VariantRequest([], constants.GENERIC_SERVICE_ERROR_MESSAGE));
             });
     }
 }
