@@ -5,7 +5,6 @@ import { constants } from '../app.constants';
 import { MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from '../components/parts/error-dialog/error-dialog.component';
 import * as jwtDecode from 'jwt-decode';
-import * as LogRocket from 'logrocket';
 import * as auth0 from 'auth0-js';
 
 export const expiredAtKey = 'expired_at';
@@ -14,6 +13,7 @@ export const urlStateKey = 'urlState';
 
 @Injectable()
 export class Auth {
+
 
     auth0 = new auth0.WebAuth({
         clientID: environment.auth0ClientId,
@@ -30,7 +30,6 @@ export class Auth {
 
     public handleAuthentication(): void {
         this.auth0.parseHash(this.handleAuthResult);
-        LogRocket.identify(localStorage.getItem(uidKey));
     }
 
     public login() {
@@ -64,7 +63,6 @@ export class Auth {
         const idToken = jwtDecode(authResult.idToken);
         localStorage.setItem(uidKey, idToken.email);
         const expiresAt = JSON.stringify(idToken.exp * 1000);
-        LogRocket.identify(localStorage.getItem(uidKey));
         localStorage.setItem(expiredAtKey, expiresAt);
     }
 

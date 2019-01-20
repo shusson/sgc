@@ -91,7 +91,6 @@ import { MaterialModule } from './app.material';
 import { MapdRowChartComponent } from './components/parts/mapd-row-chart/mapd-row-chart.component';
 import { MapdPieChartComponent } from './components/parts/mapd-pie-chart/mapd-pie-chart.component';
 import { MapdAvgAfChartComponent } from './components/parts/mapd-avg-af-chart/mapd-avg-af-chart.component';
-import * as LogRocket from 'logrocket';
 import { SummaryDialogComponent } from './components/parts/summary-dialog/summary-dialog.component';
 import { HelpIconComponent } from './components/parts/help-icon/help-icon.component';
 import { SnackbarHelpComponent } from './components/parts/snackbar-help/snackbar-help.component';
@@ -106,7 +105,6 @@ Raven
     .install();
 
 Raven.setDataCallback(function (data) {
-    data.extra.sessionURL = LogRocket.sessionURL;
     return data;
 });
 
