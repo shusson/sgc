@@ -325,11 +325,6 @@
   resolved "https://npm.ctcue.com/@types%2fnode/-/node-6.14.2.tgz#40b3dbb1221c7d66802cbcc32fe3b85e54569c77"
   integrity sha512-JWB3xaVfsfnFY8Ofc9rTB/op0fqqTSqy4vBcVk1LuRJvta7KTX+D//fCkiTMeLGhdr2EbFZzQjC97gvmPilk9Q==
 
-"@types/node@~6.0.60":
-  version "6.0.118"
-  resolved "https://npm.ctcue.com/@types%2fnode/-/node-6.0.118.tgz#8014a9b1dee0b72b4d7cd142563f1af21241c3a2"
-  integrity sha512-N33cKXGSqhOYaPiT4xUGsYlPPDwFtQM/6QxJxuMXA/7BcySW+lkn2yigWP7vfs4daiL/7NJNU6DMCqg5N4B+xQ==
-
 "@types/papaparse@^4.1.27":
   version "4.5.7"
   resolved "https://npm.ctcue.com/@types%2fpapaparse/-/papaparse-4.5.7.tgz#fff4774cb6fbfce4e0c986145c153885b6c24b88"
