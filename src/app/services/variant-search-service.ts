@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { VsalService } from './vsal-service';
 import { Variant } from '../model/variant';
 import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 import { SearchQuery } from '../model/search-query';
 import { VariantRequest } from '../model/variant-request';
 import { Region } from '../model/region';
+import { of, Observable } from "rxjs";
 
 const DEBOUNCE_TIME = 100;
 
@@ -33,7 +33,7 @@ export class VariantSearchService {
             })
             .catch(e => {
                 this.errors.next(e);
-                return Observable.of<VariantRequest>(new VariantRequest([], e));
+                return of<VariantRequest>(new VariantRequest([], e));
             })
             .share();
 

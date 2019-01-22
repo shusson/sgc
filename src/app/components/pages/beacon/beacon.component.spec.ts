@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { BeaconComponent } from './beacon.component';
 import { BeaconSearchService } from '../../../services/beacon/beacon-search-service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PageContainerComponent } from '../../parts/page-container/page-container.component';
 import { MaterialModule } from '../../../app.material';
@@ -20,6 +19,7 @@ import { BeaconTableComponent } from '../../parts/beacon-table/beacon-table.comp
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { empty } from "rxjs";
 
 describe('BeaconComponent', () => {
 
@@ -60,13 +60,13 @@ describe('BeaconComponent', () => {
                 {
                     provide: BeaconSearchService,
                     useValue: {
-                        errors: Observable.empty()
+                        errors: empty()
                     }
                 },
                 {
                     provide: ActivatedRoute,
                     useValue: {
-                        params: Observable.empty()
+                        params: empty()
                     }
                 },
                 {

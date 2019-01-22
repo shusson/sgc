@@ -4,9 +4,9 @@ import {
     BeaconId
 } from './beacon-network-service';
 import { Beacon } from '../../model/beacon';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import { of, merge, Observable } from "rxjs";
 
 const REFERENCE = 'HG19';
 const MGRB_ID = 'garvan';
@@ -47,13 +47,13 @@ export class BeaconCache {
                             br.beacon = new NetworkBeacon();
                             br.beacon.id = id;
                             br.error = 'error: ' + JSON.stringify(e);
-                            return Observable.of<BeaconResponse>(br);
+                            return of<BeaconResponse>(br);
                         })
                         .map(b => {
                             return b;
                         }));
                 }
-                return Observable.merge<BeaconResponse>(...obs);
+                return merge<BeaconResponse>(...obs);
             }).share();
 
         this.subs.push(this.queue.subscribe((id) => {

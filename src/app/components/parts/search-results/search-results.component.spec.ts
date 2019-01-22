@@ -4,7 +4,6 @@ import { VariantSearchService } from '../../../services/variant-search-service';
 import { GenomeBrowserComponent } from '../genome-browser/genome-browser.component';
 import { AlleleFreqComponent } from '../allele-freq/allele-freq.component';
 import { VariantTrackService } from '../../../services/genome-browser/variant-track-service';
-import { Observable } from 'rxjs/Observable';
 import { GenomeBrowserResizeComponent } from '../genome-browser-resizable/genome-browser-resizable.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
@@ -25,6 +24,7 @@ import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
 import { RegionInformationComponent } from '../region-information/region-information.component';
 import { ClincalFilteringComponent } from '../clincal-filtering/clincal-filtering.component';
 import { ClinicalChartComponent } from '../clinical-chart/clinical-chart.component';
+import { empty } from "rxjs";
 
 describe('Component: SearchResults', () => {
 
@@ -61,20 +61,20 @@ describe('Component: SearchResults', () => {
                 {
                     provide: ActivatedRoute,
                     useValue: {
-                        params: Observable.empty()
+                        params: empty()
                     }
                 },
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 },
                 {
                     provide: VariantTrackService,
                     useValue: {
-                        highlightedVariant: Observable.empty(),
-                        clickedVariant: Observable.empty()
+                        highlightedVariant: empty(),
+                        clickedVariant: empty()
                     }
                 },
                 {

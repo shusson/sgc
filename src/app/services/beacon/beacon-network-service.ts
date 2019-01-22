@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Beacon } from '../../model/beacon';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { throwError, Observable } from "rxjs";
 
 const TIMEOUT = 20000;
 
@@ -56,7 +55,7 @@ export class BeaconNetworkService {
         return this.http.get(`${ environment.beaconNetworkUrl }/beacons`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError)
-            .map((data) => {
+            .map((data: any) => {
                 return data.filter((v: NetworkBeacon) => {
                     const intersection = v.supportedReferences.filter(x => SUPPORTED_REFERENCES.has(x));
                     return intersection.length > 0 && !v.aggregator && v.id !== MGRB_ID;
@@ -68,7 +67,7 @@ export class BeaconNetworkService {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/json')
             .append('Accept', '*/*');
-        return this.http.get(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
+        return this.http.get<any>(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(this.handleError);
     }
@@ -89,7 +88,7 @@ export class BeaconNetworkService {
     }
 
     private handleError() {
-        return Observable.throw('An error occurred while trying to connect to the Beacon Network');
+        return throwError('An error occurred while trying to connect to the Beacon Network');
     }
 
     private parseBeacon(v: any): BeaconResponse {

@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable';
 import { VariantRequest } from '../model/variant-request';
+import { of, throwError } from "rxjs";
 
 export class MockVsalService {
     error = '';
@@ -15,8 +15,8 @@ export class MockVsalService {
 
     getVariants() {
         if (this.error) {
-            return Observable.throw(this.error);
+            return throwError(this.error);
         }
-        return Observable.of<VariantRequest>(new VariantRequest(this.expectedVariants, ''));
+        return of<VariantRequest>(new VariantRequest(this.expectedVariants, ''));
     }
 }

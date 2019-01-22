@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { throwError, Observable } from "rxjs";
 
 const TIMEOUT = 10000;
 const CHROMOSOME_URL = '/info/assembly/human/1';
@@ -14,10 +14,10 @@ export class EnsemblService {
     healthCheck(): Promise<boolean> {
         const headers = new HttpHeaders()
             .append('Accept', 'application/json');
-        return this.http.get(HEALTH_CHECK_URL, {headers: headers})
+        return this.http.get<any>(HEALTH_CHECK_URL, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
-                return Observable.throw('Ensembl health check failed');
+                return throwError('Ensembl health check failed');
             })
             .toPromise();
     }
@@ -33,7 +33,7 @@ export class EnsemblService {
         return this.http.get(url, {headers: headers, params: params})
             .timeout(TIMEOUT)
             .catch(() => {
-                return Observable.throw('An error occurred while trying to connect to ensembl');
+                return throwError('An error occurred while trying to connect to ensembl');
             });
     }
 }

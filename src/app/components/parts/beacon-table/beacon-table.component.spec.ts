@@ -5,7 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { BeaconNetworkService } from '../../../services/beacon/beacon-network-service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 describe('BeaconTableComponent', () => {
     let component: BeaconTableComponent;
@@ -36,7 +36,7 @@ describe('BeaconTableComponent', () => {
         component.beacons = <any>{
             responses: [],
             resolvedResponses: () => [],
-            results: Observable.empty()
+            results: empty()
         };
         fixture.detectChanges();
     });

@@ -12,7 +12,7 @@ import { ElasticGeneSearch } from '../../../services/autocomplete/elastic-gene-s
 import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 describe('Component: Genome Browser', () => {
 
@@ -56,7 +56,7 @@ describe('Component: Genome Browser', () => {
                 {
                     provide: ElasticGeneSearch,
                     useValue: {
-                        getChromosome: () => Observable.empty()
+                        getChromosome: () => empty()
                     }
                 },
                 {

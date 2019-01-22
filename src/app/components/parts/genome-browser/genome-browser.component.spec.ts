@@ -9,8 +9,8 @@ import { EnsemblService } from '../../../services/ensembl-service';
 import { MaterialModule } from '../../../app.material';
 import { FormsModule } from '@angular/forms';
 import { OverlayMenuComponent } from '../overlay-menu/overlay-menu.component';
-import { Observable } from 'rxjs/Observable';
 import { Chromosome } from '../../../model/chromosome';
+import { of } from "rxjs";
 
 describe('Component: Genome Browser', () => {
 
@@ -44,7 +44,7 @@ describe('Component: Genome Browser', () => {
                     provide: ElasticGeneSearch,
                     useValue: {
                         getChromosome: () => {
-                            return Observable.of<Chromosome>({name: 'X', length: 1});
+                            return of<Chromosome>({name: 'X', length: 1});
                         }
                     }
                 },

@@ -15,7 +15,6 @@ import { SearchBarComponent } from '../../parts/search-bar/search-bar.component'
 import { SearchOptionComponent } from '../../parts/search-option/search-option.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { GeneInformationComponent } from '../../parts/gene-information/gene-information.component';

@@ -1,14 +1,12 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { RegionInformationComponent } from './region-information.component';
 import { RegionService } from '../../../services/autocomplete/region-service';
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 describe('RegionInformationComponent', () => {
     let component: RegionInformationComponent;
@@ -29,7 +27,7 @@ describe('RegionInformationComponent', () => {
                 {
                     provide: RegionService,
                     useValue: {
-                        getGenesInRegion: () => Observable.empty()
+                        getGenesInRegion: () => empty()
                     }
                 },
                 {

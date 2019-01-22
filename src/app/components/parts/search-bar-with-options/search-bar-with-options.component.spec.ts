@@ -1,7 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { SearchBarWithOptionsComponent } from './search-bar-with-options.component';
 import { FormsModule } from '@angular/forms';
@@ -11,8 +9,8 @@ import { ScrollService } from '../../../services/scroll-service';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { MockSearchBarService } from '../../../mocks/search-bar-service.mock';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { MaterialModule } from '../../../app.material';
+import { empty } from "rxjs";
 
 describe('SearchBarWithOptionsComponent', () => {
     let component: SearchBarWithOptionsComponent;
@@ -38,7 +36,7 @@ describe('SearchBarWithOptionsComponent', () => {
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 },
             ]

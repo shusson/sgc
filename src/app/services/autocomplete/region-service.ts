@@ -1,11 +1,11 @@
 import { AutocompleteService } from './autocomplete-service';
 import { Region } from '../../model/region';
 import { GenericAutocompleteResult } from '../../model/autocomplete-result';
-import { Observable } from 'rxjs/Observable';
 import { RegionAutocomplete } from '../../model/region-autocomplete';
 import { Injectable } from '@angular/core';
 import { EnsemblService } from '../ensembl-service';
 import { Gene } from '../../model/gene';
+import { of, Observable } from "rxjs";
 
 @Injectable()
 export class RegionService implements AutocompleteService<Region> {
@@ -24,14 +24,14 @@ export class RegionService implements AutocompleteService<Region> {
             }
             const r = new Region(chromosome, start, end);
             const regions = [new RegionAutocomplete(r, r.name(), '', this)];
-            return Observable.of<GenericAutocompleteResult<Region>[]>(regions);
+            return of<GenericAutocompleteResult<Region>[]>(regions);
         } else {
-            return Observable.of<GenericAutocompleteResult<Region>[]>([]);
+            return of<GenericAutocompleteResult<Region>[]>([]);
         }
     }
 
     getDetails(autocomplete: GenericAutocompleteResult<Region>): Observable<Region> {
-        return Observable.of(autocomplete.result);
+        return of(autocomplete.result);
     }
 
     getGenesInRegion(r: Region): Observable<Gene[]> {

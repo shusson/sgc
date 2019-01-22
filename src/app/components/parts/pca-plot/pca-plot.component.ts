@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import * as Papa from 'papaparse'
+import { Observable } from "rxjs";
 
 const PLOT_WIDTH = window.innerWidth <= 500 ? 320 : 500;
 const PLOT_HEIGHT = window.innerWidth <= 500 ? 300 : 400;

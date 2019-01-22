@@ -8,7 +8,7 @@ import { VariantTrackService } from '../../../services/genome-browser/variant-tr
 import { MockVariantSearchService } from '../../../mocks/variant-search-service.mock';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 describe('ClincalFilteringComponent', () => {
     let component: ClincalFilteringComponent;
@@ -36,13 +36,13 @@ describe('ClincalFilteringComponent', () => {
                 {
                     provide: ActivatedRoute,
                     useValue: {
-                        params: Observable.empty()
+                        params: empty()
                     }
                 },
                 {
                     provide: Router,
                     useValue: {
-                        events: Observable.empty()
+                        events: empty()
                     }
                 },
             ]

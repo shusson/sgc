@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Gene } from '../../model/gene';
 import { GenericAutocompleteResult } from '../../model/autocomplete-result';
-import { Observable } from 'rxjs/Observable';
 import { GeneAutocomplete } from '../../model/gene-autocomplete';
 import { AutocompleteService } from './autocomplete-service';
 import { Chromosome } from '../../model/chromosome';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { of, throwError, Observable } from "rxjs";
 
 const TIMEOUT = 5000;
 
@@ -22,7 +22,7 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
         return this.http.get(`${ environment.elasticUrl }/chromosomes/chromosome/${chromosome.toUpperCase()}`, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
-                return Observable.throw('An error occurred while trying to connect to elasticsearch');
+                return throwError('An error occurred while trying to connect to elasticsearch');
             })
             .map(data => {
                 const source = data['_source'];
@@ -85,11 +85,11 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
         return this.http.post(environment.elasticUrl + '/_search', body, {headers: headers})
             .timeout(TIMEOUT)
             .catch(() => {
-                return Observable.throw('An error occurred while trying to connect to elasticsearch');
+                return throwError('An error occurred while trying to connect to elasticsearch');
             })
-            .map(data => {
+            .map((data: any) => {
                 return data.hits.hits.map((j: any) => {
-                    let g = new Gene();
+                    const g = new Gene();
                     const source = j._source;
                     g.id = source.id;
                     g.name = source.description;
@@ -103,6 +103,6 @@ export class ElasticGeneSearch implements AutocompleteService<Gene> {
     }
 
     getDetails(gene: GeneAutocomplete): Observable<Gene> {
-        return Observable.of<Gene>(gene.result);
+        return of<Gene>(gene.result);
     }
 }

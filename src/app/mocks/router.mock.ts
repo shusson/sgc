@@ -1,8 +1,8 @@
 
-import { Observable } from 'rxjs/Observable';
+import { empty } from "rxjs";
 
 export class MockRouter {
-    events = Observable.empty();
+    events = empty();
     createUrlTree() {}
     serializeUrl() {}
 }

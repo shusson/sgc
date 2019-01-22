@@ -3,10 +3,10 @@ import {
     ChangeDetectorRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { SearchBarService } from '../../../services/search-bar-service';
 import { GenericAutocompleteResult } from '../../../model/autocomplete-result';
+import { of, Observable } from "rxjs";
 
 export class SearchBarOptions {
     autofocus = false;
@@ -51,12 +51,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
                 if (term && term.length > 1) {
                     return this.searchBarService.searchAutocompleteServicesStartsWith(term);
                 } else {
-                    return Observable.of<any[]>([]);
+                    return of<any[]>([]);
                 }
             })
             .catch(error => {
                 this.handleError(error);
-                return Observable.of<any[]>([]);
+                return of<any[]>([]);
             })
             .share();
 
