@@ -1,5 +1,7 @@
 FROM angular/ngcontainer
 
+USER root
+
 # Update and install required packages
 RUN apt-get update && apt-get install -y \
     curl \
