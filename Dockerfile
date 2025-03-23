@@ -1,36 +1,23 @@
-FROM angular/ngcontainer
+FROM node:18.19.0-bullseye
 
-USER root
-
-# Update and install required packages
-RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    python3 \
-    npm
-
-# Optional: link python2 to python3 if legacy tools require it
-RUN ln -sf /usr/bin/python3 /usr/bin/python2
-
-# Install global NPM tools
-RUN npm install -g \
-    @angular/cli@7.2.2 \
-    semver \
-    n
-
-# Use Node.js version 18.19.0
-RUN n 18.19.0
-
-# Set working directory and copy project files
+# Set working directory
 WORKDIR /app
+
+# Install required packages
+RUN apt-get update && \
+    apt-get install -y curl python3 && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Copy project files
 COPY . .
 
-# Install local dependencies
-RUN npm install && \
-    npm install @mapbox/whoots-js
+# Install dependencies
+RUN npm install -g @angular/cli@7.2.2 semver \
+    && npm install \
+    && npm install @mapbox/whoots-js --save
 
-# Expose Angular dev server port
+# Expose the Angular default port
 EXPOSE 4200
 
-# Run Angular dev server
+# Run the Angular dev server
 CMD ["ng", "serve", "--host", "0.0.0.0"]
