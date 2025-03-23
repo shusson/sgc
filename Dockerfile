@@ -11,10 +11,9 @@ RUN apt-get update && \
 # Copy project files
 COPY . .
 
-# Install dependencies
-RUN npm install -g @angular/cli@7.2.2 semver \
-    && npm install \
-    && npm install @mapbox/whoots-js --save
+RUN npm install -g @angular/cli@7.2.2 semver
+RUN npm install
+RUN npm install @mapbox/whoots-js --save
 
 # Expose the Angular default port
 EXPOSE 4200
