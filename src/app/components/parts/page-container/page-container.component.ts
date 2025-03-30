@@ -13,7 +13,7 @@ export class PageContainerComponent implements OnInit {
     @Input() showTitle = true;
     @Input() showPrivacy = true;
     @Input() showBanner = false;
-    title = 'SYDNEY GENOMICS COLLABORATIVE';
+    title = 'Sydney Genomics Collaborative';
     smallTitle = 'SGC';
     showHamburger = false;
 

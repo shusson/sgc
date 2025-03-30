@@ -2,7 +2,10 @@
     <input placeholder="Filter" [ngModel]="currentFilter" (ngModelChange)="onFilter($event)"
            (keydown)="onKeydown($event)"
            (blur)="onBlur()"
-           (focus)="onFocus()"
+           (focus)="tooltip.show()&&onFocus()"
+           #tooltip="matTooltip"
+            matTooltip="Enter a keyword or start a command with /"
+            matTooltipPosition="left"
     >
     <div class="filter-options" *ngIf="show">
         <div class="filter-option" *ngFor="let option of autoComplete; let i = index;"

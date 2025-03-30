@@ -1,7 +1,7 @@
 <div class="search-band">
     <div class="search-content" [ngClass]="{'expanded': expanded}">
         <div class="search-bar">
-            <app-search-bar [options]="{autofocus: false}" (focused)="onFocus()" [action]="action"></app-search-bar>
+            <app-search-bar [options]="{autofocus: false}" (focused)="onFocus()" [action]="action" [regError]="regionError"></app-search-bar>        
         </div>
         <div class="search-bar-results" *ngIf="expanded">
             <div class="search-options">
@@ -10,6 +10,7 @@
             </div>
 
             <div class="message message-error" *ngIf="searchBarService.autocompleteError">{{ searchBarService.autocompleteError }}</div>
+            <div class="message message-error" *ngIf="regionError && !searchBarService.autocompleteError">Start position cannot be greater than end</div>
             <div class="search-examples">
                 Examples: <a (click)="action(example1)">{{ example1 }}</a> or
                 <a (click)="action(example2)">{{ example2 }}</a>

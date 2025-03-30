@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./title-logo-banner.component.css']
 })
 export class TitleLogoBannerComponent implements OnInit {
-    title = 'SYDNEY GENOMICS COLLABORATIVE';
+    title = 'Sydney Genomics Collaborative';
     subtitle = 'TRANSLATING GENOMICS RESEARCH INTO BETTER HEALTH OUTCOMES';
 
     constructor() {

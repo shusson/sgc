@@ -1,22 +1,30 @@
-FROM node:18.19.0-bullseye
+# Step 1: Build the Angular application
+FROM node:12 AS build
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Install required packages
-RUN apt-get update && \
-    apt-get install -y curl python3 && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# Copy package.json and yarn.lock files
+COPY package.json yarn.lock ./
 
-# Copy project files
+# Install project dependencies
+RUN yarn install
+
+# Copy the rest of the application code
 COPY . .
 
-RUN npm install -g @angular/cli@7.2.2 semver
-RUN npm install
-RUN npm install @mapbox/whoots-js --save
+# Build the Angular app
+RUN yarn ng build --prod
 
-# Expose the Angular default port
-EXPOSE 4200
+# Step 2: Set up Nginx to serve the built app
+FROM nginx:alpine
 
-# Run the Angular dev server
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+# Copy the built Angular app to the Nginx server
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose port 80 for the Nginx server
+EXPOSE 80
+
+# Run Nginx to serve the app
+CMD ["nginx", "-g", "daemon off;"]
+

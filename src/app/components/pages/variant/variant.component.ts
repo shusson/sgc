@@ -51,7 +51,7 @@ export class VariantComponent implements OnInit, OnDestroy {
 
     parseParams(params: Params) {
         try {
-            const r = /([\dxy]*)-(\d*)-([AGTC\*]*)-([AGTC\*]*)+/ig;
+            const r = /([\dxymt]*)-(\d*)-([AGTC\*]*)-([AGTC\*]*)+/ig;
             const m = r.exec(params['query']);
             const chromo = m[1];
             const start = Number(m[2]);

@@ -64,6 +64,11 @@ export class VariantsTablePaginatedComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
 
+    variantVarsomeUrl(v: string) {
+        let varName = v.replace(/:/g, '-').toString();
+        return `https://varsome.com/variant/hg19/${varName}`;
+    }
+
     variantUrl(v: string) {
         return this.router.createUrlTree(['/search/variant', {query: v.replace(/:/g, '-')}]).toString();
     }

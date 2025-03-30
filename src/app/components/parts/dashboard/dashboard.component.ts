@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
-import '@mapd/mapdc/dist/mapdc.js';
+import '@mapd/mapdc/dist/charting.js';
 import { Subscription } from 'rxjs/Subscription';
 import { constants } from '../../../app.constants';
 import { SearchBarService } from '../../../services/search-bar-service';
@@ -124,12 +124,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             if (!v) {
                 return;
             }
+
             if (v.result instanceof Gene) {
-                const f = new DimensionFilter();
+                //Currently MAPD doesn't translate Gene symbol into correct region
+                /*const f = new DimensionFilter();
                 f.dimension = new Dimension();
                 f.dimension.name = 'geneSymbol';
                 f.operator = '=';
-                f.value = v.result.symbol;
+                f.value = v.result.symbol;*/
+
+                const f = new BasicFilter(`chromosome='${v.result.chromosome}' AND c3_START >= ${v.result.start} AND c3_START <= ${v.result.end}`);
                 this.cf.mfs.addFilter(f);
             } else if (v.result instanceof Region) {
                 const r = (<Region>v.result);

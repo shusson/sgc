@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./privacy-footer.component.css']
 })
 export class PrivacyFooterComponent implements OnInit {
-    year = '2017';
+    year = '2019';
 
     constructor() {
     }

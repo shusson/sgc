@@ -71,10 +71,19 @@ export class Auth {
             if (!environment.production) {
                 console.log(err);
             }
-            this.dialog.open(
-                ErrorDialogComponent,
-                { data: "An error occurred while trying to authenticate. Please ensure private browsing is disabled and try again."}
-            );
+            if(err.errorDescription === "Please verify your email before logging in."){
+                this.dialog.open(
+                    ErrorDialogComponent,
+                    { data: "Please verify your email before logging in."}
+                );
+                this.router.navigate(['/initiatives'])
+            }else{
+                this.dialog.open(
+                    ErrorDialogComponent,
+                    { data: "An error occurred while trying to authenticate. Please ensure private browsing is disabled and try again."}
+                );
+                this.router.navigate(['/initiatives'])
+            }
         } else if (authResult && authResult.idToken && authResult.idToken !== 'undefined') {
             this.setSession(authResult);
             const path = localStorage.getItem(urlStateKey);

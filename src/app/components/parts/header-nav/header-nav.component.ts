@@ -12,7 +12,9 @@ import { SignUpComponent } from '../sign-up/sign-up.component';
 })
 export class HeaderNavComponent implements OnInit {
     termsDropdown = false;
+    userDropdown = false;
     termsLinkActive = false;
+    userEmail = localStorage.getItem('uid')?localStorage.getItem('uid'):null;
 
     @HostListener('document:click', ['$event']) outsideClick($event: Event) {
         if (!$event) {
@@ -20,6 +22,7 @@ export class HeaderNavComponent implements OnInit {
         }
         if (!this.elf.nativeElement.contains($event.target)) {
             this.hideTerms();
+            this.hideUser();
         }
     }
 
@@ -55,6 +58,25 @@ export class HeaderNavComponent implements OnInit {
     showTerms = () => {
         if (!this.termsDropdown) {
             this.termsDropdown = true;
+            this.userDropdown = false;
+        }
+    };
+
+    toggleUser(event: Event) {
+        event.stopPropagation();
+        this.userDropdown ? this.hideUser() : this.showUser();
+    }
+
+    hideUser = () => {
+        if (this.userDropdown) {
+            this.userDropdown = false;
+        }
+    };
+
+    showUser = () => {
+        if (!this.userDropdown) {
+            this.userDropdown = true;
+            this.termsDropdown = false;
         }
     };
 

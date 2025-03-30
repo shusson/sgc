@@ -92,7 +92,7 @@ export class TableService {
     }
 
     display(label: string, variant: Variant): string {
-        return this.displayMap[label](variant) ? String(this.displayMap[label](variant)) : '';
+        return this.displayMap[label](variant)!==null ? String(this.displayMap[label](variant)) : '';
     }
 
     sort(label: string, variants: Variant[]) {

@@ -61,7 +61,7 @@ const INITIATIVES = new Map<string, Initiative>([
             aim: 'Empower researchers to discover better health outcomes for diseases via genetic sequencing.',
             methods: `Grants and support to individual researchers enabling whole genome sequencing and translational genomic investigations.`,
             outcome: `Better health outcomes for various diseases including heart disease in babies, mitochondrial disease, metastatic melanoma, schizophrenia, retinal dystrophy, cardiomyopathies, mendelian immunodeficiencies, and epilepsy.`,
-            cohorts: ['schizophrenia', 'mendelian_disorders', 'epilepsy', 'melanoma', 'mitochondrial', 'congenital', 'rare_disease', 'retinal', 'bone', 'cardiomyopathies'],
+            cohorts: ['schizophrenia', 'mendelian_disorders', 'epilepsy', 'melanoma', 'mitochondrial', 'congenital', 'rare_disease', 'retinal', 'bone', 'cardiomyopathies', 'bipolar'],
             people: ['murraycairns', 'grahammann', 'carolynsue', 'sallydunwoodie'],
             genomes: '2295',
             sequenced: '1689',

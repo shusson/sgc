@@ -49,10 +49,7 @@ export class BeaconNetworkService {
     }
 
     getSupportedBeacons(): Observable<NetworkBeacon[]> {
-        const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json')
-            .append('Accept', '*/*');
-        return this.http.get(`${ environment.beaconNetworkUrl }/beacons`, {headers: headers})
+        return this.http.get(`${ environment.beaconNetworkUrl }/beacons`)
             .timeout(TIMEOUT)
             .catch(this.handleError)
             .map((data: any) => {
@@ -64,21 +61,14 @@ export class BeaconNetworkService {
     }
 
     getOrganisations(): Observable<NetworkOrganization[]> {
-        const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json')
-            .append('Accept', '*/*');
-        return this.http.get<any>(`${ environment.beaconNetworkUrl }/organizations`, {headers: headers})
+        return this.http.get<any>(`${ environment.beaconNetworkUrl }/organizations`)
             .timeout(TIMEOUT)
             .catch(this.handleError);
     }
 
     queryBeacon(id: string, beacon: Beacon): Observable<BeaconResponse> {
-        const headers = new HttpHeaders()
-            .append('Content-Type', 'application/json')
-            .append('Accept', '*/*');
         const searchParams = beacon.getSearchParams();
         return this.http.get(`${ environment.beaconNetworkUrl }/responses/${ id }`, {
-            headers: headers,
             params: searchParams
         })
             .timeout(TIMEOUT)

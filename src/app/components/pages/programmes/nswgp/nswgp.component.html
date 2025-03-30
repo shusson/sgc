@@ -47,6 +47,13 @@
             </a>
         </div>
 
+        <div class="sub-title">2017 Cohorts</div>
+        <div class="cohorts">
+            <a *ngFor="let cohort of cohorts2017" href="initiatives/nswgp#{{ cohort.id }}-details">
+                <app-cohort-card [cohortId]="cohort.id"></app-cohort-card>
+            </a>
+        </div>
+
         <div class="sub-title-anchor">
             <div class="sub-title">Recipients 2015</div>
             <a class="back-anchor" (click)="backToTop()">Back to top</a>
@@ -171,6 +178,23 @@
                     clinical
                     analysis of patients and their families that aims to improve the care of families with inherited
                     cardiomyopathies.
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="sub-title-anchor">
+            <div class="sub-title">Recipients 2017</div>
+            <a class="back-anchor" (click)="backToTop()">Back to top</a>
+        </div>
+        <div class="recipients">
+            <ul>
+                <div class="offset-anchor" id="bipolar-details"></div>
+                <li [ngClass]="{'is-active': activeAnchor === 'bipolar-details'}">
+                    Dr Jan Fullerton ($2.46 million) from Neuroscience Research Australia (NeuRA) will lead a team from
+                     the Black Dog Institute, UNSW Sydney and the Prince of Wales Hospital. The study aims to study the
+                      whole genome sequences of approximately 1200 individuals from across NSW with bipolar disorder, to
+                       identify the molecular pathways which increase risk of illness.
                 </li>
             </ul>
 
