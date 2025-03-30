@@ -1,28 +1,37 @@
 <div class="right-side">
     <nav>
-        <a routerLink="/initiatives" routerLinkActive="is-active">INITIATIVES</a>
-        <a routerLink="/search" routerLinkActive="is-active">SEARCH</a>
-        <a class="explore-beta" routerLink="/explore" routerLinkActive="is-active">EXPLORE</a>
-        <a routerLink="/beacon" routerLinkActive="is-active">BEACON</a>
-        <a routerLink="/about" routerLinkActive="is-active">ABOUT</a>
+        <a routerLink="/initiatives" routerLinkActive="is-active">Initiatives</a>
+        <a routerLink="/search" routerLinkActive="is-active">Search</a>
+        <a class="explore-beta" routerLink="/explore" routerLinkActive="is-active">Explore</a>
+        <a routerLink="/beacon" routerLinkActive="is-active">Beacon</a>
+        <a routerLink="/about" routerLinkActive="is-active">About</a>
         <a [ngClass]="{'is-active': termsLinkActive}" (click)="toggleTerms($event)">
             <div class="terms-link">
-                <span class="label">DATA ACCESS</span>
+                <span class="label">Data access</span>
                 <i *ngIf="!termsDropdown" class="material-icons">keyboard_arrow_down</i>
                 <i *ngIf="termsDropdown" class="material-icons">keyboard_arrow_up</i>
             </div>
 
-            <div *ngIf="termsDropdown" class="terms-dropdown" (click)="goToMgrbTerms($event)">
+            <div *ngIf="termsDropdown" [ngClass]="['terms', 'dropdown']" (click)="goToMgrbTerms($event)">
                 <a>MGRB</a>
             </div>
         </a>
 
         <div *ngIf="!auth.authenticated()" class="sign-up">
-            <a (click)="auth.login()">LOG IN</a>
+            <a (click)="auth.login()">Log in</a>
             <div class="spacer">|</div>
-            <a (click)="openSignUpDialog()">SIGN UP</a>
+            <a (click)="openSignUpDialog()">Sign up</a>
         </div>
+        <a *ngIf="auth.authenticated()" [ngClass]="{'is-active': termsLinkActive}" (click)="toggleUser($event)">
+            <div class="terms-link">
+                <span class="label">{{userEmail}}</span>
+                <i *ngIf="!userDropdown" class="material-icons">keyboard_arrow_down</i>
+                <i *ngIf="userDropdown" class="material-icons">keyboard_arrow_up</i>
+            </div>
 
-        <a (click)="auth.logout()" *ngIf="auth.authenticated()">LOG OUT</a>
+            <div *ngIf="userDropdown" [ngClass]="['user', 'dropdown']" (click)="auth.logout()">
+                <a>Log out</a>
+            </div>
+        </a>
     </nav>
 </div>

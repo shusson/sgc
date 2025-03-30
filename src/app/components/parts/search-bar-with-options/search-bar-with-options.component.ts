@@ -2,6 +2,7 @@ import { Component, Input, HostListener, ElementRef, AfterViewInit } from '@angu
 import { SearchBarService } from '../../../services/search-bar-service';
 import { ScrollService } from '../../../services/scroll-service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-search-bar-with-options',
@@ -18,6 +19,8 @@ export class SearchBarWithOptionsComponent implements AfterViewInit {
         const obj = {query: query, timestamp: Date.now()};
         this.router.navigate(['/search/results', obj]);
     };
+    private subscriptions: Subscription[] = [];
+    regionError: boolean = false;
 
     @HostListener('document:click', ['$event']) onClick($event: Event) {
         this.toggleExpansion($event);
@@ -38,6 +41,10 @@ export class SearchBarWithOptionsComponent implements AfterViewInit {
         this.searchBarService.searchedEvent.subscribe(() => {
             this.expanded = false;
         });
+
+        this.subscriptions.push(this.searchBarService.startGreaterThanEnd.subscribe((flag) =>{
+            this.regionError = flag;
+        }));
     }
 
     toggleExpansion($event: Event) {
@@ -55,6 +62,10 @@ export class SearchBarWithOptionsComponent implements AfterViewInit {
         if (this.expandable) {
             this.expanded = true;
         }
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach((s) => s.unsubscribe());
     }
 
 }

@@ -23,6 +23,10 @@
     cursor: pointer;
 }
 
+.varsome-link {
+    float: right;
+}
+
 @media (min-width: 0px) and (max-width: 800px) {
 
     .location {

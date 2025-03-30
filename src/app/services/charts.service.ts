@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import '@mapd/mapdc/dist/mapdc.js';
+import '@mapd/mapdc/dist/charting.js';
 
 export enum ChartType {
     Row,

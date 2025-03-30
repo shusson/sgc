@@ -10,6 +10,7 @@ import * as Papa from 'papaparse';
 import { VariantSearchService } from '../../../services/variant-search-service';
 import { TableService } from '../../../services/table-service';
 import { FilterAutoComponent } from '../filter-auto/filter-auto.component';
+import { ALLELEFREQ_DIFFERENCE_THRESHOLD } from '../../../shared/afThreshold'
 
 const DB_SNP_URL = 'https://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi';
 const MINIMAL_VIEW = 500;
@@ -121,6 +122,18 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
         return JSON.stringify(a) === JSON.stringify(b);
     }
 
+    compareAlleleFreq(variant: Variant, self: number, comparator: number) {
+        if(variant[self] && variant[comparator]){
+            if(Math.abs(variant[self] - variant[comparator]) > ALLELEFREQ_DIFFERENCE_THRESHOLD){
+                if(variant[self] > variant[comparator]){
+                    return true;
+                }    
+            }
+        }
+        return false;
+    }
+
+
     ngOnDestroy() {
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
@@ -131,6 +144,10 @@ export class VariantsTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
     variantUrl(v: Variant) {
         return this.router.createUrlTree(['/search/variant', {query: Variant.displayName(v)}]).toString();
+    }
+
+    variantVarsomeUrl(v: Variant) {
+        return `https://varsome.com/variant/hg19/${Variant.displayName(v)}`;
     }
 
     toggleScales($event) {

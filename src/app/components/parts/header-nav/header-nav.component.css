@@ -4,10 +4,17 @@
     margin-right: -9px;
 }
 
-.terms-dropdown {
-    position: absolute;
+.user {
+    width: 153px;
+}
+
+.terms {
     width: 103px;
-    left: 0;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
     padding: 30px 50px 30px 0;
     background-color: #336F9C;
     margin-top: 23px;

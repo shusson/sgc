@@ -16,8 +16,8 @@
 }
 
 .logos img {
-    width: 180px;
-    height: auto !important;
+    max-width: 180px;
+    height: 60px !important;
     margin-top: 1rem;
 }
 

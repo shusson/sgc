@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Chart, ChartsService } from '../../../services/charts.service';
 import { CrossfilterService } from '../../../services/crossfilter.service';
 import * as d3 from 'd3';
-import '@mapd/mapdc/dist/mapdc.js';
+import '@mapd/mapdc/dist/charting.js';
 
 const SMALL_WIDTH = 180;
 const SMALL_HEIGHT = 230;

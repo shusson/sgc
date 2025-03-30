@@ -4,3 +4,7 @@
     -webkit-user-select: text;
     -ms-user-select: text;
 }
+
+:host ::ng-deep .datatable-body-cell {
+    padding: 0.4rem 1.2rem !important;
+  }

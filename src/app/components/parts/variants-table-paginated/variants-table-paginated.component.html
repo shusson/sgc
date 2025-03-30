@@ -16,6 +16,9 @@
         [loadingIndicator]="loading">
         <ngx-datatable-column name="Variant" prop="VARIANT">
             <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <a target="_blank" [href]="variantVarsomeUrl(value)" class='varsome-link'>
+                    <i class="fa fa-external-link" matTooltip="See variant in VarSome" matTooltipPosition="above"></i>
+                </a>
                 <a target="_blank" [href]="variantUrl(value)">{{value}}</a>
             </ng-template>
         </ngx-datatable-column>

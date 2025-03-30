@@ -11,7 +11,7 @@
                (focus)="onFocused(searchBox.value)">
         <button color="accent" mat-mini-fab (click)="action(searchBox.value)"><mat-icon>search</mat-icon></button>
     </form>
-    <div *ngIf="autocompleteResults.length > 0 && !loading" class="search-results">
+    <div *ngIf="autocompleteResults.length > 0 && !loading && !regError" class="search-results">
         <div *ngFor="let result of autocompleteResults; let i = index;"
              [ngClass]="{'even': (i % 2), 'selected': i === selectedIndex}"
              (mousedown)="$event.stopImmediatePropagation(); search($event, searchBox, result)"

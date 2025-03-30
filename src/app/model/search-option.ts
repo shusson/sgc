@@ -12,7 +12,7 @@ export class SearchOption {
     }
 
     allOptions() {
-        return ['All'].concat(this.options);
+        return this.options;
     }
 
     setValue(v: string) {

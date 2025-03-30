@@ -48,7 +48,6 @@ export class VsalService {
     }
 
     private requests(params: HttpParams, headers: HttpHeaders): Observable<VariantRequest> {
-        params = params.append('count', 'true');
         return Observable.create((observer) => {
             this.request(params, headers).subscribe((vs: VariantRequest) => {
                 observer.next(vs);
