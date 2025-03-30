@@ -1,0 +1,1 @@
+export const ALLELEFREQ_DIFFERENCE_THRESHOLD : number = 0.2;
